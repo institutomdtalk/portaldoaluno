@@ -195,6 +195,16 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .footer-brand{font-family:var(--serif);font-size:1rem;color:var(--gold);margin-bottom:6px;letter-spacing:.5px}
 .footer-copy{font-size:11px;color:rgba(255,255,255,.3)}
 
+/* MEET + PRÓXIMA AULA */
+.btn-meet{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px;border-radius:8px;border:none;background:#1a73e8;color:var(--white);font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s;margin-bottom:10px}
+.btn-meet:hover{background:#1557b0;transform:translateY(-1px)}
+.btn-meet svg{width:16px;height:16px;stroke:var(--white);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.proxima-aula-box{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:10px;padding:18px 20px;margin-bottom:14px;position:relative;overflow:hidden}
+.proxima-aula-box::before{content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(196,164,90,.12) 0%,transparent 70%)}
+.proxima-aula-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.proxima-aula-data{font-family:var(--serif);font-size:1.2rem;font-weight:400;color:var(--white);line-height:1.3}
+.proxima-aula-vazia{font-size:12px;color:rgba(255,255,255,.4);font-style:italic}
+
 /* SPINNER */
 .spinner-inline{width:13px;height:13px;border:1.5px solid rgba(11,29,58,.15);border-top-color:var(--navy);border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:middle;margin-right:6px}
 .spinner-white{border-color:rgba(255,255,255,.2);border-top-color:var(--white)}
@@ -285,13 +295,25 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
   <main class="dashboard">
 
-    <!-- PRESENÇA -->
+    <!-- PRÓXIMA AULA + MEET + PRESENÇA -->
     <div class="card card--presenca">
       <div class="card-pad">
         <div class="presenca-left">
           <p class="presenca-label"><span class="pulse-dot"></span> Presença na Aula</p>
-          <h2 class="presenca-title">Confirme sua presença</h2>
-          <p class="presenca-subtitle">Registre sua presença ou falta na aula de hoje.</p>
+
+          <!-- Próxima aula -->
+          <div class="proxima-aula-box">
+            <p class="proxima-aula-label">Próxima Aula</p>
+            <p class="proxima-aula-data" id="proxima-aula-txt"><span class="proxima-aula-vazia">Não informada</span></p>
+          </div>
+
+          <!-- Botão Meet -->
+          <a class="btn-meet" id="btn-meet" href="#" target="_blank" rel="noopener" style="display:none">
+            <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            Entrar no Google Meet
+          </a>
+
+          <p class="presenca-subtitle" style="margin-top:4px">Registre sua presença ou falta na aula de hoje.</p>
         </div>
         <div class="presenca-right">
           <div class="stat-row-inline">
@@ -576,6 +598,21 @@ function renderDashboard(a, avisos) {
 
   var ld = document.getElementById('link-drive');
   if (a.link_drive) { ld.href = a.link_drive; } else { ld.classList.add('disabled'); }
+
+  // Próxima aula
+  var proxEl = document.getElementById('proxima-aula-txt');
+  if (proxEl) {
+    if (a.proxima_aula && a.proxima_aula.trim()) {
+      proxEl.textContent = a.proxima_aula;
+    }
+  }
+
+  // Google Meet
+  var meetBtn = document.getElementById('btn-meet');
+  if (meetBtn && a.link_meet && a.link_meet.trim()) {
+    meetBtn.href = a.link_meet;
+    meetBtn.style.display = 'flex';
+  }
 
   if (a.curso)           document.getElementById('espaco-titulo').textContent = a.curso;
   if (a.descricao_curso) document.getElementById('espaco-desc').textContent   = a.descricao_curso;
