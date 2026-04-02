@@ -312,35 +312,32 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       </div>
     </div>
 
-    <!-- CALENDÁRIO + MURAL lado a lado -->
-    <div class="card" style="grid-column:1/-1">
-      <div class="card-pad" class="cal-mural-grid" style="display:grid;grid-template-columns:1fr 320px;gap:32px;align-items:start">
-
-        <!-- CALENDÁRIO -->
-        <div>
-          <p class="card-overline">Histórico de Presenças</p>
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-            <button id="cal-btn-prev" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8249;</button>
-            <span id="cal-month-label" style="font-family:var(--serif);font-size:0.95rem;font-weight:500;color:var(--navy);min-width:130px;text-align:center"></span>
-            <button id="cal-btn-next" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8250;</button>
-          </div>
-          <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;max-width:280px"></div>
-          <div style="background:var(--cream);border-radius:10px;padding:16px 20px;margin-top:20px;display:flex;align-items:center;gap:16px">
-            <div style="text-align:center;min-width:56px">
-              <div style="font-family:var(--serif);font-size:2.4rem;font-weight:600;color:var(--danger);line-height:1" id="cal-faltas-mes">0</div>
-              <p style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">falta<span id="cal-plural">s</span></p>
-            </div>
-            <div style="width:1px;height:40px;background:var(--border)"></div>
-            <p style="font-size:12px;color:var(--text-muted);line-height:1.5"><span id="cal-plural2" style="display:none"></span>Registradas neste mês</p>
-          </div>
+    <!-- CALENDÁRIO -->
+    <div class="card">
+      <div class="card-pad">
+        <p class="card-overline">Histórico de Presenças</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <button id="cal-btn-prev" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8249;</button>
+          <span id="cal-month-label" style="font-family:var(--serif);font-size:0.95rem;font-weight:500;color:var(--navy);min-width:130px;text-align:center"></span>
+          <button id="cal-btn-next" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8250;</button>
         </div>
-
-        <!-- MURAL -->
-        <div class="cal-mural-border" style="border-left:1px solid var(--border);padding-left:32px">
-          <p class="card-overline">Mural de Avisos</p>
-          <div id="mural-content"><div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div></div>
+        <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
+        <div style="background:var(--cream);border-radius:10px;padding:14px 18px;margin-top:18px;display:flex;align-items:center;gap:16px">
+          <div style="text-align:center;min-width:48px">
+            <div style="font-family:var(--serif);font-size:2.2rem;font-weight:600;color:var(--danger);line-height:1" id="cal-faltas-mes">0</div>
+            <p style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">falta<span id="cal-plural">s</span></p>
+          </div>
+          <div style="width:1px;height:36px;background:var(--border)"></div>
+          <p style="font-size:12px;color:var(--text-muted);line-height:1.5"><span id="cal-plural2" style="display:none"></span>Registradas neste mês</p>
         </div>
+      </div>
+    </div>
 
+    <!-- MURAL -->
+    <div class="card">
+      <div class="card-pad">
+        <p class="card-overline">Mural de Avisos</p>
+        <div id="mural-content"><div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div></div>
       </div>
     </div>
 
