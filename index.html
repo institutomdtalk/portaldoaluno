@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MD Talk — Portal do Aluno</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:       #1B2A4A;
+    --navy-light: #243761;
+    --gold:       #B8963E;
+    --gold-light: #C8A84B;
+    --cream:      #FAF7F2;
+    --cream-dark: #F0EBE1;
+    --text:       #1a1a1a;
+    --text-muted: #6b6b6b;
+    --border:     rgba(27,42,74,0.12);
+    --success:    #2D6A4F;
+    --success-bg: #D8F3DC;
+    --danger:     #A32D2D;
+    --danger-bg:  #FCEBEB;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--cream); min-height: 100vh; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--text); min-height: 100vh; background: var(--cream); }
+
+  /* PAGES */
+  .page { display: none; min-height: 100vh; }
+  .page.active { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1rem; }
+
+  /* BRAND */
+  .brand { text-align: center; margin-bottom: 2.5rem; animation: fadeDown 0.6s ease; }
+  .brand-mark { font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 6px; }
+  .brand-name { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600; color: var(--navy); line-height: 1; }
+  .brand-divider { width: 40px; height: 1px; background: var(--gold); margin: 10px auto 0; }
+
+  /* CARD */
+  .card {
+    background: #fff;
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 420px;
+    animation: fadeUp 0.5s ease;
+    box-shadow: 0 2px 24px rgba(27,42,74,0.06);
+  }
+  .card + .card { margin-top: 1rem; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 0.5px solid var(--border); margin: 1.25rem 0; }
+
+  /* BUTTONS */
+  .btn {
+    width: 100%;
+    padding: 13px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+  .btn:last-child { margin-bottom: 0; }
+  .btn-navy { background: var(--navy); color: #fff; }
+  .btn-navy:hover:not(:disabled) { background: var(--navy-light); transform: translateY(-1px); }
+  .btn-gold { background: var(--gold); color: #fff; }
+  .btn-gold:hover:not(:disabled) { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-outline { background: transparent; color: var(--navy); border: 0.5px solid var(--border); }
+  .btn-outline:hover:not(:disabled) { background: var(--cream); }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none !important; }
+  .btn-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    margin-bottom: 8px;
+    text-decoration: none;
+    border: 0.5px solid var(--border);
+    color: var(--navy);
+    background: transparent;
+    cursor: pointer;
+  }
+  .btn-link:hover { background: var(--cream); transform: translateY(-1px); }
+  .btn-link svg { flex-shrink: 0; }
+
+  /* FIELD */
+  .field-group { margin-bottom: 12px; }
+  .field-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 500; margin-bottom: 5px; display: block; }
+  .field-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .field-input:focus { border-color: var(--navy); background: #fff; }
+  .field-input::placeholder { color: #bbb; }
+
+  /* ERROR */
+  .alert-error {
+    display: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 10px;
+    background: var(--danger-bg);
+    color: var(--danger);
+    border-left: 2px solid #f09595;
+  }
+
+  /* STATS */
+  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 1.25rem; }
+  .stat { background: var(--cream); border-radius: 10px; padding: 12px 8px; text-align: center; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; line-height: 1; }
+  .stat-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-top: 3px; }
+
+  /* MURAL */
+  .aviso-item {
+    padding: 12px 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .aviso-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .aviso-item:first-child { padding-top: 0; }
+  .aviso-data { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .aviso-txt { font-size: 13px; color: var(--text); line-height: 1.6; }
+
+  /* MATERIAL ITEM */
+  .mat-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--border);
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .mat-item:last-child { border-bottom: none; }
+  .mat-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; opacity: 0.7; }
+  .mat-nome { flex: 1; font-size: 13px; color: var(--text); font-weight: 400; }
+  .mat-tipo { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+  .mat-arrow { color: var(--text-muted); font-size: 12px; }
+
+  /* LOADING SPINNER */
+  .spinner-wrap { text-align: center; padding: 1.5rem 0; color: var(--text-muted); font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .spinner { width: 16px; height: 16px; border: 2px solid rgba(27,42,74,0.15); border-top-color: var(--navy); border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; flex-shrink: 0; }
+
+  /* EMPTY STATE */
+  .empty-state { text-align: center; padding: 1rem 0; font-size: 13px; color: var(--text-muted); font-style: italic; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp   { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes spin     { to { transform: rotate(360deg); } }
+
+  @media (max-width: 480px) {
+    .card { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===========================
+     LOADING
+=========================== -->
+<div class="page active" id="page-loading">
+  <div class="brand">
+    <div class="brand-mark">Instituto</div>
+    <div class="brand-name">MD Talk</div>
+    <div class="brand-divider"></div>
+  </div>
+  <div style="text-align:center; color:var(--text-muted); font-size:13px;">
+    <span class="spinner" style="border-top-color:var(--navy); margin-right:8px; vertical-align:middle;"></span>
+    Carregando...
+  </div>
+</div>
+
+<!-- ===========================
+     LOGIN
+=========================== -->
+<div class="page" id="page-login">
+  <div class="brand">
+    <div class="brand-mark">Instituto</div>
+    <div class="brand-name">MD Talk</div>
+    <div class="brand-divider"></div>
+  </div>
+  <div class="card">
+    <div class="section-title">Acesso ao Portal</div>
+    <div class="field-group">
+      <label class="field-label" for="f-login">Login</label>
+      <input class="field-input" type="text" id="f-login" placeholder="seu login" autocomplete="username">
+    </div>
+    <div class="field-group" style="margin-bottom:16px;">
+      <label class="field-label" for="f-senha">Senha</label>
+      <input class="field-input" type="password" id="f-senha" placeholder="sua senha" autocomplete="current-password">
+    </div>
+    <button class="btn btn-navy" id="btn-enter" onclick="doLogin()">Acessar</button>
+    <div class="alert-error" id="login-err"></div>
+  </div>
+  <div style="margin-top:1.5rem; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--text-muted); text-align:center;">
+    Acesso restrito a alunos
+  </div>
+</div>
+
+<!-- ===========================
+     DASHBOARD
+=========================== -->
+<div class="page" id="page-dashboard">
+  <div class="brand">
+    <div class="brand-mark">Instituto</div>
+    <div class="brand-name">MD Talk</div>
+    <div class="brand-divider"></div>
+  </div>
+
+  <!-- Mural de Avisos -->
+  <div class="card">
+    <div class="section-title">Mural de Avisos</div>
+    <div id="mural-content">
+      <div class="spinner-wrap"><div class="spinner"></div>Carregando avisos...</div>
+    </div>
+  </div>
+
+  <!-- Meu Espaço -->
+  <div class="card">
+    <div class="section-title">Meu Espaco</div>
+
+    <a class="btn-link" id="link-drive" href="#" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+      </svg>
+      Minha Pasta no Drive
+    </a>
+
+    <a class="btn-link" id="link-agenda" href="#" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      Minha Agenda
+    </a>
+  </div>
+
+  <!-- Programa -->
+  <div class="card" id="card-programa">
+    <div class="section-title" id="programa-titulo">Meu Programa</div>
+    <div style="font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:1rem;" id="programa-desc"></div>
+    <hr style="margin-top:0;">
+    <div class="section-title" style="margin-bottom:0.75rem;">Materiais</div>
+    <div id="materiais-content">
+      <div class="empty-state">Nenhum material disponivel no momento.</div>
+    </div>
+  </div>
+
+  <!-- Presencas -->
+  <div class="card">
+    <div class="section-title">Minhas Presencas</div>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-num" style="color:var(--success);" id="stat-presencas">—</div>
+        <div class="stat-lbl">Presencas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color:var(--danger);" id="stat-faltas">—</div>
+        <div class="stat-lbl">Faltas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="stat-freq">—</div>
+        <div class="stat-lbl">Freq.</div>
+      </div>
+    </div>
+    <div id="historico-content">
+      <div class="empty-state">Nenhuma aula registrada ainda.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:1rem; width:100%; max-width:420px;">
+    <button class="btn btn-outline" onclick="doLogout()" style="font-size:12px; padding:10px;">Sair</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// CONFIGURACAO — cole a URL do seu Apps Script aqui
+// ============================================================
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzYaTJWlGlx26oNu_R1eKvQsSvxWiahrwUrrxp-t6RoY8wbxfAsVQ9mGzLExCq0jE6kbg/exec';
+
+// ============================================================
+// PAGES
+// ============================================================
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+}
+
+// ============================================================
+// LOGIN
+// ============================================================
+async function doLogin() {
+  const login = document.getElementById('f-login').value.trim();
+  const senha = document.getElementById('f-senha').value.trim();
+  const btn   = document.getElementById('btn-enter');
+  const err   = document.getElementById('login-err');
+
+  err.style.display = 'none';
+  if (!login || !senha) { showErr('Preencha login e senha.'); return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Verificando...';
+  showPage('loading');
+
+  try {
+    const r = await fetch(
+      `${SCRIPT_URL}?action=login&login=${encodeURIComponent(login)}&senha=${encodeURIComponent(senha)}`
+    );
+    const d = await r.json();
+
+    if (d.success) {
+      renderDashboard(d.aluno, d.avisos);
+    } else {
+      showPage('login');
+      showErr(d.message || 'Login ou senha incorretos.');
+    }
+  } catch(e) {
+    showPage('login');
+    showErr('Erro de conexao. Tente novamente.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Acessar';
+  }
+}
+
+function showErr(msg) {
+  const el = document.getElementById('login-err');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('page-login').classList.contains('active'))
+    doLogin();
+});
+
+// ============================================================
+// DASHBOARD
+// ============================================================
+function renderDashboard(a, avisos) {
+  // Drive
+  const ld = document.getElementById('link-drive');
+  if (a.link_drive) { ld.href = a.link_drive; }
+  else { ld.style.opacity = '0.35'; ld.style.pointerEvents = 'none'; ld.querySelector('svg').nextSibling.textContent = ' Pasta nao configurada'; }
+
+  // Agenda
+  const la = document.getElementById('link-agenda');
+  if (a.link_agenda) { la.href = a.link_agenda; }
+  else { la.style.opacity = '0.35'; la.style.pointerEvents = 'none'; }
+
+  // Programa
+  if (a.curso) document.getElementById('programa-titulo').textContent = a.curso;
+  if (a.descricao_curso) document.getElementById('programa-desc').textContent = a.descricao_curso;
+  else document.getElementById('programa-desc').style.display = 'none';
+
+  // Materiais
+  const matEl = document.getElementById('materiais-content');
+  if (a.materiais && a.materiais.length) {
+    matEl.innerHTML = a.materiais.map(m => `
+      <a class="mat-item" href="${m.link}" target="_blank" rel="noopener">
+        <div class="mat-dot"></div>
+        <span class="mat-nome">${m.nome}</span>
+        <span class="mat-tipo">${m.tipo || ''}</span>
+        <span class="mat-arrow">›</span>
+      </a>`).join('');
+  }
+
+  // Avisos
+  const muralEl = document.getElementById('mural-content');
+  if (!avisos || !avisos.length) {
+    muralEl.innerHTML = '<div class="empty-state">Nenhum aviso no momento.</div>';
+  } else {
+    muralEl.innerHTML = avisos.map(av => `
+      <div class="aviso-item">
+        <div class="aviso-data">${av.data}</div>
+        <div class="aviso-txt">${av.texto}</div>
+      </div>`).join('');
+  }
+
+  showPage('dashboard');
+}
+
+// ============================================================
+// LOGOUT
+// ============================================================
+function doLogout() {
+  document.getElementById('f-login').value = '';
+  document.getElementById('f-senha').value = '';
+  document.getElementById('login-err').style.display = 'none';
+  document.getElementById('mural-content').innerHTML =
+    '<div class="spinner-wrap"><div class="spinner"></div>Carregando avisos...</div>';
+  showPage('login');
+}
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('load', () => showPage('login'));
+</script>
+</body>
+</html>
