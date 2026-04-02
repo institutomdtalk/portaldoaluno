@@ -242,6 +242,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   .contact-item{border-right:none;border-bottom:1px solid var(--border)}
   .contact-item:last-child{border-bottom:none}
   .card--form .card-pad{flex-direction:column}
+  .cal-mural-grid{grid-template-columns:1fr !important}
+  .cal-mural-border{border-left:none !important;padding-left:0 !important;border-top:1px solid var(--border);padding-top:24px !important}
   .form-btn{width:100%;justify-content:center}
 }
 </style>
@@ -318,9 +320,11 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       </div>
     </div>
 
-    <!-- CALENDÁRIO -->
+    <!-- CALENDÁRIO + MURAL lado a lado -->
     <div class="card" style="grid-column:1/-1">
-      <div class="card-pad" style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start">
+      <div class="card-pad" class="cal-mural-grid" style="display:grid;grid-template-columns:1fr 320px;gap:32px;align-items:start">
+
+        <!-- CALENDÁRIO -->
         <div>
           <p class="card-overline">Historico de Presencas</p>
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
@@ -328,21 +332,23 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
             <span id="cal-month-label" style="font-family:var(--serif);font-size:1.05rem;font-weight:500;color:var(--navy);min-width:150px;text-align:center"></span>
             <button id="cal-btn-next" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8250;</button>
           </div>
-          <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:380px"></div>
+          <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px"></div>
+          <div style="background:var(--cream);border-radius:10px;padding:16px 20px;margin-top:20px;display:flex;align-items:center;gap:16px">
+            <div style="text-align:center;min-width:56px">
+              <div style="font-family:var(--serif);font-size:2.4rem;font-weight:600;color:var(--danger);line-height:1" id="cal-faltas-mes">0</div>
+              <p style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">falta<span id="cal-plural">s</span></p>
+            </div>
+            <div style="width:1px;height:40px;background:var(--border)"></div>
+            <p style="font-size:12px;color:var(--text-muted);line-height:1.5"><span id="cal-plural2" style="display:none"></span>Registradas neste mes</p>
+          </div>
         </div>
-        <div style="background:var(--cream);border-radius:10px;padding:20px 24px;min-width:160px;text-align:center;align-self:center">
-          <p style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Neste mes</p>
-          <div style="font-family:var(--serif);font-size:2.8rem;font-weight:600;color:var(--danger);line-height:1" id="cal-faltas-mes">0</div>
-          <p style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.4">falta<span id="cal-plural">s</span><br>registrada<span id="cal-plural2">s</span></p>
-        </div>
-      </div>
-    </div>
 
-    <!-- MURAL -->
-    <div class="card" style="grid-column:1/-1">
-      <div class="card-pad">
-        <p class="card-overline">Mural de Avisos</p>
-        <div id="mural-content"><div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div></div>
+        <!-- MURAL -->
+        <div class="cal-mural-border" style="border-left:1px solid var(--border);padding-left:32px">
+          <p class="card-overline">Mural de Avisos</p>
+          <div id="mural-content"><div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div></div>
+        </div>
+
       </div>
     </div>
 
@@ -363,17 +369,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       </div>
     </div>
 
-    <!-- WELCOME -->
-    <a href="https://institutomdtalk.github.io/welcome/" target="_blank" rel="noopener" class="card card--link">
-      <div class="card-pad">
-        <div class="link-icon link-icon--gold"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-        <p class="card-overline">Onboarding</p>
-        <h3 class="card-title">Welcome to MD Talk</h3>
-        <p class="card-desc">Seu ponto de partida no programa. Tudo o que voce precisa saber para comecar com o pe direito.</p>
-        <span class="card-arrow">Acessar &rarr;</span>
-      </div>
-    </a>
-
     <!-- CAMBRIDGE -->
     <a href="https://dictionary.cambridge.org/pt/dicionario/ingles-portugues/" target="_blank" rel="noopener" class="card card--link">
       <div class="card-pad">
@@ -393,6 +388,22 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <h3 class="card-title">YouGlish</h3>
         <p class="card-desc">Pronuncias reais de termos tecnicos em contextos autenticos de video.</p>
         <span class="card-arrow">Acessar &rarr;</span>
+      </div>
+    </a>
+
+    <!-- WELCOME ONBOARDING (horizontal, mesmo formato dos formulários) -->
+    <a href="https://institutomdtalk.github.io/welcome/" target="_blank" rel="noopener" class="card card--form">
+      <div class="card-pad">
+        <div class="form-icon-wrap">
+          <div class="form-icon-ring"></div>
+          <svg class="form-icon-svg" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="form-content">
+          <p class="card-overline">Onboarding</p>
+          <h3 class="card-title">Welcome to MD Talk</h3>
+          <p class="card-desc">Seu ponto de partida no programa. Tudo o que voce precisa saber para comecar com o pe direito.</p>
+        </div>
+        <span class="form-btn">Acessar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
       </div>
     </a>
 
