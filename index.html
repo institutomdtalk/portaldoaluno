@@ -416,6 +416,21 @@
   .spinner-white { border-color: rgba(255,255,255,0.2); border-top-color: var(--white); }
   @keyframes spin { to{transform:rotate(360deg)} }
 
+  /* ── MODAL FALTA ── */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(6,15,31,0.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 200; align-items: center; justify-content: center; padding: 1.5rem; }
+  .modal-overlay.active { display: flex; }
+  .modal-box { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; max-width: 420px; width: 100%; box-shadow: var(--shadow-lg); animation: fadeIn 0.25s ease both; }
+  .modal-icon { width: 44px; height: 44px; border-radius: 50%; background: #FEF3C7; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+  .modal-icon svg { width: 22px; height: 22px; stroke: #D97706; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .modal-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-bottom: 0.65rem; line-height: 1.25; }
+  .modal-text { font-size: 13.5px; color: var(--text-muted); line-height: 1.72; margin-bottom: 1.5rem; }
+  .modal-text strong { color: var(--text-body); font-weight: 600; }
+  .modal-actions { display: flex; gap: 8px; }
+  .btn-modal-cancel { flex: 1; padding: 11px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); font-family: var(--sans); font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+  .btn-modal-cancel:hover { background: var(--cream); }
+  .btn-modal-confirm { flex: 2; padding: 11px; border-radius: 8px; border: none; background: var(--navy); color: var(--white); font-family: var(--sans); font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+  .btn-modal-confirm:hover { background: var(--navy-light); }
+
   /* ── TOAST ── */
   .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--navy); color: var(--white); padding: 12px 24px; border-radius: 8px; font-size: 13px; font-weight: 500; opacity: 0; pointer-events: none; transition: all 0.35s ease; z-index: 100; white-space: nowrap; box-shadow: var(--shadow-lg); border-left: 3px solid var(--gold); }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -443,6 +458,16 @@
     .form-btn { width: 100%; justify-content: center; }
     .card--training .card-pad { gap: 16px; }
   }
+
+  /* ── CALENDÁRIO ── */
+  .cal-day-label { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); text-align: center; padding: 4px 2px; }
+  .cal-day { aspect-ratio: 1; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; color: var(--text-muted); position: relative; }
+  .cal-day.other-month { opacity: 0.25; }
+  .cal-day.has-presenca { background: var(--success-bg); color: var(--success); font-weight: 700; }
+  .cal-day.has-falta    { background: var(--danger-bg);  color: var(--danger);  font-weight: 700; }
+  .cal-day.today { outline: 2px solid var(--gold); outline-offset: -2px; }
+  .cal-day .cal-mark { position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); font-size: 9px; line-height: 1; }
+
 </style>
 </head>
 <body>
@@ -484,8 +509,9 @@
         <h1 class="brand-title">Seu Portal de <em>Medical English</em></h1>
       </div>
       <div class="header-right">
-        <p class="header-greeting">Bem-vinda,</p>
+        <p class="header-greeting" id="hdr-greeting">Good morning,</p>
         <p class="header-student-name" id="hdr-nome"></p>
+        <p class="header-clock" id="hdr-clock" style="font-family:var(--serif);font-size:1.1rem;font-weight:300;color:rgba(255,255,255,0.5);letter-spacing:1px;margin-bottom:8px;line-height:1;"></p>
         <button class="btn-signout" onclick="doLogout()">Sair</button>
       </div>
     </div>
@@ -493,16 +519,6 @@
   </header>
 
   <main class="dashboard">
-
-    <!-- MURAL -->
-    <div class="card card--mural">
-      <div class="card-pad">
-        <p class="card-overline">Mural de Avisos</p>
-        <div id="mural-content">
-          <div style="color:var(--text-muted);font-size:13px;"><span class="spinner-inline"></span>Carregando...</div>
-        </div>
-      </div>
-    </div>
 
     <!-- CONFIRMAR PRESENÇA -->
     <div class="card card--presenca">
@@ -540,33 +556,48 @@
       </div>
     </div>
 
-    <!-- HISTORICO -->
+    <!-- CALENDÁRIO DE PRESENÇAS + FALTAS DO MÊS -->
     <div class="card" style="grid-column:1/-1;">
+      <div class="card-pad" style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;">
+        <div>
+          <p class="card-overline">Historico de Presencas</p>
+          <div id="cal-nav" style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <button onclick="calPrev()" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;">&#8249;</button>
+            <span id="cal-month-label" style="font-family:var(--serif);font-size:1.05rem;font-weight:500;color:var(--navy);min-width:140px;text-align:center;"></span>
+            <button onclick="calNext()" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;">&#8250;</button>
+          </div>
+          <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:360px;"></div>
+        </div>
+        <div style="background:var(--cream);border-radius:10px;padding:20px 24px;min-width:160px;text-align:center;align-self:center;">
+          <p style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Neste mes</p>
+          <div style="font-family:var(--serif);font-size:2.8rem;font-weight:600;color:var(--danger);line-height:1;" id="cal-faltas-mes">0</div>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.4;">falta<span id="cal-plural">s</span><br>registrada<span id="cal-plural2">s</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MURAL DE AVISOS -->
+    <div class="card card--mural" style="grid-column:1/-1;">
       <div class="card-pad">
-        <p class="card-overline">Historico de Presencas</p>
-        <div id="historico-content">
-          <div class="empty-state">Nenhuma aula registrada ainda.</div>
+        <p class="card-overline">Mural de Avisos</p>
+        <div id="mural-content">
+          <div style="color:var(--text-muted);font-size:13px;"><span class="spinner-inline"></span>Carregando...</div>
         </div>
       </div>
     </div>
 
     <!-- MEU ESPACO -->
-    <div class="card card--espaco">
+    <div class="card card--espaco" style="grid-column:1/-1;">
       <div class="card-pad">
         <p class="card-overline">Meu Espaco</p>
         <h3 class="card-title" id="espaco-titulo">Meu Programa</h3>
         <p class="card-desc" id="espaco-desc" style="margin-bottom:16px;"></p>
-        <div class="espaco-links">
+        <div class="espaco-links" style="grid-template-columns:1fr;">
           <a class="espaco-link" id="link-drive" href="#" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
             Minha Pasta no Drive
           </a>
-          <a class="espaco-link" id="link-agenda" href="#" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            Minha Agenda
-          </a>
         </div>
-        <!-- Materiais -->
         <div id="materiais-section" style="margin-top:18px; display:none;">
           <p style="font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Materiais</p>
           <div id="materiais-content"></div>
@@ -574,16 +605,16 @@
       </div>
     </div>
 
-    <!-- CHECK-IN EXTERNO -->
-    <a href="https://institutomdtalk.github.io/mdtalk-checkin/" target="_blank" rel="noopener" class="card card--link">
+    <!-- WELCOME TO MD TALK -->
+    <a href="https://institutomdtalk.github.io/welcome/" target="_blank" rel="noopener" class="card card--link">
       <div class="card-pad">
-        <div class="link-icon link-icon--navy">
-          <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <div class="link-icon link-icon--gold">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         </div>
-        <p class="card-overline">Check-in de Aula</p>
-        <h3 class="card-title">Confirmar Presenca</h3>
-        <p class="card-desc">Acesse o sistema de check-in para confirmar sua presenca na aula agendada.</p>
-        <span class="card-arrow">Fazer check-in &rarr;</span>
+        <p class="card-overline">Onboarding</p>
+        <h3 class="card-title">Welcome to MD Talk</h3>
+        <p class="card-desc">Seu ponto de partida no programa. Tudo o que voce precisa saber para comecar com o pe direito.</p>
+        <span class="card-arrow">Acessar &rarr;</span>
       </div>
     </a>
 
@@ -613,33 +644,7 @@
       </div>
     </a>
 
-    <!-- PLATAFORMA -->
-    <a href="https://institutomdtalk.curseduca.pro/" target="_blank" rel="noopener" class="card card--link">
-      <div class="card-pad">
-        <div class="link-icon link-icon--gold">
-          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
-        </div>
-        <p class="card-overline">Plataforma</p>
-        <h3 class="card-title">Plataforma MD Talk</h3>
-        <p class="card-desc">Acesso exclusivo para alunos. Materiais, aulas e recursos complementares.</p>
-        <span class="card-arrow">Acessar &rarr;</span>
-      </div>
-    </a>
-
-    <!-- AGENDA -->
-    <a href="https://calendar.app.google/uRqedaYhvLyy2t566" target="_blank" rel="noopener" class="card card--link">
-      <div class="card-pad">
-        <div class="link-icon link-icon--gold">
-          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
-        </div>
-        <p class="card-overline">Agenda</p>
-        <h3 class="card-title">Remanejamento de Aulas</h3>
-        <p class="card-desc">Solicite remanejamento conforme as regras de funcionamento do curso.</p>
-        <span class="card-arrow">Acessar &rarr;</span>
-      </div>
-    </a>
-
-    <!-- FORMULÁRIO -->
+    <!-- FORMULÁRIO — INTERESSES -->
     <a href="https://forms.office.com/r/SfVaqefC18" target="_blank" rel="noopener" class="card card--form">
       <div class="card-pad">
         <div class="form-icon-wrap">
@@ -651,10 +656,23 @@
           <h3 class="card-title">Conte-nos seus interesses</h3>
           <p class="card-desc">Preencha o formulario com os assuntos e temas que mais interessam a voce. Suas aulas serao desenvolvidas e personalizadas a partir dessas informacoes.</p>
         </div>
-        <span class="form-btn">
-          Preencher
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-        </span>
+        <span class="form-btn">Preencher <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <!-- FORMULÁRIO — FEEDBACK -->
+    <a href="COLE_AQUI_O_LINK_DO_FORMULARIO_DE_FEEDBACK" target="_blank" rel="noopener" class="card card--form">
+      <div class="card-pad">
+        <div class="form-icon-wrap">
+          <div class="form-icon-ring"></div>
+          <svg class="form-icon-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
+        <div class="form-content">
+          <p class="card-overline">Sua Opiniao</p>
+          <h3 class="card-title">Como esta sendo sua experiencia conosco?</h3>
+          <p class="card-desc">Sua percepcao e fundamental para continuarmos evoluindo. Compartilhe como esta sendo sua jornada no MD Talk.</p>
+        </div>
+        <span class="form-btn">Preencher <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
       </div>
     </a>
 
@@ -715,13 +733,31 @@
 
 </div>
 
+<!-- MODAL FALTA -->
+<div class="modal-overlay" id="modal-falta">
+  <div class="modal-box">
+    <div class="modal-icon">
+      <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <div class="modal-title">Ciencia sobre cancelamento</div>
+    <div class="modal-text">
+      Ao registrar esta falta, declaro que estou ciente de que o cancelamento de aulas deve ser comunicado com <strong>antecedencia minima de 2 horas</strong> em relacao ao horario de inicio. Solicitacoes realizadas fora deste prazo implicam em aula <strong>contabilizada como realizada</strong>, conforme os termos acordados no inicio do programa.<br><br>
+      Ao confirmar, voce sera redirecionado ao link de reagendamento.
+    </div>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="fecharModalFalta()">Voltar</button>
+      <button class="btn-modal-confirm" onclick="confirmarFalta()">Estou ciente — Registrar falta</button>
+    </div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <!-- ════════════════════════════════════
      SCRIPT
 ════════════════════════════════════ -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ─────────────────────────────────────
 // CONFIGURAÇÃO
 // ─────────────────────────────────────
@@ -733,10 +769,8 @@ let currentStudent = null;
 // PÁGINAS
 // ─────────────────────────────────────
 function showPage(id) {
-  document.querySelectorAll('.page, #page-login, #page-dashboard').forEach(el => {
-    el.classList.remove('active');
-    if (el.style) el.style.display = '';
-  });
+  document.getElementById('page-login').classList.remove('active');
+  document.getElementById('page-dashboard').classList.remove('active');
   const el = document.getElementById('page-' + id);
   if (el) el.classList.add('active');
 }
@@ -832,11 +866,131 @@ function renderDashboard(a, avisos) {
   renderHistorico(a.historico);
 
   // Mostrar dashboard
-  document.getElementById('page-login').classList.remove('active');
-  document.getElementById('page-dashboard').classList.add('active');
+  showPage('dashboard');
+  startClock();
 
   // Animar cards
   setTimeout(() => animateCards(), 50);
+}
+
+// ─────────────────────────────────────
+// RELÓGIO E SAUDAÇÃO EM TEMPO REAL
+// ─────────────────────────────────────
+let clockInterval = null;
+
+function startClock() {
+  updateClock();
+  clockInterval = setInterval(updateClock, 1000);
+}
+
+function stopClock() {
+  if (clockInterval) { clearInterval(clockInterval); clockInterval = null; }
+}
+
+function updateClock() {
+  const now = new Date();
+  const h   = now.getHours();
+  const m   = String(now.getMinutes()).padStart(2, '0');
+  const s   = String(now.getSeconds()).padStart(2, '0');
+
+  let greeting = 'Good evening,';
+  if (h >= 5  && h < 12) greeting = 'Good morning,';
+  else if (h >= 12 && h < 18) greeting = 'Good afternoon,';
+
+  const grEl = document.getElementById('hdr-greeting');
+  const clEl = document.getElementById('hdr-clock');
+  if (grEl) grEl.textContent = greeting;
+  if (clEl) clEl.textContent = `${String(h).padStart(2,'0')}:${m}:${s}`;
+}
+
+// ─────────────────────────────────────
+// CALENDÁRIO DE PRESENÇAS
+// ─────────────────────────────────────
+let calYear, calMonth, calData = [];
+
+const MONTHS_PT = ['Janeiro','Fevereiro','Marco','Abril','Maio','Junho',
+                   'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const DAYS_EN   = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+function initCalendar(historico) {
+  calData = historico || [];
+  const now = new Date();
+  calYear  = now.getFullYear();
+  calMonth = now.getMonth();
+  renderCalendar();
+}
+
+function calPrev() { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar(); }
+function calNext() { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCalendar(); }
+
+function parseCalDate(str) {
+  // Supports "02 de abril de 2026" (pt-BR long) and dd/mm/yyyy
+  if (!str) return null;
+  const months = {'janeiro':0,'fevereiro':1,'marco':2,'abril':3,'maio':4,'junho':5,
+                  'julho':6,'agosto':7,'setembro':8,'outubro':9,'novembro':10,'dezembro':11};
+  const m1 = str.match(/^(\d{1,2})\s+de\s+(\w+)\s+de\s+(\d{4})/i);
+  if (m1) {
+    const mo = months[m1[2].toLowerCase()];
+    if (mo !== undefined) return new Date(parseInt(m1[3]), mo, parseInt(m1[1]));
+  }
+  const m2 = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (m2) return new Date(parseInt(m2[3]), parseInt(m2[2])-1, parseInt(m2[1]));
+  return null;
+}
+
+function renderCalendar() {
+  const label = document.getElementById('cal-month-label');
+  const grid  = document.getElementById('cal-grid');
+  const faltasMes = document.getElementById('cal-faltas-mes');
+  if (!label || !grid) return;
+
+  label.textContent = `${MONTHS_PT[calMonth]} ${calYear}`;
+
+  // Build lookup: "YYYY-M-D" -> status
+  const lookup = {};
+  calData.forEach(h => {
+    const d = parseCalDate(h.data_aula);
+    if (d) {
+      const key = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+      lookup[key] = h.status;
+    }
+  });
+
+  // Count faltas this displayed month
+  let faltasCount = 0;
+  calData.forEach(h => {
+    const d = parseCalDate(h.data_aula);
+    if (d && d.getFullYear() === calYear && d.getMonth() === calMonth && h.status === 'falta')
+      faltasCount++;
+  });
+  faltasMes.textContent = faltasCount;
+  document.getElementById('cal-plural').textContent  = faltasCount === 1 ? '' : 's';
+  document.getElementById('cal-plural2').textContent = faltasCount === 1 ? '' : 's';
+
+  const today  = new Date();
+  const first  = new Date(calYear, calMonth, 1);
+  const last   = new Date(calYear, calMonth + 1, 0);
+  const startDow = first.getDay(); // 0=Sun
+
+  let html = DAYS_EN.map(d => `<div class="cal-day-label">${d}</div>`).join('');
+
+  // Empty cells before first day
+  for (let i = 0; i < startDow; i++)
+    html += '<div class="cal-day other-month"></div>';
+
+  for (let day = 1; day <= last.getDate(); day++) {
+    const key    = `${calYear}-${calMonth}-${day}`;
+    const status = lookup[key];
+    const isToday = (today.getFullYear()===calYear && today.getMonth()===calMonth && today.getDate()===day);
+    let cls = 'cal-day';
+    let mark = '';
+    if (status === 'presente') { cls += ' has-presenca'; mark = '✓'; }
+    else if (status === 'falta') { cls += ' has-falta';    mark = '✕'; }
+    if (isToday) cls += ' today';
+    html += `<div class="${cls}">${day}${mark ? `<span class="cal-mark">${mark}</span>` : ''}</div>`;
+  }
+
+  grid.innerHTML = html;
 }
 
 // ─────────────────────────────────────
@@ -844,10 +998,10 @@ function renderDashboard(a, avisos) {
 // ─────────────────────────────────────
 function renderHistorico(historico) {
   if (!historico || !historico.length) {
-    document.getElementById('historico-content').innerHTML = '<div class="empty-state">Nenhuma aula registrada ainda.</div>';
     document.getElementById('stat-presencas').textContent = '0';
     document.getElementById('stat-faltas').textContent = '0';
     document.getElementById('stat-freq').textContent = '—';
+    initCalendar([]);
     return;
   }
 
@@ -860,20 +1014,7 @@ function renderHistorico(historico) {
   document.getElementById('stat-faltas').textContent    = faltas;
   document.getElementById('stat-freq').textContent      = freq;
 
-  document.getElementById('historico-content').innerHTML = historico.slice(0, 10).map(h => {
-    const isP = h.status === 'presente';
-    const icon = isP
-      ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
-      : '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-    return `
-      <div class="historico-item">
-        <div>
-          <div class="historico-data">${h.data_aula || '—'}</div>
-          <div class="historico-reg">${h.registrado_em || ''}</div>
-        </div>
-        <div class="badge ${isP ? 'badge-green' : 'badge-red'}">${icon} ${h.status}</div>
-      </div>`;
-  }).join('');
+  initCalendar(historico);
 }
 
 // ─────────────────────────────────────
@@ -882,6 +1023,33 @@ function renderHistorico(historico) {
 async function registrarPresenca(status) {
   if (!currentStudent) return;
 
+  // ── Falta: exibir modal de ciência antes de prosseguir ──
+  if (status === 'falta') {
+    showModalFalta();
+    return;
+  }
+
+  await _gravarRegistro('presente');
+}
+
+function showModalFalta() {
+  document.getElementById('modal-falta').classList.add('active');
+}
+
+function fecharModalFalta() {
+  document.getElementById('modal-falta').classList.remove('active');
+}
+
+async function confirmarFalta() {
+  fecharModalFalta();
+  await _gravarRegistro('falta');
+  // Redirecionar para reagendamento após fechar modal
+  setTimeout(() => {
+    window.open('https://calendar.app.google/RAURJTpXNw35Lzht5', '_blank');
+  }, 600);
+}
+
+async function _gravarRegistro(status) {
   const btnP = document.getElementById('btn-presente');
   const btnF = document.getElementById('btn-falta');
   btnP.disabled = true;
@@ -911,11 +1079,19 @@ async function registrarPresenca(status) {
       currentStudent.historico = historico;
       renderHistorico(historico);
 
-      // Desabilitar botões de hoje
-      btnP.innerHTML = 'Confirmado hoje';
-      btnF.innerHTML = 'Registrar Falta';
+      // Desabilitar botões
+      btnP.innerHTML = status === 'presente' ? 'Presenca confirmada' : 'Confirmar Presenca';
+      btnF.innerHTML = status === 'falta'    ? 'Falta registrada'    : 'Registrar Falta';
       btnP.disabled = true;
       btnF.disabled = true;
+
+      // ── Presença: abrir WhatsApp ──
+      if (status === 'presente') {
+        const waMsg = encodeURIComponent('Confirmo minha presença na aula de hoje.');
+        setTimeout(() => {
+          window.open('https://wa.me/5514997758941?text=' + waMsg, '_blank');
+        }, 600);
+      }
     } else {
       showToast('Erro ao registrar. Tente novamente.', 'error');
       btnP.disabled = false;
@@ -940,14 +1116,14 @@ function resetBtnPresenca() {
 // ─────────────────────────────────────
 function doLogout() {
   currentStudent = null;
+  stopClock();
   document.getElementById('f-login').value = '';
   document.getElementById('f-senha').value = '';
   document.getElementById('login-err').style.display = 'none';
   document.getElementById('mural-content').innerHTML = '<div style="color:var(--text-muted);font-size:13px;"><span class="spinner-inline"></span>Carregando...</div>';
   document.getElementById('historico-content').innerHTML = '<div class="empty-state">Nenhuma aula registrada ainda.</div>';
   document.getElementById('materiais-section').style.display = 'none';
-  document.getElementById('page-dashboard').classList.remove('active');
-  document.getElementById('page-login').classList.add('active');
+  showPage('login');
 }
 
 // ─────────────────────────────────────
@@ -983,7 +1159,7 @@ function animateCards() {
 
 // Init
 window.addEventListener('load', () => {
-  document.getElementById('page-login').classList.add('active');
+  showPage('login');
 });
 </script>
 </body>
