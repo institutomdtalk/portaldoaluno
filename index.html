@@ -4,37 +4,43 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portal do Aluno — Instituto MD Talk</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy:       #0B1D3A;
-  --navy-deep:  #060F1F;
-  --navy-mid:   #0F2645;
-  --navy-light: #163158;
-  --gold:       #C4A45A;
-  --gold-light: #D4BA7A;
-  --gold-glow:  rgba(196,164,90,0.12);
-  --white:      #FFFFFF;
-  --off-white:  #F7F5F0;
-  --cream:      #FAF8F4;
-  --warm-gray:  #9A9590;
-  --text-body:  #3A3632;
-  --text-muted: #6B6560;
-  --border:     rgba(11,29,58,0.07);
-  --success:    #2D6A4F;
-  --success-bg: #D8F3DC;
-  --danger:     #A32D2D;
-  --danger-bg:  #FCEBEB;
-  --serif: 'Cormorant Garamond', Georgia, serif;
-  --sans:  'DM Sans', Arial, sans-serif;
-  --radius: 6px;
-  --shadow-sm: 0 1px 3px rgba(11,29,58,0.04), 0 1px 2px rgba(11,29,58,0.06);
-  --shadow-md: 0 4px 16px rgba(11,29,58,0.06), 0 1px 3px rgba(11,29,58,0.04);
-  --shadow-lg: 0 12px 40px rgba(11,29,58,0.1), 0 4px 12px rgba(11,29,58,0.05);
+  --navy:        #0B1D3A;
+  --navy-deep:   #050D1A;
+  --navy-mid:    #0F2645;
+  --navy-light:  #163158;
+  --navy-surface:#0A1929;
+  --gold:        #C4A45A;
+  --gold-light:  #D4BA7A;
+  --gold-pale:   #E8D9B0;
+  --gold-glow:   rgba(196,164,90,0.12);
+  --gold-faint:  rgba(196,164,90,0.05);
+  --gold-line:   rgba(196,164,90,0.18);
+  --white:       #FFFFFF;
+  --off-white:   #F6F4EF;
+  --cream:       #FAF8F3;
+  --warm-gray:   #9A9590;
+  --text-body:   #3A3632;
+  --text-muted:  #6B6560;
+  --border:      rgba(11,29,58,0.06);
+  --border-gold: rgba(196,164,90,0.22);
+  --success:     #2D6A4F;
+  --success-bg:  #D8F3DC;
+  --danger:      #A32D2D;
+  --danger-bg:   #FCEBEB;
+  --serif:  'Cormorant Garamond', Georgia, serif;
+  --sans:   'Raleway', 'Helvetica Neue', Arial, sans-serif;
+  --radius:     4px;
+  --shadow-sm:  0 1px 4px rgba(11,29,58,0.04);
+  --shadow-md:  0 6px 24px rgba(11,29,58,0.07);
+  --shadow-lg:  0 16px 48px rgba(11,29,58,0.10);
+  --shadow-gold:0 8px 32px rgba(196,164,90,0.12);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;font-size:17px}
-body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);line-height:1.7;-webkit-font-smoothing:antialiased;font-size:1rem}
+body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased}
 
 /* PAGES */
 #page-login{min-height:100vh;display:none;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1rem;background:var(--off-white)}
@@ -55,7 +61,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .field-input{width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--sans);background:var(--cream);color:#1a1a1a;outline:none;transition:border-color .15s,background .15s}
 .field-input:focus{border-color:var(--navy);background:var(--white)}
 .field-input::placeholder{color:#bbb}
-.btn-login-submit{width:100%;padding:13px;border-radius:8px;border:none;background:var(--navy);color:var(--white);font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.5px;cursor:pointer;transition:background .2s,transform .15s;margin-top:4px}
+.btn-login-submit{width:100%;padding:14px;border-radius:3px;border:none;background:var(--navy);color:var(--white);font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.4s cubic-bezier(0.22,1,0.36,1);margin-top:4px}
 .btn-login-submit:hover{background:var(--navy-light);transform:translateY(-1px)}
 .btn-login-submit:disabled{opacity:.4;cursor:not-allowed;transform:none}
 .login-error{display:none;margin-top:10px;padding:9px 12px;border-radius:8px;background:var(--danger-bg);color:var(--danger);font-size:12px;border-left:2px solid #f09595;line-height:1.5}
@@ -65,7 +71,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .header{background:var(--navy-deep);position:relative;overflow:hidden}
 .header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 30%,rgba(196,164,90,.07) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 85% 70%,rgba(196,164,90,.05) 0%,transparent 60%);pointer-events:none}
 .header-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:36px 32px 44px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px}
-.brand-label{font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.brand-label{font-size:10px;font-weight:600;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
 .brand-title{font-family:var(--serif);font-size:clamp(1.8rem,3.8vw,2.6rem);font-weight:300;color:var(--white);line-height:1.2}
 .brand-title em{font-weight:400;font-style:italic;color:var(--gold-light)}
 .header-right{text-align:right}
@@ -80,9 +86,11 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .dashboard{max-width:1100px;margin:0 auto;padding:24px 32px 50px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
 
 /* BASE CARD */
-.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);transition:box-shadow .35s ease,transform .35s ease,border-color .35s ease;opacity:0;transform:translateY(16px)}
-.card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:rgba(196,164,90,.2)}
-.card-pad{padding:20px 20px}
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);transition:all 0.4s cubic-bezier(0.22,1,0.36,1);opacity:0;transform:translateY(16px);position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 10%,var(--gold) 50%,transparent 90%);transform:scaleX(0);transition:transform 0.5s cubic-bezier(0.22,1,0.36,1)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:var(--border-gold)}
+.card-pad{padding:28px 26px}
 .card-overline{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
 .card-title{font-family:var(--serif);font-size:1.35rem;font-weight:500;color:var(--navy);line-height:1.25;margin-bottom:8px}
 .card-desc{font-size:1rem;color:var(--text-muted);line-height:1.7}
@@ -104,8 +112,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .stat-pill-num.green{color:#4ADE80}
 .stat-pill-num.red{color:#F87171}
 .stat-pill-lbl{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.4);margin-top:3px}
-.btn-confirmar{display:flex;align-items:center;gap:8px;background:var(--gold);color:var(--navy-deep);font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:13px 22px;border-radius:6px;border:none;cursor:pointer;transition:all .25s ease;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.btn-confirmar:hover:not(:disabled){background:var(--gold-light);transform:translateY(-2px);box-shadow:0 6px 20px rgba(196,164,90,.35)}
+.btn-confirmar{display:flex;align-items:center;gap:10px;background:var(--gold);color:var(--navy-deep);font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:14px 26px;border-radius:3px;border:none;cursor:pointer;transition:all 0.4s cubic-bezier(0.22,1,0.36,1);white-space:nowrap}
+.btn-confirmar:hover:not(:disabled){background:var(--gold-light);box-shadow:0 6px 24px rgba(196,164,90,0.35)}
 .btn-confirmar:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
 .btn-confirmar svg{width:15px;height:15px}
 
@@ -127,8 +135,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .empty-state{font-size:13px;color:var(--text-muted);font-style:italic}
 
 /* ESPACO LINKS */
-.espaco-link{display:flex;align-items:center;gap:10px;padding:14px 18px;border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--navy);font-size:1rem;font-weight:500;background:var(--cream);transition:all .2s;margin-bottom:8px}
-.espaco-link:hover{background:var(--white);border-color:rgba(196,164,90,.4);transform:translateY(-1px)}
+.espaco-link{display:flex;align-items:center;gap:12px;padding:18px 20px;border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;color:var(--navy);font-size:13px;font-weight:600;background:var(--white);box-shadow:var(--shadow-sm);transition:all 0.4s cubic-bezier(0.22,1,0.36,1);margin-bottom:10px}
+.espaco-link:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:var(--border-gold)}
 .espaco-link svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 .espaco-link.disabled{opacity:.35;pointer-events:none}
 
@@ -149,8 +157,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .link-icon--navy svg{stroke:var(--gold-light);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .link-icon--gold{background:var(--gold-glow);border:1px solid rgba(196,164,90,.2)}
 .link-icon--gold svg{stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.card-arrow{margin-top:auto;padding-top:14px;font-size:14px;font-weight:600;color:var(--gold);display:flex;align-items:center;gap:6px;letter-spacing:.5px;transition:gap .3s}
-.card--link:hover .card-arrow{gap:10px}
+.card-arrow{margin-top:auto;padding-top:14px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:6px;border-bottom:1px solid transparent;transition:all 0.3s ease;width:fit-content}
+.card--link:hover .card-arrow{color:var(--navy);border-bottom-color:var(--gold);gap:10px}
 
 /* FORM CARD */
 .card--form{grid-column:1/-1;display:block;text-decoration:none;color:inherit;cursor:pointer;background:var(--cream);border:1px dashed rgba(196,164,90,.35)}
@@ -162,8 +170,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .form-icon-svg{width:24px;height:24px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s}
 .card--form:hover .form-icon-svg{transform:rotate(-8deg) scale(1.1)}
 .form-content{flex:1}
-.form-btn{flex-shrink:0;display:flex;align-items:center;gap:8px;background:transparent;color:var(--gold);font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:11px 22px;border-radius:4px;border:1px solid var(--gold);transition:all .3s}
-.card--form:hover .form-btn{background:var(--gold);color:var(--navy-deep)}
+.form-btn{flex-shrink:0;display:flex;align-items:center;gap:10px;background:var(--gold);color:var(--navy-deep);font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:16px 28px;border-radius:3px;border:none;transition:all 0.4s cubic-bezier(0.22,1,0.36,1)}
+.card--form:hover .form-btn{background:var(--gold-light);box-shadow:0 6px 24px rgba(196,164,90,.35)}
 
 /* TRAINING */
 .card--training{grid-column:1/-1;display:block;text-decoration:none;color:inherit;cursor:pointer;position:relative;overflow:hidden}
@@ -180,24 +188,24 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .card--training:hover::before{opacity:1}
 
 /* CONTACT STRIP */
-.contact-strip{grid-column:1/-1;background:var(--navy-deep);border-radius:var(--radius);padding:32px 40px;display:flex;flex-direction:column;gap:0;opacity:0;transform:translateY(16px)}
-.contact-item{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid rgba(196,164,90,0.12);text-decoration:none;transition:opacity .2s}
-.contact-item:last-child{border-bottom:none}
-.contact-item:hover{opacity:.75}
-.contact-item-label{font-size:12px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--white)}
+.contact-strip{grid-column:1/-1;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden;opacity:0;transform:translateY(16px);display:grid;grid-template-columns:repeat(3,1fr)}
+.contact-item{display:flex;align-items:center;gap:16px;padding:22px 24px;text-decoration:none;color:inherit;border-right:1px solid var(--border);transition:all 0.4s cubic-bezier(0.22,1,0.36,1)}
+.contact-item:last-child{border-right:none}
+.contact-item:hover{background:var(--gold-faint);transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--border-gold)}
+.contact-item-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--warm-gray);margin-bottom:2px}
 .contact-item-arrow{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.35);font-size:12px;letter-spacing:2px;text-transform:uppercase;transition:gap .25s}
-.contact-item:hover .contact-item-arrow{gap:16px;color:var(--gold)}
+.contact-icon-wrap{width:44px;height:44px;border-radius:50%;background:var(--off-white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}.contact-icon-wrap svg{width:20px;height:20px;fill:none;stroke:var(--navy);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .contact-item-arrow svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* FOOTER */
 .footer{background:var(--navy-deep);text-align:center;padding:32px 24px;position:relative}
 .footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.35}
-.footer-brand{font-family:var(--serif);font-size:1rem;color:var(--gold);margin-bottom:6px;letter-spacing:.5px}
+.footer-brand{font-family:var(--serif);font-size:1.15rem;color:var(--gold);margin-bottom:8px;letter-spacing:1px}
 .footer-copy{font-size:11px;color:rgba(255,255,255,.3)}
 
 /* MEET + PRÓXIMA AULA */
-.btn-meet{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;border-radius:8px;border:none;background:#1a73e8;color:var(--white);font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s;margin-bottom:14px}
-.btn-meet:hover{background:#1557b0;transform:translateY(-1px)}
+.btn-meet{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px 20px;border-radius:3px;border:none;background:#1a73e8;color:var(--white);font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:all 0.4s cubic-bezier(0.22,1,0.36,1);margin-bottom:14px}
+.btn-meet:hover{background:#1557b0;box-shadow:0 6px 20px rgba(26,115,232,0.3)}
 .btn-meet svg{width:16px;height:16px;stroke:var(--white);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 .proxima-aula-box{padding:0;margin-bottom:12px}
 
@@ -226,9 +234,9 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .modal-text{font-size:1rem;color:var(--text-muted);line-height:1.75;margin-bottom:1.5rem}
 .modal-text strong{color:var(--text-body);font-weight:600}
 .modal-actions{display:flex;gap:8px}
-.btn-modal-cancel{flex:1;padding:11px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-muted);font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:background .2s}
+.btn-modal-cancel{flex:1;padding:13px;border-radius:3px;border:1px solid var(--border);background:transparent;color:var(--text-muted);font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.3s ease}
 .btn-modal-cancel:hover{background:var(--cream)}
-.btn-modal-confirm{flex:2;padding:11px;border-radius:8px;border:none;background:var(--navy);color:var(--white);font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;transition:background .2s}
+.btn-modal-confirm{flex:2;padding:13px;border-radius:3px;border:none;background:var(--navy);color:var(--white);font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.4s cubic-bezier(0.22,1,0.36,1)}
 .btn-modal-confirm:hover{background:var(--navy-light)}
 
 @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
@@ -242,7 +250,9 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   .stat-row-inline{width:100%}
   .stat-pill{flex:1}
   .btn-confirmar{width:100%;justify-content:center}
-  .contact-strip{padding:24px 20px}
+  .contact-strip{grid-template-columns:1fr}
+  .contact-item{border-right:none;border-bottom:1px solid var(--border)}
+  .contact-item:last-child{border-bottom:none}
   .card--form .card-pad{flex-direction:column}
   .cal-mural-grid{grid-template-columns:1fr !important}
   .cal-mural-border{border-left:none !important;padding-left:0 !important;border-top:1px solid var(--border);padding-top:24px !important}
@@ -471,16 +481,31 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     <!-- CONTATO -->
     <div class="contact-strip">
       <a href="https://instagram.com/inglesmedico.thaifaria" target="_blank" rel="noopener" class="contact-item">
-        <span class="contact-item-label">Instagram</span>
-        <span class="contact-item-arrow">@inglesmedico.thaifaria <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
+        <div class="contact-icon-wrap">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><path d="M17.5 6.5h.01"/></svg>
+        </div>
+        <div>
+          <p class="contact-item-label">Instagram</p>
+          <p class="contact-item-value">@inglesmedico.thaifaria</p>
+        </div>
       </a>
       <a href="#" id="link-email" class="contact-item">
-        <span class="contact-item-label">Entrar em Contato</span>
-        <span class="contact-item-arrow">mdtalk.office&#64;gmail.com <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
+        <div class="contact-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <p class="contact-item-label">E-mail</p>
+          <p class="contact-item-value">mdtalk.office&#64;gmail.com</p>
+        </div>
       </a>
       <a href="https://wa.me/5514997758941" target="_blank" rel="noopener" class="contact-item">
-        <span class="contact-item-label">WhatsApp</span>
-        <span class="contact-item-arrow">Enviar mensagem <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
+        <div class="contact-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        </div>
+        <div>
+          <p class="contact-item-label">WhatsApp</p>
+          <p class="contact-item-value">Enviar mensagem</p>
+        </div>
       </a>
     </div>
 
@@ -488,6 +513,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
   <footer class="footer">
     <p class="footer-brand">Instituto MD Talk</p>
+    <p style="font-family:var(--serif);font-style:italic;font-size:14px;color:rgba(255,255,255,0.25);margin-bottom:16px">Precisão linguística para a excelência médica.</p>
     <p class="footer-copy">&copy; 2026 Instituto MD Talk &mdash; Todos os direitos reservados.</p>
   </footer>
 </div>
