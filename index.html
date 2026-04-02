@@ -1421,9 +1421,15 @@ function animateCounter(el, target) {
 // ── VERIFICAR HOJE ──
 function verificarRegistroHoje(historico) {
   if(!historico||!historico.length) return;
-  var hoje=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
+  var now=new Date();
+  var diaHoje=now.getDate();
+  var mesHoje=now.getMonth();
+  var anoHoje=now.getFullYear();
   for(var i=0;i<historico.length;i++){
-    if(historico[i].data_aula===hoje){ bloqueiarBotoesHoje(historico[i].status); return; }
+    var d=parseCalDate(historico[i].data_aula);
+    if(d && d.getDate()===diaHoje && d.getMonth()===mesHoje && d.getFullYear()===anoHoje){
+      bloqueiarBotoesHoje(historico[i].status); return;
+    }
   }
 }
 
