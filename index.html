@@ -657,6 +657,7 @@ function renderDashboard(a, avisos) {
   }
 
   renderHistorico(a.historico);
+  verificarRegistroHoje(a.historico);
   showPage('dashboard');
   startClock();
   setTimeout(animateCards, 50);
@@ -785,6 +786,39 @@ function confirmarFalta() {
   fecharModalFalta();
   _gravarRegistro('falta');
   setTimeout(function(){ window.open('https://calendar.app.google/RAURJTpXNw35Lzht5','_blank'); }, 600);
+}
+
+// ── VERIFICA SE JÁ REGISTROU HOJE ──
+function verificarRegistroHoje(historico) {
+  if (!historico || !historico.length) return;
+  var hoje = new Date().toLocaleDateString('pt-BR', {day:'2-digit',month:'long',year:'numeric'});
+  var registroHoje = null;
+  for (var i = 0; i < historico.length; i++) {
+    if (historico[i].data_aula === hoje) { registroHoje = historico[i]; break; }
+  }
+  if (registroHoje) {
+    bloqueiarBotoesHoje(registroHoje.status);
+  }
+}
+
+function bloqueiarBotoesHoje(status) {
+  var btnP = document.getElementById('btn-presente');
+  var btnF = document.getElementById('btn-falta');
+  if (!btnP || !btnF) return;
+  btnP.disabled = true;
+  btnF.disabled = true;
+  if (status === 'presente') {
+    btnP.textContent = 'Presença confirmada hoje';
+    btnP.style.background = '#2D6A4F';
+    btnP.style.opacity = '1';
+    btnF.textContent = 'Registrar Falta';
+    btnF.style.opacity = '0.3';
+  } else {
+    btnF.textContent = 'Falta registrada hoje';
+    btnF.style.opacity = '1';
+    btnP.textContent = 'Confirmar Presença';
+    btnP.style.opacity = '0.3';
+  }
 }
 
 function _gravarRegistro(status) {
