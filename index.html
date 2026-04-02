@@ -265,7 +265,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       <label class="field-label" for="f-senha">Senha</label>
       <input class="field-input" type="password" id="f-senha" placeholder="sua senha" autocomplete="current-password">
     </div>
-    <button class="btn-login-submit" id="btn-entrar" onclick="doLogin()">Acessar</button>
+    <button class="btn-login-submit" id="btn-entrar">Acessar</button>
     <div class="login-error" id="login-err"></div>
   </div>
   <div class="login-footer-note">Acesso restrito a alunos</div>
@@ -283,7 +283,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <p class="header-greeting" id="hdr-greeting">Good morning,</p>
         <p class="header-student-name" id="hdr-nome"></p>
         <p class="header-clock" id="hdr-clock"></p>
-        <button class="btn-signout" onclick="doLogout()">Sair</button>
+        <button class="btn-signout" id="btn-signout">Sair</button>
       </div>
     </div>
     <div class="header-gold-line"></div>
@@ -306,11 +306,11 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
             <div class="stat-pill"><div class="stat-pill-num"       id="stat-freq">—</div><div class="stat-pill-lbl">Freq.</div></div>
           </div>
           <div style="display:flex;gap:8px">
-            <button class="btn-confirmar" id="btn-presente" onclick="registrarPresenca('presente')">
+            <button class="btn-confirmar" id="btn-presente">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               Confirmar Presenca
             </button>
-            <button class="btn-confirmar" id="btn-falta" onclick="registrarPresenca('falta')" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.15)">
+            <button class="btn-confirmar" id="btn-falta" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.15)">
               Registrar Falta
             </button>
           </div>
@@ -324,9 +324,9 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <div>
           <p class="card-overline">Historico de Presencas</p>
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-            <button onclick="calPrev()" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8249;</button>
+            <button id="cal-btn-prev" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8249;</button>
             <span id="cal-month-label" style="font-family:var(--serif);font-size:1.05rem;font-weight:500;color:var(--navy);min-width:150px;text-align:center"></span>
-            <button onclick="calNext()" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8250;</button>
+            <button id="cal-btn-next" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8250;</button>
           </div>
           <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:380px"></div>
         </div>
@@ -441,7 +441,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <div class="contact-icon contact-icon--ig"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><path d="M17.5 6.5h.01"/></svg></div>
         <div><p class="contact-text-label">Instagram</p><p class="contact-text-value">@inglesmedico.thaifaria</p></div>
       </a>
-      <a href="#" onclick="this.href='mai'+'lto:mdtalk.o'+'ffice@gmail.com'" class="contact-item">
+      <a href="#" id="link-email" class="contact-item">
         <div class="contact-icon contact-icon--email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
         <div><p class="contact-text-label">E-mail</p><p class="contact-text-value">mdtalk.office&#64;gmail.com</p></div>
       </a>
@@ -469,8 +469,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       Ao confirmar, voce sera redirecionado ao link de reagendamento.
     </div>
     <div class="modal-actions">
-      <button class="btn-modal-cancel" onclick="fecharModalFalta()">Voltar</button>
-      <button class="btn-modal-confirm" onclick="confirmarFalta()">Estou ciente — Registrar falta</button>
+      <button class="btn-modal-cancel" id="btn-modal-cancel">Voltar</button>
+      <button class="btn-modal-confirm" id="btn-modal-confirm">Estou ciente — Registrar falta</button>
     </div>
   </div>
 </div>
@@ -823,6 +823,39 @@ function animateCards() {
 
 // ── INIT ──
 window.addEventListener('load', function(){ showPage('login'); });
+
+// ── EVENT LISTENERS (evita problemas com onclick e Cloudflare) ──
+document.addEventListener('DOMContentLoaded', function() {
+  var btnEntrar = document.getElementById('btn-entrar');
+  if (btnEntrar) btnEntrar.addEventListener('click', doLogin);
+
+  var btnSignout = document.getElementById('btn-signout');
+  if (btnSignout) btnSignout.addEventListener('click', doLogout);
+
+  var btnPresente = document.getElementById('btn-presente');
+  if (btnPresente) btnPresente.addEventListener('click', function(){ registrarPresenca('presente'); });
+
+  var btnFalta = document.getElementById('btn-falta');
+  if (btnFalta) btnFalta.addEventListener('click', function(){ registrarPresenca('falta'); });
+
+  var btnPrev = document.getElementById('cal-btn-prev');
+  if (btnPrev) btnPrev.addEventListener('click', calPrev);
+
+  var btnNext = document.getElementById('cal-btn-next');
+  if (btnNext) btnNext.addEventListener('click', calNext);
+
+  var btnModalCancel = document.getElementById('btn-modal-cancel');
+  if (btnModalCancel) btnModalCancel.addEventListener('click', fecharModalFalta);
+
+  var btnModalConfirm = document.getElementById('btn-modal-confirm');
+  if (btnModalConfirm) btnModalConfirm.addEventListener('click', confirmarFalta);
+
+  var linkEmail = document.getElementById('link-email');
+  if (linkEmail) linkEmail.addEventListener('click', function(){ 
+    this.href = 'mai'+'lto:mdtalk.of'+'fice@gmail.com'; 
+  });
+});
+
 </script>
 </body>
 </html>
