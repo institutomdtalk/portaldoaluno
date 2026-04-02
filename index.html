@@ -258,6 +258,77 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   .cal-mural-border{border-left:none !important;padding-left:0 !important;border-top:1px solid var(--border);padding-top:24px !important}
   .form-btn{width:100%;justify-content:center}
 }
+
+  /* ═══ GEOMETRIC HEADER DECORATIONS ═══ */
+  .header-geo{position:absolute;pointer-events:none;z-index:0}
+  .header-geo--ring{width:320px;height:320px;border:1px solid rgba(196,164,90,0.06);border-radius:50%;top:-100px;right:-60px;animation:geoFloat 20s ease-in-out infinite}
+  .header-geo--ring2{width:200px;height:200px;border:1px solid rgba(196,164,90,0.04);border-radius:50%;bottom:-40px;left:-40px;animation:geoFloat 24s ease-in-out infinite reverse}
+  .header-geo--line{width:1px;height:120px;background:linear-gradient(180deg,transparent,rgba(196,164,90,0.15),transparent);top:10%;left:8%;animation:geoFloat 16s ease-in-out infinite}
+  .header-geo--diamond{width:14px;height:14px;border:1px solid rgba(196,164,90,0.18);transform:rotate(45deg);top:30%;right:15%;animation:geoPulse 6s ease-in-out infinite}
+  .header-geo--diamond2{width:8px;height:8px;border:1px solid rgba(196,164,90,0.12);transform:rotate(45deg);bottom:25%;left:12%;animation:geoPulse 8s ease-in-out infinite 2s}
+
+  @keyframes geoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+  @keyframes geoPulse{0%,100%{opacity:0.4;transform:rotate(45deg) scale(1)}50%{opacity:1;transform:rotate(45deg) scale(1.4)}}
+
+  /* ═══ SCROLL REVEAL ═══ */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.8s cubic-bezier(0.22,1,0.36,1),transform 0.8s cubic-bezier(0.22,1,0.36,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* ═══ PULSE DOT ENHANCED ═══ */
+  .pulse-dot{width:8px;height:8px;background:#4ADE80;border-radius:50%;display:inline-block;flex-shrink:0;position:relative}
+  .pulse-dot::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(74,222,128,0.4);animation:pulsering 2s ease-out infinite}
+  @keyframes pulsering{0%{transform:scale(0.8);opacity:1}100%{transform:scale(2);opacity:0}}
+
+  /* ═══ SHIMMER ON GOLD ELEMENTS ═══ */
+  .card-overline{position:relative;display:inline-block}
+
+  /* ═══ CARD ENTRANCE STAGGER ═══ */
+  .card:nth-child(1){transition-delay:0.05s}
+  .card:nth-child(2){transition-delay:0.10s}
+  .card:nth-child(3){transition-delay:0.15s}
+  .card:nth-child(4){transition-delay:0.20s}
+  .card:nth-child(5){transition-delay:0.25s}
+  .card:nth-child(6){transition-delay:0.30s}
+
+  /* ═══ MEET BUTTON PULSE ═══ */
+  .btn-meet{position:relative;overflow:hidden}
+  .btn-meet::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.15) 50%,transparent 100%);transform:translateX(-100%);animation:shimmer 3s ease-in-out infinite}
+  @keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+  /* ═══ CONFIRMAR BUTTON GLOW ═══ */
+  .btn-confirmar{position:relative;overflow:hidden}
+  .btn-confirmar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);transform:translateX(-100%);transition:transform 0s}
+  .btn-confirmar:hover::after{transform:translateX(100%);transition:transform 0.5s ease}
+
+  /* ═══ SCROLL HINT (header bottom) ═══ */
+  .header-scroll-hint{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:1;opacity:0.5}
+  .header-scroll-hint span{display:block;width:1px;height:32px;background:linear-gradient(180deg,var(--gold),transparent);margin:0 auto;animation:scrollPulse 2s ease-in-out infinite}
+  @keyframes scrollPulse{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}50.01%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* ═══ GOLD LINE ANIMATE ON FORM CARD ═══ */
+  .card--form{position:relative;overflow:hidden}
+  .card--form::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1)}
+  .card--form:hover::after{transform:scaleX(1)}
+
+  /* ═══ LINK ICON BOUNCE ═══ */
+  .card--link:hover .link-icon{animation:iconBounce 0.4s cubic-bezier(0.22,1,0.36,1)}
+  @keyframes iconBounce{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1.08)}}
+
+  /* ═══ TRAINING CARD GOLD LINE ═══ */
+  .card--training:hover::after{content:'';position:absolute;left:0;top:12px;bottom:12px;width:3px;background:var(--gold);border-radius:0 2px 2px 0}
+
+  /* ═══ COUNTER ANIMATION ═══ */
+  @keyframes countUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .stat-pill-num{animation:countUp 0.5s ease both}
+
+  /* ═══ ORNAMENT DIVIDER ═══ */
+  .ornament{display:flex;align-items:center;justify-content:center;gap:16px;padding:8px 0;grid-column:1/-1}
+  .ornament-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold-line),transparent)}
+  .ornament-diamond{width:6px;height:6px;background:var(--gold);transform:rotate(45deg);opacity:0.5;animation:geoPulse 4s ease-in-out infinite}
+
+  /* ═══ HEADER INNER Z-INDEX ═══ */
+  .header-inner{position:relative;z-index:1}
+
 </style>
 </head>
 <body>
@@ -288,6 +359,11 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 <!-- DASHBOARD -->
 <div id="page-dashboard">
   <header class="header">
+    <div class="header-geo header-geo--ring"></div>
+    <div class="header-geo header-geo--ring2"></div>
+    <div class="header-geo header-geo--line"></div>
+    <div class="header-geo header-geo--diamond"></div>
+    <div class="header-geo header-geo--diamond2"></div>
     <div class="header-inner">
       <div class="header-brand">
         <p class="brand-label">Instituto MD Talk</p>
@@ -301,6 +377,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       </div>
     </div>
     <div class="header-gold-line"></div>
+    <div class="header-scroll-hint"><span></span></div>
   </header>
 
   <main class="dashboard">
@@ -382,6 +459,13 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         </div>
 
       </div>
+    </div>
+
+    <!-- ORNAMENT -->
+    <div class="ornament">
+      <span class="ornament-line"></span>
+      <span class="ornament-diamond"></span>
+      <span class="ornament-line"></span>
     </div>
 
     <!-- MEU ESPACO -->
@@ -686,7 +770,10 @@ function renderDashboard(a, avisos) {
   verificarRegistroHoje(a.historico);
   showPage('dashboard');
   startClock();
-  setTimeout(animateCards, 50);
+  setTimeout(function(){
+    animateCards();
+    initReveal();
+  }, 50);
 }
 
 // ── RELÓGIO ──
@@ -939,6 +1026,36 @@ function animateCards() {
 
 // ── INIT ──
 window.addEventListener('load', function(){ showPage('login'); });
+
+// ── SCROLL REVEAL ──
+function initReveal() {
+  var reveals = document.querySelectorAll('#page-dashboard .card, #page-dashboard .contact-strip, #page-dashboard .ornament');
+  if (!('IntersectionObserver' in window)) {
+    reveals.forEach(function(el){ el.classList.add('visible'); el.style.opacity='1'; el.style.transform='none'; });
+    return;
+  }
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+  reveals.forEach(function(el){ obs.observe(el); });
+}
+
+// ── ANIMATED STATS (presença counters) ──
+function animateCounter(el, target) {
+  var duration = 1200;
+  var start = performance.now();
+  (function tick(now) {
+    var progress = Math.min((now - start) / duration, 1);
+    var eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(eased * target);
+    if (progress < 1) requestAnimationFrame(tick);
+  })(start);
+}
 
 // ── EVENT LISTENERS (evita problemas com onclick e Cloudflare) ──
 document.addEventListener('DOMContentLoaded', function() {
