@@ -704,13 +704,13 @@
           <p class="contact-text-value">@inglesmedico.thaifaria</p>
         </div>
       </a>
-      <a href="mailto:mdtalk.office@gmail.com" class="contact-item">
+      <a href="/cdn-cgi/l/email-protection#563b3222373a3d783930303f353316313b373f3a7835393b" class="contact-item">
         <div class="contact-icon contact-icon--email">
           <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </div>
         <div>
           <p class="contact-text-label">E-mail</p>
-          <p class="contact-text-value">mdtalk.office@gmail.com</p>
+          <p class="contact-text-value"><span class="__cf_email__" data-cfemail="cea3aabaafa2a5e0a1a8a8a7adab8ea9a3afa7a2e0ada1a3">[email&#160;protected]</span></p>
         </div>
       </a>
       <a href="https://wa.me/5514997758941" target="_blank" rel="noopener" class="contact-item">
@@ -757,7 +757,7 @@
 <!-- ════════════════════════════════════
      SCRIPT
 ════════════════════════════════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ─────────────────────────────────────
 // CONFIGURAÇÃO
 // ─────────────────────────────────────
@@ -792,7 +792,8 @@ async function doLogin() {
 
   try {
     const r = await fetch(
-      `${SCRIPT_URL}?action=login&login=${encodeURIComponent(login)}&senha=${encodeURIComponent(senha)}`
+      `${SCRIPT_URL}?action=login&login=${encodeURIComponent(login)}&senha=${encodeURIComponent(senha)}`,
+      { redirect: 'follow' }
     );
     const d = await r.json();
 
@@ -1066,7 +1067,8 @@ async function _gravarRegistro(status) {
     const agora = new Date().toLocaleString('pt-BR');
 
     const r = await fetch(
-      `${SCRIPT_URL}?action=registrar&login=${encodeURIComponent(currentStudent.login)}&nome=${encodeURIComponent(currentStudent.nome_display || currentStudent.login)}&status=${status}&data_aula=${encodeURIComponent(hoje)}&registrado_em=${encodeURIComponent(agora)}`
+      `${SCRIPT_URL}?action=registrar&login=${encodeURIComponent(currentStudent.login)}&nome=${encodeURIComponent(currentStudent.nome_display || currentStudent.login)}&status=${status}&data_aula=${encodeURIComponent(hoje)}&registrado_em=${encodeURIComponent(agora)}`,
+      { redirect: 'follow' }
     );
     const d = await r.json();
 
@@ -1148,19 +1150,4 @@ function animateCards() {
         setTimeout(() => {
           entry.target.style.transition = 'opacity 0.55s ease-out, transform 0.55s ease-out, box-shadow 0.35s ease, border-color 0.35s ease';
           entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }, i * 70);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.04 });
-  cards.forEach(c => observer.observe(c));
-}
-
-// Init
-window.addEventListener('load', () => {
-  showPage('login');
-});
-</script>
-</body>
-</html>
+          entry.target.style.transform = 'translateY(0)'
