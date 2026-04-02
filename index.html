@@ -4,477 +4,251 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portal do Aluno — Instituto MD Talk</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy:       #0B1D3A;
-    --navy-deep:  #060F1F;
-    --navy-mid:   #0F2645;
-    --navy-light: #163158;
-    --gold:       #C4A45A;
-    --gold-light: #D4BA7A;
-    --gold-pale:  #E8D9B0;
-    --gold-glow:  rgba(196,164,90,0.12);
-    --white:      #FFFFFF;
-    --off-white:  #F7F5F0;
-    --cream:      #FAF8F4;
-    --warm-gray:  #9A9590;
-    --text-dark:  #1A1A1A;
-    --text-body:  #3A3632;
-    --text-muted: #6B6560;
-    --border:     rgba(11,29,58,0.07);
-    --success:    #2D6A4F;
-    --success-bg: #D8F3DC;
-    --danger:     #A32D2D;
-    --danger-bg:  #FCEBEB;
-    --serif:      'Cormorant Garamond', Georgia, serif;
-    --sans:       'DM Sans', 'Helvetica Neue', Arial, sans-serif;
-    --radius:     6px;
-    --shadow-sm:  0 1px 3px rgba(11,29,58,0.04), 0 1px 2px rgba(11,29,58,0.06);
-    --shadow-md:  0 4px 16px rgba(11,29,58,0.06), 0 1px 3px rgba(11,29,58,0.04);
-    --shadow-lg:  0 12px 40px rgba(11,29,58,0.1), 0 4px 12px rgba(11,29,58,0.05);
-  }
+:root {
+  --navy:       #0B1D3A;
+  --navy-deep:  #060F1F;
+  --navy-mid:   #0F2645;
+  --navy-light: #163158;
+  --gold:       #C4A45A;
+  --gold-light: #D4BA7A;
+  --gold-glow:  rgba(196,164,90,0.12);
+  --white:      #FFFFFF;
+  --off-white:  #F7F5F0;
+  --cream:      #FAF8F4;
+  --warm-gray:  #9A9590;
+  --text-body:  #3A3632;
+  --text-muted: #6B6560;
+  --border:     rgba(11,29,58,0.07);
+  --success:    #2D6A4F;
+  --success-bg: #D8F3DC;
+  --danger:     #A32D2D;
+  --danger-bg:  #FCEBEB;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'DM Sans', Arial, sans-serif;
+  --radius: 6px;
+  --shadow-sm: 0 1px 3px rgba(11,29,58,0.04), 0 1px 2px rgba(11,29,58,0.06);
+  --shadow-md: 0 4px 16px rgba(11,29,58,0.06), 0 1px 3px rgba(11,29,58,0.04);
+  --shadow-lg: 0 12px 40px rgba(11,29,58,0.1), 0 4px 12px rgba(11,29,58,0.05);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);line-height:1.65;-webkit-font-smoothing:antialiased}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { font-family: var(--sans); background: var(--off-white); color: var(--text-body); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+/* PAGES */
+#page-login{min-height:100vh;display:none;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1rem;background:var(--off-white)}
+#page-login.active{display:flex}
+#page-dashboard{display:none}
+#page-dashboard.active{display:block;min-height:100vh}
 
-  /* ── PAGES ── */
-  .page { display: none; }
-  .page.active { display: block; }
+/* LOGIN */
+.login-brand{text-align:center;margin-bottom:2.5rem;animation:fadeIn 0.6s ease forwards}
+.login-brand-mark{font-size:10px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.login-brand-name{font-family:var(--serif);font-size:2.2rem;font-weight:300;color:var(--navy);line-height:1}
+.login-brand-name em{font-style:italic;color:var(--gold);font-weight:400}
+.login-brand-line{width:40px;height:1px;background:var(--gold);margin:12px auto 0;opacity:.6}
+.login-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:2.2rem 2rem;width:100%;max-width:400px;box-shadow:var(--shadow-md);animation:fadeIn .5s ease .1s both}
+.login-section-title{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+.field-group{margin-bottom:12px}
+.field-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);font-weight:500;margin-bottom:5px;display:block}
+.field-input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:var(--sans);background:var(--cream);color:#1a1a1a;outline:none;transition:border-color .15s,background .15s}
+.field-input:focus{border-color:var(--navy);background:var(--white)}
+.field-input::placeholder{color:#bbb}
+.btn-login-submit{width:100%;padding:12px;border-radius:8px;border:none;background:var(--navy);color:var(--white);font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.5px;cursor:pointer;transition:background .2s,transform .15s;margin-top:4px}
+.btn-login-submit:hover{background:var(--navy-light);transform:translateY(-1px)}
+.btn-login-submit:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.login-error{display:none;margin-top:10px;padding:9px 12px;border-radius:8px;background:var(--danger-bg);color:var(--danger);font-size:12px;border-left:2px solid #f09595;line-height:1.5}
+.login-footer-note{margin-top:1.5rem;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);text-align:center;opacity:.6}
 
-  /* ══════════════════════════════════════
-     LOGIN PAGE
-  ══════════════════════════════════════ */
-  #page-login {
-    min-height: 100vh;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 1rem;
-    background: var(--off-white);
-  }
-  #page-login.active { display: flex; }
+/* HEADER */
+.header{background:var(--navy-deep);position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 30%,rgba(196,164,90,.07) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 85% 70%,rgba(196,164,90,.05) 0%,transparent 60%);pointer-events:none}
+.header-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:36px 32px 44px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px}
+.brand-label{font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.brand-title{font-family:var(--serif);font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:300;color:var(--white);line-height:1.2}
+.brand-title em{font-weight:400;font-style:italic;color:var(--gold-light)}
+.header-right{text-align:right}
+.header-greeting{font-size:12px;color:rgba(255,255,255,.45);margin-bottom:2px;letter-spacing:.3px}
+.header-student-name{font-family:var(--serif);font-size:1.3rem;font-weight:400;color:var(--white);line-height:1;margin-bottom:4px}
+.header-clock{font-family:var(--serif);font-size:1rem;font-weight:300;color:rgba(255,255,255,.35);letter-spacing:2px;margin-bottom:8px;line-height:1}
+.btn-signout{background:transparent;border:1px solid rgba(196,164,90,.3);color:rgba(255,255,255,.45);font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;border-radius:4px;cursor:pointer;transition:all .2s}
+.btn-signout:hover{border-color:var(--gold);color:var(--gold)}
+.header-gold-line{position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 5%,var(--gold) 30%,var(--gold) 70%,transparent 95%);opacity:.5}
 
-  .login-brand { text-align: center; margin-bottom: 2.5rem; animation: fadeIn 0.6s ease forwards; }
-  .login-brand-mark { font-size: 10px; font-weight: 600; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
-  .login-brand-name { font-family: var(--serif); font-size: 2.2rem; font-weight: 300; color: var(--navy); line-height: 1; }
-  .login-brand-name em { font-style: italic; color: var(--gold); font-weight: 400; }
-  .login-brand-line { width: 40px; height: 1px; background: var(--gold); margin: 12px auto 0; opacity: 0.6; }
+/* DASHBOARD GRID */
+.dashboard{max-width:1100px;margin:0 auto;padding:32px 32px 60px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
 
-  .login-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2.2rem 2rem;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: var(--shadow-md);
-    animation: fadeIn 0.5s ease 0.1s both;
-  }
+/* BASE CARD */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);transition:box-shadow .35s ease,transform .35s ease,border-color .35s ease;opacity:0;transform:translateY(16px)}
+.card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:rgba(196,164,90,.2)}
+.card-pad{padding:28px 26px}
+.card-overline{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.card-title{font-family:var(--serif);font-size:1.25rem;font-weight:500;color:var(--navy);line-height:1.25;margin-bottom:8px}
+.card-desc{font-size:13.5px;color:var(--text-muted);line-height:1.7}
 
-  .login-section-title {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.2rem;
-  }
+/* PRESENÇA CARD */
+.card--presenca{grid-column:1/-1;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,var(--navy-light) 100%);border:none;position:relative;overflow:hidden}
+.card--presenca::before{content:'';position:absolute;top:-40%;right:-10%;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(196,164,90,.1) 0%,transparent 70%);pointer-events:none}
+.card--presenca .card-pad{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:32px 28px}
+.presenca-left{flex:1}
+.presenca-label{font-size:10px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.pulse-dot{width:7px;height:7px;background:#4ADE80;border-radius:50%;display:inline-block;animation:pulse 2s ease-in-out infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(74,222,128,.5)}50%{opacity:.8;box-shadow:0 0 0 6px rgba(74,222,128,0)}}
+.presenca-title{font-family:var(--serif);font-size:clamp(1.25rem,2.5vw,1.6rem);font-weight:400;color:var(--white);line-height:1.25;margin-bottom:6px}
+.presenca-subtitle{font-size:13px;color:rgba(255,255,255,.5)}
+.presenca-right{display:flex;flex-direction:column;align-items:flex-end;gap:12px;flex-shrink:0}
+.stat-row-inline{display:flex;gap:12px}
+.stat-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:10px 16px;text-align:center;min-width:64px}
+.stat-pill-num{font-family:var(--serif);font-size:1.6rem;font-weight:600;line-height:1;color:var(--white)}
+.stat-pill-num.green{color:#4ADE80}
+.stat-pill-num.red{color:#F87171}
+.stat-pill-lbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.4);margin-top:3px}
+.btn-confirmar{display:flex;align-items:center;gap:8px;background:var(--gold);color:var(--navy-deep);font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:13px 24px;border-radius:4px;border:none;cursor:pointer;transition:all .3s ease;white-space:nowrap}
+.btn-confirmar:hover:not(:disabled){background:var(--gold-light);transform:scale(1.03);box-shadow:0 4px 20px rgba(196,164,90,.3)}
+.btn-confirmar:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-confirmar svg{width:15px;height:15px}
 
-  .field-group { margin-bottom: 12px; }
-  .field-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 500; margin-bottom: 5px; display: block; }
-  .field-input {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 13px;
-    font-family: var(--sans);
-    background: var(--cream);
-    color: var(--text-dark);
-    outline: none;
-    transition: border-color 0.15s, background 0.15s;
-  }
-  .field-input:focus { border-color: var(--navy); background: var(--white); }
-  .field-input::placeholder { color: #bbb; }
+/* CALENDÁRIO */
+.cal-day-label{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);text-align:center;padding:4px 2px}
+.cal-day{aspect-ratio:1;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--text-muted)}
+.cal-day.other-month{opacity:.25}
+.cal-day.has-presenca{background:var(--success-bg);color:var(--success);font-weight:700}
+.cal-day.has-falta{background:var(--danger-bg);color:var(--danger);font-weight:700}
+.cal-day.today{outline:2px solid var(--gold);outline-offset:-2px}
+.cal-mark{font-size:8px;line-height:1;margin-top:1px}
 
-  .btn-login-submit {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-    background: var(--navy);
-    color: var(--white);
-    font-family: var(--sans);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
-    margin-top: 4px;
-  }
-  .btn-login-submit:hover { background: var(--navy-light); transform: translateY(-1px); }
-  .btn-login-submit:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+/* MURAL */
+.aviso-item{padding:12px 0;border-bottom:1px solid var(--border)}
+.aviso-item:last-child{border-bottom:none;padding-bottom:0}
+.aviso-item:first-child{padding-top:0}
+.aviso-data{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.aviso-txt{font-size:14px;color:var(--text-body);line-height:1.65}
+.empty-state{font-size:13px;color:var(--text-muted);font-style:italic}
 
-  .login-error {
-    display: none;
-    margin-top: 10px;
-    padding: 9px 12px;
-    border-radius: 8px;
-    background: var(--danger-bg);
-    color: var(--danger);
-    font-size: 12px;
-    border-left: 2px solid #f09595;
-    line-height: 1.5;
-  }
+/* ESPACO LINKS */
+.espaco-link{display:flex;align-items:center;gap:10px;padding:13px 16px;border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--navy);font-size:14px;font-weight:500;background:var(--cream);transition:all .2s;margin-bottom:8px}
+.espaco-link:hover{background:var(--white);border-color:rgba(196,164,90,.4);transform:translateY(-1px)}
+.espaco-link svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.espaco-link.disabled{opacity:.35;pointer-events:none}
 
-  .login-footer-note { margin-top: 1.5rem; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); text-align: center; opacity: 0.6; }
+/* MATERIAIS */
+.mat-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);text-decoration:none}
+.mat-item:last-child{border-bottom:none}
+.mat-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;opacity:.7}
+.mat-nome{flex:1;font-size:13.5px;color:var(--text-body)}
+.mat-tipo{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted)}
 
-  /* ══════════════════════════════════════
-     DASHBOARD PAGE — HEADER
-  ══════════════════════════════════════ */
-  #page-dashboard { display: none; }
-  #page-dashboard.active { display: block; min-height: 100vh; }
+/* LINK CARDS */
+.card--link{display:flex;flex-direction:column;text-decoration:none;color:inherit;cursor:pointer}
+.card--link .card-pad{flex:1;display:flex;flex-direction:column}
+.link-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;transition:transform .35s}
+.card--link:hover .link-icon{transform:scale(1.08)}
+.link-icon svg{width:20px;height:20px}
+.link-icon--navy{background:var(--navy)}
+.link-icon--navy svg{stroke:var(--gold-light);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.link-icon--gold{background:var(--gold-glow);border:1px solid rgba(196,164,90,.2)}
+.link-icon--gold svg{stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.card-arrow{margin-top:auto;padding-top:14px;font-size:12px;font-weight:600;color:var(--gold);display:flex;align-items:center;gap:6px;letter-spacing:.5px;transition:gap .3s}
+.card--link:hover .card-arrow{gap:10px}
 
-  .header {
-    background: var(--navy-deep);
-    position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 60% 50% at 20% 30%, rgba(196,164,90,0.07) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 60% at 85% 70%, rgba(196,164,90,0.05) 0%, transparent 60%);
-    pointer-events: none;
-  }
+/* FORM CARD */
+.card--form{grid-column:1/-1;display:block;text-decoration:none;color:inherit;cursor:pointer;background:var(--cream);border:1px dashed rgba(196,164,90,.35)}
+.card--form:hover{border-style:solid;border-color:var(--gold);background:var(--white)}
+.card--form .card-pad{display:flex;align-items:center;gap:24px}
+.form-icon-wrap{flex-shrink:0;width:60px;height:60px;position:relative;display:flex;align-items:center;justify-content:center}
+.form-icon-ring{position:absolute;inset:0;border-radius:50%;border:2px solid var(--gold);opacity:.25;animation:ringsp 12s linear infinite;border-top-color:transparent;border-bottom-color:transparent}
+@keyframes ringsp{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.form-icon-svg{width:24px;height:24px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s}
+.card--form:hover .form-icon-svg{transform:rotate(-8deg) scale(1.1)}
+.form-content{flex:1}
+.form-btn{flex-shrink:0;display:flex;align-items:center;gap:8px;background:transparent;color:var(--gold);font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:11px 22px;border-radius:4px;border:1px solid var(--gold);transition:all .3s}
+.card--form:hover .form-btn{background:var(--gold);color:var(--navy-deep)}
 
-  .header-inner {
-    position: relative;
-    z-index: 1;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 36px 32px 44px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
+/* TRAINING */
+.card--training{grid-column:1/-1;display:block;text-decoration:none;color:inherit;cursor:pointer;position:relative;overflow:hidden}
+.card--training .card-pad{display:flex;align-items:center;gap:24px}
+.training-badge{flex-shrink:0;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);display:flex;align-items:center;justify-content:center;transition:transform .4s}
+.card--training:hover .training-badge{transform:rotate(-5deg) scale(1.08)}
+.training-badge svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.training-content{flex:1}
+.training-arrow{flex-shrink:0;width:38px;height:38px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all .35s}
+.card--training:hover .training-arrow{background:var(--gold);border-color:var(--gold)}
+.training-arrow svg{width:15px;height:15px;stroke:var(--text-muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:stroke .35s}
+.card--training:hover .training-arrow svg{stroke:var(--navy-deep)}
+.card--training::before{content:'';position:absolute;left:0;top:16px;bottom:16px;width:3px;background:var(--gold);border-radius:0 2px 2px 0;opacity:0;transition:opacity .35s}
+.card--training:hover::before{opacity:1}
 
-  .header-brand {}
-  .brand-label { font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
-  .brand-title { font-family: var(--serif); font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 300; color: var(--white); line-height: 1.2; }
-  .brand-title em { font-weight: 400; font-style: italic; color: var(--gold-light); }
+/* CONTACT STRIP */
+.contact-strip{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden;opacity:0;transform:translateY(16px)}
+.contact-item{display:flex;align-items:center;gap:14px;padding:20px 22px;text-decoration:none;color:inherit;transition:background .3s;border-right:1px solid var(--border)}
+.contact-item:last-child{border-right:none}
+.contact-item:hover{background:var(--gold-glow)}
+.contact-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-icon svg{width:17px;height:17px;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.contact-icon--ig{background:linear-gradient(135deg,#833AB4,#FD1D1D,#F77737)}
+.contact-icon--ig svg{stroke:white}
+.contact-icon--email{background:var(--navy)}
+.contact-icon--email svg{stroke:var(--gold-light)}
+.contact-icon--wpp{background:#25D366}
+.contact-icon--wpp svg{stroke:white}
+.contact-text-label{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--warm-gray);margin-bottom:2px}
+.contact-text-value{font-size:13px;font-weight:500;color:var(--navy)}
 
-  .header-right { text-align: right; }
-  .header-greeting { font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 4px; }
-  .header-greeting strong { color: rgba(255,255,255,0.75); font-weight: 500; }
-  .header-student-name { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; color: var(--white); line-height: 1; margin-bottom: 6px; }
+/* FOOTER */
+.footer{background:var(--navy-deep);text-align:center;padding:32px 24px;position:relative}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.35}
+.footer-brand{font-family:var(--serif);font-size:1rem;color:var(--gold);margin-bottom:6px;letter-spacing:.5px}
+.footer-copy{font-size:11px;color:rgba(255,255,255,.3)}
 
-  .btn-signout {
-    background: transparent;
-    border: 1px solid rgba(196,164,90,0.3);
-    color: rgba(255,255,255,0.45);
-    font-family: var(--sans);
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 6px 14px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-signout:hover { border-color: var(--gold); color: var(--gold); }
+/* SPINNER */
+.spinner-inline{width:13px;height:13px;border:1.5px solid rgba(11,29,58,.15);border-top-color:var(--navy);border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:middle;margin-right:6px}
+.spinner-white{border-color:rgba(255,255,255,.2);border-top-color:var(--white)}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-  .header-gold-line { position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent 5%, var(--gold) 30%, var(--gold) 70%, transparent 95%); opacity: 0.5; }
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:var(--white);padding:12px 24px;border-radius:8px;font-size:13px;font-weight:500;opacity:0;pointer-events:none;transition:all .35s;z-index:100;white-space:nowrap;box-shadow:var(--shadow-lg);border-left:3px solid var(--gold)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.success{border-left-color:#4ADE80}
+.toast.error{border-left-color:#F87171}
 
-  /* ══════════════════════════════════════
-     DASHBOARD GRID
-  ══════════════════════════════════════ */
-  .dashboard {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 32px 32px 60px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-  }
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(6,15,31,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;padding:1.5rem}
+.modal-overlay.active{display:flex}
+.modal-box{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:2rem;max-width:420px;width:100%;box-shadow:var(--shadow-lg);animation:fadeIn .25s ease both}
+.modal-icon{width:44px;height:44px;border-radius:50%;background:#FEF3C7;display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+.modal-icon svg{width:22px;height:22px;stroke:#D97706;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.modal-title{font-family:var(--serif);font-size:1.2rem;font-weight:600;color:var(--navy);margin-bottom:.65rem;line-height:1.25}
+.modal-text{font-size:13.5px;color:var(--text-muted);line-height:1.72;margin-bottom:1.5rem}
+.modal-text strong{color:var(--text-body);font-weight:600}
+.modal-actions{display:flex;gap:8px}
+.btn-modal-cancel{flex:1;padding:11px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-muted);font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:background .2s}
+.btn-modal-cancel:hover{background:var(--cream)}
+.btn-modal-confirm{flex:2;padding:11px;border-radius:8px;border:none;background:var(--navy);color:var(--white);font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;transition:background .2s}
+.btn-modal-confirm:hover{background:var(--navy-light)}
 
-  /* ── BASE CARD ── */
-  .card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-sm);
-    transition: box-shadow 0.35s ease, transform 0.35s ease, border-color 0.35s ease;
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  .card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); border-color: rgba(196,164,90,0.2); }
-  .card-pad { padding: 28px 26px; }
-  .card-overline { font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
-  .card-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; color: var(--navy); line-height: 1.25; margin-bottom: 8px; }
-  .card-desc { font-size: 13.5px; color: var(--text-muted); line-height: 1.7; }
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
-  /* ── MURAL (FULL WIDTH) ── */
-  .card--mural { grid-column: 1 / -1; }
-
-  .aviso-item { padding: 12px 0; border-bottom: 1px solid var(--border); }
-  .aviso-item:last-child { border-bottom: none; padding-bottom: 0; }
-  .aviso-item:first-child { padding-top: 0; }
-  .aviso-data { font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
-  .aviso-txt { font-size: 14px; color: var(--text-body); line-height: 1.65; }
-  .empty-state { font-size: 13px; color: var(--text-muted); font-style: italic; }
-
-  /* ── PRESENÇA HERO (FULL WIDTH) ── */
-  .card--presenca {
-    grid-column: 1 / -1;
-    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, var(--navy-light) 100%);
-    border: none;
-    position: relative;
-    overflow: hidden;
-  }
-  .card--presenca::before {
-    content: '';
-    position: absolute;
-    top: -40%;
-    right: -10%;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(196,164,90,0.1) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .card--presenca .card-pad {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    padding: 32px 28px;
-  }
-  .presenca-left { flex: 1; }
-  .presenca-label { font-size: 10px; font-weight: 700; letter-spacing: 3.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-  .pulse-dot { width: 7px; height: 7px; background: #4ADE80; border-radius: 50%; display: inline-block; animation: pulse 2s ease-in-out infinite; flex-shrink: 0; }
-  @keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(74,222,128,0.5)}50%{opacity:0.8;box-shadow:0 0 0 6px rgba(74,222,128,0)} }
-  .presenca-title { font-family: var(--serif); font-size: clamp(1.25rem, 2.5vw, 1.6rem); font-weight: 400; color: var(--white); line-height: 1.25; margin-bottom: 6px; }
-  .presenca-subtitle { font-size: 13px; color: rgba(255,255,255,0.5); }
-
-  .presenca-right { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; flex-shrink: 0; }
-
-  .stat-row-inline { display: flex; gap: 12px; }
-  .stat-pill { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 10px 16px; text-align: center; min-width: 64px; }
-  .stat-pill-num { font-family: var(--serif); font-size: 1.6rem; font-weight: 600; line-height: 1; color: var(--white); }
-  .stat-pill-num.green { color: #4ADE80; }
-  .stat-pill-num.red   { color: #F87171; }
-  .stat-pill-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.4); margin-top: 3px; }
-
-  .btn-confirmar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--gold);
-    color: var(--navy-deep);
-    font-family: var(--sans);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 13px 24px;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-  }
-  .btn-confirmar:hover:not(:disabled) { background: var(--gold-light); transform: scale(1.03); box-shadow: 0 4px 20px rgba(196,164,90,0.3); }
-  .btn-confirmar:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-  .btn-confirmar svg { width: 15px; height: 15px; }
-
-  /* ── MEU ESPAÇO (FULL WIDTH) ── */
-  .card--espaco { grid-column: 1 / -1; }
-  .espaco-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .espaco-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 13px 16px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    text-decoration: none;
-    color: var(--navy);
-    font-size: 14px;
-    font-weight: 500;
-    background: var(--cream);
-    transition: all 0.2s;
-  }
-  .espaco-link:hover { background: var(--white); border-color: rgba(196,164,90,0.4); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
-  .espaco-link svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
-  .espaco-link.disabled { opacity: 0.35; pointer-events: none; }
-
-  /* ── PROGRAMA ── */
-  .card--programa { grid-column: 1 / -1; }
-  .mat-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); text-decoration: none; transition: background 0.15s; }
-  .mat-item:last-child { border-bottom: none; }
-  .mat-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; opacity: 0.7; }
-  .mat-nome { flex: 1; font-size: 13.5px; color: var(--text-body); font-weight: 400; }
-  .mat-tipo { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
-  .mat-arrow { color: var(--text-muted); font-size: 14px; }
-
-  /* ── LINK CARDS (recursos) ── */
-  .card--link { display: flex; flex-direction: column; text-decoration: none; color: inherit; cursor: pointer; }
-  .card--link .card-pad { flex: 1; display: flex; flex-direction: column; }
-  .link-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; transition: transform 0.35s ease; }
-  .card--link:hover .link-icon { transform: scale(1.08); }
-  .link-icon svg { width: 20px; height: 20px; }
-  .link-icon--navy { background: var(--navy); }
-  .link-icon--navy svg { stroke: var(--gold-light); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-  .link-icon--gold { background: var(--gold-glow); border: 1px solid rgba(196,164,90,0.2); }
-  .link-icon--gold svg { stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-  .card-arrow { margin-top: auto; padding-top: 14px; font-size: 12px; font-weight: 600; color: var(--gold); display: flex; align-items: center; gap: 6px; letter-spacing: 0.5px; transition: gap 0.3s ease; }
-  .card--link:hover .card-arrow { gap: 10px; }
-
-  /* ── FORMULÁRIO (FULL WIDTH) ── */
-  .card--form {
-    grid-column: 1 / -1;
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    background: var(--cream);
-    border: 1px dashed rgba(196,164,90,0.35);
-  }
-  .card--form:hover { border-style: solid; border-color: var(--gold); background: var(--white); }
-  .card--form .card-pad { display: flex; align-items: center; gap: 24px; }
-  .form-icon-wrap { flex-shrink: 0; width: 60px; height: 60px; position: relative; display: flex; align-items: center; justify-content: center; }
-  .form-icon-ring { position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--gold); opacity: 0.25; animation: ringsp 12s linear infinite; border-top-color: transparent; border-bottom-color: transparent; }
-  @keyframes ringsp { from{transform:rotate(0)}to{transform:rotate(360deg)} }
-  .form-icon-svg { width: 24px; height: 24px; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.35s ease; }
-  .card--form:hover .form-icon-svg { transform: rotate(-8deg) scale(1.1); }
-  .form-content { flex: 1; }
-  .form-btn { flex-shrink: 0; display: flex; align-items: center; gap: 8px; background: transparent; color: var(--gold); font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 11px 22px; border-radius: 4px; border: 1px solid var(--gold); transition: all 0.3s ease; }
-  .form-btn svg { width: 13px; height: 13px; transition: transform 0.3s ease; }
-  .card--form:hover .form-btn { background: var(--gold); color: var(--navy-deep); }
-  .card--form:hover .form-btn svg { transform: translateX(3px); }
-
-  /* ── TREINAMENTO (FULL WIDTH) ── */
-  .card--training { grid-column: 1 / -1; display: block; text-decoration: none; color: inherit; cursor: pointer; position: relative; overflow: hidden; }
-  .card--training .card-pad { display: flex; align-items: center; gap: 24px; }
-  .training-badge { flex-shrink: 0; width: 58px; height: 58px; border-radius: 50%; background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); display: flex; align-items: center; justify-content: center; transition: transform 0.4s ease; }
-  .card--training:hover .training-badge { transform: rotate(-5deg) scale(1.08); }
-  .training-badge svg { width: 26px; height: 26px; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-  .training-content { flex: 1; }
-  .training-arrow { flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: all 0.35s ease; }
-  .card--training:hover .training-arrow { background: var(--gold); border-color: var(--gold); }
-  .training-arrow svg { width: 15px; height: 15px; stroke: var(--text-muted); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.35s ease; }
-  .card--training:hover .training-arrow svg { stroke: var(--navy-deep); }
-  .card--training::before { content: ''; position: absolute; left: 0; top: 16px; bottom: 16px; width: 3px; background: var(--gold); border-radius: 0 2px 2px 0; opacity: 0; transition: opacity 0.35s ease; }
-  .card--training:hover::before { opacity: 1; }
-
-  /* ── HISTORICO ── */
-  .historico-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
-  .historico-item:last-child { border-bottom: none; }
-  .historico-data { font-size: 13px; color: var(--text-body); font-weight: 500; }
-  .historico-reg  { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-  .badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-  .badge-green { background: var(--success-bg); color: var(--success); }
-  .badge-red   { background: var(--danger-bg); color: var(--danger); }
-
-  /* ── CONTACT STRIP ── */
-  .contact-strip { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3,1fr); background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; opacity: 0; transform: translateY(16px); }
-  .contact-item { display: flex; align-items: center; gap: 14px; padding: 20px 22px; text-decoration: none; color: inherit; transition: background 0.3s ease; border-right: 1px solid var(--border); }
-  .contact-item:last-child { border-right: none; }
-  .contact-item:hover { background: var(--gold-glow); }
-  .contact-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .contact-icon svg { width: 17px; height: 17px; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-  .contact-icon--ig    { background: linear-gradient(135deg, #833AB4, #FD1D1D, #F77737); }
-  .contact-icon--ig svg { stroke: white; }
-  .contact-icon--email { background: var(--navy); }
-  .contact-icon--email svg { stroke: var(--gold-light); }
-  .contact-icon--wpp   { background: #25D366; }
-  .contact-icon--wpp svg { stroke: white; }
-  .contact-text-label { font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 2px; }
-  .contact-text-value { font-size: 13px; font-weight: 500; color: var(--navy); }
-
-  /* ── FOOTER ── */
-  .footer { background: var(--navy-deep); text-align: center; padding: 32px 24px; position: relative; }
-  .footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.35; }
-  .footer-brand { font-family: var(--serif); font-size: 1rem; color: var(--gold); margin-bottom: 6px; letter-spacing: 0.5px; }
-  .footer-copy { font-size: 11px; color: rgba(255,255,255,0.3); }
-
-  /* ── SPINNER ── */
-  .spinner-inline { width: 13px; height: 13px; border: 1.5px solid rgba(11,29,58,0.15); border-top-color: var(--navy); border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; vertical-align: middle; margin-right: 6px; }
-  .spinner-white { border-color: rgba(255,255,255,0.2); border-top-color: var(--white); }
-  @keyframes spin { to{transform:rotate(360deg)} }
-
-  /* ── MODAL FALTA ── */
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(6,15,31,0.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 200; align-items: center; justify-content: center; padding: 1.5rem; }
-  .modal-overlay.active { display: flex; }
-  .modal-box { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; max-width: 420px; width: 100%; box-shadow: var(--shadow-lg); animation: fadeIn 0.25s ease both; }
-  .modal-icon { width: 44px; height: 44px; border-radius: 50%; background: #FEF3C7; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
-  .modal-icon svg { width: 22px; height: 22px; stroke: #D97706; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .modal-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-bottom: 0.65rem; line-height: 1.25; }
-  .modal-text { font-size: 13.5px; color: var(--text-muted); line-height: 1.72; margin-bottom: 1.5rem; }
-  .modal-text strong { color: var(--text-body); font-weight: 600; }
-  .modal-actions { display: flex; gap: 8px; }
-  .btn-modal-cancel { flex: 1; padding: 11px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); font-family: var(--sans); font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.2s; }
-  .btn-modal-cancel:hover { background: var(--cream); }
-  .btn-modal-confirm { flex: 2; padding: 11px; border-radius: 8px; border: none; background: var(--navy); color: var(--white); font-family: var(--sans); font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
-  .btn-modal-confirm:hover { background: var(--navy-light); }
-
-  /* ── TOAST ── */
-  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--navy); color: var(--white); padding: 12px 24px; border-radius: 8px; font-size: 13px; font-weight: 500; opacity: 0; pointer-events: none; transition: all 0.35s ease; z-index: 100; white-space: nowrap; box-shadow: var(--shadow-lg); border-left: 3px solid var(--gold); }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .toast.success { border-left-color: #4ADE80; }
-  .toast.error   { border-left-color: #F87171; }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeIn { from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)} }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 720px) {
-    .dashboard { grid-template-columns: 1fr; padding: 20px 16px 48px; gap: 14px; }
-    .header-inner { padding: 28px 20px 32px; flex-direction: column; align-items: flex-start; }
-    .header-right { text-align: left; }
-    .card--presenca .card-pad { flex-direction: column; align-items: flex-start; padding: 24px 20px; }
-    .presenca-right { align-items: flex-start; width: 100%; }
-    .stat-row-inline { width: 100%; }
-    .stat-pill { flex: 1; }
-    .btn-confirmar { width: 100%; justify-content: center; }
-    .espaco-links { grid-template-columns: 1fr; }
-    .contact-strip { grid-template-columns: 1fr; }
-    .contact-item { border-right: none; border-bottom: 1px solid var(--border); }
-    .contact-item:last-child { border-bottom: none; }
-    .card--form .card-pad { flex-direction: column; }
-    .form-btn { width: 100%; justify-content: center; }
-    .card--training .card-pad { gap: 16px; }
-  }
-
-  /* ── CALENDÁRIO ── */
-  .cal-day-label { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); text-align: center; padding: 4px 2px; }
-  .cal-day { aspect-ratio: 1; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; color: var(--text-muted); position: relative; }
-  .cal-day.other-month { opacity: 0.25; }
-  .cal-day.has-presenca { background: var(--success-bg); color: var(--success); font-weight: 700; }
-  .cal-day.has-falta    { background: var(--danger-bg);  color: var(--danger);  font-weight: 700; }
-  .cal-day.today { outline: 2px solid var(--gold); outline-offset: -2px; }
-  .cal-day .cal-mark { position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); font-size: 9px; line-height: 1; }
-
+@media(max-width:720px){
+  .dashboard{grid-template-columns:1fr;padding:20px 16px 48px;gap:14px}
+  .header-inner{padding:28px 20px 32px;flex-direction:column;align-items:flex-start}
+  .header-right{text-align:left}
+  .card--presenca .card-pad{flex-direction:column;align-items:flex-start;padding:24px 20px}
+  .presenca-right{align-items:flex-start;width:100%}
+  .stat-row-inline{width:100%}
+  .stat-pill{flex:1}
+  .btn-confirmar{width:100%;justify-content:center}
+  .contact-strip{grid-template-columns:1fr}
+  .contact-item{border-right:none;border-bottom:1px solid var(--border)}
+  .contact-item:last-child{border-bottom:none}
+  .card--form .card-pad{flex-direction:column}
+  .form-btn{width:100%;justify-content:center}
+}
 </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════
-     LOGIN
-════════════════════════════════════ -->
+<!-- LOGIN -->
 <div id="page-login" class="active">
   <div class="login-brand">
     <div class="login-brand-mark">Instituto</div>
@@ -487,7 +261,7 @@
       <label class="field-label" for="f-login">Login</label>
       <input class="field-input" type="text" id="f-login" placeholder="seu login" autocomplete="username">
     </div>
-    <div class="field-group" style="margin-bottom:16px;">
+    <div class="field-group" style="margin-bottom:16px">
       <label class="field-label" for="f-senha">Senha</label>
       <input class="field-input" type="password" id="f-senha" placeholder="sua senha" autocomplete="current-password">
     </div>
@@ -497,11 +271,8 @@
   <div class="login-footer-note">Acesso restrito a alunos</div>
 </div>
 
-<!-- ════════════════════════════════════
-     DASHBOARD
-════════════════════════════════════ -->
+<!-- DASHBOARD -->
 <div id="page-dashboard">
-
   <header class="header">
     <div class="header-inner">
       <div class="header-brand">
@@ -511,7 +282,7 @@
       <div class="header-right">
         <p class="header-greeting" id="hdr-greeting">Good morning,</p>
         <p class="header-student-name" id="hdr-nome"></p>
-        <p class="header-clock" id="hdr-clock" style="font-family:var(--serif);font-size:1.1rem;font-weight:300;color:rgba(255,255,255,0.5);letter-spacing:1px;margin-bottom:8px;line-height:1;"></p>
+        <p class="header-clock" id="hdr-clock"></p>
         <button class="btn-signout" onclick="doLogout()">Sair</button>
       </div>
     </div>
@@ -520,7 +291,7 @@
 
   <main class="dashboard">
 
-    <!-- CONFIRMAR PRESENÇA -->
+    <!-- PRESENÇA -->
     <div class="card card--presenca">
       <div class="card-pad">
         <div class="presenca-left">
@@ -530,25 +301,16 @@
         </div>
         <div class="presenca-right">
           <div class="stat-row-inline">
-            <div class="stat-pill">
-              <div class="stat-pill-num green" id="stat-presencas">—</div>
-              <div class="stat-pill-lbl">Presencas</div>
-            </div>
-            <div class="stat-pill">
-              <div class="stat-pill-num red" id="stat-faltas">—</div>
-              <div class="stat-pill-lbl">Faltas</div>
-            </div>
-            <div class="stat-pill">
-              <div class="stat-pill-num" id="stat-freq">—</div>
-              <div class="stat-pill-lbl">Freq.</div>
-            </div>
+            <div class="stat-pill"><div class="stat-pill-num green" id="stat-presencas">—</div><div class="stat-pill-lbl">Presencas</div></div>
+            <div class="stat-pill"><div class="stat-pill-num red"   id="stat-faltas">—</div><div class="stat-pill-lbl">Faltas</div></div>
+            <div class="stat-pill"><div class="stat-pill-num"       id="stat-freq">—</div><div class="stat-pill-lbl">Freq.</div></div>
           </div>
-          <div style="display:flex;gap:8px;">
+          <div style="display:flex;gap:8px">
             <button class="btn-confirmar" id="btn-presente" onclick="registrarPresenca('presente')">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               Confirmar Presenca
             </button>
-            <button class="btn-confirmar" id="btn-falta" onclick="registrarPresenca('falta')" style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);border:1px solid rgba(255,255,255,0.15);">
+            <button class="btn-confirmar" id="btn-falta" onclick="registrarPresenca('falta')" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.15)">
               Registrar Falta
             </button>
           </div>
@@ -556,61 +318,55 @@
       </div>
     </div>
 
-    <!-- CALENDÁRIO DE PRESENÇAS + FALTAS DO MÊS -->
-    <div class="card" style="grid-column:1/-1;">
-      <div class="card-pad" style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;">
+    <!-- CALENDÁRIO -->
+    <div class="card" style="grid-column:1/-1">
+      <div class="card-pad" style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start">
         <div>
           <p class="card-overline">Historico de Presencas</p>
-          <div id="cal-nav" style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
-            <button onclick="calPrev()" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;">&#8249;</button>
-            <span id="cal-month-label" style="font-family:var(--serif);font-size:1.05rem;font-weight:500;color:var(--navy);min-width:140px;text-align:center;"></span>
-            <button onclick="calNext()" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;">&#8250;</button>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+            <button onclick="calPrev()" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8249;</button>
+            <span id="cal-month-label" style="font-family:var(--serif);font-size:1.05rem;font-weight:500;color:var(--navy);min-width:150px;text-align:center"></span>
+            <button onclick="calNext()" style="background:none;border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8250;</button>
           </div>
-          <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:360px;"></div>
+          <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:380px"></div>
         </div>
-        <div style="background:var(--cream);border-radius:10px;padding:20px 24px;min-width:160px;text-align:center;align-self:center;">
-          <p style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Neste mes</p>
-          <div style="font-family:var(--serif);font-size:2.8rem;font-weight:600;color:var(--danger);line-height:1;" id="cal-faltas-mes">0</div>
-          <p style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.4;">falta<span id="cal-plural">s</span><br>registrada<span id="cal-plural2">s</span></p>
+        <div style="background:var(--cream);border-radius:10px;padding:20px 24px;min-width:160px;text-align:center;align-self:center">
+          <p style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Neste mes</p>
+          <div style="font-family:var(--serif);font-size:2.8rem;font-weight:600;color:var(--danger);line-height:1" id="cal-faltas-mes">0</div>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.4">falta<span id="cal-plural">s</span><br>registrada<span id="cal-plural2">s</span></p>
         </div>
       </div>
     </div>
 
-    <!-- MURAL DE AVISOS -->
-    <div class="card card--mural" style="grid-column:1/-1;">
+    <!-- MURAL -->
+    <div class="card" style="grid-column:1/-1">
       <div class="card-pad">
         <p class="card-overline">Mural de Avisos</p>
-        <div id="mural-content">
-          <div style="color:var(--text-muted);font-size:13px;"><span class="spinner-inline"></span>Carregando...</div>
-        </div>
+        <div id="mural-content"><div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div></div>
       </div>
     </div>
 
     <!-- MEU ESPACO -->
-    <div class="card card--espaco" style="grid-column:1/-1;">
+    <div class="card" style="grid-column:1/-1">
       <div class="card-pad">
         <p class="card-overline">Meu Espaco</p>
         <h3 class="card-title" id="espaco-titulo">Meu Programa</h3>
-        <p class="card-desc" id="espaco-desc" style="margin-bottom:16px;"></p>
-        <div class="espaco-links" style="grid-template-columns:1fr;">
-          <a class="espaco-link" id="link-drive" href="#" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-            Minha Pasta no Drive
-          </a>
-        </div>
-        <div id="materiais-section" style="margin-top:18px; display:none;">
-          <p style="font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Materiais</p>
+        <p class="card-desc" id="espaco-desc" style="margin-bottom:16px"></p>
+        <a class="espaco-link" id="link-drive" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          Minha Pasta no Drive
+        </a>
+        <div id="materiais-section" style="margin-top:18px;display:none">
+          <p style="font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Materiais</p>
           <div id="materiais-content"></div>
         </div>
       </div>
     </div>
 
-    <!-- WELCOME TO MD TALK -->
+    <!-- WELCOME -->
     <a href="https://institutomdtalk.github.io/welcome/" target="_blank" rel="noopener" class="card card--link">
       <div class="card-pad">
-        <div class="link-icon link-icon--gold">
-          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        </div>
+        <div class="link-icon link-icon--gold"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
         <p class="card-overline">Onboarding</p>
         <h3 class="card-title">Welcome to MD Talk</h3>
         <p class="card-desc">Seu ponto de partida no programa. Tudo o que voce precisa saber para comecar com o pe direito.</p>
@@ -621,9 +377,7 @@
     <!-- CAMBRIDGE -->
     <a href="https://dictionary.cambridge.org/pt/dicionario/ingles-portugues/" target="_blank" rel="noopener" class="card card--link">
       <div class="card-pad">
-        <div class="link-icon link-icon--navy">
-          <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M8 7h8"/><path d="M8 11h5"/></svg>
-        </div>
+        <div class="link-icon link-icon--navy"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M8 7h8"/><path d="M8 11h5"/></svg></div>
         <p class="card-overline">Dicionario</p>
         <h3 class="card-title">Cambridge Dictionary</h3>
         <p class="card-desc">Dicionario ingles-portugues com pronuncia, exemplos e niveis de uso.</p>
@@ -634,9 +388,7 @@
     <!-- YOUGLISH -->
     <a href="https://pt.youglish.com/" target="_blank" rel="noopener" class="card card--link">
       <div class="card-pad">
-        <div class="link-icon link-icon--navy">
-          <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/><path d="M19.07 4.93a10 10 0 010 14.14"/></svg>
-        </div>
+        <div class="link-icon link-icon--navy"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/><path d="M19.07 4.93a10 10 0 010 14.14"/></svg></div>
         <p class="card-overline">Pronuncia</p>
         <h3 class="card-title">YouGlish</h3>
         <p class="card-desc">Pronuncias reais de termos tecnicos em contextos autenticos de video.</p>
@@ -644,83 +396,58 @@
       </div>
     </a>
 
-    <!-- FORMULÁRIO — INTERESSES -->
+    <!-- FORMULÁRIO INTERESSES -->
     <a href="https://forms.office.com/r/SfVaqefC18" target="_blank" rel="noopener" class="card card--form">
       <div class="card-pad">
-        <div class="form-icon-wrap">
-          <div class="form-icon-ring"></div>
-          <svg class="form-icon-svg" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        </div>
+        <div class="form-icon-wrap"><div class="form-icon-ring"></div><svg class="form-icon-svg" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
         <div class="form-content">
           <p class="card-overline">Personalize seu Curso</p>
           <h3 class="card-title">Conte-nos seus interesses</h3>
-          <p class="card-desc">Preencha o formulario com os assuntos e temas que mais interessam a voce. Suas aulas serao desenvolvidas e personalizadas a partir dessas informacoes.</p>
+          <p class="card-desc">Preencha o formulario com os assuntos e temas que mais interessam a voce. Suas aulas serao personalizadas a partir dessas informacoes.</p>
         </div>
-        <span class="form-btn">Preencher <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
+        <span class="form-btn">Preencher <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
       </div>
     </a>
 
-    <!-- FORMULÁRIO — FEEDBACK -->
+    <!-- FORMULÁRIO FEEDBACK -->
     <a href="COLE_AQUI_O_LINK_DO_FORMULARIO_DE_FEEDBACK" target="_blank" rel="noopener" class="card card--form">
       <div class="card-pad">
-        <div class="form-icon-wrap">
-          <div class="form-icon-ring"></div>
-          <svg class="form-icon-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-        </div>
+        <div class="form-icon-wrap"><div class="form-icon-ring"></div><svg class="form-icon-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
         <div class="form-content">
           <p class="card-overline">Sua Opiniao</p>
           <h3 class="card-title">Como esta sendo sua experiencia conosco?</h3>
           <p class="card-desc">Sua percepcao e fundamental para continuarmos evoluindo. Compartilhe como esta sendo sua jornada no MD Talk.</p>
         </div>
-        <span class="form-btn">Preencher <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
+        <span class="form-btn">Preencher <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
       </div>
     </a>
 
     <!-- TREINAMENTO -->
     <a href="https://institutomdtalk.github.io/treinamento/" target="_blank" rel="noopener" class="card card--training">
       <div class="card-pad">
-        <div class="training-badge">
-          <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-        </div>
+        <div class="training-badge"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
         <div class="training-content">
           <p class="card-overline">Treinamento Complementar</p>
           <h3 class="card-title">Congressos, Observership e Fellowship</h3>
           <p class="card-desc">Treinamento especializado para apresentacoes em congressos internacionais, processos de observership e fellowship.</p>
         </div>
-        <div class="training-arrow">
-          <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-        </div>
+        <div class="training-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
       </div>
     </a>
 
     <!-- CONTATO -->
     <div class="contact-strip">
       <a href="https://instagram.com/inglesmedico.thaifaria" target="_blank" rel="noopener" class="contact-item">
-        <div class="contact-icon contact-icon--ig">
-          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><path d="M17.5 6.5h.01"/></svg>
-        </div>
-        <div>
-          <p class="contact-text-label">Instagram</p>
-          <p class="contact-text-value">@inglesmedico.thaifaria</p>
-        </div>
+        <div class="contact-icon contact-icon--ig"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><path d="M17.5 6.5h.01"/></svg></div>
+        <div><p class="contact-text-label">Instagram</p><p class="contact-text-value">@inglesmedico.thaifaria</p></div>
       </a>
-      <a href="#" onclick="this.href='mail'+'to:mdtalk'+'.'+'office@gmail.com'" class="contact-item">
-        <div class="contact-icon contact-icon--email">
-          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </div>
-        <div>
-          <p class="contact-text-label">E-mail</p>
-          <p class="contact-text-value">mdtalk.office&#64;gmail.com</p>
-        </div>
+      <a href="#" onclick="this.href='mai'+'lto:mdtalk.o'+'ffice@gmail.com'" class="contact-item">
+        <div class="contact-icon contact-icon--email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div><p class="contact-text-label">E-mail</p><p class="contact-text-value">mdtalk.office&#64;gmail.com</p></div>
       </a>
       <a href="https://wa.me/5514997758941" target="_blank" rel="noopener" class="contact-item">
-        <div class="contact-icon contact-icon--wpp">
-          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-        </div>
-        <div>
-          <p class="contact-text-label">WhatsApp</p>
-          <p class="contact-text-value">Enviar mensagem</p>
-        </div>
+        <div class="contact-icon contact-icon--wpp"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
+        <div><p class="contact-text-label">WhatsApp</p><p class="contact-text-value">Enviar mensagem</p></div>
       </a>
     </div>
 
@@ -728,20 +455,17 @@
 
   <footer class="footer">
     <p class="footer-brand">Instituto MD Talk</p>
-    <p class="footer-copy">&copy; 2026 Instituto MD Talk — Todos os direitos reservados.</p>
+    <p class="footer-copy">&copy; 2026 Instituto MD Talk &mdash; Todos os direitos reservados.</p>
   </footer>
-
 </div>
 
 <!-- MODAL FALTA -->
 <div class="modal-overlay" id="modal-falta">
   <div class="modal-box">
-    <div class="modal-icon">
-      <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    </div>
+    <div class="modal-icon"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
     <div class="modal-title">Ciencia sobre cancelamento</div>
     <div class="modal-text">
-      Ao registrar esta falta, declaro que estou ciente de que o cancelamento de aulas deve ser comunicado com <strong>antecedencia minima de 2 horas</strong> em relacao ao horario de inicio. Solicitacoes realizadas fora deste prazo implicam em aula <strong>contabilizada como realizada</strong>, conforme os termos acordados no inicio do programa.<br><br>
+      Ao registrar esta falta, declaro que estou ciente de que o cancelamento de aulas deve ser comunicado com <strong>antecedencia minima de 2 horas</strong> em relacao ao horario de inicio. Solicitacoes fora deste prazo implicam em aula <strong>contabilizada como realizada</strong>, conforme os termos acordados no inicio do programa.<br><br>
       Ao confirmar, voce sera redirecionado ao link de reagendamento.
     </div>
     <div class="modal-actions">
@@ -754,31 +478,56 @@
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-<!-- ════════════════════════════════════
-     SCRIPT
-════════════════════════════════════ -->
 <script>
-// ─────────────────────────────────────
-// CONFIGURAÇÃO
-// ─────────────────────────────────────
+// ── CONFIGURAÇÃO ──
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzYaTJWlGlx26oNu_R1eKvQsSvxWiahrwUrrxp-t6RoY8wbxfAsVQ9mGzLExCq0jE6kbg/exec';
-
 let currentStudent = null;
 
-// ─────────────────────────────────────
-// PÁGINAS
-// ─────────────────────────────────────
+// ── JSONP (resolve CORS com Apps Script) ──
+function callScript(params, onSuccess, onError) {
+  const cbName = 'cb_' + Date.now() + '_' + Math.floor(Math.random()*10000);
+  const url = SCRIPT_URL + '?' + params + '&callback=' + cbName;
+  const script = document.createElement('script');
+  let done = false;
+
+  window[cbName] = function(data) {
+    done = true;
+    delete window[cbName];
+    document.body.removeChild(script);
+    onSuccess(data);
+  };
+
+  script.src = url;
+  script.onerror = function() {
+    if (!done) {
+      done = true;
+      delete window[cbName];
+      if (document.body.contains(script)) document.body.removeChild(script);
+      onError && onError();
+    }
+  };
+
+  setTimeout(function() {
+    if (!done) {
+      done = true;
+      delete window[cbName];
+      if (document.body.contains(script)) document.body.removeChild(script);
+      onError && onError();
+    }
+  }, 15000);
+
+  document.body.appendChild(script);
+}
+
+// ── PAGES ──
 function showPage(id) {
   document.getElementById('page-login').classList.remove('active');
   document.getElementById('page-dashboard').classList.remove('active');
-  const el = document.getElementById('page-' + id);
-  if (el) el.classList.add('active');
+  document.getElementById('page-' + id).classList.add('active');
 }
 
-// ─────────────────────────────────────
-// LOGIN
-// ─────────────────────────────────────
-async function doLogin() {
+// ── LOGIN ──
+function doLogin() {
   const login = document.getElementById('f-login').value.trim();
   const senha = document.getElementById('f-senha').value.trim();
   const btn   = document.getElementById('btn-entrar');
@@ -790,132 +539,102 @@ async function doLogin() {
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner-inline"></span> Verificando...';
 
-  try {
-    const r = await fetch(
-      `${SCRIPT_URL}?action=login&login=${encodeURIComponent(login)}&senha=${encodeURIComponent(senha)}`,
-      { redirect: 'follow' }
-    );
-    const d = await r.json();
-
-    if (d.success) {
-      currentStudent = d.aluno;
-      renderDashboard(d.aluno, d.avisos);
-    } else {
-      showErr(d.message || 'Login ou senha incorretos.');
+  callScript(
+    'action=login&login=' + encodeURIComponent(login) + '&senha=' + encodeURIComponent(senha),
+    function(d) {
+      btn.disabled = false;
+      btn.textContent = 'Acessar';
+      if (d.success) {
+        currentStudent = d.aluno;
+        renderDashboard(d.aluno, d.avisos);
+      } else {
+        showErr(d.message || 'Login ou senha incorretos.');
+      }
+    },
+    function() {
+      btn.disabled = false;
+      btn.textContent = 'Acessar';
+      showErr('Erro de conexao. Tente novamente.');
     }
-  } catch(e) {
-    showErr('Erro de conexao. Tente novamente.');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Acessar';
-  }
+  );
 }
 
 function showErr(msg) {
-  const el = document.getElementById('login-err');
+  var el = document.getElementById('login-err');
   el.textContent = msg;
   el.style.display = 'block';
 }
 
-document.addEventListener('keydown', e => {
+document.addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && document.getElementById('page-login').classList.contains('active'))
     doLogin();
 });
 
-// ─────────────────────────────────────
-// DASHBOARD
-// ─────────────────────────────────────
+// ── DASHBOARD ──
 function renderDashboard(a, avisos) {
-  // Header
   document.getElementById('hdr-nome').textContent = a.nome_display || a.login;
 
-  // Drive / Agenda
-  const ld = document.getElementById('link-drive');
+  var ld = document.getElementById('link-drive');
   if (a.link_drive) { ld.href = a.link_drive; } else { ld.classList.add('disabled'); }
-  const la = document.getElementById('link-agenda');
-  if (a.link_agenda) { la.href = a.link_agenda; } else { la.classList.add('disabled'); }
 
-  // Programa
-  if (a.curso) document.getElementById('espaco-titulo').textContent = a.curso;
-  if (a.descricao_curso) document.getElementById('espaco-desc').textContent = a.descricao_curso;
+  if (a.curso)           document.getElementById('espaco-titulo').textContent = a.curso;
+  if (a.descricao_curso) document.getElementById('espaco-desc').textContent   = a.descricao_curso;
 
-  // Materiais
   if (a.materiais && a.materiais.length) {
     document.getElementById('materiais-section').style.display = 'block';
-    document.getElementById('materiais-content').innerHTML = a.materiais.map(m => `
-      <a class="mat-item" href="${m.link}" target="_blank" rel="noopener">
-        <div class="mat-dot"></div>
-        <span class="mat-nome">${m.nome}</span>
-        <span class="mat-tipo">${m.tipo || ''}</span>
-        <span class="mat-arrow">›</span>
-      </a>`).join('');
+    document.getElementById('materiais-content').innerHTML = a.materiais.map(function(m) {
+      return '<a class="mat-item" href="' + m.link + '" target="_blank" rel="noopener">' +
+        '<div class="mat-dot"></div>' +
+        '<span class="mat-nome">' + m.nome + '</span>' +
+        '<span class="mat-tipo">' + (m.tipo || '') + '</span>' +
+        '</a>';
+    }).join('');
   }
 
-  // Avisos
-  const muralEl = document.getElementById('mural-content');
+  var muralEl = document.getElementById('mural-content');
   if (!avisos || !avisos.length) {
     muralEl.innerHTML = '<div class="empty-state">Nenhum aviso no momento.</div>';
   } else {
-    muralEl.innerHTML = avisos.map(av => `
-      <div class="aviso-item">
-        <div class="aviso-data">${av.data}</div>
-        <div class="aviso-txt">${av.texto}</div>
-      </div>`).join('');
+    muralEl.innerHTML = avisos.map(function(av) {
+      return '<div class="aviso-item"><div class="aviso-data">' + av.data + '</div><div class="aviso-txt">' + av.texto + '</div></div>';
+    }).join('');
   }
 
-  // Histórico e stats
   renderHistorico(a.historico);
-
-  // Mostrar dashboard
   showPage('dashboard');
   startClock();
-
-  // Animar cards
-  setTimeout(() => animateCards(), 50);
+  setTimeout(animateCards, 50);
 }
 
-// ─────────────────────────────────────
-// RELÓGIO E SAUDAÇÃO EM TEMPO REAL
-// ─────────────────────────────────────
-let clockInterval = null;
-
+// ── RELÓGIO ──
+var clockInterval = null;
 function startClock() {
   updateClock();
   clockInterval = setInterval(updateClock, 1000);
 }
-
 function stopClock() {
   if (clockInterval) { clearInterval(clockInterval); clockInterval = null; }
 }
-
 function updateClock() {
-  const now = new Date();
-  const h   = now.getHours();
-  const m   = String(now.getMinutes()).padStart(2, '0');
-  const s   = String(now.getSeconds()).padStart(2, '0');
-
-  let greeting = 'Good evening,';
-  if (h >= 5  && h < 12) greeting = 'Good morning,';
-  else if (h >= 12 && h < 18) greeting = 'Good afternoon,';
-
-  const grEl = document.getElementById('hdr-greeting');
-  const clEl = document.getElementById('hdr-clock');
+  var now = new Date();
+  var h = now.getHours();
+  var m = String(now.getMinutes()).padStart(2,'0');
+  var s = String(now.getSeconds()).padStart(2,'0');
+  var greeting = h >= 5 && h < 12 ? 'Good morning,' : h >= 12 && h < 18 ? 'Good afternoon,' : 'Good evening,';
+  var grEl = document.getElementById('hdr-greeting');
+  var clEl = document.getElementById('hdr-clock');
   if (grEl) grEl.textContent = greeting;
-  if (clEl) clEl.textContent = `${String(h).padStart(2,'0')}:${m}:${s}`;
+  if (clEl) clEl.textContent = String(h).padStart(2,'0') + ':' + m + ':' + s;
 }
 
-// ─────────────────────────────────────
-// CALENDÁRIO DE PRESENÇAS
-// ─────────────────────────────────────
-let calYear, calMonth, calData = [];
-
-const MONTHS_PT = ['Janeiro','Fevereiro','Marco','Abril','Maio','Junho',
-                   'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-const DAYS_EN   = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+// ── CALENDÁRIO ──
+var calYear, calMonth, calData = [];
+var MONTHS_PT = ['Janeiro','Fevereiro','Marco','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+var DAYS_EN   = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 
 function initCalendar(historico) {
   calData = historico || [];
-  const now = new Date();
+  var now = new Date();
   calYear  = now.getFullYear();
   calMonth = now.getMonth();
   renderCalendar();
@@ -925,229 +644,185 @@ function calPrev() { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; }
 function calNext() { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCalendar(); }
 
 function parseCalDate(str) {
-  // Supports "02 de abril de 2026" (pt-BR long) and dd/mm/yyyy
   if (!str) return null;
-  const months = {'janeiro':0,'fevereiro':1,'marco':2,'abril':3,'maio':4,'junho':5,
-                  'julho':6,'agosto':7,'setembro':8,'outubro':9,'novembro':10,'dezembro':11};
-  const m1 = str.match(/^(\d{1,2})\s+de\s+(\w+)\s+de\s+(\d{4})/i);
-  if (m1) {
-    const mo = months[m1[2].toLowerCase()];
-    if (mo !== undefined) return new Date(parseInt(m1[3]), mo, parseInt(m1[1]));
-  }
-  const m2 = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  var months = {janeiro:0,fevereiro:1,marco:2,abril:3,maio:4,junho:5,julho:6,agosto:7,setembro:8,outubro:9,novembro:10,dezembro:11};
+  var m1 = str.match(/^(\d{1,2})\s+de\s+(\w+)\s+de\s+(\d{4})/i);
+  if (m1) { var mo = months[m1[2].toLowerCase()]; if (mo !== undefined) return new Date(parseInt(m1[3]), mo, parseInt(m1[1])); }
+  var m2 = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
   if (m2) return new Date(parseInt(m2[3]), parseInt(m2[2])-1, parseInt(m2[1]));
   return null;
 }
 
 function renderCalendar() {
-  const label = document.getElementById('cal-month-label');
-  const grid  = document.getElementById('cal-grid');
-  const faltasMes = document.getElementById('cal-faltas-mes');
+  var label = document.getElementById('cal-month-label');
+  var grid  = document.getElementById('cal-grid');
+  var faltasMes = document.getElementById('cal-faltas-mes');
   if (!label || !grid) return;
 
-  label.textContent = `${MONTHS_PT[calMonth]} ${calYear}`;
+  label.textContent = MONTHS_PT[calMonth] + ' ' + calYear;
 
-  // Build lookup: "YYYY-M-D" -> status
-  const lookup = {};
-  calData.forEach(h => {
-    const d = parseCalDate(h.data_aula);
-    if (d) {
-      const key = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
-      lookup[key] = h.status;
-    }
+  var lookup = {};
+  calData.forEach(function(h) {
+    var d = parseCalDate(h.data_aula);
+    if (d) lookup[d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate()] = h.status;
   });
 
-  // Count faltas this displayed month
-  let faltasCount = 0;
-  calData.forEach(h => {
-    const d = parseCalDate(h.data_aula);
-    if (d && d.getFullYear() === calYear && d.getMonth() === calMonth && h.status === 'falta')
-      faltasCount++;
+  var faltasCount = 0;
+  calData.forEach(function(h) {
+    var d = parseCalDate(h.data_aula);
+    if (d && d.getFullYear()===calYear && d.getMonth()===calMonth && h.status==='falta') faltasCount++;
   });
   faltasMes.textContent = faltasCount;
-  document.getElementById('cal-plural').textContent  = faltasCount === 1 ? '' : 's';
-  document.getElementById('cal-plural2').textContent = faltasCount === 1 ? '' : 's';
+  document.getElementById('cal-plural').textContent  = faltasCount===1?'':'s';
+  document.getElementById('cal-plural2').textContent = faltasCount===1?'':'s';
 
-  const today  = new Date();
-  const first  = new Date(calYear, calMonth, 1);
-  const last   = new Date(calYear, calMonth + 1, 0);
-  const startDow = first.getDay(); // 0=Sun
+  var today = new Date();
+  var first = new Date(calYear, calMonth, 1);
+  var last  = new Date(calYear, calMonth+1, 0);
+  var html  = DAYS_EN.map(function(d){ return '<div class="cal-day-label">'+d+'</div>'; }).join('');
 
-  let html = DAYS_EN.map(d => `<div class="cal-day-label">${d}</div>`).join('');
+  for (var i=0; i<first.getDay(); i++) html += '<div class="cal-day other-month"></div>';
 
-  // Empty cells before first day
-  for (let i = 0; i < startDow; i++)
-    html += '<div class="cal-day other-month"></div>';
-
-  for (let day = 1; day <= last.getDate(); day++) {
-    const key    = `${calYear}-${calMonth}-${day}`;
-    const status = lookup[key];
-    const isToday = (today.getFullYear()===calYear && today.getMonth()===calMonth && today.getDate()===day);
-    let cls = 'cal-day';
-    let mark = '';
-    if (status === 'presente') { cls += ' has-presenca'; mark = '✓'; }
-    else if (status === 'falta') { cls += ' has-falta';    mark = '✕'; }
-    if (isToday) cls += ' today';
-    html += `<div class="${cls}">${day}${mark ? `<span class="cal-mark">${mark}</span>` : ''}</div>`;
+  for (var day=1; day<=last.getDate(); day++) {
+    var key    = calYear+'-'+calMonth+'-'+day;
+    var status = lookup[key];
+    var isToday = (today.getFullYear()===calYear && today.getMonth()===calMonth && today.getDate()===day);
+    var cls = 'cal-day';
+    var mark = '';
+    if (status==='presente') { cls+=' has-presenca'; mark='✓'; }
+    else if (status==='falta') { cls+=' has-falta'; mark='✕'; }
+    if (isToday) cls+=' today';
+    html += '<div class="'+cls+'">'+day+(mark?'<div class="cal-mark">'+mark+'</div>':'')+'</div>';
   }
-
   grid.innerHTML = html;
 }
 
-// ─────────────────────────────────────
-// HISTÓRICO E STATS
-// ─────────────────────────────────────
+// ── HISTÓRICO / STATS ──
 function renderHistorico(historico) {
   if (!historico || !historico.length) {
     document.getElementById('stat-presencas').textContent = '0';
-    document.getElementById('stat-faltas').textContent = '0';
-    document.getElementById('stat-freq').textContent = '—';
+    document.getElementById('stat-faltas').textContent    = '0';
+    document.getElementById('stat-freq').textContent      = '—';
     initCalendar([]);
     return;
   }
-
-  const presencas = historico.filter(h => h.status === 'presente').length;
-  const faltas    = historico.filter(h => h.status === 'falta').length;
-  const total     = presencas + faltas;
-  const freq      = total > 0 ? Math.round((presencas / total) * 100) + '%' : '—';
-
+  var presencas = historico.filter(function(h){ return h.status==='presente'; }).length;
+  var faltas    = historico.filter(function(h){ return h.status==='falta'; }).length;
+  var total     = presencas + faltas;
   document.getElementById('stat-presencas').textContent = presencas;
   document.getElementById('stat-faltas').textContent    = faltas;
-  document.getElementById('stat-freq').textContent      = freq;
-
+  document.getElementById('stat-freq').textContent      = total>0 ? Math.round((presencas/total)*100)+'%' : '—';
   initCalendar(historico);
 }
 
-// ─────────────────────────────────────
-// REGISTRAR PRESENÇA / FALTA
-// ─────────────────────────────────────
-async function registrarPresenca(status) {
+// ── PRESENÇA / FALTA ──
+function registrarPresenca(status) {
   if (!currentStudent) return;
-
-  // ── Falta: exibir modal de ciência antes de prosseguir ──
-  if (status === 'falta') {
-    showModalFalta();
-    return;
-  }
-
-  await _gravarRegistro('presente');
+  if (status === 'falta') { showModalFalta(); return; }
+  _gravarRegistro('presente');
 }
 
-function showModalFalta() {
-  document.getElementById('modal-falta').classList.add('active');
-}
+function showModalFalta()  { document.getElementById('modal-falta').classList.add('active'); }
+function fecharModalFalta(){ document.getElementById('modal-falta').classList.remove('active'); }
 
-function fecharModalFalta() {
-  document.getElementById('modal-falta').classList.remove('active');
-}
-
-async function confirmarFalta() {
+function confirmarFalta() {
   fecharModalFalta();
-  await _gravarRegistro('falta');
-  // Redirecionar para reagendamento após fechar modal
-  setTimeout(() => {
-    window.open('https://calendar.app.google/RAURJTpXNw35Lzht5', '_blank');
-  }, 600);
+  _gravarRegistro('falta');
+  setTimeout(function(){ window.open('https://calendar.app.google/RAURJTpXNw35Lzht5','_blank'); }, 600);
 }
 
-async function _gravarRegistro(status) {
-  const btnP = document.getElementById('btn-presente');
-  const btnF = document.getElementById('btn-falta');
+function _gravarRegistro(status) {
+  var btnP = document.getElementById('btn-presente');
+  var btnF = document.getElementById('btn-falta');
   btnP.disabled = true;
   btnF.disabled = true;
-  btnP.innerHTML = status === 'presente'
-    ? '<span class="spinner-inline spinner-white"></span> Registrando...'
-    : 'Confirmar Presenca';
-  btnF.innerHTML = status === 'falta'
-    ? '<span class="spinner-inline" style="border-top-color:rgba(255,255,255,0.6)"></span> Registrando...'
-    : 'Registrar Falta';
+  btnP.innerHTML = status==='presente' ? '<span class="spinner-inline spinner-white"></span> Registrando...' : 'Confirmar Presenca';
+  btnF.innerHTML = status==='falta'    ? '<span class="spinner-inline" style="border-top-color:rgba(255,255,255,.6)"></span> Registrando...' : 'Registrar Falta';
 
-  try {
-    const hoje = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
-    const agora = new Date().toLocaleString('pt-BR');
+  var hoje  = new Date().toLocaleDateString('pt-BR', {day:'2-digit',month:'long',year:'numeric'});
+  var agora = new Date().toLocaleString('pt-BR');
 
-    const r = await fetch(
-      `${SCRIPT_URL}?action=registrar&login=${encodeURIComponent(currentStudent.login)}&nome=${encodeURIComponent(currentStudent.nome_display || currentStudent.login)}&status=${status}&data_aula=${encodeURIComponent(hoje)}&registrado_em=${encodeURIComponent(agora)}`,
-      { redirect: 'follow' }
-    );
-    const d = await r.json();
-
-    if (d.success) {
-      showToast(status === 'presente' ? 'Presenca confirmada!' : 'Falta registrada.', status === 'presente' ? 'success' : '');
-
-      // Atualizar histórico e stats localmente
-      const novoRegistro = { status, data_aula: hoje, registrado_em: agora };
-      const historico = [novoRegistro, ...(currentStudent.historico || [])];
-      currentStudent.historico = historico;
-      renderHistorico(historico);
-
-      // Desabilitar botões
-      btnP.innerHTML = status === 'presente' ? 'Presenca confirmada' : 'Confirmar Presenca';
-      btnF.innerHTML = status === 'falta'    ? 'Falta registrada'    : 'Registrar Falta';
-      btnP.disabled = true;
-      btnF.disabled = true;
-
-      // ── Presença: abrir WhatsApp ──
-      if (status === 'presente') {
-        const waMsg = encodeURIComponent('Confirmo minha presença na aula de hoje.');
-        setTimeout(() => {
-          window.open('https://wa.me/5514997758941?text=' + waMsg, '_blank');
-        }, 600);
+  callScript(
+    'action=registrar&login=' + encodeURIComponent(currentStudent.login) +
+    '&nome='         + encodeURIComponent(currentStudent.nome_display || currentStudent.login) +
+    '&status='       + status +
+    '&data_aula='    + encodeURIComponent(hoje) +
+    '&registrado_em='+ encodeURIComponent(agora),
+    function(d) {
+      if (d.success) {
+        showToast(status==='presente' ? 'Presenca confirmada!' : 'Falta registrada.', status==='presente'?'success':'');
+        var novoReg = {status:status, data_aula:hoje, registrado_em:agora};
+        var hist = [novoReg].concat(currentStudent.historico || []);
+        currentStudent.historico = hist;
+        renderHistorico(hist);
+        btnP.textContent = status==='presente' ? 'Presenca confirmada' : 'Confirmar Presenca';
+        btnF.textContent = status==='falta'    ? 'Falta registrada'    : 'Registrar Falta';
+        btnP.disabled = true;
+        btnF.disabled = true;
+        if (status==='presente') {
+          setTimeout(function(){ window.open('https://wa.me/5514997758941?text='+encodeURIComponent('Confirmo minha presença na aula de hoje.'),'_blank'); }, 600);
+        }
+      } else {
+        showToast('Erro ao registrar. Tente novamente.','error');
+        btnP.disabled = false; btnF.disabled = false;
+        btnP.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><polyline points="20 6 9 17 4 12"/></svg> Confirmar Presenca';
+        btnF.textContent = 'Registrar Falta';
       }
-    } else {
-      showToast('Erro ao registrar. Tente novamente.', 'error');
-      btnP.disabled = false;
-      btnF.disabled = false;
-      resetBtnPresenca();
+    },
+    function() {
+      showToast('Erro de conexao.','error');
+      btnP.disabled = false; btnF.disabled = false;
+      btnP.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><polyline points="20 6 9 17 4 12"/></svg> Confirmar Presenca';
+      btnF.textContent = 'Registrar Falta';
     }
-  } catch(e) {
-    showToast('Erro de conexao. Tente novamente.', 'error');
-    btnP.disabled = false;
-    btnF.disabled = false;
-    resetBtnPresenca();
-  }
+  );
 }
 
-function resetBtnPresenca() {
-  document.getElementById('btn-presente').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><polyline points="20 6 9 17 4 12"/></svg> Confirmar Presenca';
-  document.getElementById('btn-falta').innerHTML = 'Registrar Falta';
-}
-
-// ─────────────────────────────────────
-// LOGOUT
-// ─────────────────────────────────────
+// ── LOGOUT ──
 function doLogout() {
   currentStudent = null;
   stopClock();
   document.getElementById('f-login').value = '';
   document.getElementById('f-senha').value = '';
   document.getElementById('login-err').style.display = 'none';
-  document.getElementById('mural-content').innerHTML = '<div style="color:var(--text-muted);font-size:13px;"><span class="spinner-inline"></span>Carregando...</div>';
-  document.getElementById('historico-content').innerHTML = '<div class="empty-state">Nenhuma aula registrada ainda.</div>';
+  document.getElementById('mural-content').innerHTML = '<div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div>';
   document.getElementById('materiais-section').style.display = 'none';
   showPage('login');
 }
 
-// ─────────────────────────────────────
-// TOAST
-// ─────────────────────────────────────
+// ── TOAST ──
 function showToast(msg, type) {
-  const t = document.getElementById('toast');
+  var t = document.getElementById('toast');
   t.textContent = msg;
-  t.className = 'toast' + (type ? ' ' + type : '');
+  t.className = 'toast' + (type ? ' '+type : '');
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
+  setTimeout(function(){ t.classList.remove('show'); }, 3000);
 }
 
-// ─────────────────────────────────────
-// ANIMAÇÃO DE CARDS
-// ─────────────────────────────────────
+// ── ANIMAÇÃO DE CARDS ──
 function animateCards() {
-  const cards = document.querySelectorAll('#page-dashboard .card, #page-dashboard .contact-strip');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+  var cards = document.querySelectorAll('#page-dashboard .card, #page-dashboard .contact-strip');
+  if (!('IntersectionObserver' in window)) {
+    cards.forEach(function(c){ c.style.opacity='1'; c.style.transform='translateY(0)'; });
+    return;
+  }
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry, i) {
       if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.style.transition = 'opacity 0.55s ease-out, transform 0.55s ease-out, box-shadow 0.35s ease, border-color 0.35s ease';
+        setTimeout(function(){
+          entry.target.style.transition = 'opacity .55s ease-out, transform .55s ease-out, box-shadow .35s, border-color .35s';
           entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)'
+          entry.target.style.transform = 'translateY(0)';
+        }, i * 70);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.04});
+  cards.forEach(function(c){ observer.observe(c); });
+}
+
+// ── INIT ──
+window.addEventListener('load', function(){ showPage('login'); });
+</script>
+</body>
+</html>
