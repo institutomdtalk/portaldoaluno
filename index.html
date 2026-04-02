@@ -307,12 +307,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
             <p class="proxima-aula-data" id="proxima-aula-txt"><span class="proxima-aula-vazia">Não informada</span></p>
           </div>
 
-          <!-- Botão Meet -->
-          <a class="btn-meet" id="btn-meet" href="#" target="_blank" rel="noopener" style="display:none">
-            <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-            Entrar no Google Meet
-          </a>
-
           <p class="presenca-subtitle" style="margin-top:4px">Registre sua presença ou falta na aula de hoje.</p>
         </div>
         <div class="presenca-right">
@@ -355,11 +349,28 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       </div>
     </div>
 
-    <!-- MURAL -->
+    <!-- MEET + MURAL no mesmo card -->
     <div class="card">
-      <div class="card-pad">
-        <p class="card-overline">Mural de Avisos</p>
-        <div id="mural-content"><div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div></div>
+      <div class="card-pad" style="padding-bottom:0">
+
+        <!-- Google Meet -->
+        <a class="btn-meet" id="btn-meet" href="#" target="_blank" rel="noopener" style="display:none">
+          <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          Entrar no Google Meet
+        </a>
+        <div id="meet-placeholder" style="display:none;background:var(--cream);border-radius:8px;padding:14px 16px;margin-bottom:18px;text-align:center">
+          <p style="font-size:12px;color:var(--text-muted);font-style:italic">Link do Google Meet não configurado.</p>
+        </div>
+
+        <!-- Divisor -->
+        <div id="meet-divider" style="height:1px;background:var(--border);margin:0 -26px 0 -26px;display:none"></div>
+
+        <!-- Mural -->
+        <div style="padding-top:20px;padding-bottom:26px">
+          <p class="card-overline">Mural de Avisos</p>
+          <div id="mural-content"><div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div></div>
+        </div>
+
       </div>
     </div>
 
@@ -609,9 +620,17 @@ function renderDashboard(a, avisos) {
 
   // Google Meet
   var meetBtn = document.getElementById('btn-meet');
-  if (meetBtn && a.link_meet && a.link_meet.trim()) {
-    meetBtn.href = a.link_meet;
-    meetBtn.style.display = 'flex';
+  var meetDiv = document.getElementById('meet-divider');
+  var meetPlaceholder = document.getElementById('meet-placeholder');
+  if (meetBtn) {
+    if (a.link_meet && a.link_meet.trim()) {
+      meetBtn.href = a.link_meet;
+      meetBtn.style.display = 'flex';
+      if (meetDiv) meetDiv.style.display = 'block';
+    } else {
+      if (meetPlaceholder) meetPlaceholder.style.display = 'block';
+      if (meetDiv) meetDiv.style.display = 'block';
+    }
   }
 
   if (a.curso)           document.getElementById('espaco-titulo').textContent = a.curso;
