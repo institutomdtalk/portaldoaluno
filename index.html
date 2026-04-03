@@ -1425,12 +1425,17 @@ function verificarRegistroHoje(historico) {
   var diaHoje=now.getDate();
   var mesHoje=now.getMonth();
   var anoHoje=now.getFullYear();
+  console.log('[MD Talk] verificarRegistroHoje — hoje:', diaHoje, mesHoje, anoHoje);
+  console.log('[MD Talk] historico recebido:', JSON.stringify(historico));
   for(var i=0;i<historico.length;i++){
     var d=parseCalDate(historico[i].data_aula);
+    console.log('[MD Talk] registro', i, '— data_aula:', historico[i].data_aula, '— parseCalDate:', d);
     if(d && d.getDate()===diaHoje && d.getMonth()===mesHoje && d.getFullYear()===anoHoje){
+      console.log('[MD Talk] MATCH — bloqueando botões com status:', historico[i].status);
       bloqueiarBotoesHoje(historico[i].status); return;
     }
   }
+  console.log('[MD Talk] Nenhum registro hoje encontrado.');
 }
 
 function bloqueiarBotoesHoje(status) {
