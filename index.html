@@ -703,6 +703,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .cal-day.has-presenca{background:var(--success-bg);color:var(--success);font-weight:700}
 .cal-day.has-falta{background:var(--danger-bg);color:var(--danger);font-weight:700}
 .cal-day.today{outline:1.5px solid var(--gold);outline-offset:-1.5px}
+.cal-day.has-feriado{background:rgba(196,164,90,0.08);color:var(--gold);}
 .cal-mark{font-size:7px;line-height:1;margin-top:0}
 
 /* ═══════════════════════════════════════
@@ -1056,14 +1057,25 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
           <button id="cal-btn-next" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s ease">&#8250;</button>
         </div>
         <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
-        <div style="background:var(--off-white);border-radius:var(--radius);padding:14px 16px;margin-top:14px;display:flex;align-items:center;gap:14px;border:1px solid var(--border)">
-          <div style="text-align:center;min-width:44px">
-            <div style="font-family:var(--serif);font-size:1.8rem;font-weight:600;color:var(--danger);line-height:1" id="cal-faltas-mes">0</div>
-            <p style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">falta<span id="cal-plural">s</span></p>
+        <div style="background:var(--off-white);border-radius:var(--radius);padding:14px 16px;margin-top:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border)">
+          <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
+            <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--success);line-height:1" id="cal-presencas-mes">0</div>
+            <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Presenças</p>
           </div>
-          <div style="width:1px;height:32px;background:var(--border)"></div>
-          <p style="font-size:14px;color:var(--text-muted);line-height:1.5"><span id="cal-plural2" style="display:none"></span>Registradas neste mês</p>
+          <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
+            <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--danger);line-height:1" id="cal-faltas-mes">0</div>
+            <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Falta<span id="cal-plural">s</span></p>
+          </div>
+          <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
+            <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--navy);line-height:1" id="cal-freq-mes">—</div>
+            <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Frequência</p>
+          </div>
+          <div style="text-align:center;padding:4px 8px">
+            <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--gold);line-height:1" id="cal-esperadas-mes">—</div>
+            <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Esperadas</p>
+          </div>
         </div>
+        <p id="cal-nav-aviso" style="font-size:11px;color:var(--text-muted);margin-top:8px;text-align:center;font-style:italic;display:none">Visualização de mês anterior — somente leitura</p>
       </div>
     </div>
 
@@ -1315,6 +1327,7 @@ function renderDashboard(a, avisos) {
   if (!avisos || !avisos.length) { muralEl.innerHTML = '<div class="empty-state">Nenhum aviso no momento.</div>'; }
   else { muralEl.innerHTML = avisos.map(function(av) { return '<div class="aviso-item"><div class="aviso-data">'+av.data+'</div><div class="aviso-txt">'+av.texto+'</div></div>'; }).join(''); }
 
+  window._calFreq = a.frequencia_semanal ? parseInt(a.frequencia_semanal) : null;
   renderHistorico(a.historico);
   verificarRegistroHoje(a.historico);
   showPage('dashboard');
@@ -1346,9 +1359,69 @@ var calYear, calMonth, calData = [];
 var MONTHS_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 var DAYS_EN   = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 
-function initCalendar(historico) { calData = historico||[]; var now=new Date(); calYear=now.getFullYear(); calMonth=now.getMonth(); renderCalendar(); }
+// Feriados nacionais brasileiros (YYYY-MM-DD)
+var FERIADOS = [
+  // 2025
+  '2025-01-01','2025-03-03','2025-03-04','2025-04-18','2025-04-20','2025-04-21',
+  '2025-05-01','2025-06-19','2025-09-07','2025-10-12','2025-11-02','2025-11-15',
+  '2025-11-20','2025-12-25',
+  // 2026
+  '2026-01-01','2026-02-16','2026-02-17','2026-04-03','2026-04-05','2026-04-21',
+  '2026-05-01','2026-06-04','2026-09-07','2026-10-12','2026-11-02','2026-11-15',
+  '2026-11-20','2026-12-25'
+];
+
+function isFeriado(date) {
+  var key = date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
+  return FERIADOS.indexOf(key) >= 0;
+}
+
+// Calcula aulas esperadas no mês considerando frequência semanal e feriados
+function aulasEsperadasNoMes(ano, mes, freqSemanal) {
+  if(!freqSemanal || freqSemanal < 1) return null;
+  // Conta semanas no mês (semanas ISO: conta segundas a partir do primeiro dia do mês)
+  var total = 0;
+  var first = new Date(ano, mes, 1);
+  var last  = new Date(ano, mes+1, 0);
+  var hoje  = new Date();
+  // Só conta semanas já passadas (até hoje se mês atual, ou mês inteiro se passado)
+  var limiteData = (ano < hoje.getFullYear() || (ano === hoje.getFullYear() && mes < hoje.getMonth()))
+    ? last
+    : hoje;
+  
+  // Percorre cada dia do mês até hoje
+  var d = new Date(first);
+  var semanasContadas = {};
+  while(d <= limiteData && d <= last) {
+    // Número da semana do ano como chave
+    var startOfYear = new Date(d.getFullYear(), 0, 1);
+    var weekNum = Math.ceil(((d - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
+    if(!semanasContadas[weekNum]) {
+      // Verifica se algum dia desta semana que seria de aula é feriado
+      // Considera que aula em feriado = contabilizada como dada (não desconta)
+      semanasContadas[weekNum] = true;
+      total += freqSemanal;
+    }
+    d.setDate(d.getDate() + 1);
+  }
+  return total;
+}
+
+function initCalendar(historico, freqSemanal) {
+  calData = historico||[];
+  if(freqSemanal) window._calFreq = freqSemanal;
+  var now=new Date(); calYear=now.getFullYear(); calMonth=now.getMonth();
+  renderCalendar();
+}
+
 function calPrev() { calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderCalendar(); }
-function calNext() { calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderCalendar(); }
+function calNext() {
+  var now=new Date();
+  // Não navega além do mês atual
+  if(calYear===now.getFullYear()&&calMonth===now.getMonth()) return;
+  calMonth++; if(calMonth>11){calMonth=0;calYear++;}
+  renderCalendar();
+}
 
 function parseCalDate(str) {
   if(!str) return null;
@@ -1361,18 +1434,49 @@ function parseCalDate(str) {
 }
 
 function renderCalendar() {
-  var label=document.getElementById('cal-month-label');
-  var grid=document.getElementById('cal-grid');
-  var faltasMes=document.getElementById('cal-faltas-mes');
+  var label   = document.getElementById('cal-month-label');
+  var grid    = document.getElementById('cal-grid');
+  var aviso   = document.getElementById('cal-nav-aviso');
   if(!label||!grid) return;
+
+  var now = new Date();
+  var isMesAtual = (calYear===now.getFullYear() && calMonth===now.getMonth());
+
   label.textContent = MONTHS_PT[calMonth]+' '+calYear;
+
+  // Mostrar aviso de mês anterior
+  if(aviso) aviso.style.display = isMesAtual ? 'none' : 'block';
+
+  // Build lookup
   var lookup={};
-  calData.forEach(function(h){var d=parseCalDate(h.data_aula);if(d)lookup[d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate()]=h.status;});
-  var faltasCount=0;
-  calData.forEach(function(h){var d=parseCalDate(h.data_aula);if(d&&d.getFullYear()===calYear&&d.getMonth()===calMonth&&h.status==='falta')faltasCount++;});
-  faltasMes.textContent=faltasCount;
-  document.getElementById('cal-plural').textContent=faltasCount===1?'':'s';
-  document.getElementById('cal-plural2').textContent=faltasCount===1?'':'s';
+  calData.forEach(function(h){
+    var d=parseCalDate(h.data_aula);
+    if(d) lookup[d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate()]=h.status;
+  });
+
+  // Stats do mês visualizado
+  var presencasMes=0, faltasMes=0;
+  calData.forEach(function(h){
+    var d=parseCalDate(h.data_aula);
+    if(d && d.getFullYear()===calYear && d.getMonth()===calMonth){
+      if(h.status==='presente') presencasMes++;
+      else if(h.status==='falta') faltasMes++;
+    }
+  });
+  var totalMes = presencasMes + faltasMes;
+  var freqMes  = totalMes > 0 ? Math.round((presencasMes/totalMes)*100)+'%' : '—';
+  var esperadas = window._calFreq ? aulasEsperadasNoMes(calYear, calMonth, window._calFreq) : null;
+
+  document.getElementById('cal-faltas-mes').textContent = faltasMes;
+  document.getElementById('cal-plural').textContent = faltasMes===1?'':'s';
+  var elP = document.getElementById('cal-presencas-mes');
+  var elFreq = document.getElementById('cal-freq-mes');
+  var elEsp  = document.getElementById('cal-esperadas-mes');
+  if(elP) elP.textContent = presencasMes;
+  if(elFreq) elFreq.textContent = freqMes;
+  if(elEsp) elEsp.textContent = esperadas !== null ? esperadas : '—';
+
+  // Render grid
   var today=new Date();
   var first=new Date(calYear,calMonth,1);
   var last=new Date(calYear,calMonth+1,0);
@@ -1382,14 +1486,20 @@ function renderCalendar() {
     var key=calYear+'-'+calMonth+'-'+day;
     var status=lookup[key];
     var isToday=(today.getFullYear()===calYear&&today.getMonth()===calMonth&&today.getDate()===day);
-    var cls='cal-day';
-    var mark='';
+    var thisDate=new Date(calYear,calMonth,day);
+    var isFer=isFeriado(thisDate);
+    var cls='cal-day'; var mark='';
     if(status==='presente'){cls+=' has-presenca';mark='✓';}
     else if(status==='falta'){cls+=' has-falta';mark='✕';}
+    else if(isFer && thisDate<=today){cls+=' has-feriado';}
     if(isToday) cls+=' today';
-    html+='<div class="'+cls+'">'+day+(mark?'<div class="cal-mark">'+mark+'</div>':'')+'</div>';
+    html+='<div class="'+cls+'" title="'+(isFer?'Feriado — aula contabilizada como realizada':'')+'">'+day+(mark?'<div class="cal-mark">'+mark+'</div>':'')+'</div>';
   }
   grid.innerHTML=html;
+
+  // Block next button if already at current month
+  var btnNext=document.getElementById('cal-btn-next');
+  if(btnNext) btnNext.style.opacity = isMesAtual ? '0.3' : '1';
 }
 
 // ── HISTÓRICO / STATS ──
@@ -1398,8 +1508,9 @@ function renderHistorico(historico) {
     document.getElementById('stat-presencas').textContent='0';
     document.getElementById('stat-faltas').textContent='0';
     document.getElementById('stat-freq').textContent='—';
-    initCalendar([]); return;
+    initCalendar([], window._calFreq||null); return;
   }
+  // Stats TOTAIS (todos os meses) para os pills do card de presença
   var presencas=historico.filter(function(h){return h.status==='presente';}).length;
   var faltas=historico.filter(function(h){return h.status==='falta';}).length;
   var total=presencas+faltas;
@@ -1409,7 +1520,7 @@ function renderHistorico(historico) {
   elP.textContent='0'; elF.textContent='0';
   setTimeout(function(){ animateCounter(elP,presencas); animateCounter(elF,faltas); }, 400);
   document.getElementById('stat-freq').textContent=freq;
-  initCalendar(historico);
+  initCalendar(historico, window._calFreq||null);
 }
 
 function animateCounter(el, target) {
