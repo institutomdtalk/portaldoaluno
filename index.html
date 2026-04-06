@@ -1715,6 +1715,24 @@ function buildStatusBadge(status) {
 
 
 
+function copiarPix() {
+  var key = '38315226851';
+  var btn = document.getElementById('pix-copy-btn');
+  navigator.clipboard.writeText(key).then(function(){
+    btn.textContent = 'Copiado!';
+    btn.style.background = 'var(--success)';
+    btn.style.color = 'var(--white)';
+    setTimeout(function(){ btn.textContent = 'Copiar'; btn.style.background = ''; btn.style.color = ''; }, 2000);
+  }).catch(function(){
+    var el = document.getElementById('pix-key-display');
+    var range = document.createRange(); range.selectNode(el);
+    window.getSelection().removeAllRanges(); window.getSelection().addRange(range);
+    document.execCommand('copy');
+    btn.textContent = 'Copiado!';
+    setTimeout(function(){ btn.textContent = 'Copiar'; }, 2000);
+  });
+}
+
 function animateCounter(el, target) {
   var duration=1200; var start=performance.now();
   (function tick(now){ var p=Math.min((now-start)/duration,1); var e=1-Math.pow(1-p,3); el.textContent=Math.round(e*target); if(p<1) requestAnimationFrame(tick); })(start);
