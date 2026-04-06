@@ -1198,10 +1198,20 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
             <div id="pag-empty" style="color:var(--text-muted);font-size:13px;font-style:italic;display:none">Nenhum registro financeiro.</div>
 
-            <!-- Histórico -->
+            <!-- Histórico (meses anteriores) -->
             <div id="pag-historico" style="margin-top:16px;display:none">
               <p style="font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Histórico</p>
               <div id="pag-lista"></div>
+            </div>
+
+            <!-- Chave Pix -->
+            <div style="margin-top:20px;background:var(--off-white);border:1px solid var(--border-gold);border-radius:var(--radius);padding:14px 18px">
+              <p style="font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Chave Pix</p>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                <p style="font-family:var(--serif);font-size:1.1rem;font-weight:500;color:var(--navy)" id="pag-pix-display">38315226851</p>
+                <button id="pag-copy-btn" onclick="copiarPix()" style="background:var(--gold);color:var(--navy-deep);border:none;border-radius:var(--radius);padding:9px 18px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s ease;white-space:nowrap;flex-shrink:0">Copiar</button>
+              </div>
+              <p style="font-size:11px;color:var(--text-muted);margin-top:10px;line-height:1.6;font-style:italic">Se você já efetuou o pagamento, por favor, aguarde a atualização do sistema.</p>
             </div>
 
           </div>
@@ -1678,20 +1688,27 @@ function renderPagamentos(pagamentos) {
       : 'Pagamento pendente — clique para ver detalhes.';
   }
 
-  // Histórico
-  if (histDiv) histDiv.style.display = 'block';
-  lista.innerHTML = sorted.map(function(p) {
-    return '<div class="pag-item">' +
-      '<div class="pag-item-left">' +
-        '<p class="pag-item-mes">' + (p.mes_referencia || p.vencimento || '—') + '</p>' +
-        '<p class="pag-item-venc">Venc. ' + (p.vencimento || '—') + (p.data_pagamento ? ' · Pago em ' + p.data_pagamento : '') + '</p>' +
-      '</div>' +
-      '<div class="pag-item-right">' +
-        '<p class="pag-item-valor">' + (p.valor || '—') + '</p>' +
-        buildStatusBadge(p.status) +
-      '</div>' +
-    '</div>';
-  }).join('');
+  // Histórico — exclui o mês atual (sorted[0])
+  var historico = sorted.slice(1);
+  if (histDiv) {
+    if (historico.length > 0) {
+      histDiv.style.display = 'block';
+      lista.innerHTML = historico.map(function(p) {
+        return '<div class="pag-item">' +
+          '<div class="pag-item-left">' +
+            '<p class="pag-item-mes">' + (p.mes_referencia || p.vencimento || '—') + '</p>' +
+            '<p class="pag-item-venc">Venc. ' + (p.vencimento || '—') + (p.data_pagamento ? ' · Pago em ' + p.data_pagamento : '') + '</p>' +
+          '</div>' +
+          '<div class="pag-item-right">' +
+            '<p class="pag-item-valor">' + (p.valor || '—') + '</p>' +
+            buildStatusBadge(p.status) +
+          '</div>' +
+        '</div>';
+      }).join('');
+    } else {
+      histDiv.style.display = 'none';
+    }
+  }
 }
 
 var _pagOpen = false;
@@ -1703,6 +1720,24 @@ function togglePagamentos() {
   collapse.style.maxHeight = _pagOpen ? collapse.scrollHeight + 400 + 'px' : '0';
   if (chevron) chevron.style.transform = _pagOpen ? 'rotate(180deg)' : 'rotate(0)';
   if (chevronWrap) chevronWrap.style.background = _pagOpen ? 'var(--gold-faint)' : '';
+}
+
+function copiarPix() {
+  var key = '38315226851';
+  var btn = document.getElementById('pag-copy-btn');
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(key).then(function(){
+      btn.textContent = 'Copiado!';
+      setTimeout(function(){ btn.textContent = 'Copiar'; }, 2000);
+    });
+  } else {
+    var el = document.getElementById('pag-pix-display');
+    var range = document.createRange(); range.selectNode(el);
+    window.getSelection().removeAllRanges(); window.getSelection().addRange(range);
+    document.execCommand('copy');
+    btn.textContent = 'Copiado!';
+    setTimeout(function(){ btn.textContent = 'Copiar'; }, 2000);
+  }
 }
 
 function buildStatusBadge(status) {
