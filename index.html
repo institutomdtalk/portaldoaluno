@@ -952,6 +952,27 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   .login-card{padding:28px 24px}
   .geo--ring1,.geo--ring2{display:none}
 }
+
+  /* ═══ PAGAMENTOS ═══ */
+  .pag-status-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+  .pag-status-pill.pago{background:var(--success-bg);color:var(--success)}
+  .pag-status-pill.pendente{background:#FEF3C7;color:#92400E}
+  .pag-status-pill.atrasado{background:var(--danger-bg);color:var(--danger)}
+  .pag-dot-alert{width:8px;height:8px;background:var(--danger);border-radius:50%;flex-shrink:0;position:relative;display:inline-block}
+  .pag-dot-alert::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:2px solid rgba(163,45,45,0.4);animation:pulsering 1.5s ease-out infinite}
+  .pag-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);gap:12px}
+  .pag-item:last-child{border-bottom:none;padding-bottom:0}
+  .pag-item:first-child{padding-top:0}
+  .pag-item-left{flex:1}
+  .pag-item-mes{font-family:var(--serif);font-size:1rem;font-weight:500;color:var(--navy);margin-bottom:2px}
+  .pag-item-venc{font-size:11px;color:var(--text-muted)}
+  .pag-item-right{text-align:right;flex-shrink:0}
+  .pag-item-valor{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--navy);margin-bottom:4px}
+  .pag-mes-atual{background:linear-gradient(135deg,var(--navy-deep),var(--navy));border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative;overflow:hidden}
+  .pag-mes-atual::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0.3}
+  .pag-mes-atual-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+  .pag-mes-atual-valor{font-family:var(--serif);font-size:1.5rem;font-weight:400;color:var(--white);line-height:1}
+  .pag-mes-atual-venc{font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px}
 </style>
 </head>
 <body>
@@ -1102,6 +1123,32 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       <span class="ornament-line"></span>
       <span class="ornament-diamond"></span>
       <span class="ornament-line"></span>
+    </div>
+
+    <!-- PAGAMENTOS -->
+    <div class="card reveal">
+      <div class="card-pad">
+        <p class="card-overline">Financeiro</p>
+        <div id="pag-mes-atual-wrap" style="display:none">
+          <div class="pag-mes-atual">
+            <div>
+              <p class="pag-mes-atual-label">Mês atual</p>
+              <p class="pag-mes-atual-valor" id="pag-mes-valor">—</p>
+              <p class="pag-mes-atual-venc" id="pag-mes-venc"></p>
+            </div>
+            <div id="pag-mes-status"></div>
+          </div>
+          <div style="background:var(--gold-faint);border:1px solid var(--border-gold);border-radius:var(--radius);padding:10px 16px;margin-top:12px;display:flex;align-items:center;gap:8px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <p id="pag-obs-txt" style="font-size:12px;color:var(--text-muted);line-height:1.5"></p>
+          </div>
+        </div>
+        <div id="pag-empty" style="color:var(--text-muted);font-size:13px;font-style:italic">Nenhum registro financeiro.</div>
+        <div id="pag-historico" style="margin-top:16px;display:none">
+          <p style="font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Histórico</p>
+          <div id="pag-lista"></div>
+        </div>
+      </div>
     </div>
 
     <!-- MEU ESPAÇO -->
@@ -1349,6 +1396,7 @@ function renderDashboard(a, avisos) {
 
   window._calFreq = a.frequencia_semanal ? parseInt(a.frequencia_semanal) : null;
   renderHistorico(a.historico);
+  renderPagamentos(a.pagamentos || []);
   verificarRegistroHoje(a.historico);
   showPage('dashboard');
   startClock();
@@ -1542,6 +1590,71 @@ function renderHistorico(historico) {
   document.getElementById('stat-freq').textContent=freq;
   initCalendar(historico, window._calFreq||null);
 }
+
+// ── PAGAMENTOS ──
+var PIX_KEY = 'mdtalk.office@gmail.com'; // Sua chave Pix — altere aqui se necessário
+
+function renderPagamentos(pagamentos) {
+  var wrap    = document.getElementById('pag-mes-atual-wrap');
+  var empty   = document.getElementById('pag-empty');
+  var histDiv = document.getElementById('pag-historico');
+  var lista   = document.getElementById('pag-lista');
+  if (!wrap || !lista) return;
+
+  if (!pagamentos || !pagamentos.length) {
+    wrap.style.display    = 'none';
+    empty.style.display   = 'block';
+    histDiv.style.display = 'none';
+    return;
+  }
+
+  empty.style.display = 'none';
+
+  // Ordena por data de vencimento (mais recente primeiro)
+  var sorted = pagamentos.slice().sort(function(a,b){
+    return new Date(b.vencimento_iso||b.vencimento) - new Date(a.vencimento_iso||a.vencimento);
+  });
+
+  // Mês atual = primeiro registro
+  var atual = sorted[0];
+  wrap.style.display = 'block';
+  document.getElementById('pag-mes-valor').textContent = atual.valor || '—';
+  document.getElementById('pag-mes-venc').textContent  = 'Vencimento: ' + (atual.vencimento || '—');
+  var obsEl = document.getElementById('pag-obs-txt');
+  if (obsEl && atual.observacao) obsEl.textContent = atual.observacao;
+  else if (obsEl) obsEl.parentElement.style.display = 'none';
+
+  // Status badge mês atual
+  var statusEl = document.getElementById('pag-mes-status');
+  statusEl.innerHTML = buildStatusBadge(atual.status);
+
+  // Histórico (todos)
+  if (pagamentos.length > 0) {
+    histDiv.style.display = 'block';
+    lista.innerHTML = sorted.map(function(p) {
+      return '<div class="pag-item">' +
+        '<div class="pag-item-left">' +
+          '<p class="pag-item-mes">' + (p.mes_referencia || p.vencimento || '—') + '</p>' +
+          '<p class="pag-item-venc">Venc. ' + (p.vencimento || '—') + (p.data_pagamento ? ' · Pago em ' + p.data_pagamento : '') + '</p>' +
+        '</div>' +
+        '<div class="pag-item-right">' +
+          '<p class="pag-item-valor">' + (p.valor || '—') + '</p>' +
+          buildStatusBadge(p.status) +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+}
+
+function buildStatusBadge(status) {
+  var s = (status||'').toLowerCase().trim();
+  var cls = s === 'pago' ? 'pago' : s === 'atrasado' ? 'atrasado' : 'pendente';
+  var dot = s === 'atrasado' ? '<span class="pag-dot-alert"></span>' : '';
+  var label = s === 'pago' ? 'Pago' : s === 'atrasado' ? 'Atrasado' : 'Pendente';
+  return '<span class="pag-status-pill ' + cls + '">' + dot + label + '</span>';
+}
+
+
 
 function animateCounter(el, target) {
   var duration=1200; var start=performance.now();
