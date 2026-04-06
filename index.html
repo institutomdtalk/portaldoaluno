@@ -1496,6 +1496,7 @@ function _gravarRegistro(status) {
 // ── LOGOUT ──
 function doLogout() {
   currentStudent=null; stopClock();
+  sessionStorage.removeItem('mdtalk_student');
   document.getElementById('f-login').value=''; document.getElementById('f-senha').value='';
   document.getElementById('login-err').style.display='none';
   document.getElementById('mural-content').innerHTML='<div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div>';
@@ -1559,7 +1560,20 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ── INIT ──
-window.addEventListener('load', function(){ showPage('login'); });
+window.addEventListener('load', function(){
+  var saved = sessionStorage.getItem('mdtalk_student');
+  if (saved) {
+    try {
+      var data = JSON.parse(saved);
+      if (data && data.aluno) {
+        currentStudent = data.aluno;
+        renderDashboard(data.aluno, data.avisos || []);
+        return;
+      }
+    } catch(e) {}
+  }
+  showPage('login');
+});
 </script>
 </body>
 </html>
