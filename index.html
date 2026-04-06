@@ -1125,32 +1125,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       <span class="ornament-line"></span>
     </div>
 
-    <!-- PAGAMENTOS -->
-    <div class="card reveal">
-      <div class="card-pad">
-        <p class="card-overline">Financeiro</p>
-        <div id="pag-mes-atual-wrap" style="display:none">
-          <div class="pag-mes-atual">
-            <div>
-              <p class="pag-mes-atual-label">Mês atual</p>
-              <p class="pag-mes-atual-valor" id="pag-mes-valor">—</p>
-              <p class="pag-mes-atual-venc" id="pag-mes-venc"></p>
-            </div>
-            <div id="pag-mes-status"></div>
-          </div>
-          <div style="background:var(--gold-faint);border:1px solid var(--border-gold);border-radius:var(--radius);padding:10px 16px;margin-top:12px;display:flex;align-items:center;gap:8px">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            <p id="pag-obs-txt" style="font-size:12px;color:var(--text-muted);line-height:1.5"></p>
-          </div>
-        </div>
-        <div id="pag-empty" style="color:var(--text-muted);font-size:13px;font-style:italic">Nenhum registro financeiro.</div>
-        <div id="pag-historico" style="margin-top:16px;display:none">
-          <p style="font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Histórico</p>
-          <div id="pag-lista"></div>
-        </div>
-      </div>
-    </div>
-
     <!-- MEU ESPAÇO -->
     <div class="card reveal" style="grid-column:1/-1">
       <div class="card-pad">
@@ -1180,6 +1154,61 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <span class="form-btn">Acessar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
       </div>
     </a>
+
+    <!-- PAGAMENTOS -->
+    <div class="card card--form reveal" id="pag-card" style="display:none">
+      <div class="card-pad" style="flex-direction:column;align-items:stretch;gap:0">
+
+        <!-- Header clicável -->
+        <div style="display:flex;align-items:center;gap:24px;cursor:pointer" onclick="togglePagamentos()">
+          <div class="form-icon-wrap" style="flex-shrink:0">
+            <div class="form-icon-ring"></div>
+            <svg class="form-icon-svg" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          </div>
+          <div class="form-content" style="flex:1">
+            <p class="card-overline">Financeiro</p>
+            <h3 class="card-title" style="margin-bottom:4px">Informações de Pagamento</h3>
+            <p class="card-desc" id="pag-resumo-desc">Veja o status do seu pagamento e histórico.</p>
+          </div>
+          <div id="pag-status-header" style="flex-shrink:0;display:flex;align-items:center;gap:10px"></div>
+          <div id="pag-chevron" style="flex-shrink:0;width:32px;height:32px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all 0.4s cubic-bezier(0.22,1,0.36,1)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="pag-chevron-svg" style="transition:transform 0.4s cubic-bezier(0.22,1,0.36,1)"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+
+        <!-- Conteúdo retrátil -->
+        <div id="pag-collapse" style="max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.22,1,0.36,1)">
+          <div style="padding-top:20px;border-top:1px solid var(--border);margin-top:20px">
+
+            <!-- Status mês atual -->
+            <div id="pag-mes-atual-wrap" style="display:none">
+              <div class="pag-mes-atual">
+                <div>
+                  <p class="pag-mes-atual-label">Mês atual</p>
+                  <p class="pag-mes-atual-valor" id="pag-mes-valor">—</p>
+                  <p class="pag-mes-atual-venc" id="pag-mes-venc"></p>
+                </div>
+                <div id="pag-mes-status"></div>
+              </div>
+              <div id="pag-obs-box" style="background:var(--gold-faint);border:1px solid var(--border-gold);border-radius:var(--radius);padding:10px 16px;margin-top:12px;display:none;align-items:center;gap:8px">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <p id="pag-obs-txt" style="font-size:12px;color:var(--text-muted);line-height:1.5"></p>
+              </div>
+            </div>
+
+            <div id="pag-empty" style="color:var(--text-muted);font-size:13px;font-style:italic;display:none">Nenhum registro financeiro.</div>
+
+            <!-- Histórico -->
+            <div id="pag-historico" style="margin-top:16px;display:none">
+              <p style="font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Histórico</p>
+              <div id="pag-lista"></div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
 
     <!-- CAMBRIDGE -->
     <a href="https://dictionary.cambridge.org/pt/dicionario/ingles-portugues/" target="_blank" rel="noopener" class="card card--link reveal">
@@ -1595,20 +1624,25 @@ function renderHistorico(historico) {
 var PIX_KEY = 'mdtalk.office@gmail.com'; // Sua chave Pix — altere aqui se necessário
 
 function renderPagamentos(pagamentos) {
+  var card    = document.getElementById('pag-card');
   var wrap    = document.getElementById('pag-mes-atual-wrap');
   var empty   = document.getElementById('pag-empty');
   var histDiv = document.getElementById('pag-historico');
   var lista   = document.getElementById('pag-lista');
-  if (!wrap || !lista) return;
+  var header  = document.getElementById('pag-status-header');
+  if (!card || !lista) return;
+
+  // Sempre mostra o card
+  card.style.display = 'block';
 
   if (!pagamentos || !pagamentos.length) {
-    wrap.style.display    = 'none';
-    empty.style.display   = 'block';
-    histDiv.style.display = 'none';
+    if (wrap)    wrap.style.display    = 'none';
+    if (empty)   empty.style.display   = 'block';
+    if (histDiv) histDiv.style.display = 'none';
     return;
   }
 
-  empty.style.display = 'none';
+  if (empty) empty.style.display = 'none';
 
   // Ordena por data de vencimento (mais recente primeiro)
   var sorted = pagamentos.slice().sort(function(a,b){
@@ -1617,33 +1651,58 @@ function renderPagamentos(pagamentos) {
 
   // Mês atual = primeiro registro
   var atual = sorted[0];
-  wrap.style.display = 'block';
+  if (wrap) wrap.style.display = 'block';
   document.getElementById('pag-mes-valor').textContent = atual.valor || '—';
   document.getElementById('pag-mes-venc').textContent  = 'Vencimento: ' + (atual.vencimento || '—');
-  var obsEl = document.getElementById('pag-obs-txt');
-  if (obsEl && atual.observacao) obsEl.textContent = atual.observacao;
-  else if (obsEl) obsEl.parentElement.style.display = 'none';
 
-  // Status badge mês atual
-  var statusEl = document.getElementById('pag-mes-status');
-  statusEl.innerHTML = buildStatusBadge(atual.status);
-
-  // Histórico (todos)
-  if (pagamentos.length > 0) {
-    histDiv.style.display = 'block';
-    lista.innerHTML = sorted.map(function(p) {
-      return '<div class="pag-item">' +
-        '<div class="pag-item-left">' +
-          '<p class="pag-item-mes">' + (p.mes_referencia || p.vencimento || '—') + '</p>' +
-          '<p class="pag-item-venc">Venc. ' + (p.vencimento || '—') + (p.data_pagamento ? ' · Pago em ' + p.data_pagamento : '') + '</p>' +
-        '</div>' +
-        '<div class="pag-item-right">' +
-          '<p class="pag-item-valor">' + (p.valor || '—') + '</p>' +
-          buildStatusBadge(p.status) +
-        '</div>' +
-      '</div>';
-    }).join('');
+  // Observação
+  var obsBox = document.getElementById('pag-obs-box');
+  var obsEl  = document.getElementById('pag-obs-txt');
+  if (obsEl && atual.observacao && atual.observacao.trim()) {
+    obsEl.textContent = atual.observacao;
+    if (obsBox) obsBox.style.display = 'flex';
   }
+
+  // Status badge no header (sempre visível) e dentro do card
+  var badge = buildStatusBadge(atual.status);
+  if (header) header.innerHTML = badge;
+  var statusEl = document.getElementById('pag-mes-status');
+  if (statusEl) statusEl.innerHTML = badge;
+
+  // Resumo no subtítulo
+  var desc = document.getElementById('pag-resumo-desc');
+  if (desc) {
+    var s = (atual.status||'').toLowerCase();
+    desc.textContent = s === 'pago' ? 'Pagamento em dia — clique para ver detalhes.'
+      : s === 'atrasado' ? 'Pagamento em atraso — clique para ver detalhes.'
+      : 'Pagamento pendente — clique para ver detalhes.';
+  }
+
+  // Histórico
+  if (histDiv) histDiv.style.display = 'block';
+  lista.innerHTML = sorted.map(function(p) {
+    return '<div class="pag-item">' +
+      '<div class="pag-item-left">' +
+        '<p class="pag-item-mes">' + (p.mes_referencia || p.vencimento || '—') + '</p>' +
+        '<p class="pag-item-venc">Venc. ' + (p.vencimento || '—') + (p.data_pagamento ? ' · Pago em ' + p.data_pagamento : '') + '</p>' +
+      '</div>' +
+      '<div class="pag-item-right">' +
+        '<p class="pag-item-valor">' + (p.valor || '—') + '</p>' +
+        buildStatusBadge(p.status) +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+var _pagOpen = false;
+function togglePagamentos() {
+  var collapse  = document.getElementById('pag-collapse');
+  var chevron   = document.getElementById('pag-chevron-svg');
+  var chevronWrap = document.getElementById('pag-chevron');
+  _pagOpen = !_pagOpen;
+  collapse.style.maxHeight = _pagOpen ? collapse.scrollHeight + 400 + 'px' : '0';
+  if (chevron) chevron.style.transform = _pagOpen ? 'rotate(180deg)' : 'rotate(0)';
+  if (chevronWrap) chevronWrap.style.background = _pagOpen ? 'var(--gold-faint)' : '';
 }
 
 function buildStatusBadge(status) {
