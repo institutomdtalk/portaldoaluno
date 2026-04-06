@@ -1497,7 +1497,7 @@ function renderCalendar() {
     var cls='cal-day'; var mark='';
     if(status==='presente'){cls+=' has-presenca';mark='✓';}
     else if(status==='falta'){cls+=' has-falta';mark='✕';}
-    else if(isFer && thisDate<=today){cls+=' has-feriado';}
+    else if(isFer){cls+=' has-feriado';}
     if(isToday) cls+=' today';
     html+='<div class="'+cls+'" title="'+(isFer?'Feriado — aula contabilizada como realizada':'')+'">'+day+(mark?'<div class="cal-mark">'+mark+'</div>':'')+'</div>';
   }
