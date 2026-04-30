@@ -1216,11 +1216,11 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
             <p class="anot-section-label">Notas Livres</p>
             <div id="anot-lista-nota"></div>
             <div class="anot-add-bar">
-              <button class="anot-add-btn" onclick="adicionarAnot('tarefa')">
+              <button class="anot-add-btn" id="btn-add-tarefa">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 Tarefa
               </button>
-              <button class="anot-add-btn" onclick="adicionarAnot('nota')">
+              <button class="anot-add-btn" id="btn-add-nota">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 Nota
               </button>
@@ -2060,6 +2060,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var btnModalConfirm=document.getElementById('btn-modal-confirm');
   if(btnModalConfirm) btnModalConfirm.addEventListener('click', confirmarFalta);
+
+  var btnAddT = document.getElementById('btn-add-tarefa');
+  if(btnAddT) btnAddT.addEventListener('click', function(){ adicionarAnot('tarefa'); });
+  var btnAddN = document.getElementById('btn-add-nota');
+  if(btnAddN) btnAddN.addEventListener('click', function(){ adicionarAnot('nota'); });
 
   var linkEmail=document.getElementById('link-email');
   if(linkEmail) linkEmail.addEventListener('click', function(){ this.href='mai'+'lto:mdtalk.of'+'fice@gmail.com'; });
