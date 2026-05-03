@@ -1974,15 +1974,18 @@ function renderDriveFiles(files) {
   if (!section || !grid || !files || !files.length) return;
   section.style.display = 'block';
   grid.innerHTML = files.map(function(f) {
+    var eName = f.name.replace(/\\/g,'\\\\').replace(/'/g,'\\x27');
+    var eEmbed = f.embedUrl.replace(/'/g,'\\x27');
+    var eView  = f.viewUrl.replace(/'/g,'\\x27');
     var thumb = f.mimeType === 'application/pdf'
       ? '<div class="drive-file-thumb-placeholder"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>'
-      : '<img class="drive-file-thumb" src="' + f.thumbnail + '" alt="' + f.name + '" loading="lazy" onerror="this.style.display='none'">';
+      : '<img class="drive-file-thumb" src="' + f.thumbnail + '" alt="" loading="lazy">';
     return '<div class="drive-file">' +
       thumb +
       '<div class="drive-file-info">' +
-        '<p class="drive-file-name" title="' + f.name + '">' + f.name + '</p>' +
+        '<p class="drive-file-name" title="' + eName + '">' + eName + '</p>' +
         '<div class="drive-file-actions">' +
-          '<button class="drive-file-btn primary" onclick="openPdfModal('' + f.embedUrl.replace(/'/g, "\'") + '','' + f.name.replace(/'/g, "\'") + '','' + f.viewUrl.replace(/'/g, "\'") + '')">Abrir aqui</button>' +
+          '<button class="drive-file-btn primary" onclick="openPdfModal(\'' + eEmbed + '\',\'' + eName + '\',\'' + eView + '\')">Abrir aqui</button>' +
           '<a class="drive-file-btn" href="' + f.viewUrl + '" target="_blank" rel="noopener">Drive</a>' +
         '</div>' +
       '</div>' +
