@@ -1569,8 +1569,22 @@ function renderDashboard(a, avisos) {
   renderHistorico(a.historico);
   verificarRegistroHoje(a.historico);
   carregarAnotacoes(a.anotacoes || []);
-  console.log('[MD Talk] driveFiles:', JSON.stringify(a.driveFiles));
-  renderDriveFiles(a.driveFiles || []);
+  // Busca arquivos do Drive de forma assíncrona (não atrasa o login)
+  if (a.link_drive && a.link_drive.trim()) {
+    document.getElementById('drive-files-section').style.display = 'block';
+    document.getElementById('drive-files-grid').innerHTML = '<p style="font-size:12px;color:var(--text-muted);grid-column:1/-1">Carregando arquivos...</p>';
+    callScript(
+      'action=get_drive_files&login=' + encodeURIComponent(a.login),
+      function(d) {
+        if (d.success && d.files && d.files.length) {
+          renderDriveFiles(d.files);
+        } else {
+          document.getElementById('drive-files-section').style.display = 'none';
+        }
+      },
+      function() { document.getElementById('drive-files-section').style.display = 'none'; }
+    );
+  }
   showPage('dashboard');
   startClock();
   setTimeout(function(){ initReveal(); animateCards(); }, 80);
