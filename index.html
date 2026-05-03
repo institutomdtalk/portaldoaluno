@@ -1973,24 +1973,30 @@ function renderDriveFiles(files) {
   var grid    = document.getElementById('drive-files-grid');
   if (!section || !grid || !files || !files.length) return;
   section.style.display = 'block';
-  grid.innerHTML = files.map(function(f) {
-    var eName = f.name.replace(/\\/g,'\\\\').replace(/'/g,'\\x27');
-    var eEmbed = f.embedUrl.replace(/'/g,'\\x27');
-    var eView  = f.viewUrl.replace(/'/g,'\\x27');
-    var thumb = f.mimeType === 'application/pdf'
-      ? '<div class="drive-file-thumb-placeholder"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>'
-      : '<img class="drive-file-thumb" src="' + f.thumbnail + '" alt="" loading="lazy">';
-    return '<div class="drive-file">' +
-      thumb +
+  grid.innerHTML = '';
+  files.forEach(function(f, i) {
+    var div = document.createElement('div');
+    div.className = 'drive-file';
+    var thumb;
+    if (f.mimeType === 'application/pdf') {
+      thumb = '<div class="drive-file-thumb-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>';
+    } else {
+      thumb = '<img class="drive-file-thumb" src="' + f.thumbnail + '" alt="" loading="lazy">';
+    }
+    div.innerHTML = thumb +
       '<div class="drive-file-info">' +
-        '<p class="drive-file-name" title="' + eName + '">' + eName + '</p>' +
+        '<p class="drive-file-name">' + f.name + '</p>' +
         '<div class="drive-file-actions">' +
-          '<button class="drive-file-btn primary" onclick="openPdfModal(\'' + eEmbed + '\',\'' + eName + '\',\'' + eView + '\')">Abrir aqui</button>' +
+          '<button class="drive-file-btn primary" data-embed="' + f.embedUrl + '" data-name="' + f.name + '" data-view="' + f.viewUrl + '">Abrir aqui</button>' +
           '<a class="drive-file-btn" href="' + f.viewUrl + '" target="_blank" rel="noopener">Drive</a>' +
         '</div>' +
-      '</div>' +
-    '</div>';
-  }).join('');
+      '</div>';
+    var btn = div.querySelector('.drive-file-btn.primary');
+    btn.addEventListener('click', function() {
+      openPdfModal(this.dataset.embed, this.dataset.name, this.dataset.view);
+    });
+    grid.appendChild(div);
+  });
 }
 
 function openPdfModal(embedUrl, name, viewUrl) {
