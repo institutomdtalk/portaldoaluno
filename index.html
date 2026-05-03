@@ -1026,6 +1026,32 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   .btn-hamburger{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:6px;transition:opacity 0.2s}
   .btn-hamburger:hover{opacity:0.7}
   .btn-hamburger span{display:block;width:20px;height:1.5px;background:rgba(255,255,255,0.5);border-radius:2px;transition:all 0.3s ease}
+
+  /* ═══ DRIVE FILES ═══ */
+  .drive-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+  .drive-file{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all 0.3s ease;background:var(--white)}
+  .drive-file:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:var(--border-gold)}
+  .drive-file-thumb{width:100%;aspect-ratio:3/4;object-fit:cover;background:var(--off-white);display:block}
+  .drive-file-thumb-placeholder{width:100%;aspect-ratio:3/4;background:var(--off-white);display:flex;align-items:center;justify-content:center}
+  .drive-file-thumb-placeholder svg{width:32px;height:32px;stroke:var(--gold);fill:none;stroke-width:1.5;opacity:0.5}
+  .drive-file-info{padding:10px 12px}
+  .drive-file-name{font-size:11px;font-weight:500;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:6px}
+  .drive-file-actions{display:flex;gap:6px}
+  .drive-file-btn{flex:1;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;font-family:var(--sans);padding:6px 8px;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;text-align:center;text-decoration:none;transition:all 0.25s;background:none;color:var(--text-muted)}
+  .drive-file-btn:hover{border-color:var(--gold);color:var(--gold)}
+  .drive-file-btn.primary{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
+  .drive-file-btn.primary:hover{background:var(--gold-light)}
+
+  /* PDF Viewer Modal */
+  .pdf-modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,13,26,0.85);backdrop-filter:blur(8px);z-index:400;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+  .pdf-modal-overlay.active{display:flex}
+  .pdf-modal-box{background:var(--white);width:100%;max-width:860px;height:85vh;display:flex;flex-direction:column;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg)}
+  .pdf-modal-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border);flex-shrink:0}
+  .pdf-modal-title{font-family:var(--serif);font-size:1rem;font-weight:500;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:600px}
+  .pdf-modal-actions{display:flex;align-items:center;gap:10px;flex-shrink:0}
+  .pdf-modal-close{background:none;border:1px solid var(--border);border-radius:50%;width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.25s}
+  .pdf-modal-close:hover{border-color:var(--gold);color:var(--gold)}
+  .pdf-modal-iframe{flex:1;width:100%;border:none}
 </style>
 </head>
 <body>
@@ -1175,6 +1201,12 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <p class="card-overline">Meu Espaço</p>
         <h3 class="card-title" id="espaco-titulo">Meu Programa</h3>
         <p class="card-desc" id="espaco-desc" style="margin-bottom:16px"></p>
+        <!-- DRIVE FILES -->
+        <div id="drive-files-section" style="margin-bottom:20px;display:none">
+          <p class="card-overline" style="margin-bottom:10px">Últimos Conteúdos</p>
+          <div class="drive-grid" id="drive-files-grid"></div>
+        </div>
+
         <a class="espaco-link" id="link-drive" href="#" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
           Minha Pasta no Drive
@@ -1388,6 +1420,25 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 </div>
 
+<!-- PDF VIEWER MODAL -->
+<div class="pdf-modal-overlay" id="pdf-modal">
+  <div class="pdf-modal-box">
+    <div class="pdf-modal-header">
+      <span class="pdf-modal-title" id="pdf-modal-title"></span>
+      <div class="pdf-modal-actions">
+        <a id="pdf-modal-drive-link" href="#" target="_blank" rel="noopener"
+           style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;font-family:var(--sans);color:var(--gold);text-decoration:none;padding:6px 14px;border:1px solid var(--border-gold);border-radius:var(--radius);transition:all 0.25s">
+          Abrir no Drive
+        </a>
+        <button class="pdf-modal-close" id="pdf-modal-close">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <iframe class="pdf-modal-iframe" id="pdf-modal-iframe" src="" allowfullscreen></iframe>
+  </div>
+</div>
+
 <!-- MODAL FALTA -->
 <div class="modal-overlay" id="modal-falta">
   <div class="modal-box">
@@ -1518,6 +1569,7 @@ function renderDashboard(a, avisos) {
   renderHistorico(a.historico);
   verificarRegistroHoje(a.historico);
   carregarAnotacoes(a.anotacoes || []);
+  renderDriveFiles(a.driveFiles || []);
   showPage('dashboard');
   startClock();
   setTimeout(function(){ initReveal(); animateCards(); }, 80);
@@ -1915,6 +1967,50 @@ function carregarAnotacoes(anotacoes) {
   }, 100);
 }
 
+// ── DRIVE FILES ──
+function renderDriveFiles(files) {
+  var section = document.getElementById('drive-files-section');
+  var grid    = document.getElementById('drive-files-grid');
+  if (!section || !grid || !files || !files.length) return;
+  section.style.display = 'block';
+  grid.innerHTML = files.map(function(f) {
+    var thumb = f.mimeType === 'application/pdf'
+      ? '<div class="drive-file-thumb-placeholder"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>'
+      : '<img class="drive-file-thumb" src="' + f.thumbnail + '" alt="' + f.name + '" loading="lazy" onerror="this.style.display='none'">';
+    return '<div class="drive-file">' +
+      thumb +
+      '<div class="drive-file-info">' +
+        '<p class="drive-file-name" title="' + f.name + '">' + f.name + '</p>' +
+        '<div class="drive-file-actions">' +
+          '<button class="drive-file-btn primary" onclick="openPdfModal('' + f.embedUrl.replace(/'/g, "\'") + '','' + f.name.replace(/'/g, "\'") + '','' + f.viewUrl.replace(/'/g, "\'") + '')">Abrir aqui</button>' +
+          '<a class="drive-file-btn" href="' + f.viewUrl + '" target="_blank" rel="noopener">Drive</a>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function openPdfModal(embedUrl, name, viewUrl) {
+  var modal   = document.getElementById('pdf-modal');
+  var iframe  = document.getElementById('pdf-modal-iframe');
+  var title   = document.getElementById('pdf-modal-title');
+  var driveLink = document.getElementById('pdf-modal-drive-link');
+  if (!modal || !iframe) return;
+  iframe.src = embedUrl;
+  if (title) title.textContent = name;
+  if (driveLink) driveLink.href = viewUrl;
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePdfModal() {
+  var modal  = document.getElementById('pdf-modal');
+  var iframe = document.getElementById('pdf-modal-iframe');
+  if (modal)  modal.classList.remove('active');
+  if (iframe) iframe.src = '';
+  document.body.style.overflow = '';
+}
+
 function animateCounter(el, target) {
   var duration=1200; var start=performance.now();
   (function tick(now){ var p=Math.min((now-start)/duration,1); var e=1-Math.pow(1-p,3); el.textContent=Math.round(e*target); if(p<1) requestAnimationFrame(tick); })(start);
@@ -2065,6 +2161,11 @@ document.addEventListener('DOMContentLoaded', function() {
   if(btnAddT) btnAddT.addEventListener('click', function(){ adicionarAnot('tarefa'); });
   var btnAddN = document.getElementById('btn-add-nota');
   if(btnAddN) btnAddN.addEventListener('click', function(){ adicionarAnot('nota'); });
+
+  var pdfClose = document.getElementById('pdf-modal-close');
+  if(pdfClose) pdfClose.addEventListener('click', closePdfModal);
+  var pdfOverlay = document.getElementById('pdf-modal');
+  if(pdfOverlay) pdfOverlay.addEventListener('click', function(e){ if(e.target===this) closePdfModal(); });
 
   var linkEmail=document.getElementById('link-email');
   if(linkEmail) linkEmail.addEventListener('click', function(){ this.href='mai'+'lto:mdtalk.of'+'fice@gmail.com'; });
