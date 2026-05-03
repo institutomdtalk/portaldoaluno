@@ -1052,6 +1052,77 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   .pdf-modal-close{background:none;border:1px solid var(--border);border-radius:50%;width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.25s}
   .pdf-modal-close:hover{border-color:var(--gold);color:var(--gold)}
   .pdf-modal-iframe{flex:1;width:100%;border:none}
+
+  /* ═══ TRILHA DE APRENDIZADO ═══ */
+  .trilha-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:4px}
+  .trilha-card{
+    border:1px solid var(--border);border-radius:var(--radius);
+    overflow:hidden;background:var(--white);
+    transition:all 0.4s cubic-bezier(0.22,1,0.36,1);
+    position:relative;cursor:pointer;
+    display:flex;flex-direction:column;
+  }
+  .trilha-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:var(--border-gold)}
+  .trilha-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    transform:scaleX(0);transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .trilha-card:hover::before{transform:scaleX(1)}
+  .trilha-card.concluido{border-color:rgba(45,106,79,0.25)}
+  .trilha-card.concluido::before{background:linear-gradient(90deg,transparent,#4ADE80,transparent);transform:scaleX(1)}
+  .trilha-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--off-white);display:block}
+  .trilha-thumb-placeholder{
+    width:100%;aspect-ratio:16/9;
+    background:linear-gradient(135deg,var(--navy-deep),var(--navy));
+    display:flex;align-items:center;justify-content:center;
+  }
+  .trilha-thumb-placeholder svg{width:28px;height:28px;stroke:var(--gold);fill:none;stroke-width:1.5;opacity:0.5}
+  .trilha-body{padding:14px 16px;flex:1;display:flex;flex-direction:column}
+  .trilha-tipo{
+    font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+    padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:8px;width:fit-content;
+  }
+  .trilha-tipo.gramatica{background:#EDE9FE;color:#6D28D9}
+  .trilha-tipo.vocabulario{background:var(--gold-faint);color:#92400E}
+  .trilha-titulo{font-family:var(--serif);font-size:1rem;font-weight:500;color:var(--navy);line-height:1.25;margin-bottom:auto}
+  .trilha-footer{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid var(--border)}
+  .trilha-ordem{font-size:10px;color:var(--text-muted);letter-spacing:1px}
+  .trilha-actions{display:flex;align-items:center;gap:8px}
+  .trilha-btn-pdf{
+    font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+    font-family:var(--sans);color:var(--gold);background:none;
+    border:1px solid var(--border-gold);padding:5px 12px;border-radius:var(--radius);
+    text-decoration:none;cursor:pointer;transition:all 0.25s;flex-shrink:0;
+  }
+  .trilha-btn-pdf:hover{background:var(--gold);color:var(--navy-deep)}
+  .trilha-check{
+    width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;transition:all 0.3s ease;flex-shrink:0;background:none;
+  }
+  .trilha-check:hover{border-color:var(--gold)}
+  .trilha-check.done{background:#4ADE80;border-color:#4ADE80}
+  .trilha-check svg{width:11px;height:11px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity 0.2s}
+  .trilha-check.done svg{opacity:1}
+  .trilha-concluido-badge{
+    position:absolute;top:8px;right:8px;
+    background:#22c55e;color:#fff;
+    font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+    padding:3px 10px;border-radius:20px;
+    display:none;
+  }
+  .trilha-card.concluido .trilha-concluido-badge{display:block}
+  .trilha-empty{font-size:13px;color:var(--text-muted);font-style:italic;padding:8px 0}
+
+  /* Trilha section separators */
+  .trilha-section-label{
+    font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+    color:var(--text-muted);margin:20px 0 12px;display:flex;align-items:center;gap:12px;
+  }
+  .trilha-section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+  @media(max-width:768px){.trilha-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -1264,6 +1335,16 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
             <p class="anot-counter" id="anot-counter">0 / 20 itens</p>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- TRILHA DE APRENDIZADO -->
+    <div class="card reveal" style="grid-column:1/-1">
+      <div class="card-pad">
+        <p class="card-overline">Trilha de Aprendizado</p>
+        <h3 class="card-title" style="margin-bottom:4px">Seu Programa Personalizado</h3>
+        <p class="card-desc" style="margin-bottom:20px" id="trilha-resumo">Carregando sua trilha...</p>
+        <div id="trilha-content"></div>
       </div>
     </div>
 
@@ -1569,6 +1650,8 @@ function renderDashboard(a, avisos) {
   renderHistorico(a.historico);
   verificarRegistroHoje(a.historico);
   carregarAnotacoes(a.anotacoes || []);
+  window._trilhaData = a.trilha || [];
+  renderTrilha(a.trilha || []);
   // Busca arquivos do Drive de forma assíncrona (não atrasa o login)
   if (a.link_drive && a.link_drive.trim()) {
     document.getElementById('drive-files-section').style.display = 'block';
@@ -2033,6 +2116,111 @@ function closePdfModal() {
   if (modal)  modal.classList.remove('active');
   if (iframe) iframe.src = '';
   document.body.style.overflow = '';
+}
+
+// ── TRILHA DE APRENDIZADO ──
+function renderTrilha(trilha) {
+  var container = document.getElementById('trilha-content');
+  var resumo    = document.getElementById('trilha-resumo');
+  if (!container) return;
+
+  if (!trilha || !trilha.length) {
+    container.innerHTML = '<p class="trilha-empty">Sua trilha ainda não foi configurada.</p>';
+    if (resumo) resumo.textContent = 'Sua trilha personalizada aparecerá aqui.';
+    return;
+  }
+
+  var concluidos = trilha.filter(function(m){ return m.concluido; }).length;
+  if (resumo) resumo.textContent = concluidos + ' de ' + trilha.length + ' módulos concluídos · ' + Math.round((concluidos/trilha.length)*100) + '% completo';
+
+  // Separate by tipo
+  var gramatica   = trilha.filter(function(m){ return m.tipo === 'gramatica' || m.tipo === 'gramática'; });
+  var vocabulario = trilha.filter(function(m){ return m.tipo === 'vocabulario' || m.tipo === 'vocabulário'; });
+  var outros      = trilha.filter(function(m){ return m.tipo !== 'gramatica' && m.tipo !== 'gramática' && m.tipo !== 'vocabulario' && m.tipo !== 'vocabulário'; });
+
+  var html = '';
+  if (gramatica.length) {
+    html += '<div class="trilha-section-label">Gramática</div>';
+    html += '<div class="trilha-grid">' + gramatica.map(buildTrilhaCard).join('') + '</div>';
+  }
+  if (vocabulario.length) {
+    html += '<div class="trilha-section-label">Vocabulário</div>';
+    html += '<div class="trilha-grid">' + vocabulario.map(buildTrilhaCard).join('') + '</div>';
+  }
+  if (outros.length) {
+    html += '<div class="trilha-section-label">Outros</div>';
+    html += '<div class="trilha-grid">' + outros.map(buildTrilhaCard).join('') + '</div>';
+  }
+
+  container.innerHTML = html;
+
+  // Add event listeners to cards and buttons
+  container.querySelectorAll('.trilha-card[data-url]').forEach(function(card) {
+    card.addEventListener('click', function(e) {
+      if (e.target.closest('.trilha-check') || e.target.closest('.trilha-btn-pdf')) return;
+      window.open(card.dataset.url, '_blank');
+    });
+  });
+  container.querySelectorAll('.trilha-check').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var ordem = parseInt(btn.dataset.ordem);
+      var done  = btn.classList.contains('done');
+      var novoValor = done ? 'nao' : 'sim';
+      btn.classList.toggle('done', !done);
+      var card = btn.closest('.trilha-card');
+      if (card) card.classList.toggle('concluido', !done);
+      // Update local data
+      var item = window._trilhaData && window._trilhaData.find(function(m){ return m.ordem === ordem; });
+      if (item) item.concluido = !done;
+      // Update resumo
+      var concl = (window._trilhaData || []).filter(function(m){ return m.concluido; }).length;
+      var total = (window._trilhaData || []).length;
+      var resumoEl = document.getElementById('trilha-resumo');
+      if (resumoEl) resumoEl.textContent = concl + ' de ' + total + ' módulos concluídos · ' + Math.round((concl/total)*100) + '% completo';
+      // Save to server
+      if (currentStudent) {
+        callScript(
+          'action=concluir_modulo&login=' + encodeURIComponent(currentStudent.login) + '&ordem=' + ordem + '&concluido=' + novoValor,
+          function(){}, function(){}
+        );
+      }
+    });
+  });
+}
+
+function buildTrilhaCard(m) {
+  // Convert Drive share link to direct image URL
+  var thumbSrc = '';
+  if (m.thumbnail) {
+    var idMatch = m.thumbnail.match(/[-\w]{25,}/);
+    thumbSrc = idMatch ? 'https://drive.google.com/uc?export=view&id=' + idMatch[0] : m.thumbnail;
+  }
+  var thumb = thumbSrc
+    ? '<img class="trilha-thumb" src="' + thumbSrc + '" alt="' + m.titulo + '" loading="lazy">'  
+    : '<div class="trilha-thumb-placeholder"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>';
+
+  var tipoLabel = (m.tipo === 'gramatica' || m.tipo === 'gramática') ? 'Gramática' : (m.tipo === 'vocabulario' || m.tipo === 'vocabulário') ? 'Vocabulário' : m.tipo;
+  var tipoClass = (m.tipo === 'gramatica' || m.tipo === 'gramática') ? 'gramatica' : 'vocabulario';
+  var doneClass = m.concluido ? ' concluido' : '';
+
+  return '<div class="trilha-card' + doneClass + '" data-url="' + m.url_pagina + '">' +
+    '<span class="trilha-concluido-badge">Concluído</span>' +
+    thumb +
+    '<div class="trilha-body">' +
+      '<span class="trilha-tipo ' + tipoClass + '">' + tipoLabel + '</span>' +
+      '<p class="trilha-titulo">' + m.titulo + '</p>' +
+      '<div class="trilha-footer">' +
+        '<span class="trilha-ordem">Módulo ' + m.ordem + '</span>' +
+        '<div class="trilha-actions">' +
+          (m.url_pdf ? '<a class="trilha-btn-pdf" href="' + m.url_pdf + '" target="_blank" rel="noopener" download>PDF</a>' : '') +
+          '<button class="trilha-check' + (m.concluido ? ' done' : '') + '" data-ordem="' + m.ordem + '" title="Marcar como concluído">' +
+            '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>' +
+          '</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
 }
 
 function animateCounter(el, target) {
