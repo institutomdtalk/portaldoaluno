@@ -2193,8 +2193,16 @@ function buildTrilhaCard(m) {
   // Convert Drive share link to direct image URL
   var thumbSrc = '';
   if (m.thumbnail) {
-    var idMatch = m.thumbnail.match(/[-\w]{25,}/);
-    thumbSrc = idMatch ? 'https://drive.google.com/uc?export=view&id=' + idMatch[0] : m.thumbnail;
+    // Extract Drive file ID from any Drive link format
+    var idMatch = m.thumbnail.match(/\/d\/([a-zA-Z0-9_-]{10,})/);
+    if (!idMatch) idMatch = m.thumbnail.match(/id=([a-zA-Z0-9_-]{10,})/);
+    if (!idMatch) idMatch = m.thumbnail.match(/([a-zA-Z0-9_-]{25,})/);
+    if (idMatch) {
+      // Use thumbnail API which doesn't have CORS issues
+      thumbSrc = 'https://drive.google.com/thumbnail?id=' + idMatch[1] + '&sz=w600';
+    } else {
+      thumbSrc = m.thumbnail;
+    }
   }
   var thumb = thumbSrc
     ? '<img class="trilha-thumb" src="' + thumbSrc + '" alt="' + m.titulo + '" loading="lazy">'  
