@@ -1569,6 +1569,7 @@ function renderDashboard(a, avisos) {
   renderHistorico(a.historico);
   verificarRegistroHoje(a.historico);
   carregarAnotacoes(a.anotacoes || []);
+  console.log('[MD Talk] driveFiles:', JSON.stringify(a.driveFiles));
   renderDriveFiles(a.driveFiles || []);
   showPage('dashboard');
   startClock();
