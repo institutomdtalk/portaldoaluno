@@ -49,10 +49,10 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 /* ═══════════════════════════════════════
    PAGES
 ═══════════════════════════════════════ */
-#page-login{display:none;min-height:100vh;flex-direction:column;background:var(--navy-deep);position:relative;overflow:hidden}
-#page-login.active{display:flex}
-#page-dashboard{display:none}
-#page-dashboard.active{display:block;min-height:100vh}
+#page-login{display:none;flex-direction:column;background:var(--navy-deep);position:relative;overflow:hidden}
+#page-login.active{display:flex;min-height:100vh}
+#page-dashboard{display:none;height:0;overflow:hidden}
+#page-dashboard.active{display:block;height:auto;overflow:visible}
 
 /* ═══════════════════════════════════════
    LOGIN — CINEMATIC HERO
