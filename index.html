@@ -1314,19 +1314,14 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <div style="display:none"><div id="anot-chevron-wrap"></div><svg id="anot-chevron-svg"></svg></div>
         <div id="anot-collapse" style="display:block">
           <div>
-            <p class="anot-section-label" style="margin-top:0;border-top:none;padding-top:0">Tarefas</p>
             <div id="anot-lista-tarefa"></div>
-            <p class="anot-section-label">Notas Livres</p>
-            <div id="anot-lista-nota"></div>
+
             <div class="anot-add-bar">
               <button class="anot-add-btn" id="btn-add-tarefa">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 Tarefa
               </button>
-              <button class="anot-add-btn" id="btn-add-nota">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Nota
-              </button>
+
               <span class="anot-save-indicator" id="anot-save-ind">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 Salvo
@@ -1949,7 +1944,6 @@ function toggleAnotacoes() {
 
 function renderAnotacoes() {
   var tarefas = _anotData.filter(function(a){ return a.tipo === 'tarefa'; });
-  var notas   = _anotData.filter(function(a){ return a.tipo === 'nota'; });
 
   document.getElementById('anot-lista-tarefa').innerHTML = tarefas.length
     ? tarefas.map(function(a){ return buildAnotItem(a); }).join('')
@@ -2379,8 +2373,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var btnAddT = document.getElementById('btn-add-tarefa');
   if(btnAddT) btnAddT.addEventListener('click', function(){ adicionarAnot('tarefa'); });
-  var btnAddN = document.getElementById('btn-add-nota');
-  if(btnAddN) btnAddN.addEventListener('click', function(){ adicionarAnot('nota'); });
 
   var pdfClose = document.getElementById('pdf-modal-close');
   if(pdfClose) pdfClose.addEventListener('click', closePdfModal);
