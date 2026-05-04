@@ -1949,10 +1949,6 @@ function renderAnotacoes() {
     ? tarefas.map(function(a){ return buildAnotItem(a); }).join('')
     : '<p class="anot-empty">Nenhuma tarefa ainda.</p>';
 
-  document.getElementById('anot-lista-nota').innerHTML = notas.length
-    ? notas.map(function(a){ return buildAnotItem(a); }).join('')
-    : '<p class="anot-empty">Nenhuma nota ainda.</p>';
-
   var total = _anotData.length;
   document.getElementById('anot-counter').textContent = total + ' / ' + MAX_ANOT + ' itens';
 
