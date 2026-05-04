@@ -1197,6 +1197,19 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       </div>
     </a>
 
+    <!-- MEU GOOGLE DOCS -->
+    <a id="card-meu-docs" href="#" target="_blank" rel="noopener" class="card card--form reveal" style="grid-column:1/-1">
+      <div class="card-pad">
+        <div class="form-icon-wrap"><div class="form-icon-ring"></div><svg class="form-icon-svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+        <div class="form-content">
+          <p class="card-overline">Seus Documentos</p>
+          <h3 class="card-title">Meu Google Docs</h3>
+          <p class="card-desc">Acesse seu documento pessoal do programa — anotações de aula, vocabulário trabalhado e registros do seu progresso.</p>
+        </div>
+        <span class="form-btn">Acessar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
     <!-- TRILHA DE APRENDIZADO -->
     <div class="card reveal" style="grid-column:1/-1">
       <div class="card-pad">
@@ -1617,6 +1630,8 @@ function renderDashboard(a, avisos) {
   if (a.link_drive) { ld.href = a.link_drive; } else { ld.classList.add('disabled'); }
   var cardDrive = document.getElementById('card-meu-drive');
   if (cardDrive) { if (a.link_drive) { cardDrive.href = a.link_drive; } else { cardDrive.style.opacity='0.35'; cardDrive.style.pointerEvents='none'; } }
+  var cardDocs = document.getElementById('card-meu-docs');
+  if (cardDocs) { if (a.link_docs && a.link_docs.trim()) { cardDocs.href = a.link_docs; } else { cardDocs.style.opacity='0.35'; cardDocs.style.pointerEvents='none'; } }
 
   var proxEl = document.getElementById('proxima-aula-txt');
   if (proxEl && a.proxima_aula && a.proxima_aula.trim()) proxEl.textContent = a.proxima_aula;
