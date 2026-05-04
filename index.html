@@ -1631,7 +1631,7 @@ function renderDashboard(a, avisos) {
   var cardDrive = document.getElementById('card-meu-drive');
   if (cardDrive) { if (a.link_drive) { cardDrive.href = a.link_drive; } else { cardDrive.style.opacity='0.35'; cardDrive.style.pointerEvents='none'; } }
   var cardDocs = document.getElementById('card-meu-docs');
-  if (cardDocs) { if (a.link_docs && a.link_docs.trim()) { cardDocs.href = a.link_docs; } else { cardDocs.style.opacity='0.35'; cardDocs.style.pointerEvents='none'; } }
+  if (cardDocs && a.link_docs && a.link_docs.trim()) { cardDocs.href = a.link_docs; }
 
   var proxEl = document.getElementById('proxima-aula-txt');
   if (proxEl && a.proxima_aula && a.proxima_aula.trim()) proxEl.textContent = a.proxima_aula;
