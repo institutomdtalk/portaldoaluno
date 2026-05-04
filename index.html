@@ -1207,6 +1207,10 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
             <button class="btn-confirmar" id="btn-falta" style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.12)">
               Registrar Falta
             </button>
+            <a class="btn-meet" id="btn-meet" href="#" target="_blank" rel="noopener" style="display:none;width:100%;justify-content:center;margin-top:4px">
+              <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              Entrar no Google Meet
+            </a>
           </div>
         </div>
       </div>
@@ -1253,14 +1257,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     <!-- MEET + MURAL -->
     <div class="card reveal" style="display:flex;flex-direction:column">
       <div class="card-pad" style="display:flex;flex-direction:column;flex:1">
-        <a class="btn-meet" id="btn-meet" href="#" target="_blank" rel="noopener" style="display:none;margin-bottom:16px">
-          <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-          Entrar no Google Meet
-        </a>
-        <div id="meet-placeholder" style="display:none;background:var(--off-white);border-radius:var(--radius);padding:12px 14px;margin-bottom:16px;text-align:center;border:1px solid var(--border)">
-          <p style="font-size:12px;color:var(--text-muted);font-style:italic">Link do Meet não configurado.</p>
-        </div>
-        <div id="meet-divider" style="height:1px;background:var(--border);margin:0 -24px 16px;display:none"></div>
+        <div id="meet-placeholder" style="display:none"></div>
+        <div id="meet-divider" style="display:none"></div>
         <p class="card-overline">Mural de Avisos</p>
         <div id="mural-content" style="flex:1"><div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div></div>
       </div>
