@@ -735,19 +735,17 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 ═══════════════════════════════════════ */
 .card--form{
   grid-column:1/-1;display:block;text-decoration:none;color:inherit;cursor:pointer;
-  background:var(--cream);border:1px dashed var(--border-gold);
+  background:var(--white);border:1px solid var(--border);
   overflow:hidden;position:relative;
 }
 .card--form::before{display:none}
 .card--form::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,var(--gold),transparent);
-  transform:scaleX(0);transform-origin:left;
-  transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  content:'';position:absolute;left:0;top:16px;bottom:16px;width:3px;
+  background:var(--gold);border-radius:0 2px 2px 0;
+  opacity:0;transition:opacity 0.35s ease;
 }
-.card--form:hover{border-style:solid;border-color:var(--gold);background:var(--white);transform:translateY(-2px)}
-.card--form:hover::after{transform:scaleX(1)}
-.card--form:hover{box-shadow:var(--shadow-md)}
+.card--form:hover::after{opacity:1}
+.card--form:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:var(--border-gold)}
 .card--form .card-pad{display:flex;align-items:center;gap:24px}
 
 .form-icon-wrap{flex-shrink:0;width:56px;height:56px;position:relative;display:flex;align-items:center;justify-content:center}
@@ -759,7 +757,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 }
 @keyframes ringsp{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .form-icon-svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:transform 0.4s cubic-bezier(0.22,1,0.36,1)}
-.card--form:hover .form-icon-svg{transform:rotate(-8deg) scale(1.1)}
+.card--form:hover .form-icon-svg{transform:scale(1.1)}
 
 .form-content{flex:1}
 .form-btn{
@@ -1388,13 +1386,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     </a>
 
 
-    <!-- SEÇÃO: OUTROS CURSOS MD TALK -->
-    <div class="ornament reveal" style="grid-column:1/-1;padding:12px 0 4px">
-      <div class="ornament-line"></div>
-      <span style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);opacity:0.7;flex-shrink:0">Outros Cursos MD Talk</span>
-      <div class="ornament-line"></div>
-    </div>
-
     <!-- SEÇÃO: INSTITUTO MD TALK -->
     <div class="ornament reveal" style="grid-column:1/-1;padding:12px 0 4px">
       <div class="ornament-line"></div>
@@ -1427,6 +1418,13 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <span class="form-btn">Preencher <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
       </div>
     </a>
+
+    <!-- SEÇÃO: OUTROS CURSOS MD TALK -->
+    <div class="ornament reveal" style="grid-column:1/-1;padding:12px 0 4px">
+      <div class="ornament-line"></div>
+      <span style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);opacity:0.7;flex-shrink:0">Outros Cursos MD Talk</span>
+      <div class="ornament-line"></div>
+    </div>
 
     <!-- TREINAMENTO -->
     <a href="https://institutomdtalk.github.io/treinamento/" target="_blank" rel="noopener" class="card card--training reveal">
