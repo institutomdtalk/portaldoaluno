@@ -69,7 +69,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   min-height:100vh;
 }
 
-/* Layered atmospheric gradients */
 #page-login::before{
   content:'';
   position:absolute;
@@ -82,7 +81,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   z-index:0;
 }
 
-/* Grain texture */
 #page-login::after{
   content:'';
   position:absolute;
@@ -93,7 +91,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   z-index:0;
 }
 
-/* Geometric decorations */
 .geo{position:absolute;pointer-events:none;z-index:0}
 .geo--ring1{width:420px;height:420px;border:1px solid rgba(196,164,90,0.06);border-radius:50%;top:-130px;right:-90px;animation:geoFloat 20s ease-in-out infinite}
 .geo--ring2{width:280px;height:280px;border:1px solid rgba(196,164,90,0.04);border-radius:50%;bottom:-70px;left:-70px;animation:geoFloat 24s ease-in-out infinite reverse}
@@ -107,7 +104,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 @keyframes geoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
 @keyframes geoPulse{0%,100%{opacity:0.4;transform:rotate(45deg) scale(1)}50%{opacity:1;transform:rotate(45deg) scale(1.4)}}
 
-/* Login brand */
 .login-overline{
   font-family:var(--sans);
   font-size:10px;
@@ -150,7 +146,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   animation:heroReveal 1s cubic-bezier(0.22,1,0.36,1) 0.55s forwards;
 }
 
-/* Login card */
 .login-card{
   background:rgba(255,255,255,0.04);
   border:1px solid rgba(196,164,90,0.18);
@@ -270,7 +265,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   animation:heroReveal 1s cubic-bezier(0.22,1,0.36,1) 0.85s forwards;
 }
 
-/* Scroll hint */
 .login-scroll-hint{
   position:absolute;
   bottom:28px;
@@ -325,7 +319,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   pointer-events:none;
 }
 
-/* Header geo elements */
 .hgeo{position:absolute;pointer-events:none;z-index:0}
 .hgeo--ring{width:280px;height:280px;border:1px solid rgba(196,164,90,0.05);border-radius:50%;top:-80px;right:-60px;animation:geoFloat 22s ease-in-out infinite}
 .hgeo--line{width:1px;height:100px;background:linear-gradient(180deg,transparent,rgba(196,164,90,0.12),transparent);top:15%;left:8%;animation:geoFloat 18s ease-in-out infinite}
@@ -519,62 +512,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 }
 
 /* ═══════════════════════════════════════
-   PRESENÇA CARD
+   PRESENÇA — botões
 ═══════════════════════════════════════ */
-.card--presenca{
-  grid-column:1/-1;
-  background:linear-gradient(135deg,var(--navy-deep) 0%,var(--navy) 60%,var(--navy-light) 100%);
-  border:none;
-  position:relative;
-  overflow:hidden;
-}
-
-.card--presenca::before{display:none}
-
-.card--presenca::after{
-  content:'';
-  position:absolute;
-  top:-40%;right:-8%;
-  width:300px;height:300px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(196,164,90,0.08) 0%,transparent 65%);
-  pointer-events:none;
-}
-
-/* Grain on presença card */
-.card--presenca .grain{
-  position:absolute;
-  inset:0;
-  opacity:0.02;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  pointer-events:none;
-}
-
-.card--presenca .card-pad{
-  position:relative;
-  z-index:1;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:24px;
-  padding:28px 28px;
-}
-
-.presenca-left{flex:1}
-
-.presenca-label{
-  font-size:9px;
-  font-weight:700;
-  letter-spacing:4px;
-  text-transform:uppercase;
-  color:var(--gold);
-  margin-bottom:14px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-/* Pulse dot with ring */
 .pulse-dot{
   width:8px;height:8px;
   background:#4ADE80;
@@ -593,6 +532,20 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 }
 @keyframes pulsering{0%{transform:scale(0.8);opacity:1}100%{transform:scale(2.2);opacity:0}}
 
+.presenca-left{flex:1}
+
+.presenca-label{
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
 .presenca-title{
   font-family:var(--serif);
   font-size:clamp(1.15rem,2.5vw,1.5rem);
@@ -604,7 +557,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 .presenca-subtitle{font-size:13px;color:rgba(255,255,255,0.4);margin-top:6px}
 
-/* Proxima aula */
 .proxima-aula-box{padding:0;margin-bottom:14px}
 .proxima-aula-label{
   font-size:9px;
@@ -624,8 +576,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 }
 .proxima-aula-vazia{font-size:13px;color:rgba(255,255,255,0.3);font-style:italic}
 
-/* Stat pills */
-.presenca-right{display:flex;flex-direction:column;align-items:flex-end;gap:14px;flex-shrink:0}
+.presenca-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0}
 .stat-row-inline{display:flex;gap:10px}
 .stat-pill{
   background:rgba(255,255,255,0.06);
@@ -673,7 +624,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .btn-confirmar svg{width:14px;height:14px;flex-shrink:0;transition:transform 0.3s ease}
 .btn-confirmar:hover:not(:disabled) svg{transform:scale(1.15)}
 
-/* Meet button */
+/* Meet button — full width, smaller, below the two buttons */
 .btn-meet{
   display:flex;align-items:center;justify-content:center;gap:8px;
   padding:10px 18px;
@@ -684,6 +635,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   cursor:pointer;text-decoration:none;
   transition:all 0.4s cubic-bezier(0.22,1,0.36,1);
   position:relative;overflow:hidden;
+  width:100%;
 }
 .btn-meet::after{
   content:'';position:absolute;inset:0;
@@ -692,7 +644,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   animation:shimmer 3s ease-in-out infinite;
 }
 .btn-meet:hover{background:#1557b0;box-shadow:0 6px 20px rgba(26,115,232,0.35)}
-.btn-meet svg{width:16px;height:16px;stroke:var(--white);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.btn-meet svg{width:15px;height:15px;stroke:var(--white);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 
 @keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
 
@@ -944,7 +896,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   .presenca-right{align-items:flex-start;width:100%}
   .stat-row-inline{width:100%}
   .stat-pill{flex:1}
-  .btn-confirmar{width:100%;justify-content:center}
+  .btn-confirmar{flex:1}
   .contact-strip{grid-template-columns:1fr}
   .contact-item{border-right:none;border-bottom:1px solid var(--border)}
   .contact-item:last-child{border-bottom:none}
@@ -1114,7 +1066,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   .trilha-card.concluido .trilha-concluido-badge{display:block}
   .trilha-empty{font-size:13px;color:var(--text-muted);font-style:italic;padding:8px 0}
 
-  /* Trilha section separators */
   .trilha-section-label{
     font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
     color:var(--text-muted);margin:20px 0 12px;display:flex;align-items:center;gap:12px;
@@ -1186,6 +1137,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <button class="btn-signout" id="btn-signout">Sair</button>
       </div>
     </div>
+
     <!-- PRESENÇA NO HERO -->
     <div style="position:relative;z-index:1;border-top:1px solid rgba(196,164,90,0.12)">
       <div style="max-width:1100px;margin:0 auto;padding:28px 36px 36px;display:flex;justify-content:space-between;align-items:flex-start;gap:32px;flex-wrap:wrap">
@@ -1196,30 +1148,36 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
           </div>
           <p class="presenca-subtitle" style="margin-top:10px">Registre sua presença ou falta no dia de sua aula.</p>
         </div>
+
+        <!-- ── BOTÕES DE PRESENÇA ── -->
         <div class="presenca-right">
           <div style="display:none"><span id="stat-presencas"></span><span id="stat-faltas"></span><span id="stat-freq"></span></div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn-confirmar" id="btn-presente">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              Confirmar Presença
-            </button>
-            <button class="btn-confirmar" id="btn-falta" style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.12)">
-              Registrar Falta
-            </button>
-            <a class="btn-meet" id="btn-meet" href="#" target="_blank" rel="noopener" style="display:none;justify-content:center;margin-top:4px">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <!-- linha com os dois botões lado a lado -->
+            <div style="display:flex;gap:8px">
+              <button class="btn-confirmar" id="btn-presente">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Confirmar Presença
+              </button>
+              <button class="btn-confirmar" id="btn-falta" style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.12)">
+                Registrar Falta
+              </button>
+            </div>
+            <!-- botão Meet abaixo, largura total -->
+            <a class="btn-meet" id="btn-meet" href="#" target="_blank" rel="noopener" style="display:none">
               <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
               Entrar no Google Meet
             </a>
           </div>
         </div>
+        <!-- ── /BOTÕES DE PRESENÇA ── -->
+
       </div>
     </div>
     <div class="header-gold-line"></div>
   </header>
 
   <main class="dashboard">
-
-
 
     <!-- CALENDÁRIO -->
     <div class="card reveal">
@@ -1269,7 +1227,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <p class="card-overline">Meu Espaço</p>
         <h3 class="card-title" id="espaco-titulo">Meu Programa</h3>
         <p class="card-desc" id="espaco-desc" style="margin-bottom:16px"></p>
-        <!-- DRIVE FILES -->
         <div id="drive-files-section" style="margin-bottom:20px;display:none">
           <p class="card-overline" style="margin-bottom:10px">Últimos Conteúdos</p>
           <div class="drive-grid" id="drive-files-grid"></div>
@@ -1288,14 +1245,12 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
           Prateleira de Textos
         </a>
         <div id="materiais-section" style="margin-top:18px;display:none">
-          <!-- Header clicável -->
           <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:4px" onclick="toggleMateriais()">
             <p style="font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold)">Materiais</p>
             <div id="mat-chevron-wrap" style="width:24px;height:24px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all 0.4s cubic-bezier(0.22,1,0.36,1)">
               <svg id="mat-chevron-svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.4s cubic-bezier(0.22,1,0.36,1)"><path d="M6 9l6 6 6-6"/></svg>
             </div>
           </div>
-          <!-- Collapse -->
           <div id="mat-collapse" style="max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.22,1,0.36,1)">
             <div id="materiais-content" style="padding-top:8px"></div>
           </div>
@@ -1303,7 +1258,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       </div>
     </div>
 
-    <!-- ANOTAÇÕES + ENVIO LADO A LADO -->
+    <!-- ANOTAÇÕES -->
     <div class="card card--link reveal" style="cursor:default">
       <div class="card-pad">
         <div class="link-icon link-icon--navy"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
@@ -1345,6 +1300,19 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <div id="trilha-content"></div>
       </div>
     </div>
+
+    <!-- ENVIO DE ATIVIDADES (form card) -->
+    <a href="https://institutomdtalk.github.io/homework/" target="_blank" rel="noopener" class="card card--form reveal" style="grid-column:1/-1">
+      <div class="card-pad">
+        <div class="form-icon-wrap"><div class="form-icon-ring"></div><svg class="form-icon-svg" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <div class="form-content">
+          <p class="card-overline">Tarefas</p>
+          <h3 class="card-title">Envio de Atividades</h3>
+          <p class="card-desc">Submita aqui as respostas das suas tarefas e atividades do programa.</p>
+        </div>
+        <span class="form-btn">Acessar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
 
     <!-- CAMBRIDGE -->
     <a href="https://dictionary.cambridge.org/pt/dicionario/ingles-portugues/" target="_blank" rel="noopener" class="card card--link reveal">
@@ -1454,7 +1422,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   </div>
 
   <script>
-  // Sidebar — script separado para evitar interferencia do Cloudflare
   (function() {
     function initSidebar() {
       var bh = document.getElementById('btn-hamburger');
@@ -1572,7 +1539,6 @@ function doLogin() {
       btn.disabled = false; btn.textContent = 'Acessar Portal';
       if (d.success) {
         currentStudent = d.aluno;
-        // Salva apenas credenciais, não o histórico (histórico sempre vem fresh do servidor)
         sessionStorage.setItem('mdtalk_login', d.aluno.login);
         sessionStorage.setItem('mdtalk_senha', btoa(encodeURIComponent(document.getElementById('f-senha').value.trim())));
         renderDashboard(d.aluno, d.avisos);
@@ -1587,13 +1553,13 @@ document.addEventListener('keydown', function(e) { if (e.key==='Enter' && docume
 
 // ── DASHBOARD ──
 function renderDashboard(a, avisos) {
-  // Sempre reseta os botões antes de verificar o histórico
   var btnP = document.getElementById('btn-presente');
   var btnF = document.getElementById('btn-falta');
   if (btnP) {
     btnP.disabled = false;
     btnP.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"/></svg> Confirmar Presença';
-    btnP.style.background = ''; btnP.style.color = ''; btnP.style.opacity = ''; btnP.style.boxShadow = '';
+    btnP.style.background = '#22c55e'; btnP.style.color = 'var(--white)'; btnP.style.opacity = ''; btnP.style.boxShadow = '';
+    btnP.style.border = 'none';
   }
   if (btnF) {
     btnF.disabled = false;
@@ -1613,8 +1579,14 @@ function renderDashboard(a, avisos) {
   var meetDiv = document.getElementById('meet-divider');
   var meetPh  = document.getElementById('meet-placeholder');
   if (meetBtn) {
-    if (a.link_meet && a.link_meet.trim()) { meetBtn.href = a.link_meet; meetBtn.style.display = 'flex'; if (meetDiv) meetDiv.style.display = 'block'; }
-    else { if (meetPh) meetPh.style.display = 'block'; if (meetDiv) meetDiv.style.display = 'block'; }
+    if (a.link_meet && a.link_meet.trim()) {
+      meetBtn.href = a.link_meet;
+      meetBtn.style.display = 'flex';
+      if (meetDiv) meetDiv.style.display = 'block';
+    } else {
+      if (meetPh) meetPh.style.display = 'block';
+      if (meetDiv) meetDiv.style.display = 'block';
+    }
   }
 
   if (a.curso)           document.getElementById('espaco-titulo').textContent = a.curso;
@@ -1637,18 +1609,14 @@ function renderDashboard(a, avisos) {
   carregarAnotacoes(a.anotacoes || []);
   window._trilhaData = a.trilha || [];
   renderTrilha(a.trilha || []);
-  // Busca arquivos do Drive de forma assíncrona (não atrasa o login)
   if (a.link_drive && a.link_drive.trim()) {
     document.getElementById('drive-files-section').style.display = 'block';
     document.getElementById('drive-files-grid').innerHTML = '<p style="font-size:12px;color:var(--text-muted);grid-column:1/-1">Carregando arquivos...</p>';
     callScript(
       'action=get_drive_files&login=' + encodeURIComponent(a.login),
       function(d) {
-        if (d.success && d.files && d.files.length) {
-          renderDriveFiles(d.files);
-        } else {
-          document.getElementById('drive-files-section').style.display = 'none';
-        }
+        if (d.success && d.files && d.files.length) { renderDriveFiles(d.files); }
+        else { document.getElementById('drive-files-section').style.display = 'none'; }
       },
       function() { document.getElementById('drive-files-section').style.display = 'none'; }
     );
@@ -1660,11 +1628,8 @@ function renderDashboard(a, avisos) {
 
 // ── RELÓGIO ──
 var clockInterval = null;
-function startClock() {
-  updateClock();
-  clockInterval = setInterval(updateClock, 1000);
-}
-function stopClock() { if (clockInterval) { clearInterval(clockInterval); clockInterval = null; } }
+function startClock() { updateClock(); clockInterval = setInterval(updateClock, 1000); }
+function stopClock()  { if (clockInterval) { clearInterval(clockInterval); clockInterval = null; } }
 function updateClock() {
   var now = new Date();
   var h = now.getHours();
@@ -1682,13 +1647,10 @@ var calYear, calMonth, calData = [];
 var MONTHS_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 var DAYS_EN   = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 
-// Feriados nacionais brasileiros (YYYY-MM-DD)
 var FERIADOS = [
-  // 2025
   '2025-01-01','2025-03-03','2025-03-04','2025-04-18','2025-04-20','2025-04-21',
   '2025-05-01','2025-06-19','2025-09-07','2025-10-12','2025-11-02','2025-11-15',
   '2025-11-20','2025-12-25',
-  // 2026
   '2026-01-01','2026-02-16','2026-02-17','2026-04-03','2026-04-05','2026-04-21',
   '2026-05-01','2026-06-04','2026-09-07','2026-10-12','2026-11-02','2026-11-15',
   '2026-11-20','2026-12-25'
@@ -1699,32 +1661,19 @@ function isFeriado(date) {
   return FERIADOS.indexOf(key) >= 0;
 }
 
-// Calcula aulas esperadas no mês considerando frequência semanal e feriados
 function aulasEsperadasNoMes(ano, mes, freqSemanal) {
   if(!freqSemanal || freqSemanal < 1) return null;
-  // Conta semanas no mês (semanas ISO: conta segundas a partir do primeiro dia do mês)
   var total = 0;
   var first = new Date(ano, mes, 1);
   var last  = new Date(ano, mes+1, 0);
   var hoje  = new Date();
-  // Só conta semanas já passadas (até hoje se mês atual, ou mês inteiro se passado)
-  var limiteData = (ano < hoje.getFullYear() || (ano === hoje.getFullYear() && mes < hoje.getMonth()))
-    ? last
-    : hoje;
-  
-  // Percorre cada dia do mês até hoje
+  var limiteData = (ano < hoje.getFullYear() || (ano === hoje.getFullYear() && mes < hoje.getMonth())) ? last : hoje;
   var d = new Date(first);
   var semanasContadas = {};
   while(d <= limiteData && d <= last) {
-    // Número da semana do ano como chave
     var startOfYear = new Date(d.getFullYear(), 0, 1);
     var weekNum = Math.ceil(((d - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
-    if(!semanasContadas[weekNum]) {
-      // Verifica se algum dia desta semana que seria de aula é feriado
-      // Considera que aula em feriado = contabilizada como dada (não desconta)
-      semanasContadas[weekNum] = true;
-      total += freqSemanal;
-    }
+    if(!semanasContadas[weekNum]) { semanasContadas[weekNum] = true; total += freqSemanal; }
     d.setDate(d.getDate() + 1);
   }
   return total;
@@ -1740,7 +1689,6 @@ function initCalendar(historico, freqSemanal) {
 function calPrev() { calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderCalendar(); }
 function calNext() {
   var now=new Date();
-  // Não navega além do mês atual
   if(calYear===now.getFullYear()&&calMonth===now.getMonth()) return;
   calMonth++; if(calMonth>11){calMonth=0;calYear++;}
   renderCalendar();
@@ -1757,27 +1705,19 @@ function parseCalDate(str) {
 }
 
 function renderCalendar() {
-  var label   = document.getElementById('cal-month-label');
-  var grid    = document.getElementById('cal-grid');
-  var aviso   = document.getElementById('cal-nav-aviso');
+  var label = document.getElementById('cal-month-label');
+  var grid  = document.getElementById('cal-grid');
+  var aviso = document.getElementById('cal-nav-aviso');
   if(!label||!grid) return;
-
   var now = new Date();
   var isMesAtual = (calYear===now.getFullYear() && calMonth===now.getMonth());
-
   label.textContent = MONTHS_PT[calMonth]+' '+calYear;
-
-  // Mostrar aviso de mês anterior
   if(aviso) aviso.style.display = isMesAtual ? 'none' : 'block';
-
-  // Build lookup
   var lookup={};
   calData.forEach(function(h){
     var d=parseCalDate(h.data_aula);
     if(d) lookup[d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate()]=h.status;
   });
-
-  // Stats do mês visualizado
   var presencasMes=0, faltasMes=0;
   calData.forEach(function(h){
     var d=parseCalDate(h.data_aula);
@@ -1789,7 +1729,6 @@ function renderCalendar() {
   var totalMes = presencasMes + faltasMes;
   var freqMes  = totalMes > 0 ? Math.round((presencasMes/totalMes)*100)+'%' : '—';
   var esperadas = window._calFreq ? aulasEsperadasNoMes(calYear, calMonth, window._calFreq) : null;
-
   document.getElementById('cal-faltas-mes').textContent = faltasMes;
   document.getElementById('cal-plural').textContent = faltasMes===1?'':'s';
   var elP = document.getElementById('cal-presencas-mes');
@@ -1798,8 +1737,6 @@ function renderCalendar() {
   if(elP) elP.textContent = presencasMes;
   if(elFreq) elFreq.textContent = freqMes;
   if(elEsp) elEsp.textContent = esperadas !== null ? esperadas : '—';
-
-  // Render grid
   var today=new Date();
   var first=new Date(calYear,calMonth,1);
   var last=new Date(calYear,calMonth+1,0);
@@ -1819,8 +1756,6 @@ function renderCalendar() {
     html+='<div class="'+cls+'" title="'+(isFer?'Feriado — aula contabilizada como realizada':'')+'">'+day+(mark?'<div class="cal-mark">'+mark+'</div>':'')+'</div>';
   }
   grid.innerHTML=html;
-
-  // Block next button if already at current month
   var btnNext=document.getElementById('cal-btn-next');
   if(btnNext) btnNext.style.opacity = isMesAtual ? '0.3' : '1';
 }
@@ -1833,7 +1768,6 @@ function renderHistorico(historico) {
     document.getElementById('stat-freq').textContent='—';
     initCalendar([], window._calFreq||null); return;
   }
-  // Stats TOTAIS (todos os meses) para os pills do card de presença
   var presencas=historico.filter(function(h){return h.status==='presente';}).length;
   var faltas=historico.filter(function(h){return h.status==='falta';}).length;
   var total=presencas+faltas;
@@ -1846,7 +1780,6 @@ function renderHistorico(historico) {
   initCalendar(historico, window._calFreq||null);
 }
 
-
 function buildStatusBadge(status) {
   var s = (status||'').toLowerCase().trim();
   var cls = s === 'pago' ? 'pago' : s === 'atrasado' ? 'atrasado' : 'pendente';
@@ -1854,38 +1787,6 @@ function buildStatusBadge(status) {
   var label = s === 'pago' ? 'Pago' : s === 'atrasado' ? 'Atrasado' : 'Pendente';
   return '<span class="pag-status-pill ' + cls + '">' + dot + label + '</span>';
 }
-
-
-
-function buildStatusBadge(status) {
-  var s = (status||'').toLowerCase().trim();
-  var cls = s === 'pago' ? 'pago' : s === 'atrasado' ? 'atrasado' : 'pendente';
-  var dot = s === 'atrasado' ? '<span class="pag-dot-alert"></span>' : '';
-  var label = s === 'pago' ? 'Pago' : s === 'atrasado' ? 'Atrasado' : 'Pendente';
-  return '<span class="pag-status-pill ' + cls + '">' + dot + label + '</span>';
-}
-
-
-
-function buildStatusBadge(status) {
-  var s = (status||'').toLowerCase().trim();
-  var cls = s === 'pago' ? 'pago' : s === 'atrasado' ? 'atrasado' : 'pendente';
-  var dot = s === 'atrasado' ? '<span class="pag-dot-alert"></span>' : '';
-  var label = s === 'pago' ? 'Pago' : s === 'atrasado' ? 'Atrasado' : 'Pendente';
-  return '<span class="pag-status-pill ' + cls + '">' + dot + label + '</span>';
-}
-
-
-
-function buildStatusBadge(status) {
-  var s = (status||'').toLowerCase().trim();
-  var cls = s === 'pago' ? 'pago' : s === 'atrasado' ? 'atrasado' : 'pendente';
-  var dot = s === 'atrasado' ? '<span class="pag-dot-alert"></span>' : '';
-  var label = s === 'pago' ? 'Pago' : s === 'atrasado' ? 'Atrasado' : 'Pendente';
-  return '<span class="pag-status-pill ' + cls + '">' + dot + label + '</span>';
-}
-
-
 
 function copiarPix() {
   var key = '38315226851';
@@ -1918,31 +1819,17 @@ function toggleMateriais() {
 }
 
 var _anotOpen = false;
-var _anotData = []; // [{id, tipo, texto, feito}]
+var _anotData = [];
 var _anotSaveTimer = null;
 var MAX_ANOT = 20;
 
-function toggleAnotacoes() {
-  var collapse = document.getElementById('anot-collapse');
-  var chevron  = document.getElementById('anot-chevron-svg');
-  var wrap     = document.getElementById('anot-chevron-wrap');
-  _anotOpen = !_anotOpen;
-  collapse.style.maxHeight = _anotOpen ? (collapse.scrollHeight + 600) + 'px' : '0';
-  if (chevron) chevron.style.transform = _anotOpen ? 'rotate(180deg)' : '';
-  if (wrap) wrap.style.background = _anotOpen ? 'var(--gold-faint)' : '';
-}
-
 function renderAnotacoes() {
   var tarefas = _anotData.filter(function(a){ return a.tipo === 'tarefa'; });
-
   document.getElementById('anot-lista-tarefa').innerHTML = tarefas.length
     ? tarefas.map(function(a){ return buildAnotItem(a); }).join('')
     : '<p class="anot-empty">Nenhuma tarefa ainda.</p>';
-
   var total = _anotData.length;
   document.getElementById('anot-counter').textContent = total + ' / ' + MAX_ANOT + ' itens';
-
-  // Update resumo
   var pendentes = _anotData.filter(function(a){ return a.tipo==='tarefa' && !a.feito; }).length;
   var resumo = document.getElementById('anot-resumo');
   if (resumo) {
@@ -1952,8 +1839,6 @@ function renderAnotacoes() {
         ? pendentes + ' tarefa' + (pendentes > 1 ? 's' : '') + ' pendente' + (pendentes > 1 ? 's' : '') + ' · ' + total + ' item' + (total > 1 ? 's' : '') + ' no total'
         : 'Todas as tarefas concluídas · ' + total + ' item' + (total > 1 ? 's' : '');
   }
-
-  // Update collapse height
   var collapse = document.getElementById('anot-collapse');
   if (_anotOpen && collapse) collapse.style.maxHeight = (collapse.scrollHeight + 600) + 'px';
 }
@@ -1970,21 +1855,14 @@ function buildAnotItem(a) {
   '</div>';
 }
 
-function escapeHTML(str) {
-  return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function autoResize(el) {
-  el.style.height = 'auto';
-  el.style.height = el.scrollHeight + 'px';
-}
+function escapeHTML(str) { return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function autoResize(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
 
 function adicionarAnot(tipo) {
   if (_anotData.length >= MAX_ANOT) { showToast('Limite de ' + MAX_ANOT + ' itens atingido.', 'error'); return; }
   var id = 'anot_' + Date.now();
   _anotData.push({ id: id, tipo: tipo, texto: '', feito: false });
   renderAnotacoes();
-  // Focus new item
   setTimeout(function(){
     var el = document.querySelector('#anot-item-' + id + ' textarea');
     if (el) { el.focus(); autoResize(el); }
@@ -2020,7 +1898,6 @@ function salvarAnotacoes() {
   if (!currentStudent) return;
   var ind = document.getElementById('anot-save-ind');
   if (ind) { ind.textContent = ''; ind.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Salvando...'; ind.classList.add('visible'); }
-
   callScript(
     'action=salvar_anotacoes&login=' + encodeURIComponent(currentStudent.login) +
     '&anotacoes=' + encodeURIComponent(JSON.stringify(_anotData)),
@@ -2039,7 +1916,6 @@ function salvarAnotacoes() {
 function carregarAnotacoes(anotacoes) {
   _anotData = anotacoes || [];
   renderAnotacoes();
-  // Auto-resize all textareas after render
   setTimeout(function(){
     document.querySelectorAll('.anot-input').forEach(function(el){ autoResize(el); });
   }, 100);
@@ -2052,7 +1928,7 @@ function renderDriveFiles(files) {
   if (!section || !grid || !files || !files.length) return;
   section.style.display = 'block';
   grid.innerHTML = '';
-  files.forEach(function(f, i) {
+  files.forEach(function(f) {
     var div = document.createElement('div');
     div.className = 'drive-file';
     var thumb;
@@ -2070,9 +1946,7 @@ function renderDriveFiles(files) {
         '</div>' +
       '</div>';
     var btn = div.querySelector('.drive-file-btn.primary');
-    btn.addEventListener('click', function() {
-      openPdfModal(this.dataset.embed, this.dataset.name, this.dataset.view);
-    });
+    btn.addEventListener('click', function() { openPdfModal(this.dataset.embed, this.dataset.name, this.dataset.view); });
     grid.appendChild(div);
   });
 }
@@ -2103,38 +1977,21 @@ function renderTrilha(trilha) {
   var container = document.getElementById('trilha-content');
   var resumo    = document.getElementById('trilha-resumo');
   if (!container) return;
-
   if (!trilha || !trilha.length) {
     container.innerHTML = '<p class="trilha-empty">Sua trilha ainda não foi configurada.</p>';
     if (resumo) resumo.textContent = 'Sua trilha personalizada aparecerá aqui.';
     return;
   }
-
   var concluidos = trilha.filter(function(m){ return m.concluido; }).length;
   if (resumo) resumo.textContent = concluidos + ' de ' + trilha.length + ' módulos concluídos · ' + Math.round((concluidos/trilha.length)*100) + '% completo';
-
-  // Separate by tipo
   var gramatica   = trilha.filter(function(m){ return m.tipo === 'gramatica' || m.tipo === 'gramática'; });
   var vocabulario = trilha.filter(function(m){ return m.tipo === 'vocabulario' || m.tipo === 'vocabulário'; });
   var outros      = trilha.filter(function(m){ return m.tipo !== 'gramatica' && m.tipo !== 'gramática' && m.tipo !== 'vocabulario' && m.tipo !== 'vocabulário'; });
-
   var html = '';
-  if (gramatica.length) {
-    html += '<div class="trilha-section-label">Gramática</div>';
-    html += '<div class="trilha-grid">' + gramatica.map(buildTrilhaCard).join('') + '</div>';
-  }
-  if (vocabulario.length) {
-    html += '<div class="trilha-section-label">Vocabulário</div>';
-    html += '<div class="trilha-grid">' + vocabulario.map(buildTrilhaCard).join('') + '</div>';
-  }
-  if (outros.length) {
-    html += '<div class="trilha-section-label">Outros</div>';
-    html += '<div class="trilha-grid">' + outros.map(buildTrilhaCard).join('') + '</div>';
-  }
-
+  if (gramatica.length)   { html += '<div class="trilha-section-label">Gramática</div><div class="trilha-grid">'   + gramatica.map(buildTrilhaCard).join('')   + '</div>'; }
+  if (vocabulario.length) { html += '<div class="trilha-section-label">Vocabulário</div><div class="trilha-grid">' + vocabulario.map(buildTrilhaCard).join('') + '</div>'; }
+  if (outros.length)      { html += '<div class="trilha-section-label">Outros</div><div class="trilha-grid">'      + outros.map(buildTrilhaCard).join('')      + '</div>'; }
   container.innerHTML = html;
-
-  // Add event listeners to cards and buttons
   container.querySelectorAll('.trilha-card[data-url]').forEach(function(card) {
     card.addEventListener('click', function(e) {
       if (e.target.closest('.trilha-check') || e.target.closest('.trilha-btn-pdf')) return;
@@ -2150,15 +2007,12 @@ function renderTrilha(trilha) {
       btn.classList.toggle('done', !done);
       var card = btn.closest('.trilha-card');
       if (card) card.classList.toggle('concluido', !done);
-      // Update local data
       var item = window._trilhaData && window._trilhaData.find(function(m){ return m.ordem === ordem; });
       if (item) item.concluido = !done;
-      // Update resumo
       var concl = (window._trilhaData || []).filter(function(m){ return m.concluido; }).length;
       var total = (window._trilhaData || []).length;
       var resumoEl = document.getElementById('trilha-resumo');
       if (resumoEl) resumoEl.textContent = concl + ' de ' + total + ' módulos concluídos · ' + Math.round((concl/total)*100) + '% completo';
-      // Save to server
       if (currentStudent) {
         callScript(
           'action=concluir_modulo&login=' + encodeURIComponent(currentStudent.login) + '&ordem=' + ordem + '&concluido=' + novoValor,
@@ -2170,28 +2024,20 @@ function renderTrilha(trilha) {
 }
 
 function buildTrilhaCard(m) {
-  // Convert Drive share link to direct image URL
   var thumbSrc = '';
   if (m.thumbnail) {
-    // Extract Drive file ID from any Drive link format
     var idMatch = m.thumbnail.match(/\/d\/([a-zA-Z0-9_-]{10,})/);
     if (!idMatch) idMatch = m.thumbnail.match(/id=([a-zA-Z0-9_-]{10,})/);
     if (!idMatch) idMatch = m.thumbnail.match(/([a-zA-Z0-9_-]{25,})/);
-    if (idMatch) {
-      // Use thumbnail API which doesn't have CORS issues
-      thumbSrc = 'https://drive.google.com/thumbnail?id=' + idMatch[1] + '&sz=w600';
-    } else {
-      thumbSrc = m.thumbnail;
-    }
+    if (idMatch) { thumbSrc = 'https://drive.google.com/thumbnail?id=' + idMatch[1] + '&sz=w600'; }
+    else { thumbSrc = m.thumbnail; }
   }
   var thumb = thumbSrc
-    ? '<img class="trilha-thumb" src="' + thumbSrc + '" alt="' + m.titulo + '" loading="lazy">'  
+    ? '<img class="trilha-thumb" src="' + thumbSrc + '" alt="' + m.titulo + '" loading="lazy">'
     : '<div class="trilha-thumb-placeholder"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>';
-
   var tipoLabel = (m.tipo === 'gramatica' || m.tipo === 'gramática') ? 'Gramática' : (m.tipo === 'vocabulario' || m.tipo === 'vocabulário') ? 'Vocabulário' : m.tipo;
   var tipoClass = (m.tipo === 'gramatica' || m.tipo === 'gramática') ? 'gramatica' : 'vocabulario';
   var doneClass = m.concluido ? ' concluido' : '';
-
   return '<div class="trilha-card' + doneClass + '" data-url="' + m.url_pagina + '">' +
     '<span class="trilha-concluido-badge">Concluído</span>' +
     thumb +
@@ -2220,20 +2066,13 @@ function animateCounter(el, target) {
 function verificarRegistroHoje(historico) {
   if(!historico||!historico.length) return;
   var now=new Date();
-  var diaHoje=now.getDate();
-  var mesHoje=now.getMonth();
-  var anoHoje=now.getFullYear();
-  console.log('[MD Talk] verificarRegistroHoje — hoje:', diaHoje, mesHoje, anoHoje);
-  console.log('[MD Talk] historico recebido:', JSON.stringify(historico));
+  var diaHoje=now.getDate(); var mesHoje=now.getMonth(); var anoHoje=now.getFullYear();
   for(var i=0;i<historico.length;i++){
     var d=parseCalDate(historico[i].data_aula);
-    console.log('[MD Talk] registro', i, '— data_aula:', historico[i].data_aula, '— parseCalDate:', d);
     if(d && d.getDate()===diaHoje && d.getMonth()===mesHoje && d.getFullYear()===anoHoje){
-      console.log('[MD Talk] MATCH — bloqueando botões com status:', historico[i].status);
       bloqueiarBotoesHoje(historico[i].status); return;
     }
   }
-  console.log('[MD Talk] Nenhum registro hoje encontrado.');
 }
 
 function bloqueiarBotoesHoje(status) {
@@ -2242,8 +2081,8 @@ function bloqueiarBotoesHoje(status) {
   if(!btnP||!btnF) return;
   btnP.disabled=true; btnF.disabled=true;
   if(status==='presente'){
-    btnP.textContent='Presença confirmada hoje';
-    btnP.style.background='#22c55e'; btnP.style.color='var(--white)'; btnP.style.opacity='1';
+    btnP.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"/></svg> Presença confirmada hoje';
+    btnP.style.background='#22c55e'; btnP.style.color='var(--white)'; btnP.style.opacity='1'; btnP.style.border='none';
     btnF.style.opacity='0.25';
   } else {
     btnF.textContent='Falta registrada hoje';
@@ -2300,8 +2139,8 @@ function doLogout() {
   document.getElementById('login-err').style.display='none';
   document.getElementById('mural-content').innerHTML='<div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div>';
   document.getElementById('materiais-section').style.display='none';
-  _anotData = []; _anotOpen = false; _matOpen = false; var mc = document.getElementById('mat-collapse'); if(mc) mc.style.maxHeight='0';
-  // anot-collapse is always visible
+  _anotData = []; _anotOpen = false; _matOpen = false;
+  var mc = document.getElementById('mat-collapse'); if(mc) mc.style.maxHeight='0';
   var ach = document.getElementById('anot-chevron-svg'); if(ach) ach.style.transform='';
   showPage('login');
 }
@@ -2325,7 +2164,6 @@ function initReveal() {
   reveals.forEach(function(el){ obs.observe(el); });
 }
 
-// ── ANIMATE CARDS (legacy support) ──
 function animateCards() {
   var cards=document.querySelectorAll('#page-dashboard .card, #page-dashboard .contact-strip');
   cards.forEach(function(c){ if(!c.classList.contains('reveal')){ c.style.opacity='1'; c.style.transform='translateY(0)'; } });
@@ -2367,7 +2205,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var linkEmail=document.getElementById('link-email');
   if(linkEmail) linkEmail.addEventListener('click', function(){ this.href='mai'+'lto:mdtalk.of'+'fice@gmail.com'; });
-
 });
 
 // ── INIT ──
@@ -2377,7 +2214,6 @@ window.addEventListener('load', function(){
   if (savedLogin && savedSenha) {
     try {
       var senha = decodeURIComponent(atob(savedSenha));
-      // Refaz o login automaticamente para buscar dados frescos do servidor
       callScript(
         'action=login&login=' + encodeURIComponent(savedLogin) + '&senha=' + encodeURIComponent(senha),
         function(d) {
