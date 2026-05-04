@@ -1182,32 +1182,40 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     <!-- CALENDÁRIO -->
     <div class="card reveal">
       <div class="card-pad" style="padding:20px 20px">
-        <p class="card-overline">Histórico de Presenças</p>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-          <button id="cal-btn-prev" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s ease">&#8249;</button>
-          <span id="cal-month-label" style="font-family:var(--serif);font-size:1.15rem;font-weight:500;color:var(--navy);min-width:140px;text-align:center"></span>
-          <button id="cal-btn-next" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s ease">&#8250;</button>
-        </div>
-        <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
-        <div style="background:var(--off-white);border-radius:var(--radius);padding:14px 16px;margin-top:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border)">
-          <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
-            <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--success);line-height:1" id="cal-presencas-mes">0</div>
-            <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Presenças</p>
-          </div>
-          <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
-            <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--danger);line-height:1" id="cal-faltas-mes">0</div>
-            <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Falta<span id="cal-plural">s</span></p>
-          </div>
-          <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
-            <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--navy);line-height:1" id="cal-freq-mes">—</div>
-            <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Frequência</p>
-          </div>
-          <div style="text-align:center;padding:4px 8px">
-            <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--gold);line-height:1" id="cal-esperadas-mes">—</div>
-            <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Esperadas</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer" onclick="toggleCalendario()">
+          <p class="card-overline" style="margin-bottom:0">Histórico de Presenças</p>
+          <div id="cal-chevron-wrap" style="width:24px;height:24px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all 0.4s cubic-bezier(0.22,1,0.36,1);flex-shrink:0">
+            <svg id="cal-chevron-svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.4s cubic-bezier(0.22,1,0.36,1)"><path d="M6 9l6 6 6-6"/></svg>
           </div>
         </div>
-        <p id="cal-nav-aviso" style="font-size:11px;color:var(--text-muted);margin-top:8px;text-align:center;font-style:italic;display:none">Visualização de mês anterior — somente leitura</p>
+        <div id="cal-collapse" style="max-height:0;overflow:hidden;transition:max-height 0.55s cubic-bezier(0.22,1,0.36,1)">
+          <div style="padding-top:14px"></div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <button id="cal-btn-prev" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s ease">&#8249;</button>
+            <span id="cal-month-label" style="font-family:var(--serif);font-size:1.15rem;font-weight:500;color:var(--navy);min-width:140px;text-align:center"></span>
+            <button id="cal-btn-next" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s ease">&#8250;</button>
+          </div>
+          <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
+          <div style="background:var(--off-white);border-radius:var(--radius);padding:14px 16px;margin-top:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border)">
+            <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
+              <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--success);line-height:1" id="cal-presencas-mes">0</div>
+              <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Presenças</p>
+            </div>
+            <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
+              <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--danger);line-height:1" id="cal-faltas-mes">0</div>
+              <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Falta<span id="cal-plural">s</span></p>
+            </div>
+            <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
+              <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--navy);line-height:1" id="cal-freq-mes">—</div>
+              <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Frequência</p>
+            </div>
+            <div style="text-align:center;padding:4px 8px">
+              <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--gold);line-height:1" id="cal-esperadas-mes">—</div>
+              <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Esperadas</p>
+            </div>
+          </div>
+          <p id="cal-nav-aviso" style="font-size:11px;color:var(--text-muted);margin-top:8px;text-align:center;font-style:italic;display:none">Visualização de mês anterior — somente leitura</p>
+        </div>
       </div>
     </div>
 
@@ -1216,8 +1224,15 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       <div class="card-pad" style="display:flex;flex-direction:column;flex:1">
         <div id="meet-placeholder" style="display:none"></div>
         <div id="meet-divider" style="display:none"></div>
-        <p class="card-overline">Mural de Avisos</p>
-        <div id="mural-content" style="flex:1"><div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer" onclick="toggleMural()">
+          <p class="card-overline" style="margin-bottom:0">Mural de Avisos</p>
+          <div id="mural-chevron-wrap" style="width:24px;height:24px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all 0.4s cubic-bezier(0.22,1,0.36,1);flex-shrink:0">
+            <svg id="mural-chevron-svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.4s cubic-bezier(0.22,1,0.36,1)"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+        <div id="mural-collapse" style="max-height:0;overflow:hidden;transition:max-height 0.55s cubic-bezier(0.22,1,0.36,1)">
+          <div id="mural-content" style="padding-top:14px"><div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div></div>
+        </div>
       </div>
     </div>
 
@@ -1591,6 +1606,11 @@ function renderDashboard(a, avisos) {
   var muralEl = document.getElementById('mural-content');
   if (!avisos || !avisos.length) { muralEl.innerHTML = '<div class="empty-state">Nenhum aviso no momento.</div>'; }
   else { muralEl.innerHTML = avisos.map(function(av) { return '<div class="aviso-item"><div class="aviso-data">'+av.data+'</div><div class="aviso-txt">'+av.texto+'</div></div>'; }).join(''); }
+  // Recalc mural collapse height after content loaded
+  setTimeout(function(){
+    var mc = document.getElementById('mural-collapse');
+    if (_muralOpen && mc) mc.style.maxHeight = mc.scrollHeight + 200 + 'px';
+  }, 50);
 
   window._calFreq = a.frequencia_semanal ? parseInt(a.frequencia_semanal) : null;
   renderHistorico(a.historico);
@@ -1747,6 +1767,9 @@ function renderCalendar() {
   grid.innerHTML=html;
   var btnNext=document.getElementById('cal-btn-next');
   if(btnNext) btnNext.style.opacity = isMesAtual ? '0.3' : '1';
+  // Recalc collapse height after render
+  var calCollapse = document.getElementById('cal-collapse');
+  if (_calOpen && calCollapse) calCollapse.style.maxHeight = '1200px';
 }
 
 // ── HISTÓRICO / STATS ──
@@ -1793,6 +1816,35 @@ function copiarPix() {
     btn.textContent = 'Copiado!';
     setTimeout(function(){ btn.textContent = 'Copiar'; }, 2000);
   });
+}
+
+// ── TOGGLE CALENDÁRIO ──
+var _calOpen = false;
+function toggleCalendario() {
+  var collapse = document.getElementById('cal-collapse');
+  var chevron  = document.getElementById('cal-chevron-svg');
+  var wrap     = document.getElementById('cal-chevron-wrap');
+  _calOpen = !_calOpen;
+  if (_calOpen) {
+    collapse.style.maxHeight = '1200px';
+    setTimeout(function(){ renderCalendar(); }, 10);
+  } else {
+    collapse.style.maxHeight = '0';
+  }
+  if (chevron) chevron.style.transform = _calOpen ? 'rotate(180deg)' : '';
+  if (wrap) wrap.style.background = _calOpen ? 'var(--gold-faint)' : '';
+}
+
+// ── TOGGLE MURAL ──
+var _muralOpen = false;
+function toggleMural() {
+  var collapse = document.getElementById('mural-collapse');
+  var chevron  = document.getElementById('mural-chevron-svg');
+  var wrap     = document.getElementById('mural-chevron-wrap');
+  _muralOpen = !_muralOpen;
+  collapse.style.maxHeight = _muralOpen ? collapse.scrollHeight + 400 + 'px' : '0';
+  if (chevron) chevron.style.transform = _muralOpen ? 'rotate(180deg)' : '';
+  if (wrap) wrap.style.background = _muralOpen ? 'var(--gold-faint)' : '';
 }
 
 // ── ANOTAÇÕES ──
