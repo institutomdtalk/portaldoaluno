@@ -1315,6 +1315,32 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       </div>
     </a>
 
+    <!-- COLEÇÃO DE INFOGRÁFICOS -->
+    <a href="https://institutomdtalk.github.io/infograficos/" target="_blank" rel="noopener" class="card card--form reveal" style="grid-column:1/-1">
+      <div class="card-pad">
+        <div class="form-icon-wrap"><div class="form-icon-ring"></div><svg class="form-icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+        <div class="form-content">
+          <p class="card-overline">Recursos Visuais</p>
+          <h3 class="card-title">Coleção de Infográficos</h3>
+          <p class="card-desc">Acesse o acervo completo de infográficos do seu programa. Material visual de apoio para consolidar vocabulário e estruturas.</p>
+        </div>
+        <span class="form-btn">Acessar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <!-- MEU DRIVE -->
+    <a id="card-meu-drive" href="#" target="_blank" rel="noopener" class="card card--form reveal" style="grid-column:1/-1">
+      <div class="card-pad">
+        <div class="form-icon-wrap"><div class="form-icon-ring"></div><svg class="form-icon-svg" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="form-content">
+          <p class="card-overline">Seus Arquivos</p>
+          <h3 class="card-title">Meu Drive</h3>
+          <p class="card-desc">Acesse sua pasta pessoal no Google Drive com todos os materiais, atividades e recursos do seu programa.</p>
+        </div>
+        <span class="form-btn">Acessar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
     <!-- CAMBRIDGE -->
     <a href="https://dictionary.cambridge.org/pt/dicionario/ingles-portugues/" target="_blank" rel="noopener" class="card card--link reveal">
       <div class="card-pad">
@@ -1337,18 +1363,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       </div>
     </a>
 
-    <!-- COLEÇÃO DE INFOGRÁFICOS -->
-    <a href="https://institutomdtalk.github.io/infograficos/" target="_blank" rel="noopener" class="card card--form reveal" style="grid-column:1/-1">
-      <div class="card-pad">
-        <div class="form-icon-wrap"><div class="form-icon-ring"></div><svg class="form-icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
-        <div class="form-content">
-          <p class="card-overline">Recursos Visuais</p>
-          <h3 class="card-title">Coleção de Infográficos</h3>
-          <p class="card-desc">Acesse o acervo completo de infográficos do seu programa. Material visual de apoio para consolidar vocabulário e estruturas.</p>
-        </div>
-        <span class="form-btn">Acessar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
-      </div>
-    </a>
 
     <!-- FORMULÁRIO INTERESSES -->
     <a href="https://forms.office.com/r/SfVaqefC18" target="_blank" rel="noopener" class="card card--form reveal">
@@ -1585,6 +1599,8 @@ function renderDashboard(a, avisos) {
 
   var ld = document.getElementById('link-drive');
   if (a.link_drive) { ld.href = a.link_drive; } else { ld.classList.add('disabled'); }
+  var cardDrive = document.getElementById('card-meu-drive');
+  if (cardDrive) { if (a.link_drive) { cardDrive.href = a.link_drive; } else { cardDrive.style.opacity='0.35'; cardDrive.style.pointerEvents='none'; } }
 
   var proxEl = document.getElementById('proxima-aula-txt');
   if (proxEl && a.proxima_aula && a.proxima_aula.trim()) proxEl.textContent = a.proxima_aula;
