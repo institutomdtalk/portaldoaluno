@@ -1306,32 +1306,38 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       </div>
     </div>
 
-    <!-- ANOTAÇÕES -->
-    <div class="card reveal" style="grid-column:1/-1">
+    <!-- ANOTAÇÕES + ENVIO LADO A LADO -->
+    <div class="card card--link reveal" style="cursor:default">
       <div class="card-pad">
-        <p class="card-overline">Minhas Anotações</p>
-        <p id="anot-resumo" style="font-size:12px;color:var(--text-muted);margin-bottom:16px">Suas tarefas e anotações pessoais do programa.</p>
-        <div style="display:none"><div id="anot-chevron-wrap"></div><svg id="anot-chevron-svg"></svg></div>
-        <div id="anot-collapse" style="display:block">
-          <div>
-            <div id="anot-lista-tarefa"></div>
-
-            <div class="anot-add-bar">
-              <button class="anot-add-btn" id="btn-add-tarefa">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Tarefa
-              </button>
-
-              <span class="anot-save-indicator" id="anot-save-ind">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Salvo
-              </span>
-            </div>
-            <p class="anot-counter" id="anot-counter">0 / 20 itens</p>
-          </div>
+        <div class="link-icon link-icon--navy"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+        <p class="card-overline">Minhas Tarefas</p>
+        <h3 class="card-title">Anotações</h3>
+        <p id="anot-resumo" class="card-desc">Suas tarefas pessoais do programa.</p>
+        <div style="display:none"><div id="anot-chevron-wrap"></div><svg id="anot-chevron-svg"></svg><div id="anot-collapse"></div></div>
+        <div id="anot-lista-tarefa" style="margin-top:12px"></div>
+        <div class="anot-add-bar" style="margin-top:12px;padding-top:12px">
+          <button class="anot-add-btn" id="btn-add-tarefa">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Tarefa
+          </button>
+          <span class="anot-save-indicator" id="anot-save-ind">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Salvo
+          </span>
         </div>
+        <p class="anot-counter" id="anot-counter">0 / 20 itens</p>
       </div>
     </div>
+
+    <a href="https://institutomdtalk.github.io/homework/" target="_blank" rel="noopener" class="card card--link reveal">
+      <div class="card-pad">
+        <div class="link-icon link-icon--navy"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <p class="card-overline">Tarefas</p>
+        <h3 class="card-title">Envio de Atividades</h3>
+        <p class="card-desc">Submita aqui as respostas das suas tarefas e atividades do programa.</p>
+        <span class="card-arrow">Acessar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
 
     <!-- TRILHA DE APRENDIZADO -->
     <div class="card reveal" style="grid-column:1/-1">
