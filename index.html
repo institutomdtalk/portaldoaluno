@@ -1052,8 +1052,14 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     cursor:pointer;transition:all 0.25s;flex-shrink:0;
   }
   .trilha-pdf-more:hover{border-color:var(--gold);color:var(--gold)}
-  .trilha-pdf-extra{display:none;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px}
+  .trilha-pdf-extra{
+    display:none;flex-wrap:wrap;gap:6px;
+    padding:8px 0 4px;
+    grid-column:1/-1;width:100%;
+  }
   .trilha-pdf-extra.open{display:flex}
+  .trilha-footer-wrap{display:flex;flex-direction:column;gap:0;margin-top:12px;padding-top:10px;border-top:1px solid var(--border)}
+  .trilha-footer-main{display:flex;align-items:center;justify-content:space-between}
   .trilha-check{
     display:flex;align-items:center;gap:5px;
     padding:5px 12px;border-radius:20px;
@@ -2206,32 +2212,37 @@ function buildTrilhaCard(m) {
     '<div class="trilha-body">' +
       '<span class="trilha-tipo ' + tipoClass + '">' + tipoLabel + '</span>' +
       '<p class="trilha-titulo">' + m.titulo + '</p>' +
-      '<div class="trilha-footer">' +
-        '<span class="trilha-ordem">Lição ' + m.ordem + '</span>' +
-        '<div class="trilha-actions">' +
-          (function() {
-            if (!m.url_pdf) return '';
-            var links = m.url_pdf.split(',').map(function(l){ return l.trim(); }).filter(Boolean);
-            var total = links.length;
-            if (total === 0) return '';
-            var uid = 'pdf-extra-' + m.ordem;
-            var visible = links.slice(0, 2).map(function(link, idx) {
-              return '<a class="trilha-btn-pdf" href="' + link + '" target="_blank" rel="noopener">PDF' + (total > 1 ? ' ' + (idx+1) : '') + '</a>';
-            }).join('');
-            var extra = '';
-            if (total > 2) {
-              var extraLinks = links.slice(2).map(function(link, idx) {
-                return '<a class="trilha-btn-pdf" href="' + link + '" target="_blank" rel="noopener">PDF ' + (idx+3) + '</a>';
+      (function() {
+        if (!m.url_pdf) return '';
+        var links = m.url_pdf.split(',').map(function(l){ return l.trim(); }).filter(Boolean);
+        if (links.length <= 2) return '';
+        var uid = 'pdf-extra-' + m.ordem;
+        var extraLinks = links.slice(2).map(function(link, idx) {
+          return '<a class="trilha-btn-pdf" href="' + link + '" target="_blank" rel="noopener">PDF ' + (idx+3) + '</a>';
+        }).join('');
+        return '<div class="trilha-pdf-extra" id="' + uid + '">' + extraLinks + '</div>';
+      })() +
+      '<div class="trilha-footer-wrap">' +
+        '<div class="trilha-footer-main">' +
+          '<span class="trilha-ordem">Lição ' + m.ordem + '</span>' +
+          '<div class="trilha-actions">' +
+            (function() {
+              if (!m.url_pdf) return '';
+              var links = m.url_pdf.split(',').map(function(l){ return l.trim(); }).filter(Boolean);
+              var total = links.length;
+              if (total === 0) return '';
+              var uid = 'pdf-extra-' + m.ordem;
+              var visible = links.slice(0, 2).map(function(link, idx) {
+                return '<a class="trilha-btn-pdf" href="' + link + '" target="_blank" rel="noopener">PDF' + (total > 1 ? ' ' + (idx+1) : '') + '</a>';
               }).join('');
-              extra = '<button class="trilha-pdf-more" onclick="togglePdfExtra(\'' + uid + '\',this)">+' + (total-2) + '</button>' +
-                      '<div class="trilha-pdf-extra" id="' + uid + '">' + extraLinks + '</div>';
-            }
-            return visible + extra;
-          })() +
-          '<button class="trilha-check' + (m.concluido ? ' done' : '') + '" data-ordem="' + m.ordem + '" title="Marcar como concluído">' +
-            '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>' +
-            (m.concluido ? 'Concluído' : 'Concluir') +
-          '</button>' +
+              var more = total > 2 ? '<button class="trilha-pdf-more" onclick="togglePdfExtra(\'' + uid + '\',this)">+' + (total-2) + '</button>' : '';
+              return visible + more;
+            })() +
+            '<button class="trilha-check' + (m.concluido ? ' done' : '') + '" data-ordem="' + m.ordem + '" title="Marcar como concluído">' +
+              '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>' +
+              (m.concluido ? 'Concluído' : 'Concluir') +
+            '</button>' +
+          '</div>' +
         '</div>' +
       '</div>' +
     '</div>' +
