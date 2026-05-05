@@ -1699,16 +1699,19 @@ function renderDashboard(a, avisos) {
   carregarAnotacoes(a.anotacoes || []);
   window._trilhaData = a.trilha || [];
   renderTrilha(a.trilha || []);
-  if (a.link_drive && a.link_drive.trim()) {
-    document.getElementById('drive-files-section').style.display = 'block';
-    document.getElementById('drive-files-grid').innerHTML = '<p style="font-size:12px;color:var(--text-muted);grid-column:1/-1">Carregando arquivos...</p>';
+  var driveFilesSection = document.getElementById('drive-files-section');
+  var driveFilesGrid    = document.getElementById('drive-files-grid');
+  if (driveFilesSection && driveFilesGrid && a.link_drive && a.link_drive.trim()) {
+    driveFilesSection.style.display = 'block';
+    driveFilesGrid.innerHTML = '<p style="font-size:12px;color:var(--text-muted);grid-column:1/-1">Carregando arquivos...</p>';
     callScript(
       'action=get_drive_files&login=' + encodeURIComponent(a.login),
       function(d) {
+        var s = document.getElementById('drive-files-section');
         if (d.success && d.files && d.files.length) { renderDriveFiles(d.files); }
-        else { document.getElementById('drive-files-section').style.display = 'none'; }
+        else if (s) { s.style.display = 'none'; }
       },
-      function() { document.getElementById('drive-files-section').style.display = 'none'; }
+      function() { var s = document.getElementById('drive-files-section'); if (s) s.style.display = 'none'; }
     );
   }
   showPage('dashboard');
@@ -2283,7 +2286,7 @@ function doLogout() {
   document.getElementById('f-login').value=''; document.getElementById('f-senha').value='';
   document.getElementById('login-err').style.display='none';
   document.getElementById('mural-content').innerHTML='<div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div>';
-  document.getElementById('materiais-section').style.display='none';
+  var ms = document.getElementById('materiais-section'); if (ms) ms.style.display='none';
   _anotData = []; _anotOpen = false; _matOpen = false;
   var mc = document.getElementById('mat-collapse'); if(mc) mc.style.maxHeight='0';
   var ach = document.getElementById('anot-chevron-svg'); if(ach) ach.style.transform='';
