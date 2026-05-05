@@ -2152,14 +2152,14 @@ function renderTrilha(trilha) {
 }
 
 var TIPO_THUMBS = {
-    'soft skills': 'https://drive.google.com/thumbnail?id=15OTYr4VlAspPFX4k3kY2CniX922taZE6&sz=w800',
-    'reading': 'https://drive.google.com/thumbnail?id=1Hj37Cu-waPtUnlyoQp4f338l7M9-Gfh5&sz=w800',
-    'writing': 'https://drive.google.com/thumbnail?id=16Xs0YF14_rwe1-O68UG_LirK3v5WKwAq&sz=w800',
-    'grammar': 'https://drive.google.com/thumbnail?id=1_9LQCl2s9mX2zhC9akc2s-rfz48LOCyS&sz=w800',
-    'listening': 'https://drive.google.com/thumbnail?id=1dvk4OOAl-OXfwF8C_IM15Hh3pqT_17jk&sz=w800',
-    'vocabulary': 'https://drive.google.com/thumbnail?id=1SsHL-NSZkkR6h4xiAC6PENdOxSiusXE9&sz=w800',
-    'speaking and discussing': 'https://drive.google.com/thumbnail?id=1WWZ9204G9n18fdCqY8ZElJZLqxNL8lHU&sz=w800',
-    'curation': 'https://drive.google.com/thumbnail?id=18gBYbH9MAdmRPLVFSfFqRK-qzCBR33vo&sz=w800',
+    'soft skills': 'https://drive.google.com/uc?export=view&id=15OTYr4VlAspPFX4k3kY2CniX922taZE6',
+    'reading': 'https://drive.google.com/uc?export=view&id=1Hj37Cu-waPtUnlyoQp4f338l7M9-Gfh5',
+    'writing': 'https://drive.google.com/uc?export=view&id=16Xs0YF14_rwe1-O68UG_LirK3v5WKwAq',
+    'grammar': 'https://drive.google.com/uc?export=view&id=1_9LQCl2s9mX2zhC9akc2s-rfz48LOCyS',
+    'listening': 'https://drive.google.com/uc?export=view&id=1dvk4OOAl-OXfwF8C_IM15Hh3pqT_17jk',
+    'vocabulary': 'https://drive.google.com/uc?export=view&id=1SsHL-NSZkkR6h4xiAC6PENdOxSiusXE9',
+    'speaking and discussing': 'https://drive.google.com/uc?export=view&id=1WWZ9204G9n18fdCqY8ZElJZLqxNL8lHU',
+    'curation': 'https://drive.google.com/uc?export=view&id=18gBYbH9MAdmRPLVFSfFqRK-qzCBR33vo',
   };
 
 function buildTrilhaCard(m) {
@@ -2168,7 +2168,7 @@ function buildTrilhaCard(m) {
     var idMatch = m.thumbnail.match(/\/d\/([a-zA-Z0-9_-]{10,})/);
     if (!idMatch) idMatch = m.thumbnail.match(/id=([a-zA-Z0-9_-]{10,})/);
     if (!idMatch) idMatch = m.thumbnail.match(/([a-zA-Z0-9_-]{25,})/);
-    if (idMatch) { thumbSrc = 'https://drive.google.com/thumbnail?id=' + idMatch[1] + '&sz=w600'; }
+    if (idMatch) { thumbSrc = 'https://drive.google.com/uc?export=view&id=' + idMatch[1]; }
     else { thumbSrc = m.thumbnail; }
   }
   // Fallback to type-based thumbnail
