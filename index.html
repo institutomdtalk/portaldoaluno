@@ -2454,13 +2454,25 @@ window.addEventListener('load', function(){
   if (savedLogin && savedSenha) {
     try {
       var senha = decodeURIComponent(atob(savedSenha));
+      // Show login page briefly while authenticating
+      showPage('login');
       callScript(
         'action=login&login=' + encodeURIComponent(savedLogin) + '&senha=' + encodeURIComponent(senha),
         function(d) {
           if (d.success) { currentStudent = d.aluno; renderDashboard(d.aluno, d.avisos); }
           else { localStorage.removeItem('mdtalk_login'); localStorage.removeItem('mdtalk_senha'); showPage('login'); }
         },
-        function() { showPage('login'); }
+        function() {
+          // Network error — try again once before giving up
+          callScript(
+            'action=login&login=' + encodeURIComponent(savedLogin) + '&senha=' + encodeURIComponent(senha),
+            function(d) {
+              if (d.success) { currentStudent = d.aluno; renderDashboard(d.aluno, d.avisos); }
+              else { localStorage.removeItem('mdtalk_login'); localStorage.removeItem('mdtalk_senha'); showPage('login'); }
+            },
+            function() { localStorage.removeItem('mdtalk_login'); localStorage.removeItem('mdtalk_senha'); showPage('login'); }
+          );
+        }
       );
       return;
     } catch(e) { localStorage.removeItem('mdtalk_login'); localStorage.removeItem('mdtalk_senha'); }
