@@ -1647,7 +1647,7 @@ function renderDashboard(a, avisos) {
   document.getElementById('hdr-nome').textContent = a.nome_display || a.login;
 
   var ld = document.getElementById('link-drive');
-  if (a.link_drive) { ld.href = a.link_drive; } else { ld.classList.add('disabled'); }
+  if (ld) { if (a.link_drive) { ld.href = a.link_drive; } else { ld.classList.add('disabled'); } }
   var cardDrive = document.getElementById('card-meu-drive');
   if (cardDrive) { if (a.link_drive) { cardDrive.href = a.link_drive; } else { cardDrive.style.opacity='0.35'; cardDrive.style.pointerEvents='none'; } }
   var cardDocs = document.getElementById('card-meu-docs');
