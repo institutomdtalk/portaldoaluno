@@ -2190,7 +2190,10 @@ function buildTrilhaCard(m) {
       '<div class="trilha-footer">' +
         '<span class="trilha-ordem">Lição ' + m.ordem + '</span>' +
         '<div class="trilha-actions">' +
-          (m.url_pdf ? '<a class="trilha-btn-pdf" href="' + m.url_pdf + '" target="_blank" rel="noopener" download>PDF</a>' : '') +
+          (m.url_pdf ? m.url_pdf.split(',').map(function(link, idx) {
+            link = link.trim();
+            return link ? '<a class="trilha-btn-pdf" href="' + link + '" target="_blank" rel="noopener">PDF' + (m.url_pdf.split(',').length > 1 ? ' ' + (idx+1) : '') + '</a>' : '';
+          }).join('') : '') +
           '<button class="trilha-check' + (m.concluido ? ' done' : '') + '" data-ordem="' + m.ordem + '" title="Marcar como concluído">' +
             '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>' +
             (m.concluido ? 'Concluído' : 'Concluir') +
