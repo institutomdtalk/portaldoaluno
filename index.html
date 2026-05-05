@@ -1351,36 +1351,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       </div>
     </a>
 
-    <!-- MEU ESPAÇO -->
-    <div class="card reveal" style="grid-column:1/-1">
-      <div class="card-pad">
-        <p class="card-overline">Meu Espaço</p>
-        <h3 class="card-title" id="espaco-titulo">Meu Programa</h3>
-        <p class="card-desc" id="espaco-desc" style="margin-bottom:16px"></p>
-        <div id="drive-files-section" style="margin-bottom:20px;display:none">
-          <p class="card-overline" style="margin-bottom:10px">Últimos Conteúdos</p>
-          <div class="drive-grid" id="drive-files-grid"></div>
-        </div>
 
-        <a class="espaco-link" id="link-drive" href="#" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-          Minha Pasta no Drive
-        </a>
-
-
-        <div id="materiais-section" style="margin-top:18px;display:none">
-          <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:4px" onclick="toggleMateriais()">
-            <p style="font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold)">Materiais</p>
-            <div id="mat-chevron-wrap" style="width:24px;height:24px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all 0.4s cubic-bezier(0.22,1,0.36,1)">
-              <svg id="mat-chevron-svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.4s cubic-bezier(0.22,1,0.36,1)"><path d="M6 9l6 6 6-6"/></svg>
-            </div>
-          </div>
-          <div id="mat-collapse" style="max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.22,1,0.36,1)">
-            <div id="materiais-content" style="padding-top:8px"></div>
-          </div>
-        </div>
-      </div>
-    </div>
 
 
 
@@ -2123,7 +2094,7 @@ function renderTrilha(trilha) {
     return;
   }
   var concluidos = trilha.filter(function(m){ return m.concluido; }).length;
-  if (resumo) resumo.textContent = concluidos + ' de ' + trilha.length + ' módulos concluídos · ' + Math.round((concluidos/trilha.length)*100) + '% completo';
+  if (resumo) resumo.textContent = concluidos + ' de ' + trilha.length + ' lições concluídas · ' + Math.round((concluidos/trilha.length)*100) + '% completo';
   var gramatica   = trilha.filter(function(m){ return m.tipo === 'gramatica' || m.tipo === 'gramática'; });
   var vocabulario = trilha.filter(function(m){ return m.tipo === 'vocabulario' || m.tipo === 'vocabulário'; });
   var outros      = trilha.filter(function(m){ return m.tipo !== 'gramatica' && m.tipo !== 'gramática' && m.tipo !== 'vocabulario' && m.tipo !== 'vocabulário'; });
@@ -2155,7 +2126,7 @@ function renderTrilha(trilha) {
       var concl = (window._trilhaData || []).filter(function(m){ return m.concluido; }).length;
       var total = (window._trilhaData || []).length;
       var resumoEl = document.getElementById('trilha-resumo');
-      if (resumoEl) resumoEl.textContent = concl + ' de ' + total + ' módulos concluídos · ' + Math.round((concl/total)*100) + '% completo';
+      if (resumoEl) resumoEl.textContent = concl + ' de ' + total + ' lições concluídas · ' + Math.round((concl/total)*100) + '% completo';
       if (currentStudent) {
         callScript(
           'action=concluir_modulo&login=' + encodeURIComponent(currentStudent.login) + '&ordem=' + ordem + '&concluido=' + novoValor,
@@ -2166,14 +2137,30 @@ function renderTrilha(trilha) {
   });
 }
 
+var TIPO_THUMBS = {
+    'soft skills': 'https://drive.google.com/thumbnail?id=15OTYr4VlAspPFX4k3kY2CniX922taZE6&sz=w800',
+    'reading': 'https://drive.google.com/thumbnail?id=1Hj37Cu-waPtUnlyoQp4f338l7M9-Gfh5&sz=w800',
+    'writing': 'https://drive.google.com/thumbnail?id=16Xs0YF14_rwe1-O68UG_LirK3v5WKwAq&sz=w800',
+    'grammar': 'https://drive.google.com/thumbnail?id=1_9LQCl2s9mX2zhC9akc2s-rfz48LOCyS&sz=w800',
+    'listening': 'https://drive.google.com/thumbnail?id=1dvk4OOAl-OXfwF8C_IM15Hh3pqT_17jk&sz=w800',
+    'vocabulary': 'https://drive.google.com/thumbnail?id=1SsHL-NSZkkR6h4xiAC6PENdOxSiusXE9&sz=w800',
+    'speaking and discussing': 'https://drive.google.com/thumbnail?id=1WWZ9204G9n18fdCqY8ZElJZLqxNL8lHU&sz=w800',
+    'curation': 'https://drive.google.com/thumbnail?id=18gBYbH9MAdmRPLVFSfFqRK-qzCBR33vo&sz=w800',
+  };
+
 function buildTrilhaCard(m) {
   var thumbSrc = '';
-  if (m.thumbnail) {
+  if (m.thumbnail && m.thumbnail.trim()) {
     var idMatch = m.thumbnail.match(/\/d\/([a-zA-Z0-9_-]{10,})/);
     if (!idMatch) idMatch = m.thumbnail.match(/id=([a-zA-Z0-9_-]{10,})/);
     if (!idMatch) idMatch = m.thumbnail.match(/([a-zA-Z0-9_-]{25,})/);
     if (idMatch) { thumbSrc = 'https://drive.google.com/thumbnail?id=' + idMatch[1] + '&sz=w600'; }
     else { thumbSrc = m.thumbnail; }
+  }
+  // Fallback to type-based thumbnail
+  if (!thumbSrc && m.tipo) {
+    var tipoKey = m.tipo.toLowerCase().trim();
+    thumbSrc = TIPO_THUMBS[tipoKey] || '';
   }
   var thumb = thumbSrc
     ? '<img class="trilha-thumb" src="' + thumbSrc + '" alt="' + m.titulo + '" loading="lazy">'
