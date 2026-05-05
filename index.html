@@ -1020,9 +1020,9 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   .trilha-card:hover::before{transform:scaleX(1)}
   .trilha-card.concluido{border-color:rgba(45,106,79,0.25)}
   .trilha-card.concluido::before{background:linear-gradient(90deg,transparent,#4ADE80,transparent);transform:scaleX(1)}
-  .trilha-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--off-white);display:block}
+  .trilha-thumb{width:100%;aspect-ratio:21/9;object-fit:cover;background:var(--off-white);display:block}
   .trilha-thumb-placeholder{
-    width:100%;aspect-ratio:16/9;
+    width:100%;aspect-ratio:21/9;
     background:linear-gradient(135deg,var(--navy-deep),var(--navy));
     display:flex;align-items:center;justify-content:center;
   }
@@ -1034,7 +1034,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   }
   .trilha-tipo.gramatica{background:#EDE9FE;color:#6D28D9}
   .trilha-tipo.vocabulario{background:var(--gold-faint);color:#92400E}
-  .trilha-titulo{font-family:var(--serif);font-size:1rem;font-weight:500;color:var(--navy);line-height:1.25;margin-bottom:auto}
+  .trilha-titulo{font-family:var(--serif);font-size:1.25rem;font-weight:500;color:var(--navy);line-height:1.25;margin-bottom:auto}
   .trilha-footer{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid var(--border)}
   .trilha-ordem{font-size:10px;color:var(--text-muted);letter-spacing:1px}
   .trilha-actions{display:flex;align-items:center;gap:8px}
@@ -1046,13 +1046,16 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   }
   .trilha-btn-pdf:hover{background:var(--gold);color:var(--navy-deep)}
   .trilha-check{
-    width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);
-    display:flex;align-items:center;justify-content:center;
+    display:flex;align-items:center;gap:5px;
+    padding:5px 12px;border-radius:20px;
+    border:1.5px solid var(--border);
     cursor:pointer;transition:all 0.3s ease;flex-shrink:0;background:none;
+    font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:1px;
+    text-transform:uppercase;color:var(--text-muted);
   }
-  .trilha-check:hover{border-color:var(--gold)}
-  .trilha-check.done{background:#4ADE80;border-color:#4ADE80}
-  .trilha-check svg{width:11px;height:11px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity 0.2s}
+  .trilha-check:hover{border-color:var(--gold);color:var(--gold)}
+  .trilha-check.done{background:#22c55e;border-color:#22c55e;color:#fff}
+  .trilha-check svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:0.5;transition:opacity 0.2s;flex-shrink:0}
   .trilha-check.done svg{opacity:1}
   .trilha-concluido-badge{
     position:absolute;top:8px;right:8px;
@@ -2144,6 +2147,9 @@ function renderTrilha(trilha) {
       btn.classList.toggle('done', !done);
       var card = btn.closest('.trilha-card');
       if (card) card.classList.toggle('concluido', !done);
+      // Update button text
+      var textNode = btn.lastChild;
+      if (textNode && textNode.nodeType === 3) textNode.textContent = !done ? 'Concluído' : 'Concluir';
       var item = window._trilhaData && window._trilhaData.find(function(m){ return m.ordem === ordem; });
       if (item) item.concluido = !done;
       var concl = (window._trilhaData || []).filter(function(m){ return m.concluido; }).length;
@@ -2182,11 +2188,12 @@ function buildTrilhaCard(m) {
       '<span class="trilha-tipo ' + tipoClass + '">' + tipoLabel + '</span>' +
       '<p class="trilha-titulo">' + m.titulo + '</p>' +
       '<div class="trilha-footer">' +
-        '<span class="trilha-ordem">Módulo ' + m.ordem + '</span>' +
+        '<span class="trilha-ordem">Lição ' + m.ordem + '</span>' +
         '<div class="trilha-actions">' +
           (m.url_pdf ? '<a class="trilha-btn-pdf" href="' + m.url_pdf + '" target="_blank" rel="noopener" download>PDF</a>' : '') +
           '<button class="trilha-check' + (m.concluido ? ' done' : '') + '" data-ordem="' + m.ordem + '" title="Marcar como concluído">' +
             '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>' +
+            (m.concluido ? 'Concluído' : 'Concluir') +
           '</button>' +
         '</div>' +
       '</div>' +
