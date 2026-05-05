@@ -1670,12 +1670,16 @@ function renderDashboard(a, avisos) {
     }
   }
 
-  if (a.curso)           document.getElementById('espaco-titulo').textContent = a.curso;
-  if (a.descricao_curso) document.getElementById('espaco-desc').textContent   = a.descricao_curso;
+  var espacoTitulo = document.getElementById('espaco-titulo');
+  var espacoDesc   = document.getElementById('espaco-desc');
+  if (espacoTitulo && a.curso)           espacoTitulo.textContent = a.curso;
+  if (espacoDesc   && a.descricao_curso) espacoDesc.textContent   = a.descricao_curso;
 
-  if (a.materiais && a.materiais.length) {
-    document.getElementById('materiais-section').style.display = 'block';
-    document.getElementById('materiais-content').innerHTML = a.materiais.map(function(m) {
+  var materiaisSection  = document.getElementById('materiais-section');
+  var materiaisContent  = document.getElementById('materiais-content');
+  if (materiaisSection && materiaisContent && a.materiais && a.materiais.length) {
+    materiaisSection.style.display = 'block';
+    materiaisContent.innerHTML = a.materiais.map(function(m) {
       return '<a class="mat-item" href="'+m.link+'" target="_blank" rel="noopener"><div class="mat-dot"></div><span class="mat-nome">'+m.nome+'</span><span class="mat-tipo">'+(m.tipo||'')+'</span></a>';
     }).join('');
   }
