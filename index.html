@@ -1610,6 +1610,18 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   </div>
 </div>
 
+<!-- MODAL PRESENÇA CONFIRMADA -->
+<div class="modal-overlay" id="modal-presenca">
+  <div class="modal-box" style="text-align:center">
+    <div class="modal-icon" style="margin:0 auto 1rem;background:#D8F3DC">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div class="modal-title" style="text-align:center">Presença confirmada!</div>
+    <div class="modal-text" style="text-align:center">Obrigada! Sua presença foi confirmada e registrada no calendário.</div>
+    <button class="btn-modal-confirm" onclick="fecharPresencaModal()" style="width:100%">Fechar</button>
+  </div>
+</div>
+
 <!-- MODAL FALTA -->
 <div class="modal-overlay" id="modal-falta">
   <div class="modal-box">
@@ -2357,6 +2369,8 @@ function registrarPresenca(status) {
   if(status==='falta'){showModalFalta();return;}
   _gravarRegistro('presente');
 }
+function showPresencaModal(){ document.getElementById('modal-presenca').classList.add('active'); }
+function fecharPresencaModal(){ document.getElementById('modal-presenca').classList.remove('active'); }
 function showModalFalta(){document.getElementById('modal-falta').classList.add('active')}
 function fecharModalFalta(){document.getElementById('modal-falta').classList.remove('active')}
 function confirmarFalta(){fecharModalFalta();_gravarRegistro('falta');setTimeout(function(){window.open('https://calendar.app.google/RAURJTpXNw35Lzht5','_blank');},600);}
@@ -2379,7 +2393,7 @@ function _gravarRegistro(status) {
         currentStudent.historico=hist;
         renderHistorico(hist);
         bloqueiarBotoesHoje(status);
-        if(status==='presente') setTimeout(function(){window.open('https://wa.me/5514997758941?text='+encodeURIComponent('Confirmo minha presença na aula de hoje.'),'_blank');},600);
+        if(status==='presente') showPresencaModal();
       } else {
         showToast('Erro ao registrar.','error'); btnP.disabled=false; btnF.disabled=false;
         btnP.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"/></svg> Confirmar Presença';
