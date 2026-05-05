@@ -1658,8 +1658,8 @@ function doLogin() {
       btn.disabled = false; btn.textContent = 'Acessar Portal';
       if (d.success) {
         currentStudent = d.aluno;
-        sessionStorage.setItem('mdtalk_login', d.aluno.login);
-        sessionStorage.setItem('mdtalk_senha', btoa(encodeURIComponent(document.getElementById('f-senha').value.trim())));
+        localStorage.setItem('mdtalk_login', d.aluno.login);
+        localStorage.setItem('mdtalk_senha', btoa(encodeURIComponent(document.getElementById('f-senha').value.trim())));
         renderDashboard(d.aluno, d.avisos);
       }
       else showErr(d.message || 'Login ou senha incorretos.');
@@ -2373,8 +2373,8 @@ function _gravarRegistro(status) {
 // ── LOGOUT ──
 function doLogout() {
   currentStudent=null; stopClock();
-  sessionStorage.removeItem('mdtalk_login');
-  sessionStorage.removeItem('mdtalk_senha');
+  localStorage.removeItem('mdtalk_login');
+  localStorage.removeItem('mdtalk_senha');
   document.getElementById('f-login').value=''; document.getElementById('f-senha').value='';
   document.getElementById('login-err').style.display='none';
   document.getElementById('mural-content').innerHTML='<div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div>';
@@ -2449,8 +2449,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ── INIT ──
 window.addEventListener('load', function(){
-  var savedLogin = sessionStorage.getItem('mdtalk_login');
-  var savedSenha = sessionStorage.getItem('mdtalk_senha');
+  var savedLogin = localStorage.getItem('mdtalk_login');
+  var savedSenha = localStorage.getItem('mdtalk_senha');
   if (savedLogin && savedSenha) {
     try {
       var senha = decodeURIComponent(atob(savedSenha));
@@ -2458,12 +2458,12 @@ window.addEventListener('load', function(){
         'action=login&login=' + encodeURIComponent(savedLogin) + '&senha=' + encodeURIComponent(senha),
         function(d) {
           if (d.success) { currentStudent = d.aluno; renderDashboard(d.aluno, d.avisos); }
-          else { sessionStorage.removeItem('mdtalk_login'); sessionStorage.removeItem('mdtalk_senha'); showPage('login'); }
+          else { localStorage.removeItem('mdtalk_login'); localStorage.removeItem('mdtalk_senha'); showPage('login'); }
         },
         function() { showPage('login'); }
       );
       return;
-    } catch(e) { sessionStorage.removeItem('mdtalk_login'); sessionStorage.removeItem('mdtalk_senha'); }
+    } catch(e) { localStorage.removeItem('mdtalk_login'); localStorage.removeItem('mdtalk_senha'); }
   }
   showPage('login');
 });
