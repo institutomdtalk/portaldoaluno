@@ -49,6 +49,14 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 /* ═══════════════════════════════════════
    PAGES
 ═══════════════════════════════════════ */
+#page-loading{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;background:var(--navy-deep);position:relative;overflow:hidden}
+#page-loading.active{display:flex}
+.loading-logo{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:300;color:var(--white);margin-bottom:8px;opacity:0;animation:heroReveal 0.8s cubic-bezier(0.22,1,0.36,1) 0.2s forwards}
+.loading-logo em{font-style:italic;background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.loading-bar-wrap{width:120px;height:1px;background:rgba(196,164,90,0.15);border-radius:2px;overflow:hidden;margin-top:32px;opacity:0;animation:heroReveal 0.8s ease 0.5s forwards}
+.loading-bar{height:100%;width:0;background:var(--gold);border-radius:2px;animation:loadBar 2.5s ease-in-out infinite}
+@keyframes loadBar{0%{width:0;opacity:1}70%{width:100%;opacity:1}100%{width:100%;opacity:0}}
+.loading-text{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:16px;opacity:0;animation:heroReveal 0.8s ease 0.6s forwards}
 #page-login{display:none;flex-direction:column;background:var(--navy-deep);position:relative;overflow:hidden}
 #page-login.active{display:flex;min-height:100vh}
 #page-dashboard{display:none;height:0;overflow:hidden}
@@ -1144,6 +1152,17 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   <div class="login-scroll-hint"><span></span></div>
 </div>
 
+<!-- ═══════════ LOADING ═══════════ -->
+<div id="page-loading">
+  <div class="geo geo--ring1"></div>
+  <div class="geo geo--ring2"></div>
+  <div class="geo geo--line1"></div>
+  <div class="geo geo--diamond1"></div>
+  <h1 class="loading-logo">Instituto <em>MD Talk</em></h1>
+  <div class="loading-bar-wrap"><div class="loading-bar"></div></div>
+  <p class="loading-text">Carregando seu portal...</p>
+</div>
+
 <!-- ═══════════ DASHBOARD ═══════════ -->
 <div id="page-dashboard">
 
@@ -1639,6 +1658,7 @@ function callScript(params, onSuccess, onError) {
 function showPage(id) {
   document.getElementById('page-login').classList.remove('active');
   document.getElementById('page-dashboard').classList.remove('active');
+  document.getElementById('page-loading').classList.remove('active');
   document.getElementById('page-' + id).classList.add('active');
 }
 
@@ -2454,8 +2474,8 @@ window.addEventListener('load', function(){
   if (savedLogin && savedSenha) {
     try {
       var senha = decodeURIComponent(atob(savedSenha));
-      // Show login page briefly while authenticating
-      showPage('login');
+      // Show loading screen while authenticating
+      showPage('loading');
       callScript(
         'action=login&login=' + encodeURIComponent(savedLogin) + '&senha=' + encodeURIComponent(senha),
         function(d) {
