@@ -856,6 +856,55 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .contact-item-value{font-size:13px;font-weight:600;color:var(--navy)}
 
 /* ═══════════════════════════════════════
+   SININHO DE AVISOS
+═══════════════════════════════════════ */
+.bell-wrap{position:relative;flex-shrink:0}
+.btn-bell{
+  background:rgba(255,255,255,0.06);border:1px solid rgba(196,164,90,0.2);
+  border-radius:50%;width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all 0.3s ease;position:relative;
+}
+.btn-bell:hover{border-color:var(--gold);background:rgba(196,164,90,0.08)}
+.btn-bell svg{width:17px;height:17px;stroke:rgba(255,255,255,0.6);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke 0.3s}
+.btn-bell:hover svg{stroke:var(--gold)}
+.bell-badge{
+  position:absolute;top:-4px;right:-4px;
+  background:#ef4444;color:#fff;
+  font-family:var(--sans);font-size:9px;font-weight:700;
+  min-width:17px;height:17px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  padding:0 4px;border:1.5px solid var(--navy-deep);
+  transition:all 0.3s ease;
+}
+.bell-badge.hidden{display:none}
+.bell-dropdown{
+  position:absolute;top:calc(100% + 12px);right:0;
+  width:320px;max-height:400px;overflow-y:auto;
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--radius);box-shadow:var(--shadow-lg);
+  z-index:400;display:none;
+  animation:heroReveal 0.25s cubic-bezier(0.22,1,0.36,1) both;
+}
+.bell-dropdown.open{display:block}
+.bell-dropdown-header{
+  padding:14px 18px 10px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.bell-dropdown-title{font-family:var(--serif);font-size:1rem;font-weight:500;color:var(--navy)}
+.bell-dropdown-clear{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);background:none;border:none;cursor:pointer;font-family:var(--sans);transition:opacity 0.2s}
+.bell-dropdown-clear:hover{opacity:0.7}
+.bell-aviso-item{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border);transition:background 0.2s}
+.bell-aviso-item:last-child{border-bottom:none}
+.bell-aviso-item.lido{background:var(--off-white);opacity:0.6}
+.bell-aviso-check{width:16px;height:16px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;margin-top:2px}
+.bell-aviso-body{flex:1}
+.bell-aviso-data{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.bell-aviso-texto{font-size:13px;color:var(--text-body);line-height:1.6}
+.bell-empty{padding:24px 18px;text-align:center;font-size:13px;color:var(--text-muted);font-style:italic}
+
+/* ═══════════════════════════════════════
    FOOTER
 ═══════════════════════════════════════ */
 .footer{background:var(--navy-deep);text-align:center;padding:44px 24px;position:relative}
@@ -1183,7 +1232,22 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       <div class="header-right">
         <p class="header-greeting" id="hdr-greeting">Good morning,</p>
         <p class="header-student-name" id="hdr-nome"></p>
-        <button class="btn-signout" id="btn-signout">Sair</button>
+        <div style="display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-top:10px">
+          <div class="bell-wrap">
+            <button class="btn-bell" id="btn-bell" onclick="toggleBell()">
+              <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            </button>
+            <span class="bell-badge hidden" id="bell-badge">0</span>
+            <div class="bell-dropdown" id="bell-dropdown">
+              <div class="bell-dropdown-header">
+                <span class="bell-dropdown-title">Avisos</span>
+                <button class="bell-dropdown-clear" onclick="marcarTodosLidos()">Marcar todos como lidos</button>
+              </div>
+              <div id="bell-lista"></div>
+            </div>
+          </div>
+          <button class="btn-signout" id="btn-signout">Sair</button>
+        </div>
       </div>
     </div>
 
@@ -1349,22 +1413,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       </div>
     </div>
 
-    <!-- MEET + MURAL -->
-    <div class="card reveal" style="display:flex;flex-direction:column">
-      <div class="card-pad" style="display:flex;flex-direction:column;flex:1">
-        <div id="meet-placeholder" style="display:none"></div>
-        <div id="meet-divider" style="display:none"></div>
-        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer" onclick="toggleMural()">
-          <p class="card-overline" style="margin-bottom:0">Mural de Avisos</p>
-          <div id="mural-chevron-wrap" style="width:24px;height:24px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all 0.4s cubic-bezier(0.22,1,0.36,1);flex-shrink:0">
-            <svg id="mural-chevron-svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.4s cubic-bezier(0.22,1,0.36,1)"><path d="M6 9l6 6 6-6"/></svg>
-          </div>
-        </div>
-        <div id="mural-collapse" style="max-height:0;overflow:hidden;transition:max-height 0.55s cubic-bezier(0.22,1,0.36,1)">
-          <div id="mural-content" style="padding-top:14px"><div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div></div>
-        </div>
-      </div>
-    </div>
+
 
     <!-- SEÇÃO: RECURSOS E LINKS ÚTEIS -->
     <div class="ornament reveal" style="grid-column:1/-1;padding:12px 0 4px">
@@ -1758,14 +1807,8 @@ function renderDashboard(a, avisos) {
     }).join('');
   }
 
-  var muralEl = document.getElementById('mural-content');
-  if (!avisos || !avisos.length) { muralEl.innerHTML = '<div class="empty-state">Nenhum aviso no momento.</div>'; }
-  else { muralEl.innerHTML = avisos.map(function(av) { return '<div class="aviso-item"><div class="aviso-data">'+av.data+'</div><div class="aviso-txt">'+av.texto+'</div></div>'; }).join(''); }
-  // Recalc mural collapse height after content loaded
-  setTimeout(function(){
-    var mc = document.getElementById('mural-collapse');
-    if (_muralOpen && mc) mc.style.maxHeight = mc.scrollHeight + 200 + 'px';
-  }, 50);
+  // Init bell notifications
+  initBell(avisos || []);
 
   window._calFreq = a.frequencia_semanal ? parseInt(a.frequencia_semanal) : null;
   renderHistorico(a.historico);
@@ -1975,6 +2018,88 @@ function copiarPix() {
     setTimeout(function(){ btn.textContent = 'Copiar'; }, 2000);
   });
 }
+
+// ── SININHO DE AVISOS ──
+var _bellOpen = false;
+var _avisos = [];
+
+function initBell(avisos) {
+  _avisos = avisos || [];
+  var login = currentStudent ? currentStudent.login : 'guest';
+  var lidosKey = 'mdtalk_avisos_lidos_' + login;
+  var lidos = JSON.parse(localStorage.getItem(lidosKey) || '[]');
+
+  var lista = document.getElementById('bell-lista');
+  var badge = document.getElementById('bell-badge');
+  if (!lista) return;
+
+  if (!_avisos.length) {
+    lista.innerHTML = '<div class="bell-empty">Nenhum aviso no momento.</div>';
+    badge.classList.add('hidden');
+    return;
+  }
+
+  var naoLidos = 0;
+  lista.innerHTML = _avisos.map(function(av, i) {
+    var isLido = lidos.indexOf(i) >= 0;
+    if (!isLido) naoLidos++;
+    return '<div class="bell-aviso-item' + (isLido ? ' lido' : '') + '" id="bell-aviso-' + i + '">' +
+      '<input type="checkbox" class="bell-aviso-check" ' + (isLido ? 'checked' : '') + ' onchange="marcarLido(' + i + ', this.checked)">' +
+      '<div class="bell-aviso-body">' +
+        '<div class="bell-aviso-data">' + av.data + '</div>' +
+        '<div class="bell-aviso-texto">' + av.texto + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  if (naoLidos > 0) {
+    badge.textContent = naoLidos;
+    badge.classList.remove('hidden');
+  } else {
+    badge.classList.add('hidden');
+  }
+}
+
+function marcarLido(idx, checked) {
+  var login = currentStudent ? currentStudent.login : 'guest';
+  var lidosKey = 'mdtalk_avisos_lidos_' + login;
+  var lidos = JSON.parse(localStorage.getItem(lidosKey) || '[]');
+  if (checked && lidos.indexOf(idx) < 0) lidos.push(idx);
+  else if (!checked) lidos = lidos.filter(function(i){ return i !== idx; });
+  localStorage.setItem(lidosKey, JSON.stringify(lidos));
+  var item = document.getElementById('bell-aviso-' + idx);
+  if (item) item.classList.toggle('lido', checked);
+  // Update badge
+  var naoLidos = _avisos.length - lidos.length;
+  var badge = document.getElementById('bell-badge');
+  if (badge) {
+    if (naoLidos > 0) { badge.textContent = naoLidos; badge.classList.remove('hidden'); }
+    else { badge.classList.add('hidden'); }
+  }
+}
+
+function marcarTodosLidos() {
+  var login = currentStudent ? currentStudent.login : 'guest';
+  var lidosKey = 'mdtalk_avisos_lidos_' + login;
+  var todos = _avisos.map(function(_, i){ return i; });
+  localStorage.setItem(lidosKey, JSON.stringify(todos));
+  initBell(_avisos);
+}
+
+function toggleBell() {
+  _bellOpen = !_bellOpen;
+  var dd = document.getElementById('bell-dropdown');
+  if (dd) dd.classList.toggle('open', _bellOpen);
+}
+
+// Close bell when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.bell-wrap')) {
+    _bellOpen = false;
+    var dd = document.getElementById('bell-dropdown');
+    if (dd) dd.classList.remove('open');
+  }
+});
 
 // ── TOGGLE TRILHA ──
 var _trilhaOpen = false;
