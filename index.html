@@ -2292,19 +2292,8 @@ function buildTrilhaCard(m) {
     '<div class="trilha-body">' +
       '<span class="trilha-tipo ' + tipoClass + '">' + tipoLabel + '</span>' +
       '<p class="trilha-titulo">' + m.titulo + '</p>' +
-      (function() {
-        if (!m.url_pdf) return '';
-        var links = m.url_pdf.split(',').map(function(l){ return l.trim(); }).filter(Boolean);
-        if (links.length <= 2) return '';
-        var uid = 'pdf-extra-' + m.ordem;
-        var extraLinks = links.slice(2).map(function(link, idx) {
-          return '<a class="trilha-btn-pdf" href="' + link + '" target="_blank" rel="noopener">PDF ' + (idx+3) + '</a>';
-        }).join('');
-        return '<div class="trilha-pdf-extra" id="' + uid + '">' + extraLinks + '</div>';
-      })() +
       '<div class="trilha-footer-wrap">' +
         '<div class="trilha-footer-main">' +
-          '' +
           '<div class="trilha-actions">' +
             (function() {
               if (!m.url_pdf) return '';
@@ -2324,6 +2313,16 @@ function buildTrilhaCard(m) {
             '</button>' +
           '</div>' +
         '</div>' +
+        (function() {
+          if (!m.url_pdf) return '';
+          var links = m.url_pdf.split(',').map(function(l){ return l.trim(); }).filter(Boolean);
+          if (links.length <= 2) return '';
+          var uid = 'pdf-extra-' + m.ordem;
+          var extraLinks = links.slice(2).map(function(link, idx) {
+            return '<a class="trilha-btn-pdf" href="' + link + '" target="_blank" rel="noopener">PDF ' + (idx+3) + '</a>';
+          }).join('');
+          return '<div class="trilha-pdf-extra" id="' + uid + '" style="padding:8px 0 2px;gap:6px;flex-wrap:wrap">' + extraLinks + '</div>';
+        })() +
       '</div>' +
     '</div>' +
   '</div>';
