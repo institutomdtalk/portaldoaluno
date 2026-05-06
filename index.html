@@ -2304,7 +2304,7 @@ function buildTrilhaCard(m) {
               var visible = links.slice(0, 2).map(function(link, idx) {
                 return '<a class="trilha-btn-pdf" href="' + link + '" target="_blank" rel="noopener">PDF' + (total > 1 ? ' ' + (idx+1) : '') + '</a>';
               }).join('');
-              var more = total > 2 ? '<button class="trilha-pdf-more" onclick="togglePdfExtra(\'' + uid + '\',this)">+' + (total-2) + '</button>' : '';
+              var more = total > 2 ? '<button class="trilha-pdf-more" onclick="event.stopPropagation();togglePdfExtra(\'' + uid + '\',this)">+' + (total-2) + '</button>' : '';
               return visible + more;
             })() +
             '<button class="trilha-check' + (m.concluido ? ' done' : '') + '" data-ordem="' + m.ordem + '" title="Marcar como concluído">' +
