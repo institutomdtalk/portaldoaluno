@@ -1993,9 +1993,7 @@ function renderCalendar() {
   grid.innerHTML=html;
   var btnNext=document.getElementById('cal-btn-next');
   if(btnNext) btnNext.style.opacity = isMesAtual ? '0.3' : '1';
-  // Recalc collapse height after render
-  var calCollapse = document.getElementById('cal-collapse');
-  if (_calOpen && calCollapse) calCollapse.style.maxHeight = '1200px';
+
 }
 
 // ── HISTÓRICO / STATS ──
