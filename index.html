@@ -1233,13 +1233,13 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <p class="header-greeting" id="hdr-greeting">Good morning,</p>
         <p class="header-student-name" id="hdr-nome"></p>
         <div style="display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-top:10px">
-          <div class="bell-wrap">
-            <button class="btn-bell" id="btn-bell" onclick="toggleBell(event)">
+          <div class="bell-wrap" id="bell-wrap">
+            <button class="btn-bell" id="btn-bell">
               <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
             </button>
             <span class="bell-badge hidden" id="bell-badge">0</span>
           </div>
-          <button class="btn-signout" id="btn-signout" onclick="doLogout()">Sair</button>
+          <button class="btn-signout" id="btn-signout">Sair</button>
         </div>
       </div>
     </div>
@@ -2022,18 +2022,22 @@ function copiarPix() {
 }
 
 // ── SININHO DE AVISOS ──
-var _bellOpen = false;
 var _avisos = [];
 
 function initBell(avisos) {
   _avisos = avisos || [];
-  var login = currentStudent ? currentStudent.login : 'guest';
-  var lidosKey = 'mdtalk_avisos_lidos_' + login;
-  var lidos = JSON.parse(localStorage.getItem(lidosKey) || '[]');
+  atualizarBell();
+}
 
-  var lista = document.getElementById('bell-lista');
-  var badge = document.getElementById('bell-badge');
-  if (!lista) return;
+function getLidosKey() {
+  return 'mdtalk_avisos_lidos_' + (currentStudent ? currentStudent.login : 'guest');
+}
+
+function atualizarBell() {
+  var lidos = JSON.parse(localStorage.getItem(getLidosKey()) || '[]');
+  var lista  = document.getElementById('bell-lista');
+  var badge  = document.getElementById('bell-badge');
+  if (!lista || !badge) return;
 
   if (!_avisos.length) {
     lista.innerHTML = '<div class="bell-empty">Nenhum aviso no momento.</div>';
@@ -2046,70 +2050,30 @@ function initBell(avisos) {
     var isLido = lidos.indexOf(i) >= 0;
     if (!isLido) naoLidos++;
     return '<div class="bell-aviso-item' + (isLido ? ' lido' : '') + '" id="bell-aviso-' + i + '">' +
-      '<input type="checkbox" class="bell-aviso-check" ' + (isLido ? 'checked' : '') + ' onchange="marcarLido(' + i + ', this.checked)">' +
+      '<input type="checkbox" class="bell-aviso-check" ' + (isLido ? 'checked' : '') + ' onchange="marcarLido(' + i + ',this.checked)">' +
       '<div class="bell-aviso-body">' +
         '<div class="bell-aviso-data">' + av.data + '</div>' +
         '<div class="bell-aviso-texto">' + av.texto + '</div>' +
-      '</div>' +
-    '</div>';
+      '</div></div>';
   }).join('');
 
-  if (naoLidos > 0) {
-    badge.textContent = naoLidos;
-    badge.classList.remove('hidden');
-  } else {
-    badge.classList.add('hidden');
-  }
+  if (naoLidos > 0) { badge.textContent = naoLidos; badge.classList.remove('hidden'); }
+  else { badge.classList.add('hidden'); }
 }
 
 function marcarLido(idx, checked) {
-  var login = currentStudent ? currentStudent.login : 'guest';
-  var lidosKey = 'mdtalk_avisos_lidos_' + login;
-  var lidos = JSON.parse(localStorage.getItem(lidosKey) || '[]');
+  var lidos = JSON.parse(localStorage.getItem(getLidosKey()) || '[]');
   if (checked && lidos.indexOf(idx) < 0) lidos.push(idx);
-  else if (!checked) lidos = lidos.filter(function(i){ return i !== idx; });
-  localStorage.setItem(lidosKey, JSON.stringify(lidos));
-  var item = document.getElementById('bell-aviso-' + idx);
-  if (item) item.classList.toggle('lido', checked);
-  // Update badge
-  var naoLidos = _avisos.length - lidos.length;
-  var badge = document.getElementById('bell-badge');
-  if (badge) {
-    if (naoLidos > 0) { badge.textContent = naoLidos; badge.classList.remove('hidden'); }
-    else { badge.classList.add('hidden'); }
-  }
+  else lidos = lidos.filter(function(i){ return i !== idx; });
+  localStorage.setItem(getLidosKey(), JSON.stringify(lidos));
+  atualizarBell();
 }
 
 function marcarTodosLidos() {
-  var login = currentStudent ? currentStudent.login : 'guest';
-  var lidosKey = 'mdtalk_avisos_lidos_' + login;
   var todos = _avisos.map(function(_, i){ return i; });
-  localStorage.setItem(lidosKey, JSON.stringify(todos));
-  initBell(_avisos);
+  localStorage.setItem(getLidosKey(), JSON.stringify(todos));
+  atualizarBell();
 }
-
-function toggleBell(e) {
-  if (e) e.stopPropagation();
-  _bellOpen = !_bellOpen;
-  var dd = document.getElementById('bell-dropdown');
-  if (!dd) return;
-  if (_bellOpen) {
-    var btn = document.getElementById('btn-bell');
-    var rect = btn.getBoundingClientRect();
-    dd.style.top = (rect.bottom + 10) + 'px';
-    dd.style.right = (window.innerWidth - rect.right) + 'px';
-  }
-  dd.classList.toggle('open', _bellOpen);
-}
-
-// Close bell when clicking outside
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.bell-wrap') && !e.target.closest('.bell-dropdown')) {
-    _bellOpen = false;
-    var dd = document.getElementById('bell-dropdown');
-    if (dd) dd.classList.remove('open');
-  }
-});
 
 // ── TOGGLE TRILHA ──
 var _trilhaOpen = false;
@@ -2584,6 +2548,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var btnSignout=document.getElementById('btn-signout');
   if(btnSignout) btnSignout.addEventListener('click', doLogout);
+
+  var btnBell = document.getElementById('btn-bell');
+  var bellDd  = document.getElementById('bell-dropdown');
+  if (btnBell && bellDd) {
+    btnBell.addEventListener('click', function(e) {
+      e.stopPropagation();
+      bellDd.classList.toggle('open');
+      // Position dropdown below bell button
+      var rect = btnBell.getBoundingClientRect();
+      bellDd.style.top  = (rect.bottom + 8) + 'px';
+      bellDd.style.right = (window.innerWidth - rect.right) + 'px';
+      bellDd.style.left = 'auto';
+    });
+    document.addEventListener('click', function(e) {
+      if (!bellDd.contains(e.target) && e.target !== btnBell) {
+        bellDd.classList.remove('open');
+      }
+    });
+  }
 
   var btnPresente=document.getElementById('btn-presente');
   if(btnPresente) btnPresente.addEventListener('click', function(){ registrarPresenca('presente'); });
