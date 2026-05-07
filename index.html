@@ -2094,7 +2094,7 @@ function toggleBell() {
 
 // Close bell when clicking outside
 document.addEventListener('click', function(e) {
-  if (!e.target.closest('.bell-wrap')) {
+  if (!e.target.closest('.bell-wrap') && !e.target.closest('#btn-signout')) {
     _bellOpen = false;
     var dd = document.getElementById('bell-dropdown');
     if (dd) dd.classList.remove('open');
