@@ -2547,8 +2547,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var btnEntrar=document.getElementById('btn-entrar');
   if(btnEntrar) btnEntrar.addEventListener('click', doLogin);
 
-  var btnSignout=document.getElementById('btn-signout');
-  if(btnSignout) btnSignout.addEventListener('click', doLogout);
+  // signout handled via onclick in footer
 
   var btnBell = document.getElementById('btn-bell');
   var bellDd  = document.getElementById('bell-dropdown');
@@ -2563,7 +2562,7 @@ document.addEventListener('DOMContentLoaded', function() {
       bellDd.style.left = 'auto';
     });
     document.addEventListener('click', function(e) {
-      if (!bellDd.contains(e.target) && e.target !== btnBell) {
+      if (!bellDd.contains(e.target) && e.target !== btnBell && e.target.id !== 'btn-signout') {
         bellDd.classList.remove('open');
       }
     });
