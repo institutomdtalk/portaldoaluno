@@ -1628,7 +1628,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <span style="font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,0.35)">WhatsApp</span>
       </a>
     </div>
-    <button id="btn-signout" onclick="doLogout()" style="background:none;border:1px solid rgba(196,164,90,0.2);color:rgba(255,255,255,0.3);font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;padding:7px 20px;border-radius:4px;cursor:pointer;margin-bottom:20px;transition:all 0.3s ease" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='rgba(196,164,90,0.2)';this.style.color='rgba(255,255,255,0.3)'">Sair da conta</button>
+    <button id="btn-signout" style="background:none;border:1px solid rgba(196,164,90,0.2);color:rgba(255,255,255,0.3);font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;padding:7px 20px;border-radius:4px;cursor:pointer;margin-bottom:20px;transition:all 0.3s ease" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='rgba(196,164,90,0.2)';this.style.color='rgba(255,255,255,0.3)'">Sair da conta</button>
+    <script>document.getElementById('btn-signout').addEventListener('click', function(){ doLogout(); });</script>
     <p class="footer-copy">&copy; 2026 Instituto MD Talk &mdash; Todos os direitos reservados.</p>
   </footer>
 
