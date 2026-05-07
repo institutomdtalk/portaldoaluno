@@ -856,6 +856,19 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .contact-item-value{font-size:13px;font-weight:600;color:var(--navy)}
 
 /* ═══════════════════════════════════════
+   MODAL CALENDÁRIO
+═══════════════════════════════════════ */
+.cal-modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,13,26,0.7);backdrop-filter:blur(8px);z-index:350;align-items:center;justify-content:center;padding:24px}
+.cal-modal-overlay.active{display:flex}
+.cal-modal-box{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:480px;width:100%;box-shadow:var(--shadow-lg);animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both;position:relative}
+.cal-modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.cal-modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.cal-modal-title{font-family:var(--serif);font-size:1.25rem;font-weight:500;color:var(--navy)}
+.cal-modal-close{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.25s;flex-shrink:0}
+.cal-modal-close:hover{border-color:var(--gold)}
+.cal-modal-close svg{width:12px;height:12px;stroke:var(--text-muted);fill:none;stroke-width:2.5;stroke-linecap:round}
+
+/* ═══════════════════════════════════════
    SININHO DE AVISOS
 ═══════════════════════════════════════ */
 .bell-wrap{position:relative;flex-shrink:0}
@@ -1366,42 +1379,15 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     </a>
 
     <!-- CALENDÁRIO -->
-    <div class="card reveal">
-      <div class="card-pad" style="padding:20px 20px">
-        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer" onclick="toggleCalendario()">
-          <p class="card-overline" style="margin-bottom:0">Histórico de Presenças</p>
-          <div id="cal-chevron-wrap" style="width:24px;height:24px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all 0.4s cubic-bezier(0.22,1,0.36,1);flex-shrink:0">
-            <svg id="cal-chevron-svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.4s cubic-bezier(0.22,1,0.36,1)"><path d="M6 9l6 6 6-6"/></svg>
-          </div>
+    <div class="card card--form reveal" style="grid-column:1/-1;cursor:pointer" onclick="abrirModalCalendario()">
+      <div class="card-pad">
+        <div class="form-icon-wrap"><div class="form-icon-ring"></div><svg class="form-icon-svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <div class="form-content">
+          <p class="card-overline">Histórico de Presenças</p>
+          <h3 class="card-title">Meu Calendário de Aulas</h3>
+          <p class="card-desc">Visualize seu histórico completo de presenças e faltas, com frequência mensal e aulas esperadas.</p>
         </div>
-        <div id="cal-collapse" style="max-height:0;overflow:hidden;transition:max-height 0.55s cubic-bezier(0.22,1,0.36,1)">
-          <div style="padding-top:14px"></div>
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-            <button id="cal-btn-prev" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s ease">&#8249;</button>
-            <span id="cal-month-label" style="font-family:var(--serif);font-size:1.15rem;font-weight:500;color:var(--navy);min-width:140px;text-align:center"></span>
-            <button id="cal-btn-next" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s ease">&#8250;</button>
-          </div>
-          <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
-          <div style="background:var(--off-white);border-radius:var(--radius);padding:14px 16px;margin-top:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border)">
-            <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
-              <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--success);line-height:1" id="cal-presencas-mes">0</div>
-              <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Presenças</p>
-            </div>
-            <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
-              <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--danger);line-height:1" id="cal-faltas-mes">0</div>
-              <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Falta<span id="cal-plural">s</span></p>
-            </div>
-            <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
-              <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--navy);line-height:1" id="cal-freq-mes">—</div>
-              <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Frequência</p>
-            </div>
-            <div style="text-align:center;padding:4px 8px">
-              <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--gold);line-height:1" id="cal-esperadas-mes">—</div>
-              <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Esperadas</p>
-            </div>
-          </div>
-          <p id="cal-nav-aviso" style="font-size:11px;color:var(--text-muted);margin-top:8px;text-align:center;font-style:italic;display:none">Visualização de mês anterior — somente leitura</p>
-        </div>
+        <span class="form-btn">Ver calendário <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
       </div>
     </div>
 
@@ -1631,6 +1617,43 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     <p class="footer-copy">&copy; 2026 Instituto MD Talk &mdash; Todos os direitos reservados.</p>
   </footer>
 
+</div>
+
+<!-- MODAL CALENDÁRIO -->
+<div class="cal-modal-overlay" id="modal-calendario">
+  <div class="cal-modal-box">
+    <div class="cal-modal-header">
+      <span class="cal-modal-title">Histórico de Presenças</span>
+      <button class="cal-modal-close" onclick="fecharModalCalendario()">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <button id="cal-btn-prev" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s ease">&#8249;</button>
+      <span id="cal-month-label" style="font-family:var(--serif);font-size:1.15rem;font-weight:500;color:var(--navy);min-width:140px;text-align:center"></span>
+      <button id="cal-btn-next" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s ease">&#8250;</button>
+    </div>
+    <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
+    <div style="background:var(--off-white);border-radius:var(--radius);padding:14px 16px;margin-top:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border)">
+      <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
+        <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--success);line-height:1" id="cal-presencas-mes">0</div>
+        <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Presenças</p>
+      </div>
+      <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
+        <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--danger);line-height:1" id="cal-faltas-mes">0</div>
+        <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Falta<span id="cal-plural">s</span></p>
+      </div>
+      <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
+        <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--navy);line-height:1" id="cal-freq-mes">—</div>
+        <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Frequência</p>
+      </div>
+      <div style="text-align:center;padding:4px 8px">
+        <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--gold);line-height:1" id="cal-esperadas-mes">—</div>
+        <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Esperadas</p>
+      </div>
+    </div>
+    <p id="cal-nav-aviso" style="font-size:11px;color:var(--text-muted);margin-top:8px;text-align:center;font-style:italic;display:none">Visualização de mês anterior — somente leitura</p>
+  </div>
 </div>
 
 <!-- BELL DROPDOWN -->
@@ -2098,21 +2121,18 @@ function togglePdfExtra(uid, btn) {
   btn.textContent = isOpen ? '+' + (el.querySelectorAll('a').length) : '−';
 }
 
-// ── TOGGLE CALENDÁRIO ──
-var _calOpen = false;
-function toggleCalendario() {
-  var collapse = document.getElementById('cal-collapse');
-  var chevron  = document.getElementById('cal-chevron-svg');
-  var wrap     = document.getElementById('cal-chevron-wrap');
-  _calOpen = !_calOpen;
-  if (_calOpen) {
-    collapse.style.maxHeight = '1200px';
-    setTimeout(function(){ renderCalendar(); }, 10);
-  } else {
-    collapse.style.maxHeight = '0';
+// ── MODAL CALENDÁRIO ──
+function abrirModalCalendario() {
+  var modal = document.getElementById('modal-calendario');
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function(){ renderCalendar(); }, 50);
   }
-  if (chevron) chevron.style.transform = _calOpen ? 'rotate(180deg)' : '';
-  if (wrap) wrap.style.background = _calOpen ? 'var(--gold-faint)' : '';
+}
+function fecharModalCalendario() {
+  var modal = document.getElementById('modal-calendario');
+  if (modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
 }
 
 // ── TOGGLE MURAL ──
@@ -2578,10 +2598,15 @@ document.addEventListener('DOMContentLoaded', function() {
   if(btnFalta) btnFalta.addEventListener('click', function(){ registrarPresenca('falta'); });
 
   var btnPrev=document.getElementById('cal-btn-prev');
-  if(btnPrev) btnPrev.addEventListener('click', calPrev);
+  if(btnPrev) btnPrev.addEventListener('click', function(e){ e.stopPropagation(); calPrev(); });
 
   var btnNext=document.getElementById('cal-btn-next');
-  if(btnNext) btnNext.addEventListener('click', calNext);
+  if(btnNext) btnNext.addEventListener('click', function(e){ e.stopPropagation(); calNext(); });
+
+  var calOverlay = document.getElementById('modal-calendario');
+  if(calOverlay) calOverlay.addEventListener('click', function(e){ if(e.target===this) fecharModalCalendario(); });
+
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') fecharModalCalendario(); });
 
   var btnModalCancel=document.getElementById('btn-modal-cancel');
   if(btnModalCancel) btnModalCancel.addEventListener('click', fecharModalFalta);
