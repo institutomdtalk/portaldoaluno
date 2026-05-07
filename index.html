@@ -1234,19 +1234,12 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <p class="header-student-name" id="hdr-nome"></p>
         <div style="display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-top:10px">
           <div class="bell-wrap">
-            <button class="btn-bell" id="btn-bell" onclick="toggleBell()">
+            <button class="btn-bell" id="btn-bell" onclick="toggleBell(event)">
               <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
             </button>
             <span class="bell-badge hidden" id="bell-badge">0</span>
-            <div class="bell-dropdown" id="bell-dropdown">
-              <div class="bell-dropdown-header">
-                <span class="bell-dropdown-title">Avisos</span>
-                <button class="bell-dropdown-clear" onclick="marcarTodosLidos()">Marcar todos como lidos</button>
-              </div>
-              <div id="bell-lista"></div>
-            </div>
           </div>
-          <button class="btn-signout" id="btn-signout">Sair</button>
+          <button class="btn-signout" id="btn-signout" onclick="doLogout()">Sair</button>
         </div>
       </div>
     </div>
@@ -1638,6 +1631,15 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     <p class="footer-copy">&copy; 2026 Instituto MD Talk &mdash; Todos os direitos reservados.</p>
   </footer>
 
+</div>
+
+<!-- BELL DROPDOWN -->
+<div class="bell-dropdown" id="bell-dropdown">
+  <div class="bell-dropdown-header">
+    <span class="bell-dropdown-title">Avisos</span>
+    <button class="bell-dropdown-clear" onclick="marcarTodosLidos()">Marcar todos como lidos</button>
+  </div>
+  <div id="bell-lista"></div>
 </div>
 
 <!-- PDF VIEWER MODAL -->
@@ -2086,15 +2088,23 @@ function marcarTodosLidos() {
   initBell(_avisos);
 }
 
-function toggleBell() {
+function toggleBell(e) {
+  if (e) e.stopPropagation();
   _bellOpen = !_bellOpen;
   var dd = document.getElementById('bell-dropdown');
-  if (dd) dd.classList.toggle('open', _bellOpen);
+  if (!dd) return;
+  if (_bellOpen) {
+    var btn = document.getElementById('btn-bell');
+    var rect = btn.getBoundingClientRect();
+    dd.style.top = (rect.bottom + 10) + 'px';
+    dd.style.right = (window.innerWidth - rect.right) + 'px';
+  }
+  dd.classList.toggle('open', _bellOpen);
 }
 
 // Close bell when clicking outside
 document.addEventListener('click', function(e) {
-  if (!e.target.closest('.bell-wrap') && !e.target.closest('#btn-signout')) {
+  if (!e.target.closest('.bell-wrap') && !e.target.closest('.bell-dropdown')) {
     _bellOpen = false;
     var dd = document.getElementById('bell-dropdown');
     if (dd) dd.classList.remove('open');
