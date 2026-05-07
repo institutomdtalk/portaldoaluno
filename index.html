@@ -879,11 +879,11 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 }
 .bell-badge.hidden{display:none}
 .bell-dropdown{
-  position:absolute;top:calc(100% + 12px);right:0;
-  width:320px;max-height:400px;overflow-y:auto;
+  position:fixed;top:80px;right:24px;
+  width:300px;max-height:420px;overflow-y:auto;
   background:var(--white);border:1px solid var(--border);
   border-radius:var(--radius);box-shadow:var(--shadow-lg);
-  z-index:400;display:none;
+  z-index:9999;display:none;
   animation:heroReveal 0.25s cubic-bezier(0.22,1,0.36,1) both;
 }
 .bell-dropdown.open{display:block}
