@@ -860,7 +860,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 ═══════════════════════════════════════ */
 .card--caderno-locked{
   filter:grayscale(1);opacity:0.7;
-  pointer-events:none;
 }
 .card--caderno-locked .form-btn{
   background:var(--text-muted);color:var(--white);
@@ -1903,9 +1902,10 @@ function renderDashboard(a, avisos) {
     } else {
       // Locked — grayscale, no pointer events, show lock
       cardCaderno.classList.add('card--caderno-locked');
-      cardCaderno.removeAttribute('href');
+      cardCaderno.setAttribute('href', 'https://wa.me/5514997758941?text=' + encodeURIComponent('Gostaria de ter acesso a todos os recursos do portal'));
+      cardCaderno.style.pointerEvents = 'auto';
       if (cadernoLock) cadernoLock.style.display = 'flex';
-      if (cadernoBtnEl) cadernoBtnEl.innerHTML = 'Em breve';
+      if (cadernoBtnEl) cadernoBtnEl.innerHTML = 'Assinar';
     }
   }
 
