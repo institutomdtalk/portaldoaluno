@@ -868,12 +868,49 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .caderno-lock-icon{
   position:absolute;top:50%;right:28px;transform:translateY(-50%);
   display:flex;align-items:center;justify-content:center;
-  width:36px;height:36px;border-radius:50%;
-  background:var(--gold);
-  box-shadow:0 2px 12px rgba(196,164,90,0.35);
-  flex-shrink:0;
+  width:48px;height:48px;flex-shrink:0;
 }
-.caderno-lock-icon svg{width:16px;height:16px;stroke:var(--navy-deep);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.lock-core{
+  position:relative;z-index:2;
+  width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 16px rgba(196,164,90,0.5),0 0 32px rgba(196,164,90,0.2);
+  animation:lockPulse 2.5s ease-in-out infinite;
+}
+.lock-core svg{width:18px;height:18px;stroke:var(--navy-deep);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@keyframes lockPulse{
+  0%,100%{box-shadow:0 0 16px rgba(196,164,90,0.5),0 0 32px rgba(196,164,90,0.2);transform:scale(1)}
+  50%{box-shadow:0 0 24px rgba(196,164,90,0.8),0 0 48px rgba(196,164,90,0.35);transform:scale(1.06)}
+}
+.lock-rings{position:absolute;inset:0;z-index:1}
+.lock-ring{
+  position:absolute;border-radius:50%;border:1px solid rgba(196,164,90,0.4);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+}
+.lock-ring-1{width:52px;height:52px;animation:ringExpand 2.5s ease-out infinite}
+.lock-ring-2{width:52px;height:52px;animation:ringExpand 2.5s ease-out infinite 0.8s}
+.lock-ring-3{width:52px;height:52px;animation:ringExpand 2.5s ease-out infinite 1.6s}
+@keyframes ringExpand{
+  0%{width:40px;height:40px;opacity:0.8}
+  100%{width:70px;height:70px;opacity:0}
+}
+.lock-sparks{position:absolute;inset:0;z-index:3;pointer-events:none}
+.lock-spark{
+  position:absolute;top:50%;left:50%;
+  width:3px;height:3px;border-radius:50%;
+  background:var(--gold-light);
+  animation:sparkFloat 3s ease-in-out infinite;
+}
+.lock-spark:nth-child(1){animation-delay:0s;transform-origin:-18px 0}
+.lock-spark:nth-child(2){animation-delay:0.75s;transform-origin:0 -18px}
+.lock-spark:nth-child(3){animation-delay:1.5s;transform-origin:18px 0}
+.lock-spark:nth-child(4){animation-delay:2.25s;transform-origin:0 18px}
+@keyframes sparkFloat{
+  0%,100%{opacity:0;transform:rotate(0deg) translateX(18px) scale(0)}
+  20%{opacity:1;transform:rotate(45deg) translateX(22px) scale(1)}
+  80%{opacity:0.3;transform:rotate(180deg) translateX(26px) scale(0.5)}
+}
 
 /* ═══════════════════════════════════════
    MODAL CALENDÁRIO
@@ -1356,13 +1393,26 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <div class="card-pad">
           <div class="form-icon-wrap"><div class="form-icon-ring"></div><svg class="form-icon-svg" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
           <div class="form-content">
-            <p class="card-overline">Estudo Personalizado</p>
+            <p class="card-overline">Acesso Exclusivo para Assinantes</p>
             <h3 class="card-title">Meu Caderno Inteligente</h3>
-            <p class="card-desc">Meu Progresso, Central de Estudos, Flashcards...</p>
+            <p class="card-desc">Organize seu aprendizado, revise com flashcards e acompanhe sua evolução em tempo real.</p>
           </div>
           <span class="form-btn" id="caderno-btn">Acessar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
           <div class="caderno-lock-icon" id="caderno-lock" style="display:none">
-            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            <div class="lock-rings">
+              <div class="lock-ring lock-ring-1"></div>
+              <div class="lock-ring lock-ring-2"></div>
+              <div class="lock-ring lock-ring-3"></div>
+            </div>
+            <div class="lock-core">
+              <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            </div>
+            <div class="lock-sparks">
+              <span class="lock-spark"></span>
+              <span class="lock-spark"></span>
+              <span class="lock-spark"></span>
+              <span class="lock-spark"></span>
+            </div>
           </div>
         </div>
       </a>
