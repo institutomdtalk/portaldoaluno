@@ -883,7 +883,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   filter:grayscale(1);opacity:0.7;
 }
 .card--caderno-locked .form-btn{
-  background:var(--text-muted);color:var(--white);
+  filter:none !important;
+  opacity:1 !important;
 }
 
 .caderno-lock-icon{
@@ -1909,7 +1910,8 @@ function renderDashboard(a, avisos) {
       cardCaderno.classList.add('card--caderno-locked');
       cardCaderno.setAttribute('href', 'https://wa.me/5514997758941?text=' + encodeURIComponent('Gostaria de ter acesso a todos os recursos do portal'));
       cardCaderno.style.pointerEvents = 'auto';
-      if (cadernoBtnEl) cadernoBtnEl.innerHTML = 'Assinar';
+      if (cadernoBtnEl) cadernoBtnEl.innerHTML = 'Assinar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>';
+      if (cadernoBtnEl) { cadernoBtnEl.style.background='var(--gold)'; cadernoBtnEl.style.color='var(--navy-deep)'; }
       // Swap icon to lock SVG with orbiting dots
       var iconWrap = document.getElementById('caderno-icon-wrap');
       if (iconWrap) {
