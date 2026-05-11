@@ -866,21 +866,21 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 }
 
 .caderno-lock-icon{
-  position:absolute;top:50%;right:-24px;transform:translateY(-50%);
+  position:absolute;top:-20px;left:20px;transform:none;
   display:flex;align-items:center;justify-content:center;
-  width:48px;height:48px;flex-shrink:0;
+  width:40px;height:40px;flex-shrink:0;
   z-index:10;
   filter:none !important;
 }
 .lock-core{
   position:relative;z-index:2;
-  width:40px;height:40px;border-radius:50%;
+  width:36px;height:36px;border-radius:50%;
   background:linear-gradient(135deg,var(--gold),var(--gold-light));
   display:flex;align-items:center;justify-content:center;
   box-shadow:0 0 16px rgba(196,164,90,0.5),0 0 32px rgba(196,164,90,0.2);
   animation:lockPulse 2.5s ease-in-out infinite;
 }
-.lock-core svg{width:18px;height:18px;stroke:var(--navy-deep);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.lock-core svg{width:15px;height:15px;stroke:var(--navy-deep);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 @keyframes lockPulse{
   0%,100%{box-shadow:0 0 16px rgba(196,164,90,0.5),0 0 32px rgba(196,164,90,0.2);transform:scale(1)}
   50%{box-shadow:0 0 24px rgba(196,164,90,0.8),0 0 48px rgba(196,164,90,0.35);transform:scale(1.06)}
