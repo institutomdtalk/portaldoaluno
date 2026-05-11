@@ -856,6 +856,26 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .contact-item-value{font-size:13px;font-weight:600;color:var(--navy)}
 
 /* ═══════════════════════════════════════
+   CADERNO INTELIGENTE
+═══════════════════════════════════════ */
+.card--caderno-locked{
+  filter:grayscale(1);opacity:0.7;
+  pointer-events:none;
+}
+.card--caderno-locked .form-btn{
+  background:var(--text-muted);color:var(--white);
+}
+.caderno-lock-icon{
+  position:absolute;top:50%;right:28px;transform:translateY(-50%);
+  display:flex;align-items:center;justify-content:center;
+  width:36px;height:36px;border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 2px 12px rgba(196,164,90,0.35);
+  flex-shrink:0;
+}
+.caderno-lock-icon svg{width:16px;height:16px;stroke:var(--navy-deep);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ═══════════════════════════════════════
    MODAL CALENDÁRIO
 ═══════════════════════════════════════ */
 .cal-modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,13,26,0.7);backdrop-filter:blur(8px);z-index:350;align-items:center;justify-content:center;padding:24px}
@@ -1330,6 +1350,24 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       </div>
     </a>
 
+    <!-- CADERNO INTELIGENTE -->
+    <div id="card-caderno-wrap" style="grid-column:1/-1">
+      <a id="card-caderno" href="https://institutomdtalk.github.io/notebook/" target="_blank" rel="noopener" class="card card--form reveal" style="grid-column:1/-1;position:relative">
+        <div class="card-pad">
+          <div class="form-icon-wrap"><div class="form-icon-ring"></div><svg class="form-icon-svg" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
+          <div class="form-content">
+            <p class="card-overline">Estudo Personalizado</p>
+            <h3 class="card-title">Meu Caderno Inteligente</h3>
+            <p class="card-desc">Meu Progresso, Central de Estudos, Flashcards...</p>
+          </div>
+          <span class="form-btn" id="caderno-btn">Acessar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
+          <div class="caderno-lock-icon" id="caderno-lock" style="display:none">
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </div>
+        </div>
+      </a>
+    </div>
+
     <!-- TRILHA DE APRENDIZADO -->
     <div class="card reveal" style="grid-column:1/-1">
       <div class="card-pad">
@@ -1800,6 +1838,22 @@ function renderDashboard(a, avisos) {
   if (cardDrive) { if (a.link_drive) { cardDrive.href = a.link_drive; } else { cardDrive.style.opacity='0.35'; cardDrive.style.pointerEvents='none'; } }
   var cardDocs = document.getElementById('card-meu-docs');
   if (cardDocs && a.link_docs && a.link_docs.trim()) { cardDocs.href = a.link_docs; }
+  // Caderno Inteligente
+  var cardCaderno = document.getElementById('card-caderno');
+  var cadernoLock = document.getElementById('caderno-lock');
+  var cadernoBtnEl = document.getElementById('caderno-btn');
+  if (cardCaderno) {
+    if (a.caderno_ativo === 'sim') {
+      // Unlocked — full color, accessible
+      if (cadernoLock) cadernoLock.style.display = 'none';
+    } else {
+      // Locked — grayscale, no pointer events, show lock
+      cardCaderno.classList.add('card--caderno-locked');
+      cardCaderno.removeAttribute('href');
+      if (cadernoLock) cadernoLock.style.display = 'flex';
+      if (cadernoBtnEl) cadernoBtnEl.innerHTML = 'Em breve';
+    }
+  }
 
   var proxEl = document.getElementById('proxima-aula-txt');
   if (proxEl && a.proxima_aula && a.proxima_aula.trim()) proxEl.textContent = a.proxima_aula;
