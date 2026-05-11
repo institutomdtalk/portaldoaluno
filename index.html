@@ -864,14 +864,13 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .card--caderno-locked .form-btn{
   background:var(--text-muted);color:var(--white);
 }
-.card--caderno-locked .caderno-lock-icon{
-  filter:none !important;
-  opacity:1 !important;
-}
+
 .caderno-lock-icon{
-  position:absolute;top:50%;right:28px;transform:translateY(-50%);
+  position:absolute;top:50%;right:-24px;transform:translateY(-50%);
   display:flex;align-items:center;justify-content:center;
   width:48px;height:48px;flex-shrink:0;
+  z-index:10;
+  filter:none !important;
 }
 .lock-core{
   position:relative;z-index:2;
@@ -1391,7 +1390,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     </a>
 
     <!-- CADERNO INTELIGENTE -->
-    <div id="card-caderno-wrap" style="grid-column:1/-1">
+    <div id="card-caderno-wrap" style="grid-column:1/-1;position:relative">
       <a id="card-caderno" href="https://institutomdtalk.github.io/notebook/" target="_blank" rel="noopener" class="card card--form reveal" style="grid-column:1/-1;position:relative">
         <div class="card-pad">
           <div class="form-icon-wrap"><div class="form-icon-ring"></div><svg class="form-icon-svg" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
@@ -1401,24 +1400,25 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
             <p class="card-desc">Organize seu aprendizado, revise com flashcards e acompanhe sua evolução em tempo real.</p>
           </div>
           <span class="form-btn" id="caderno-btn">Acessar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
-          <div class="caderno-lock-icon" id="caderno-lock" style="display:none">
-            <div class="lock-rings">
-              <div class="lock-ring lock-ring-1"></div>
-              <div class="lock-ring lock-ring-2"></div>
-              <div class="lock-ring lock-ring-3"></div>
-            </div>
-            <div class="lock-core">
-              <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-            </div>
-            <div class="lock-sparks">
-              <span class="lock-spark"></span>
-              <span class="lock-spark"></span>
-              <span class="lock-spark"></span>
-              <span class="lock-spark"></span>
-            </div>
-          </div>
         </div>
       </a>
+      <!-- Lock icon floats OUTSIDE the card, on its border -->
+      <div class="caderno-lock-icon" id="caderno-lock" style="display:none">
+        <div class="lock-rings">
+          <div class="lock-ring lock-ring-1"></div>
+          <div class="lock-ring lock-ring-2"></div>
+          <div class="lock-ring lock-ring-3"></div>
+        </div>
+        <div class="lock-core">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        </div>
+        <div class="lock-sparks">
+          <span class="lock-spark"></span>
+          <span class="lock-spark"></span>
+          <span class="lock-spark"></span>
+          <span class="lock-spark"></span>
+        </div>
+      </div>
     </div>
 
     <!-- TRILHA DE APRENDIZADO -->
