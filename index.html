@@ -769,17 +769,17 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 .form-content{flex:1}
 .form-btn{
-  flex-shrink:0;display:flex;align-items:center;justify-content:center;gap:10px;
-  background:var(--gold);color:var(--navy-deep);
-  font-family:var(--sans);font-size:10px;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;
-  padding:15px 20px;border-radius:var(--radius);border:none;
-  transition:all 0.4s cubic-bezier(0.22,1,0.36,1);
-  position:relative;overflow:hidden;
-  min-width:52px;
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  width:42px;height:42px;border-radius:50%;
+  background:transparent;border:1px solid var(--border);
+  transition:all 0.35s ease;
+  position:relative;
 }
+.card--form:hover .form-btn{background:var(--gold);border-color:var(--gold)}
+.form-btn svg{stroke:var(--text-muted);transition:stroke 0.35s ease}
+.card--form:hover .form-btn svg{stroke:var(--navy-deep)}
 .form-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);transform:translateX(-100%);transition:transform 0s}
-.card--form:hover .form-btn{background:var(--gold-light);box-shadow:var(--shadow-gold)}
+
 .card--form:hover .form-btn::after{transform:translateX(100%);transition:transform 0.5s ease}
 .form-btn svg{width:13px;height:13px;transition:transform 0.3s ease}
 .card--form:hover .form-btn svg{transform:translateX(4px)}
@@ -1639,7 +1639,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <!-- Footer with single button -->
         <div style="padding:20px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px">
           <p style="font-size:12px;color:var(--text-muted);line-height:1.5;flex:1">Assine e tenha acesso imediato a todos os recursos acima.</p>
-          <span class="form-btn" style="filter:none !important;opacity:1 !important;background:var(--gold);color:var(--navy-deep);flex-shrink:0">Assinar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
+          <span class="form-btn" style="filter:none !important;opacity:1 !important;width:auto;height:auto;border-radius:4px;background:var(--gold);color:var(--navy-deep);border:none;padding:15px 20px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;flex-shrink:0">Assinar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
         </div>
       </a>
     </div>
@@ -2014,8 +2014,10 @@ function renderDashboard(a, avisos) {
       cardCaderno.classList.add('card--caderno-locked');
       cardCaderno.setAttribute('href', 'https://wa.me/5514997758941?text=' + encodeURIComponent('Gostaria de ter acesso a todos os recursos do portal'));
       cardCaderno.style.pointerEvents = 'auto';
-      if (cadernoBtnEl) cadernoBtnEl.innerHTML = 'Assinar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>';
-      if (cadernoBtnEl) { cadernoBtnEl.style.background='var(--gold)'; cadernoBtnEl.style.color='var(--navy-deep)'; }
+      if (cadernoBtnEl) {
+        cadernoBtnEl.textContent = 'Assinar';
+        cadernoBtnEl.style.cssText = 'filter:none !important;opacity:1 !important;width:auto;height:auto;border-radius:4px;background:var(--gold);color:var(--navy-deep);border:none;padding:15px 20px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:8px;flex-shrink:0;';
+      }
       // Swap icon to lock SVG with orbiting dots
       var iconWrap = document.getElementById('caderno-icon-wrap');
       if (iconWrap) {
