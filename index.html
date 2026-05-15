@@ -857,6 +857,99 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .contact-item-value{font-size:13px;font-weight:600;color:var(--navy)}
 
 /* ═══════════════════════════════════════
+   PASTA DO DRIVE
+═══════════════════════════════════════ */
+.drive-card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:12px;
+  margin-top:14px;
+}
+.drive-card-item{
+  border:1px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;cursor:pointer;
+  transition:all 0.3s ease;background:var(--white);
+  display:flex;flex-direction:column;
+}
+.drive-card-item:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:var(--border-gold)}
+.drive-card-thumb{
+  width:100%;aspect-ratio:3/4;object-fit:cover;
+  background:linear-gradient(135deg,var(--navy-deep),var(--navy));
+  display:block;
+}
+.drive-card-thumb-placeholder{
+  width:100%;aspect-ratio:3/4;
+  background:linear-gradient(135deg,var(--navy-deep),var(--navy));
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;
+}
+.drive-card-thumb-placeholder svg{width:28px;height:28px;opacity:0.5;flex-shrink:0}
+.drive-card-thumb-placeholder span{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);font-family:var(--sans)}
+.drive-card-name{
+  padding:8px 10px;
+  font-size:11px;font-weight:500;color:var(--navy);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  border-top:1px solid var(--border);flex:1;
+}
+/* Viewer Modal */
+.drive-viewer-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(5,13,26,0.92);backdrop-filter:blur(12px);
+  z-index:500;flex-direction:column;align-items:center;justify-content:center;
+}
+.drive-viewer-overlay.active{display:flex}
+.drive-viewer-box{
+  width:90vw;max-width:1000px;height:88vh;
+  display:flex;flex-direction:column;
+  background:var(--white);border-radius:var(--radius);
+  overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.5);
+  animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both;
+}
+.drive-viewer-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 18px;border-bottom:1px solid var(--border);
+  background:var(--white);flex-shrink:0;gap:12px;
+}
+.drive-viewer-title{
+  font-family:var(--serif);font-size:1rem;font-weight:500;color:var(--navy);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;
+}
+.drive-viewer-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.drive-viewer-btn{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:7px 14px;border-radius:var(--radius);
+  font-family:var(--sans);font-size:9px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  cursor:pointer;transition:all 0.25s;text-decoration:none;
+  border:1px solid var(--border);background:none;color:var(--text-muted);
+}
+.drive-viewer-btn:hover{border-color:var(--gold);color:var(--gold)}
+.drive-viewer-btn.primary{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
+.drive-viewer-btn.primary:hover{background:var(--gold-light)}
+.drive-viewer-btn svg{width:13px;height:13px;flex-shrink:0}
+.drive-viewer-close{
+  width:30px;height:30px;border-radius:50%;
+  border:1px solid var(--border);background:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all 0.25s;
+}
+.drive-viewer-close:hover{border-color:var(--danger);color:var(--danger)}
+.drive-viewer-close svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round}
+.drive-viewer-iframe{flex:1;width:100%;border:none;background:var(--off-white)}
+.drive-viewer-zoom{
+  position:fixed;bottom:24px;right:24px;z-index:501;
+  display:none;gap:8px;
+}
+.drive-viewer-zoom.active{display:flex}
+.drive-zoom-btn{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--navy-deep);border:1px solid rgba(196,164,90,0.3);
+  color:var(--white);font-size:18px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.25s;box-shadow:var(--shadow-lg);
+}
+.drive-zoom-btn:hover{background:var(--navy-light);border-color:var(--gold)}
+
+/* ═══════════════════════════════════════
    IRREGULAR VERBS
 ═══════════════════════════════════════ */
 .vb-section{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden}
@@ -1410,6 +1503,27 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
   <main class="dashboard">
 
+    <!-- PASTA DO DRIVE -->
+    <div class="card reveal" style="grid-column:1/-1" id="card-drive-files">
+      <div class="card-pad">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+          <p class="card-overline" style="margin-bottom:0">Minha Pasta</p>
+          <span id="drive-files-count" style="font-size:10px;color:var(--text-muted);font-family:var(--sans)"></span>
+        </div>
+        <h3 class="card-title" style="margin-bottom:4px">Arquivos do Drive</h3>
+        <p class="card-desc" id="drive-files-status" style="margin-bottom:0">Carregando seus arquivos...</p>
+        <!-- First row always visible -->
+        <div class="drive-card-grid" id="drive-first-row"></div>
+        <!-- Remaining rows collapsible -->
+        <div id="drive-more-rows" style="max-height:0;overflow:hidden;transition:max-height 0.6s cubic-bezier(0.22,1,0.36,1)">
+          <div class="drive-card-grid" id="drive-rest-rows"></div>
+        </div>
+        <button id="btn-drive-toggle" style="display:none;margin:16px auto 0;background:none;border:1px solid var(--border-gold);color:var(--gold);font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border-radius:var(--radius);cursor:pointer;transition:all 0.3s ease;width:fit-content" onclick="toggleDriveFiles()">
+          Ver mais <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-left:4px" id="drive-toggle-chevron"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+    </div>
+
     <!-- SEÇÃO: ACESSO EXCLUSIVO -->
     <div class="ornament reveal" style="grid-column:1/-1;padding:12px 0 4px">
       <div class="ornament-line"></div>
@@ -1930,6 +2044,33 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   </div>
 </div>
 
+<!-- DRIVE VIEWER MODAL -->
+<div class="drive-viewer-overlay" id="drive-viewer">
+  <div class="drive-viewer-box">
+    <div class="drive-viewer-header">
+      <span class="drive-viewer-title" id="drive-viewer-title"></span>
+      <div class="drive-viewer-actions">
+        <a id="drive-viewer-download" href="#" target="_blank" rel="noopener" class="drive-viewer-btn primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download
+        </a>
+        <a id="drive-viewer-open" href="#" target="_blank" rel="noopener" class="drive-viewer-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Abrir no Drive
+        </a>
+        <button class="drive-viewer-close" onclick="closeDriveViewer()">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <iframe class="drive-viewer-iframe" id="drive-viewer-iframe" src="" allowfullscreen></iframe>
+  </div>
+</div>
+<div class="drive-viewer-zoom active" id="drive-viewer-zoom" style="display:none">
+  <button class="drive-zoom-btn" onclick="zoomViewer(-1)" title="Reduzir">−</button>
+  <button class="drive-zoom-btn" onclick="zoomViewer(1)" title="Ampliar">+</button>
+</div>
+
 <!-- BELL DROPDOWN -->
 <div class="bell-dropdown" id="bell-dropdown">
   <div class="bell-dropdown-header">
@@ -2147,6 +2288,23 @@ function renderDashboard(a, avisos) {
   verificarRegistroHoje(a.historico);
   carregarAnotacoes(a.anotacoes || []);
   window._trilhaData = a.trilha || [];
+  // Load Drive files
+  var driveFirstRow = document.getElementById('drive-first-row');
+  var driveRestRows = document.getElementById('drive-rest-rows');
+  if (driveFirstRow) driveFirstRow.innerHTML = '';
+  if (driveRestRows) driveRestRows.innerHTML = '';
+  var driveStatusEl = document.getElementById('drive-files-status');
+  if (driveStatusEl) driveStatusEl.textContent = 'Carregando seus arquivos...';
+  if (a.link_drive && a.link_drive.trim()) {
+    callScript(
+      'action=get_drive_files&login=' + encodeURIComponent(a.login),
+      function(d) { if (d.success) renderDriveFilesCard(d.files || []); },
+      function()  { var s = document.getElementById('drive-files-status'); if(s) s.textContent = 'Não foi possível carregar os arquivos.'; }
+    );
+  } else {
+    if (driveStatusEl) driveStatusEl.textContent = 'Pasta do Drive não configurada.';
+  }
+
   // Load known verbs
   setTimeout(function(){ carregarVerbos(a.verbos_conhecidos || []); }, 200);
   renderTrilha(a.trilha || []);
@@ -2426,6 +2584,118 @@ function togglePdfExtra(uid, btn) {
   var isOpen = el.classList.contains('open');
   el.classList.toggle('open', !isOpen);
   btn.textContent = isOpen ? '+' + (el.querySelectorAll('a').length) : '−';
+}
+
+// ── PASTA DO DRIVE ──
+var _driveFilesOpen = false;
+var _driveZoom = 1;
+
+function getMimeIcon(mimeType) {
+  if (mimeType === 'application/pdf') return ['#e53e3e', 'PDF', 'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8'];
+  if (mimeType && mimeType.indexOf('image/') === 0) return ['#38a169', 'IMG', 'M21 19V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2z M8.5 13.5l2.5-3 3.5 4 2-2 3 3.5'];
+  if (mimeType === 'application/vnd.google-apps.document') return ['#4285f4', 'DOC', 'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8'];
+  if (mimeType === 'application/vnd.google-apps.presentation') return ['#fbbc04', 'PPT', 'M21 3H3v18h18V3z M12 8v8 M8 12h8'];
+  if (mimeType === 'application/vnd.google-apps.spreadsheet') return ['#34a853', 'XLS', 'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M8 13h8 M8 17h8 M8 9h2'];
+  return ['#718096', 'FILE', 'M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z M13 2v7h7'];
+}
+
+function buildDriveCard(f) {
+  var div = document.createElement('div');
+  div.className = 'drive-card-item';
+  var info = getMimeIcon(f.mimeType);
+  var color = info[0], label = info[1], paths = info[2];
+  var thumbHtml;
+  if (f.mimeType && f.mimeType.indexOf('image/') === 0) {
+    thumbHtml = '<img class="drive-card-thumb" src="' + f.thumbnail + '" alt="' + f.name + '" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">' +
+      '<div class="drive-card-thumb-placeholder" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="1.5">' + paths.split(' ').map(function(d){ return '<path d="'+d+'"/>'; }).join('') + '</svg><span style="color:rgba(255,255,255,0.5)">' + label + '</span></div>';
+  } else {
+    thumbHtml = '<div class="drive-card-thumb-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="1.5">' + paths.split(' ').map(function(d){ return '<path d="'+d+'"/>'; }).join('') + '</svg><span>' + label + '</span></div>';
+  }
+  div.innerHTML = thumbHtml + '<div class="drive-card-name">' + f.name + '</div>';
+  div.addEventListener('click', function() { openDriveViewer(f); });
+  return div;
+}
+
+function renderDriveFilesCard(files) {
+  var card      = document.getElementById('card-drive-files');
+  var firstRow  = document.getElementById('drive-first-row');
+  var restRows  = document.getElementById('drive-rest-rows');
+  var countEl   = document.getElementById('drive-files-count');
+  var statusEl  = document.getElementById('drive-files-status');
+  var toggleBtn = document.getElementById('btn-drive-toggle');
+  if (!card || !firstRow) return;
+
+  if (!files || !files.length) {
+    if (statusEl) statusEl.textContent = 'Nenhum arquivo encontrado na pasta.';
+    return;
+  }
+
+  if (statusEl) statusEl.style.display = 'none';
+  if (countEl)  countEl.textContent = files.length + ' arquivo' + (files.length > 1 ? 's' : '');
+
+  // Determine cols per row (4 on desktop)
+  var cols = 4;
+  var first = files.slice(0, cols);
+  var rest  = files.slice(cols);
+
+  first.forEach(function(f) { firstRow.appendChild(buildDriveCard(f)); });
+
+  if (rest.length) {
+    rest.forEach(function(f) { restRows.appendChild(buildDriveCard(f)); });
+    toggleBtn.style.display = 'block';
+  }
+}
+
+function toggleDriveFiles() {
+  _driveFilesOpen = !_driveFilesOpen;
+  var moreRows  = document.getElementById('drive-more-rows');
+  var chevron   = document.getElementById('drive-toggle-chevron');
+  var btn       = document.getElementById('btn-drive-toggle');
+  if (moreRows) moreRows.style.maxHeight = _driveFilesOpen ? moreRows.scrollHeight + 2000 + 'px' : '0';
+  if (chevron)  chevron.style.transform  = _driveFilesOpen ? 'rotate(180deg)' : '';
+  if (btn)      btn.innerHTML = (_driveFilesOpen ? 'Ver menos' : 'Ver mais') +
+    ' <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-left:4px" id="drive-toggle-chevron"><path d="M6 9l6 6 6-6"/></svg>';
+}
+
+function openDriveViewer(f) {
+  var overlay   = document.getElementById('drive-viewer');
+  var iframe    = document.getElementById('drive-viewer-iframe');
+  var title     = document.getElementById('drive-viewer-title');
+  var dlBtn     = document.getElementById('drive-viewer-download');
+  var openBtn   = document.getElementById('drive-viewer-open');
+  var zoomWrap  = document.getElementById('drive-viewer-zoom');
+  if (!overlay || !iframe) return;
+  if (title)   title.textContent = f.name;
+  if (iframe)  iframe.src = f.embedUrl;
+  if (dlBtn)   dlBtn.href = 'https://drive.google.com/uc?export=download&id=' + f.id;
+  if (openBtn) openBtn.href = f.viewUrl;
+  if (zoomWrap) zoomWrap.style.display = 'flex';
+  _driveZoom = 1;
+  if (iframe) iframe.style.transform = 'scale(1)';
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDriveViewer() {
+  var overlay  = document.getElementById('drive-viewer');
+  var iframe   = document.getElementById('drive-viewer-iframe');
+  var zoomWrap = document.getElementById('drive-viewer-zoom');
+  if (overlay)  overlay.classList.remove('active');
+  if (iframe)   { iframe.src = ''; iframe.style.transform = 'scale(1)'; }
+  if (zoomWrap) zoomWrap.style.display = 'none';
+  document.body.style.overflow = '';
+  _driveZoom = 1;
+}
+
+function zoomViewer(dir) {
+  _driveZoom = Math.min(3, Math.max(0.5, _driveZoom + dir * 0.25));
+  var iframe = document.getElementById('drive-viewer-iframe');
+  if (iframe) {
+    iframe.style.transformOrigin = 'top left';
+    iframe.style.width  = (100 / _driveZoom) + '%';
+    iframe.style.height = (100 / _driveZoom) + '%';
+    iframe.style.transform = 'scale(' + _driveZoom + ')';
+  }
 }
 
 // ── IRREGULAR VERBS ──
@@ -3002,7 +3272,14 @@ document.addEventListener('DOMContentLoaded', function() {
   var calOverlay = document.getElementById('modal-calendario');
   if(calOverlay) calOverlay.addEventListener('click', function(e){ if(e.target===this) fecharModalCalendario(); });
 
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape') fecharModalCalendario(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape') {
+      fecharModalCalendario();
+      closeDriveViewer();
+    }
+  });
+  var driveViewerOverlay = document.getElementById('drive-viewer');
+  if (driveViewerOverlay) driveViewerOverlay.addEventListener('click', function(e){ if(e.target===this) closeDriveViewer(); });
 
   var btnModalCancel=document.getElementById('btn-modal-cancel');
   if(btnModalCancel) btnModalCancel.addEventListener('click', fecharModalFalta);
@@ -3023,6 +3300,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ── INIT ──
+// Safety fallback — if stuck on loading after 8s, show login
+setTimeout(function(){
+  var loading = document.getElementById('page-loading');
+  if (loading && loading.classList.contains('active')) {
+    showPage('login');
+  }
+}, 8000);
+
 window.addEventListener('load', function(){
   var savedLogin = localStorage.getItem('mdtalk_login');
   var savedSenha = localStorage.getItem('mdtalk_senha');
