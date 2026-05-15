@@ -2606,7 +2606,7 @@ function buildDriveCard(f) {
   var color = info[0], label = info[1], paths = info[2];
   var thumbHtml;
   if (f.mimeType && f.mimeType.indexOf('image/') === 0) {
-    thumbHtml = '<img class="drive-card-thumb" src="' + f.thumbnail + '" alt="' + f.name + '" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">' +
+    thumbHtml = '<img class="drive-card-thumb" src="' + f.thumbnail + '" alt="" loading="lazy">' +
       '<div class="drive-card-thumb-placeholder" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="1.5">' + paths.split(' ').map(function(d){ return '<path d="'+d+'"/>'; }).join('') + '</svg><span style="color:rgba(255,255,255,0.5)">' + label + '</span></div>';
   } else {
     thumbHtml = '<div class="drive-card-thumb-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="1.5">' + paths.split(' ').map(function(d){ return '<path d="'+d+'"/>'; }).join('') + '</svg><span>' + label + '</span></div>';
