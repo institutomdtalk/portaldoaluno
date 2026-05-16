@@ -1530,6 +1530,21 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
   <main class="dashboard">
 
+    <!-- MEU GOOGLE DOCS -->
+    <a id="card-meu-docs" href="#" target="_blank" rel="noopener" class="card card--form reveal visible" style="grid-column:1/-1">
+      <div class="card-pad">
+        <div class="form-icon-wrap"><div class="form-icon-ring"></div><svg class="form-icon-svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+        <div class="form-content">
+          <p class="card-overline">Seus Documentos</p>
+          <h3 class="card-title">Google Docs</h3>
+          <p class="card-desc">Acesse seu documento pessoal do programa — anotações de aula, vocabulário trabalhado e registros do seu progresso.</p>
+        </div>
+        <span class="form-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+
+
     <!-- PASTA DO DRIVE -->
     <div class="card reveal" style="grid-column:1/-1" id="card-drive-files">
       <div class="card-pad">
@@ -1578,21 +1593,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <span class="form-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
       </div>
     </a>
-
-    <!-- MEU GOOGLE DOCS -->
-    <a id="card-meu-docs" href="#" target="_blank" rel="noopener" class="card card--form reveal visible" style="grid-column:1/-1">
-      <div class="card-pad">
-        <div class="form-icon-wrap"><div class="form-icon-ring"></div><svg class="form-icon-svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
-        <div class="form-content">
-          <p class="card-overline">Seus Documentos</p>
-          <h3 class="card-title">Google Docs</h3>
-          <p class="card-desc">Acesse seu documento pessoal do programa — anotações de aula, vocabulário trabalhado e registros do seu progresso.</p>
-        </div>
-        <span class="form-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span>
-      </div>
-    </a>
-
-
 
     <!-- TRILHA DE APRENDIZADO -->
     <div class="card reveal" style="grid-column:1/-1">
@@ -2671,15 +2671,11 @@ function buildDriveCard(f) {
   var info = getMimeIcon(f.mimeType);
   var color = info[0], label = info[1], paths = info[2];
   var thumbHtml;
-  // Placeholder — thumbnail comes embedded from server in f.thumbnail
-  if (f.thumbnail && f.thumbnail.length > 100) {
-    thumbHtml = '<img class="drive-card-thumb" src="' + f.thumbnail + '" alt="" loading="lazy">';
-  } else {
-    thumbHtml = '<div class="drive-card-thumb-placeholder">' +
-      '<svg viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="1.5">' +
-      paths.split(' ').map(function(d){ return '<path d="'+d+'"/>'; }).join('') +
-      '</svg><span>' + label + '</span></div>';
-  }
+  // Show placeholder with id — thumbnail loaded lazily via batch
+  thumbHtml = '<div class="drive-card-thumb-placeholder" id="ph_' + f.id + '">' +
+    '<svg viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="1.5">' +
+    paths.split(' ').map(function(d){ return '<path d="'+d+'"/>'; }).join('') +
+    '</svg><span>' + label + '</span></div>';
   var fileKey = 'drive_' + f.id;
   var isDone = _driveConluidos[fileKey] || false;
   div.className = 'drive-card-item' + (isDone ? ' concluded' : '');
@@ -2728,6 +2724,8 @@ function renderDriveFilesCard(files) {
     rest.forEach(function(f) { restRows.appendChild(buildDriveCard(f)); });
     toggleBtn.style.display = 'block';
   }
+  // Load all thumbnails in batches of 6, 2s apart
+  loadThumbsBatch(files, 6, 2000);
 }
 
 function filtrarDriveFiles(query) {
@@ -2771,6 +2769,44 @@ function filtrarDriveFiles(query) {
   if (moreRows) moreRows.style.maxHeight = '0';
   if (toggleBtn) toggleBtn.style.display = 'none';
   if (countEl) countEl.textContent = filtered.length + ' resultado' + (filtered.length > 1 ? 's' : '');
+}
+
+function loadThumbsBatch(files, batchSize, delay) {
+  // Load thumbnails in batches of batchSize with delay between each
+  var batches = [];
+  for (var i = 0; i < files.length; i += batchSize) {
+    batches.push(files.slice(i, i + batchSize));
+  }
+  function processBatch(idx) {
+    if (idx >= batches.length) return;
+    var batch = batches[idx];
+    var ids = batch.map(function(f){ return f.id; }).join(',');
+    callScript(
+      'action=get_thumbs&ids=' + encodeURIComponent(ids),
+      function(d) {
+        if (d.success && d.thumbs) {
+          Object.keys(d.thumbs).forEach(function(fileId) {
+            var thumb = d.thumbs[fileId];
+            if (!thumb || thumb.length < 100) return;
+            // Find placeholder and replace with image
+            var ph = document.getElementById('ph_' + fileId);
+            if (ph) {
+              var img = document.createElement('img');
+              img.className = 'drive-card-thumb';
+              img.src = thumb;
+              ph.parentNode.replaceChild(img, ph);
+            }
+          });
+        }
+        // Process next batch after delay
+        setTimeout(function(){ processBatch(idx + 1); }, delay);
+      },
+      function() {
+        setTimeout(function(){ processBatch(idx + 1); }, delay * 2);
+      }
+    );
+  }
+  processBatch(0);
 }
 
 function toggleDriveFiles() {
