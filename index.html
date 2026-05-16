@@ -2146,13 +2146,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 </div>
 
 <!-- BELL DROPDOWN -->
-<div class="bell-dropdown" id="bell-dropdown">
-  <div class="bell-dropdown-header">
-    <span class="bell-dropdown-title">Avisos</span>
-    <button class="bell-dropdown-clear" onclick="marcarTodosLidos()">Marcar todos como lidos</button>
-  </div>
-  <div id="bell-lista"></div>
-</div>
 
 <!-- PDF VIEWER MODAL -->
 <div class="pdf-modal-overlay" id="pdf-modal">
@@ -3728,27 +3721,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  var btnBell = document.getElementById('btn-bell');
-  var bellDd  = document.getElementById('bell-dropdown');
-  if (btnBell && bellDd) {
-    btnBell.addEventListener('click', function(e) {
-      e.stopPropagation();
-      bellDd.classList.toggle('open');
-      // Position dropdown below bell button
-      var rect = btnBell.getBoundingClientRect();
-      bellDd.style.top  = (rect.bottom + 8) + 'px';
-      bellDd.style.right = (window.innerWidth - rect.right) + 'px';
-      bellDd.style.left = 'auto';
-    });
-    document.addEventListener('click', function(e) {
-      var t = e.target;
-      // Never interfere with signout
-      if (t.id === 'btn-signout' || t.closest('#btn-signout')) return;
-      if (!bellDd.contains(t) && t !== btnBell && !btnBell.contains(t)) {
-        bellDd.classList.remove('open');
-      }
-    }, true); // useCapture=false so button listeners fire first
-  }
 
   var btnPresente=document.getElementById('btn-presente');
   if(btnPresente) btnPresente.addEventListener('click', function(){ registrarPresenca('presente'); });
