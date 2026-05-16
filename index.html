@@ -1141,66 +1141,100 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nb-dashboard-wrap{display:block}
 .nb-dashboard-wrap.hidden{display:none}
 
-/* ── Progresso ── */
-.nb-greeting-line{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.nb-greeting-line::before{content:'';display:block;width:28px;height:1px;background:var(--gold)}
-.nb-greeting-name{font-family:var(--serif);font-size:2.2rem;font-weight:300;color:var(--navy);line-height:1.1;margin-bottom:16px}
-.nb-greeting-name em{font-style:italic;color:var(--gold)}
-.nb-streak{display:inline-flex;align-items:center;gap:6px;background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.2);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;color:#ea580c;margin-right:12px}
-.nb-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}
-@media(max-width:768px){.nb-stats-grid{grid-template-columns:repeat(2,1fr)}}
-.nb-stat-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;position:relative;overflow:hidden;box-shadow:var(--shadow-sm)}
-.nb-stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.nb-stat-card.gold::before{background:var(--gold)}
-.nb-stat-card.teal::before{background:#0d9488}
-.nb-stat-card.purple::before{background:#7c3aed}
-.nb-stat-card.green::before{background:#16a34a}
-.nb-stat-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
-.nb-stat-icon svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round}
-.nb-stat-icon.gold{background:var(--gold)}
-.nb-stat-icon.teal{background:#0d9488}
-.nb-stat-icon.purple{background:#7c3aed}
-.nb-stat-icon.green{background:#16a34a}
-.nb-stat-badge{position:absolute;top:16px;right:16px;font-size:9px;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:20px;font-family:var(--sans)}
-.nb-stat-num{font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--navy);line-height:1;margin-bottom:4px}
-.nb-stat-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)}
-.nb-stat-sub{font-size:11px;color:var(--text-muted);margin-top:2px}
-.nb-stat-bar{height:3px;background:var(--border);border-radius:2px;margin-top:12px;overflow:hidden}
-.nb-stat-bar-fill{height:100%;border-radius:2px;transition:width 1s ease}
-.nb-section-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin:28px 0 14px;display:flex;align-items:center;gap:12px}
-.nb-section-label::after{content:'';flex:1;height:1px;background:var(--border)}
-.nb-two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:768px){.nb-two-col{grid-template-columns:1fr}}
-.nb-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow-sm)}
-.nb-card-title{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px}
-/* Activity feed */
-.nb-activity-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
-.nb-activity-item:last-child{border-bottom:none}
-.nb-activity-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
-.nb-activity-dot.vocabulario{background:var(--gold)}
-.nb-activity-dot.frases{background:#0d9488}
-.nb-activity-dot.termos{background:#7c3aed}
-.nb-activity-dot.anotacoes{background:#16a34a}
-.nb-activity-text{font-size:13px;color:var(--navy);line-height:1.4}
-.nb-activity-tag{font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:20px;display:inline-block;margin-top:3px}
-.nb-activity-tag.vocabulario{background:rgba(196,164,90,0.1);color:#92400E}
-.nb-activity-tag.frases{background:rgba(13,148,136,0.1);color:#0d9488}
-.nb-activity-tag.termos{background:rgba(124,58,237,0.1);color:#7c3aed}
-.nb-activity-tag.anotacoes{background:rgba(22,163,74,0.1);color:#16a34a}
-/* Consistency map */
-.nb-heatmap{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:8px}
-.nb-heatmap-day{aspect-ratio:1;border-radius:3px;background:var(--border);transition:all 0.2s}
-.nb-heatmap-day.lvl1{background:rgba(196,164,90,0.25)}
-.nb-heatmap-day.lvl2{background:rgba(196,164,90,0.5)}
-.nb-heatmap-day.lvl3{background:rgba(196,164,90,0.75)}
-.nb-heatmap-day.lvl4{background:var(--gold)}
-/* Distribution bars */
-.nb-dist-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.nb-dist-label{font-size:12px;color:var(--navy);width:80px;flex-shrink:0}
-.nb-dist-bar-wrap{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
-.nb-dist-bar{height:100%;border-radius:4px;transition:width 1s ease}
-.nb-dist-count{font-size:12px;font-weight:700;color:var(--navy);width:20px;text-align:right;flex-shrink:0}
+/* ── Progresso Dashboard ── */
+.prog-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:36px 40px}
+.prog-hero{margin-bottom:32px}
+.prog-greeting-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#c8a96e;margin-bottom:10px}
+.prog-greeting-tag::before{content:'';display:block;width:24px;height:1px;background:#c8a96e}
+.prog-name{font-family:var(--serif);font-size:2.2rem;font-weight:300;color:#1a1a1a;line-height:1.1;margin-bottom:14px}
+.prog-name em{font-style:italic;color:#c8a96e}
+.prog-badges{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.prog-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:50px;font-family:var(--sans);font-size:12px;font-weight:600}
+.prog-badge-streak{background:rgba(234,88,12,0.1);color:#ea580c;border:1px solid rgba(234,88,12,0.2)}
+.prog-badge-entry{background:rgba(200,169,110,0.1);color:#92400E;border:1px solid rgba(200,169,110,0.2)}
+.prog-badge-freq{background:rgba(22,163,74,0.1);color:#166534;border:1px solid rgba(22,163,74,0.2)}
 
+/* KPI grid */
+.prog-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+@media(max-width:900px){.prog-kpi-grid{grid-template-columns:repeat(2,1fr)}}
+.prog-kpi{background:#fff;border-radius:16px;padding:20px 22px;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 12px rgba(0,0,0,0.04)}
+.prog-kpi-accent{position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0}
+.prog-kpi-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.prog-kpi-icon svg{width:17px;height:17px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round}
+.prog-kpi-badge{position:absolute;top:16px;right:16px;font-size:9px;font-weight:700;letter-spacing:0.5px;padding:3px 9px;border-radius:20px;font-family:var(--sans)}
+.prog-kpi-num{font-family:var(--serif);font-size:2rem;font-weight:300;color:#1a1a1a;line-height:1;margin-bottom:4px}
+.prog-kpi-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:4px}
+.prog-kpi-sub{font-size:11px;color:#bbb}
+.prog-kpi-bar{height:3px;background:rgba(0,0,0,0.06);border-radius:2px;margin-top:14px;overflow:hidden}
+.prog-kpi-fill{height:100%;border-radius:2px;transition:width 1.2s cubic-bezier(0.22,1,0.36,1)}
+
+/* Message box */
+.prog-message{background:linear-gradient(135deg,#1a1a2e,#2d2d4e);border-radius:16px;padding:20px 24px;margin-bottom:28px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 16px rgba(26,26,46,0.2)}
+.prog-message-icon{width:44px;height:44px;border-radius:50%;background:rgba(200,169,110,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.prog-message-icon svg{width:20px;height:20px;fill:none;stroke:#c8a96e;stroke-width:1.5;stroke-linecap:round}
+.prog-message-text{flex:1}
+.prog-message-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(200,169,110,0.7);margin-bottom:4px;font-family:var(--sans)}
+.prog-message-body{font-family:var(--serif);font-size:1rem;font-weight:300;color:#fff;line-height:1.4}
+.prog-message-body strong{color:#c8a96e;font-weight:500}
+
+/* Two columns */
+.prog-two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:768px){.prog-two-col{grid-template-columns:1fr}}
+.prog-card{background:#fff;border-radius:16px;padding:20px 22px;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 12px rgba(0,0,0,0.04)}
+.prog-card-title{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-bottom:16px;font-family:var(--sans)}
+
+/* Activity */
+.prog-act-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid rgba(0,0,0,0.05)}
+.prog-act-item:last-child{border-bottom:none;padding-bottom:0}
+.prog-act-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.prog-act-dot.vocabulario{background:#c8a96e}
+.prog-act-dot.frases{background:#0d9488}
+.prog-act-dot.termos{background:#7c3aed}
+.prog-act-dot.anotacoes{background:#16a34a}
+.prog-act-dot.presenca{background:#16a34a}
+.prog-act-dot.arquivo{background:#3b82f6}
+.prog-act-text{font-size:12.5px;color:#1a1a1a;line-height:1.4;flex:1}
+.prog-act-tag{font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:20px;display:inline-block;margin-top:3px;font-family:var(--sans)}
+.prog-act-tag.vocabulario{background:rgba(200,169,110,0.1);color:#92400E}
+.prog-act-tag.frases{background:rgba(13,148,136,0.1);color:#0d9488}
+.prog-act-tag.termos{background:rgba(124,58,237,0.1);color:#7c3aed}
+.prog-act-tag.anotacoes{background:rgba(22,163,74,0.1);color:#166534}
+.prog-act-date{font-size:10px;color:#ccc;margin-top:2px;font-family:var(--sans)}
+
+/* Dist bars */
+.prog-dist-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.prog-dist-label{font-size:12px;color:#555;width:90px;flex-shrink:0;font-family:var(--sans)}
+.prog-dist-track{flex:1;height:6px;background:rgba(0,0,0,0.06);border-radius:3px;overflow:hidden}
+.prog-dist-fill{height:100%;border-radius:3px;transition:width 1.2s cubic-bezier(0.22,1,0.36,1)}
+.prog-dist-count{font-size:12px;font-weight:600;color:#1a1a1a;width:24px;text-align:right;flex-shrink:0}
+
+/* Heatmap */
+.prog-heatmap{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:8px}
+.prog-heatmap-cell{aspect-ratio:1;border-radius:3px;background:rgba(0,0,0,0.06);transition:all 0.3s}
+.prog-heatmap-cell.lvl1{background:rgba(200,169,110,0.25)}
+.prog-heatmap-cell.lvl2{background:rgba(200,169,110,0.5)}
+.prog-heatmap-cell.lvl3{background:rgba(200,169,110,0.75)}
+.prog-heatmap-cell.lvl4{background:#c8a96e}
+.prog-heatmap-legend{display:flex;align-items:center;gap:5px;margin-top:10px;font-size:10px;color:#bbb;font-family:var(--sans)}
+.prog-heatmap-swatch{width:11px;height:11px;border-radius:2px}
+
+/* Milestones */
+.prog-milestone{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05)}
+.prog-milestone:last-child{border-bottom:none}
+.prog-milestone-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.prog-milestone-icon.done{background:rgba(22,163,74,0.1)}
+.prog-milestone-icon.pending{background:rgba(0,0,0,0.04)}
+.prog-milestone-icon svg{width:14px;height:14px;fill:none;stroke-width:2;stroke-linecap:round}
+.prog-milestone-icon.done svg{stroke:#16a34a}
+.prog-milestone-icon.pending svg{stroke:#bbb}
+.prog-milestone-body{flex:1}
+.prog-milestone-label{font-size:13px;color:#1a1a1a;font-family:var(--sans)}
+.prog-milestone-sub{font-size:11px;color:#bbb;font-family:var(--sans)}
+.prog-milestone-badge{font-size:9px;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:20px;font-family:var(--sans)}
+.prog-milestone-badge.done{background:rgba(22,163,74,0.1);color:#166534}
+.prog-milestone-badge.pending{background:rgba(0,0,0,0.05);color:#aaa}
+
+/* ── Banco de Termos ── */
 /* ── Banco de Termos ── */
 .nt-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:32px 40px}
 .nt-topbar{display:flex;align-items:center;gap:8px;margin-bottom:24px;flex-wrap:wrap}
@@ -1879,77 +1913,119 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   </div>
 
   <!-- ══ PAINEL PROGRESSO ══ -->
-  <div class="nb-panel" id="panel-progresso">
-    <div style="margin-bottom:8px">
-      <p class="nb-greeting-line" id="nb-greeting-line">BOM DIA</p>
-      <h2 class="nb-greeting-name">Olá, <em id="nb-nome-display">aluno</em></h2>
-      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px">
-        <span class="nb-streak" id="nb-streak"><svg width="13" height="13" viewBox="0 0 24 24" fill="#ea580c" stroke="none"><path d="M12 2c0 5-5 8-5 13a5 5 0 0010 0c0-5-5-8-5-13z"/></svg><span id="nb-streak-days">0</span> dias seguidos</span>
-        <span style="font-size:12px;color:var(--text-muted)" id="nb-ultima-entrada"></span>
-      </div>
-    </div>
-    <p class="nb-section-label">Visão Geral</p>
-    <div class="nb-stats-grid">
-      <div class="nb-stat-card gold">
-        <div class="nb-stat-icon gold"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg></div>
-        <span class="nb-stat-badge" style="background:rgba(196,164,90,0.1);color:var(--gold)" id="nb-badge-termos"></span>
-        <div class="nb-stat-num" id="nb-total-entradas">0</div>
-        <div class="nb-stat-label">Entradas</div>
-        <div class="nb-stat-sub" id="nb-sub-entradas"></div>
-        <div class="nb-stat-bar"><div class="nb-stat-bar-fill" style="background:var(--gold);width:0%" id="nb-bar-entradas"></div></div>
-      </div>
-      <div class="nb-stat-card teal">
-        <div class="nb-stat-icon teal"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
-        <span class="nb-stat-badge" style="background:rgba(13,148,136,0.1);color:#0d9488" id="nb-badge-cards"></span>
-        <div class="nb-stat-num" id="nb-total-cards">0</div>
-        <div class="nb-stat-label">Smart Cards</div>
-        <div class="nb-stat-sub" id="nb-sub-cards"></div>
-        <div class="nb-stat-bar"><div class="nb-stat-bar-fill" style="background:#0d9488;width:0%" id="nb-bar-cards"></div></div>
-      </div>
-      <div class="nb-stat-card purple">
-        <div class="nb-stat-icon purple"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-        <span class="nb-stat-badge" style="background:rgba(124,58,237,0.1);color:#7c3aed" id="nb-badge-prog"></span>
-        <div class="nb-stat-num" id="nb-progresso-pct">0%</div>
-        <div class="nb-stat-label">Progresso Geral</div>
-        <div class="nb-stat-sub">Esta semana</div>
-        <div class="nb-stat-bar"><div class="nb-stat-bar-fill" style="background:#7c3aed;width:0%" id="nb-bar-prog"></div></div>
-      </div>
-      <div class="nb-stat-card green">
-        <div class="nb-stat-icon green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <span class="nb-stat-badge" style="background:rgba(22,163,74,0.1);color:#16a34a" id="nb-badge-engaj">Engajamento</span>
-        <div class="nb-stat-num" id="nb-engajamento">100%</div>
-        <div class="nb-stat-label">Engajamento</div>
-        <div class="nb-stat-sub" id="nb-sub-engaj">Esta semana</div>
-        <div class="nb-stat-bar"><div class="nb-stat-bar-fill" style="background:#16a34a;width:100%" id="nb-bar-engaj"></div></div>
-      </div>
-    </div>
-    <p class="nb-section-label">Desempenho</p>
-    <div class="nb-two-col">
-      <div class="nb-card">
-        <p class="nb-card-title">Distribuição por Seção</p>
-        <div id="nb-dist-bars"></div>
-      </div>
-      <div class="nb-card">
-        <p class="nb-card-title">Atividade Recente</p>
-        <div id="nb-activity-feed"></div>
-      </div>
-    </div>
-    <p class="nb-section-label">Consistência</p>
-    <div class="nb-card">
-      <p class="nb-card-title">Mapa de Consistência · Últimos 28 dias</p>
-      <div class="nb-heatmap" id="nb-heatmap"></div>
-      <div style="display:flex;align-items:center;gap:6px;margin-top:10px;font-size:10px;color:var(--text-muted)">
-        Menos
-        <div style="width:12px;height:12px;border-radius:2px;background:var(--border)"></div>
-        <div style="width:12px;height:12px;border-radius:2px;background:rgba(196,164,90,0.25)"></div>
-        <div style="width:12px;height:12px;border-radius:2px;background:rgba(196,164,90,0.5)"></div>
-        <div style="width:12px;height:12px;border-radius:2px;background:rgba(196,164,90,0.75)"></div>
-        <div style="width:12px;height:12px;border-radius:2px;background:var(--gold)"></div>
-        Mais
-      </div>
-    </div>
-  </div>
+  <div class="nb-panel prog-page" id="panel-progresso">
 
+    <!-- HERO -->
+    <div class="prog-hero">
+      <p class="prog-greeting-tag" id="nb-greeting-line">BOM DIA</p>
+      <h2 class="prog-name">Olá, <em id="nb-nome-display">aluno</em></h2>
+      <div class="prog-badges">
+        <span class="prog-badge prog-badge-streak" id="nb-streak">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="#ea580c" stroke="none"><path d="M12 2c0 5-5 8-5 13a5 5 0 0010 0c0-5-5-8-5-13z"/></svg>
+          <span id="nb-streak-days">0</span> dias seguidos
+        </span>
+        <span class="prog-badge prog-badge-entry" id="nb-badge-entry" style="display:none"></span>
+        <span class="prog-badge prog-badge-freq" id="nb-badge-freq" style="display:none"></span>
+      </div>
+    </div>
+
+    <!-- COACH MESSAGE -->
+    <div class="prog-message" id="prog-message">
+      <div class="prog-message-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="prog-message-text">
+        <p class="prog-message-label">Sua mentora diz</p>
+        <p class="prog-message-body" id="prog-message-body">Carregando...</p>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="prog-kpi-grid">
+      <div class="prog-kpi">
+        <div class="prog-kpi-accent" style="background:#c8a96e"></div>
+        <div class="prog-kpi-icon" style="background:#c8a96e">
+          <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        </div>
+        <span class="prog-kpi-badge" style="background:rgba(200,169,110,0.1);color:#92400E" id="kpi-badge-termos"></span>
+        <div class="prog-kpi-num" id="kpi-termos">0</div>
+        <div class="prog-kpi-label">Termos dominados</div>
+        <div class="prog-kpi-sub" id="kpi-sub-termos">no banco de termos</div>
+        <div class="prog-kpi-bar"><div class="prog-kpi-fill" style="background:#c8a96e;width:0%" id="kpi-bar-termos"></div></div>
+      </div>
+      <div class="prog-kpi">
+        <div class="prog-kpi-accent" style="background:#16a34a"></div>
+        <div class="prog-kpi-icon" style="background:#16a34a">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <span class="prog-kpi-badge" style="background:rgba(22,163,74,0.1);color:#166534" id="kpi-badge-aulas">Frequência</span>
+        <div class="prog-kpi-num" id="kpi-aulas">0</div>
+        <div class="prog-kpi-label">Aulas realizadas</div>
+        <div class="prog-kpi-sub" id="kpi-sub-aulas">com frequência —%</div>
+        <div class="prog-kpi-bar"><div class="prog-kpi-fill" style="background:#16a34a;width:0%" id="kpi-bar-aulas"></div></div>
+      </div>
+      <div class="prog-kpi">
+        <div class="prog-kpi-accent" style="background:#3b82f6"></div>
+        <div class="prog-kpi-icon" style="background:#3b82f6">
+          <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+        </div>
+        <span class="prog-kpi-badge" style="background:rgba(59,130,246,0.1);color:#1d4ed8" id="kpi-badge-arquivos"></span>
+        <div class="prog-kpi-num" id="kpi-arquivos">0</div>
+        <div class="prog-kpi-label">Arquivos concluídos</div>
+        <div class="prog-kpi-sub" id="kpi-sub-arquivos">na pasta do Drive</div>
+        <div class="prog-kpi-bar"><div class="prog-kpi-fill" style="background:#3b82f6;width:0%" id="kpi-bar-arquivos"></div></div>
+      </div>
+      <div class="prog-kpi">
+        <div class="prog-kpi-accent" style="background:#7c3aed"></div>
+        <div class="prog-kpi-icon" style="background:#7c3aed">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <span class="prog-kpi-badge" style="background:rgba(124,58,237,0.1);color:#6d28d9" id="kpi-badge-trilha"></span>
+        <div class="prog-kpi-num" id="kpi-trilha">0</div>
+        <div class="prog-kpi-label">Módulos concluídos</div>
+        <div class="prog-kpi-sub" id="kpi-sub-trilha">na trilha de aprendizado</div>
+        <div class="prog-kpi-bar"><div class="prog-kpi-fill" style="background:#7c3aed;width:0%" id="kpi-bar-trilha"></div></div>
+      </div>
+    </div>
+
+    <!-- ROW 2: Distribution + Activity -->
+    <div class="prog-two-col">
+      <div class="prog-card">
+        <p class="prog-card-title">Distribuição por Seção</p>
+        <div id="prog-dist-bars">
+          <p style="font-size:12px;color:#ccc;font-style:italic">Adicione termos para ver a distribuição.</p>
+        </div>
+      </div>
+      <div class="prog-card">
+        <p class="prog-card-title">Atividade Recente</p>
+        <div id="prog-activity">
+          <p style="font-size:12px;color:#ccc;font-style:italic">Nenhuma atividade ainda.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 3: Milestones + Heatmap -->
+    <div class="prog-two-col">
+      <div class="prog-card">
+        <p class="prog-card-title">Marcos de Progresso</p>
+        <div id="prog-milestones"></div>
+      </div>
+      <div class="prog-card">
+        <p class="prog-card-title">Consistência · Últimos 28 dias</p>
+        <div class="prog-heatmap" id="prog-heatmap"></div>
+        <div class="prog-heatmap-legend">
+          Menos
+          <div class="prog-heatmap-swatch" style="background:rgba(0,0,0,0.06)"></div>
+          <div class="prog-heatmap-swatch" style="background:rgba(200,169,110,0.25)"></div>
+          <div class="prog-heatmap-swatch" style="background:rgba(200,169,110,0.5)"></div>
+          <div class="prog-heatmap-swatch" style="background:rgba(200,169,110,0.75)"></div>
+          <div class="prog-heatmap-swatch" style="background:#c8a96e"></div>
+          Mais
+        </div>
+      </div>
+    </div>
+
+  </div>
   <!-- ══ PAINEL BANCO DE TERMOS ══ -->
   <div class="nb-panel nt-page" id="panel-termos">
     <div class="nt-topbar">
@@ -3549,6 +3625,25 @@ function loadNtTermos() {
 }
 
 // ── PROGRESSO DASHBOARD ──
+
+var COACH_MESSAGES = [
+  { min:0,  max:2,  msg:'Toda grande jornada começa com o primeiro passo. Você está aqui, e isso já é <strong>extraordinário</strong>.' },
+  { min:3,  max:9,  msg:'Você está construindo o hábito mais poderoso da medicina: aprender <strong>todos os dias</strong>. Continue.' },
+  { min:10, max:19, msg:'<strong>{n} termos</strong> anotados. Cada um deles é um tijolo na sua fluência em inglês médico.' },
+  { min:20, max:49, msg:'Impressionante. Com <strong>{n} termos</strong> no banco, você já fala a língua da medicina global.' },
+  { min:50, max:99, msg:'Você está entre os <strong>top alunos</strong> do programa. Sua dedicação é visível em cada consulta.' },
+  { min:100,max:999,msg:'<strong>{n} termos dominados</strong>. Você não está apenas aprendendo inglês — está se tornando um médico global.' }
+];
+
+function getCoachMessage(totalTermos, frequencia, streak) {
+  var msg = COACH_MESSAGES.find(function(m){ return totalTermos >= m.min && totalTermos <= m.max; });
+  var body = msg ? msg.msg.replace('{n}', totalTermos) : COACH_MESSAGES[0].msg;
+  if (frequencia >= 90) body += ' Sua frequência de <strong>' + frequencia + '%</strong> é excepcional.';
+  else if (frequencia >= 75) body += ' Frequência de <strong>' + frequencia + '%</strong> — você está no caminho certo.';
+  if (streak >= 7) body += ' <strong>' + streak + ' dias seguidos</strong> — o streak faz toda a diferença.';
+  return body;
+}
+
 function renderNbProgresso() {
   if (!currentStudent) return;
   var nome = currentStudent.nome_display || currentStudent.login;
@@ -3556,120 +3651,207 @@ function renderNbProgresso() {
   // Greeting
   var h = new Date().getHours();
   var greeting = h < 12 ? 'BOM DIA' : h < 18 ? 'BOA TARDE' : 'BOA NOITE';
-  var gl = document.getElementById('nb-greeting-line');
-  var nd = document.getElementById('nb-nome-display');
-  if (gl) gl.textContent = greeting;
-  if (nd) nd.textContent = nome;
+  var el = function(id){ return document.getElementById(id); };
+  if (el('nb-greeting-line')) el('nb-greeting-line').textContent = greeting;
+  if (el('nb-nome-display')) el('nb-nome-display').textContent = nome;
 
-  // Stats
+  // ── Termos stats ──
   var total = _ntTermos.length;
   var comTrad = _ntTermos.filter(function(t){ return t.traducao && t.traducao.trim(); }).length;
-  var confianca = _ntTermos.filter(function(t){ return parseInt(t.confianca||0) >= 4; }).length;
-  var pct = total > 0 ? Math.round((confianca / total) * 100) : 0;
+  var confiantes = _ntTermos.filter(function(t){ return parseInt(t.confianca||0) >= 3; }).length;
 
-  var el = function(id){ return document.getElementById(id); };
-  if (el('nb-total-entradas')) el('nb-total-entradas').textContent = total;
-  if (el('nb-sub-entradas')) el('nb-sub-entradas').textContent = comTrad + ' com tradução';
-  if (el('nb-badge-termos')) el('nb-badge-termos').textContent = '+' + total + ' total';
-  if (el('nb-bar-entradas')) el('nb-bar-entradas').style.width = Math.min(100, total * 2) + '%';
-  if (el('nb-total-cards')) el('nb-total-cards').textContent = comTrad;
-  if (el('nb-sub-cards')) el('nb-sub-cards').textContent = comTrad + ' entradas com tradução';
-  if (el('nb-badge-cards')) el('nb-badge-cards').textContent = Math.round((comTrad/Math.max(total,1))*100) + '%';
-  if (el('nb-bar-cards')) el('nb-bar-cards').style.width = Math.round((comTrad/Math.max(total,1))*100) + '%';
-  if (el('nb-progresso-pct')) el('nb-progresso-pct').textContent = pct + '%';
-  if (el('nb-bar-prog')) el('nb-bar-prog').style.width = pct + '%';
+  // ── Aulas stats (from calData) ──
+  var presencas = (calData||[]).filter(function(h){ return h.status === 'presente'; }).length;
+  var totalAulas = (calData||[]).length;
+  var freq = totalAulas > 0 ? Math.round((presencas/totalAulas)*100) : 0;
 
-  // Streak
-  renderNbStreak();
-  // Distribution bars
-  renderNbDist();
-  // Activity feed
-  renderNbActivity();
-  // Heatmap
-  renderNbHeatmap();
+  // ── Drive tags stats (from localStorage) ──
+  var driveKey = 'mdtalk_drive_tags_' + currentStudent.login;
+  var driveTags = JSON.parse(localStorage.getItem(driveKey) || '{}');
+  var concluidos = Object.keys(driveTags).filter(function(k){ return k.indexOf('drive_concluido_') === 0 && driveTags[k]; }).length;
+  var revisados  = Object.keys(driveTags).filter(function(k){ return k.indexOf('drive_revisado_')  === 0 && driveTags[k]; }).length;
+
+  // ── Trilha stats ──
+  var trilha = window._trilhaData || [];
+  var trilhaConcluidos = trilha.filter(function(m){ return m.concluido; }).length;
+  var trilhaTotal = trilha.length;
+
+  // ── Streak ──
+  var streak = calcStreak();
+
+  // ── Update KPIs ──
+  if (el('kpi-termos')) el('kpi-termos').textContent = total;
+  if (el('kpi-sub-termos')) el('kpi-sub-termos').textContent = confiantes + ' com alta confiança';
+  if (el('kpi-badge-termos')) el('kpi-badge-termos').textContent = comTrad + ' com tradução';
+  if (el('kpi-bar-termos')) el('kpi-bar-termos').style.width = Math.min(100, total * 2) + '%';
+
+  if (el('kpi-aulas')) el('kpi-aulas').textContent = presencas;
+  if (el('kpi-sub-aulas')) el('kpi-sub-aulas').textContent = 'frequência: ' + freq + '%';
+  if (el('kpi-badge-aulas')) el('kpi-badge-aulas').textContent = freq + '%';
+  if (el('kpi-bar-aulas')) el('kpi-bar-aulas').style.width = freq + '%';
+
+  if (el('kpi-arquivos')) el('kpi-arquivos').textContent = concluidos;
+  if (el('kpi-sub-arquivos')) el('kpi-sub-arquivos').textContent = revisados + ' revisados · ' + (concluidos + revisados) + ' interações';
+  if (el('kpi-badge-arquivos')) el('kpi-badge-arquivos').textContent = revisados + ' revisados';
+  if (el('kpi-bar-arquivos')) el('kpi-bar-arquivos').style.width = Math.min(100, concluidos * 5) + '%';
+
+  if (el('kpi-trilha')) el('kpi-trilha').textContent = trilhaConcluidos;
+  if (el('kpi-sub-trilha')) el('kpi-sub-trilha').textContent = trilhaConcluidos + ' de ' + trilhaTotal + ' módulos';
+  if (el('kpi-badge-trilha')) el('kpi-badge-trilha').textContent = trilhaTotal > 0 ? Math.round((trilhaConcluidos/trilhaTotal)*100) + '%' : '—';
+  if (el('kpi-bar-trilha')) el('kpi-bar-trilha').style.width = trilhaTotal > 0 ? Math.round((trilhaConcluidos/trilhaTotal)*100) + '%' : '0%';
+
+  // ── Badges ──
+  if (el('nb-streak-days')) el('nb-streak-days').textContent = streak;
+  var entryBadge = el('nb-badge-entry');
+  if (entryBadge) {
+    if (total > 0) { entryBadge.textContent = total + ' termos registrados'; entryBadge.style.display = 'inline-flex'; }
+    else entryBadge.style.display = 'none';
+  }
+  var freqBadge = el('nb-badge-freq');
+  if (freqBadge) {
+    if (presencas > 0) { freqBadge.textContent = freq + '% de frequência'; freqBadge.style.display = 'inline-flex'; }
+    else freqBadge.style.display = 'none';
+  }
+
+  // ── Coach message ──
+  if (el('prog-message-body')) el('prog-message-body').innerHTML = getCoachMessage(total, freq, streak);
+
+  // ── Distribution bars ──
+  renderProgDist();
+
+  // ── Activity feed ──
+  renderProgActivity();
+
+  // ── Milestones ──
+  renderProgMilestones(total, presencas, freq, concluidos, trilhaConcluidos, streak);
+
+  // ── Heatmap ──
+  renderProgHeatmap();
 }
 
-function renderNbStreak() {
-  if (!_ntTermos.length) return;
-  var dates = _ntTermos.map(function(t){ return t.data_entrada; }).filter(Boolean).sort().reverse();
-  if (!dates.length) return;
-  var ultima = document.getElementById('nb-ultima-entrada');
-  if (ultima) ultima.textContent = 'Última entrada: ' + dates[0];
-
-  // Calculate streak
+function calcStreak() {
+  if (!_ntTermos.length) return 0;
+  var uniqueDays = {};
+  _ntTermos.forEach(function(t){
+    var d = (t.data_entrada||'').trim();
+    if (d) uniqueDays[d] = true;
+  });
+  var days = Object.keys(uniqueDays).sort().reverse();
+  if (!days.length) return 0;
   var streak = 0;
   var today = new Date(); today.setHours(0,0,0,0);
-  var dayMs = 86400000;
-  var uniqueDays = {};
-  dates.forEach(function(d){ uniqueDays[d.substring(0,10)] = true; });
-  var days = Object.keys(uniqueDays).sort().reverse();
   for (var i = 0; i < days.length; i++) {
-    var d = new Date(days[i]); d.setHours(0,0,0,0);
-    var diff = Math.round((today - d) / dayMs);
+    var parts = days[i].split('/');
+    var d = parts.length === 3 ? new Date(parts[2], parts[1]-1, parts[0]) : new Date(days[i]);
+    d.setHours(0,0,0,0);
+    var diff = Math.round((today - d) / 86400000);
     if (diff === i || diff === i + 1) streak++;
     else break;
   }
-  var sd = document.getElementById('nb-streak-days');
-  if (sd) sd.textContent = streak;
+  return streak;
 }
 
-function renderNbDist() {
-  var el = document.getElementById('nb-dist-bars');
+function renderProgDist() {
+  var el = document.getElementById('prog-dist-bars');
   if (!el) return;
   var cats = ['vocabulario','termos','frases','anotacoes'];
   var labels = {vocabulario:'Vocabulário',termos:'Termos',frases:'Frases',anotacoes:'Anotações'};
-  var colors = {vocabulario:'var(--gold)',termos:'#7c3aed',frases:'#0d9488',anotacoes:'#16a34a'};
-  var counts = {};
-  cats.forEach(function(c){ counts[c] = 0; });
+  var colors = {vocabulario:'#c8a96e',termos:'#7c3aed',frases:'#0d9488',anotacoes:'#16a34a'};
+  var counts = {vocabulario:0,termos:0,frases:0,anotacoes:0};
   _ntTermos.forEach(function(t){ if(counts[t.secao] !== undefined) counts[t.secao]++; });
   var max = Math.max.apply(null, cats.map(function(c){ return counts[c]; })) || 1;
-  el.innerHTML = cats.map(function(c) {
-    var pct = Math.round((counts[c] / max) * 100);
-    return '<div class="nb-dist-row">' +
-      '<span class="nb-dist-label">' + labels[c] + '</span>' +
-      '<div class="nb-dist-bar-wrap"><div class="nb-dist-bar" style="width:' + pct + '%;background:' + colors[c] + '"></div></div>' +
-      '<span class="nb-dist-count">' + counts[c] + '</span>' +
-    '</div>';
-  }).join('');
-}
-
-function renderNbActivity() {
-  var el = document.getElementById('nb-activity-feed');
-  if (!el) return;
-  var recent = _ntTermos.slice(0, 8);
-  if (!recent.length) {
-    el.innerHTML = '<p style="font-size:13px;color:var(--text-muted);font-style:italic">Nenhuma atividade ainda.</p>';
+  if (Object.values(counts).every(function(v){ return v === 0; })) {
+    el.innerHTML = '<p style="font-size:12px;color:#ccc;font-style:italic">Adicione termos para ver a distribuição.</p>';
     return;
   }
-  el.innerHTML = recent.map(function(t) {
-    return '<div class="nb-activity-item">' +
-      '<div class="nb-activity-dot ' + (t.secao||'vocabulario') + '"></div>' +
-      '<div><div class="nb-activity-text">Adicionou <strong>' + (t.termo||'').substring(0,30) + '</strong></div>' +
-      '<span class="nb-activity-tag ' + (t.secao||'vocabulario') + '">' + (t.secao||'').toUpperCase() + '</span>' +
-      ' <span style="font-size:10px;color:var(--text-muted)">' + (t.data_entrada||'') + '</span></div>' +
+  el.innerHTML = cats.map(function(c) {
+    var pct = Math.round((counts[c]/max)*100);
+    return '<div class="prog-dist-row">' +
+      '<span class="prog-dist-label">' + labels[c] + '</span>' +
+      '<div class="prog-dist-track"><div class="prog-dist-fill" style="width:' + pct + '%;background:' + colors[c] + '"></div></div>' +
+      '<span class="prog-dist-count">' + counts[c] + '</span>' +
     '</div>';
   }).join('');
 }
 
-function renderNbHeatmap() {
-  var el = document.getElementById('nb-heatmap');
+function renderProgActivity() {
+  var el = document.getElementById('prog-activity');
+  if (!el) return;
+  var items = [];
+  // From NT_Termos
+  _ntTermos.slice(0, 6).forEach(function(t){
+    items.push({ type: t.secao||'vocabulario', text: 'Registrou <strong>' + (t.termo||'').substring(0,28) + '</strong>', date: t.data_entrada||'' });
+  });
+  // From presenca
+  var presencas = (calData||[]).filter(function(h){ return h.status === 'presente'; }).slice(0, 3);
+  presencas.forEach(function(p){
+    items.push({ type:'presenca', text: 'Aula realizada', date: p.data_aula||'' });
+  });
+  // Sort by date desc
+  items.sort(function(a,b){ return b.date.localeCompare(a.date); });
+  items = items.slice(0, 7);
+  if (!items.length) {
+    el.innerHTML = '<p style="font-size:12px;color:#ccc;font-style:italic">Nenhuma atividade ainda.</p>';
+    return;
+  }
+  el.innerHTML = items.map(function(it){
+    var tagLabel = {vocabulario:'VOCAB',frases:'FRASE',termos:'TERMO',anotacoes:'NOTA',presenca:'AULA',arquivo:'ARQUIVO'};
+    return '<div class="prog-act-item">' +
+      '<div class="prog-act-dot ' + it.type + '"></div>' +
+      '<div><div class="prog-act-text">' + it.text + '</div>' +
+      '<div><span class="prog-act-tag ' + it.type + '">' + (tagLabel[it.type]||it.type.toUpperCase()) + '</span>' +
+      (it.date ? '<span class="prog-act-date"> · ' + it.date + '</span>' : '') + '</div>' +
+    '</div></div>';
+  }).join('');
+}
+
+function renderProgMilestones(termos, aulas, freq, arquivos, modulos, streak) {
+  var el = document.getElementById('prog-milestones');
+  if (!el) return;
+  var milestones = [
+    { label:'Primeira entrada no Banco de Termos', sub:'O começo de tudo', done: termos >= 1 },
+    { label:'10 termos registrados', sub:'A jornada ganhou tração', done: termos >= 10 },
+    { label:'5 aulas realizadas', sub:'Consistência em formação', done: aulas >= 5 },
+    { label:'Frequência acima de 80%', sub:'Dedicação que forma fluência', done: freq >= 80 },
+    { label:'Primeiro arquivo concluído', sub:'Do Drive para o domínio', done: arquivos >= 1 },
+    { label:'Primeiro módulo da trilha', sub:'A trilha está em movimento', done: modulos >= 1 },
+    { label:'7 dias de streak', sub:'Hábito criado', done: streak >= 7 },
+    { label:'50 termos dominados', sub:'Vocabulário clínico em expansão', done: termos >= 50 },
+  ];
+  el.innerHTML = milestones.map(function(m){
+    return '<div class="prog-milestone">' +
+      '<div class="prog-milestone-icon ' + (m.done?'done':'pending') + '">' +
+        '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>' +
+      '</div>' +
+      '<div class="prog-milestone-body">' +
+        '<div class="prog-milestone-label">' + m.label + '</div>' +
+        '<div class="prog-milestone-sub">' + m.sub + '</div>' +
+      '</div>' +
+      '<span class="prog-milestone-badge ' + (m.done?'done':'pending') + '">' + (m.done?'✓ Conquistado':'Pendente') + '</span>' +
+    '</div>';
+  }).join('');
+}
+
+function renderProgHeatmap() {
+  var el = document.getElementById('prog-heatmap');
   if (!el) return;
   var dayCounts = {};
   _ntTermos.forEach(function(t){
-    var d = (t.data_entrada||'').substring(0,10);
+    var d = (t.data_entrada||'').trim();
     if (d) dayCounts[d] = (dayCounts[d]||0) + 1;
   });
   var html = '';
   var today = new Date(); today.setHours(0,0,0,0);
   for (var i = 27; i >= 0; i--) {
-    var d = new Date(today - i * 86400000);
-    var key = d.toISOString().substring(0,10);
+    var d = new Date(today.getTime() - i * 86400000);
+    var key = ('0'+d.getDate()).slice(-2) + '/' + ('0'+(d.getMonth()+1)).slice(-2) + '/' + d.getFullYear();
     var cnt = dayCounts[key] || 0;
-    var lvl = cnt === 0 ? '' : cnt <= 1 ? 'lvl1' : cnt <= 2 ? 'lvl2' : cnt <= 4 ? 'lvl3' : 'lvl4';
-    html += '<div class="nb-heatmap-day ' + lvl + '" title="' + key + ': ' + cnt + ' entradas"></div>';
+    var lvl = cnt === 0 ? '' : cnt === 1 ? 'lvl1' : cnt <= 3 ? 'lvl2' : cnt <= 5 ? 'lvl3' : 'lvl4';
+    html += '<div class="prog-heatmap-cell ' + lvl + '" title="' + key + ': ' + cnt + ' entradas"></div>';
   }
   el.innerHTML = html;
 }
+
 
 // ── BANCO DE TERMOS ──
 var _ntOrdem = 'recente';
