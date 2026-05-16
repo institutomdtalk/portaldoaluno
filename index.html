@@ -1656,11 +1656,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
           <button class="btn-hamburger-main" id="btn-drawer-open" title="Menu">
             <span></span><span></span><span></span>
           </button>
-          <nav style="display:flex;align-items:center;gap:0">
-          <a href="https://institutomdtalk.github.io/welcome/" target="_blank" rel="noopener" style="font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);text-decoration:none;padding-right:20px;transition:color 0.3s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Welcome</a>
-          <a href="https://calendar.app.google/9s8vRTnw3YE6p5fR9" target="_blank" rel="noopener" style="font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);text-decoration:none;padding:0 20px;border-left:1px solid rgba(196,164,90,0.15);transition:color 0.3s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Disponibilidade para Remanejo</a>
-
-        </nav>
         </div>
         <p class="brand-label">Instituto MD Talk</p>
         <h1 class="brand-title">Seu Portal de <em>Medical English</em></h1>
@@ -1669,12 +1664,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <p class="header-greeting" id="hdr-greeting">Good morning,</p>
         <p class="header-student-name" id="hdr-nome"></p>
         <div style="display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-top:10px">
-          <div class="bell-wrap" id="bell-wrap">
-            <button class="btn-bell" id="btn-bell">
-              <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-            </button>
-            <span class="bell-badge hidden" id="bell-badge">0</span>
-          </div>
           <button id="btn-live" onclick="toggleLiveMode()">
             <span class="live-pulse"></span>
             Live
@@ -1725,6 +1714,21 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   </header>
 
   <main class="dashboard">
+
+    <!-- TRILHA DE APRENDIZADO -->
+    <div class="card reveal" style="grid-column:1/-1" id="card-trilha">
+      <div class="card-pad">
+        <p class="card-overline">Programa de Proficiência em Inglês Médico</p>
+        <h3 class="card-title">Minha Trilha de Aprendizado</h3>
+        <p class="card-desc" style="margin-bottom:20px">Acompanhe sua jornada e marque os módulos concluídos.</p>
+        <div id="trilha-lista"></div>
+        <div id="trilha-mais-wrap" style="display:none;margin-top:16px;text-align:center">
+          <button id="btn-trilha-mais" onclick="toggleTrilhaMais()" style="background:none;border:1px solid var(--border-gold);color:var(--gold);font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border-radius:var(--radius);cursor:pointer;transition:all 0.3s ease">
+            Ver mais <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-left:4px" id="trilha-mais-chevron"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- PASTA DO DRIVE -->
     <div class="card reveal" style="grid-column:1/-1" id="card-drive-files">
