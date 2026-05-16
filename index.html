@@ -4688,20 +4688,13 @@ function _gravarRegistro(status) {
 // ── LOGOUT ──
 function doLogout() {
   try {
-    // Close any open modals
     document.querySelectorAll('.cal-modal-overlay,.drive-viewer-overlay,.nt-modal-overlay').forEach(function(m){
       m.classList.remove('active');
     });
     currentStudent = null;
-    stopClock();
     localStorage.removeItem('mdtalk_login');
     localStorage.removeItem('mdtalk_senha');
-    var fl = document.getElementById('f-login'); if(fl) fl.value='';
-    var fs = document.getElementById('f-senha'); if(fs) fs.value='';
-    var le = document.getElementById('login-err'); if(le) le.style.display='none';
-    _anotData = []; _anotOpen = false; _matOpen = false;
   } catch(e) {}
-  // Force reload to login — cleanest approach
   location.reload();
 }
 
