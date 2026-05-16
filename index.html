@@ -1109,9 +1109,11 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
    NOTEBOOK TABS
 ═══════════════════════════════════════ */
 .nb-tabs-bar{
-  background:var(--off-white);border-bottom:1px solid var(--border);
+  background:var(--off-white);
+  border-bottom:1px solid var(--border);
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
   display:flex;align-items:center;gap:4px;
-  padding:6px 28px 0;overflow-x:auto;
+  padding:6px 36px 0;overflow-x:auto;
   position:sticky;top:0;z-index:200;
   scrollbar-width:none;
 }
