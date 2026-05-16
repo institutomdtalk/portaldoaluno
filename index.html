@@ -1290,6 +1290,53 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .bell-empty{padding:24px 18px;text-align:center;font-size:13px;color:var(--text-muted);font-style:italic}
 
 /* ═══════════════════════════════════════
+   DRAWER MENU
+═══════════════════════════════════════ */
+.drawer-overlay{position:fixed;inset:0;background:rgba(5,13,26,0.6);backdrop-filter:blur(4px);z-index:700;opacity:0;pointer-events:none;transition:opacity 0.4s ease}
+.drawer-overlay.open{opacity:1;pointer-events:all}
+.drawer{position:fixed;left:0;top:0;bottom:0;width:280px;background:var(--navy-deep);z-index:701;transform:translateX(-100%);transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);display:flex;flex-direction:column;overflow:hidden}
+.drawer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0.25}
+.drawer.open{transform:translateX(0)}
+.drawer-header{padding:24px 20px 16px;border-bottom:1px solid rgba(196,164,90,0.1);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.drawer-brand{font-family:var(--serif);font-size:1rem;font-weight:300;color:var(--gold);letter-spacing:1px}
+.drawer-close{width:28px;height:28px;border:1px solid rgba(196,164,90,0.2);border-radius:50%;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;flex-shrink:0}
+.drawer-close:hover{border-color:var(--gold)}
+.drawer-close svg{width:11px;height:11px;stroke:rgba(255,255,255,0.4);fill:none;stroke-width:2;stroke-linecap:round}
+.drawer-nav{flex:1;overflow-y:auto;padding:8px 0 20px}
+.drawer-section-label{font-size:8px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(196,164,90,0.4);padding:16px 20px 6px}
+.drawer-item{display:flex;align-items:center;gap:10px;padding:11px 20px;text-decoration:none;color:rgba(255,255,255,0.45);font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:1px;transition:all 0.25s;cursor:pointer;border:none;background:none;width:100%;text-align:left;position:relative}
+.drawer-item::before{content:'';position:absolute;left:0;top:6px;bottom:6px;width:2px;background:var(--gold);border-radius:0 2px 2px 0;opacity:0;transition:opacity 0.25s}
+.drawer-item:hover{color:rgba(255,255,255,0.8);background:rgba(196,164,90,0.05)}
+.drawer-item:hover::before,.drawer-item.active::before{opacity:1}
+.drawer-item.active{color:var(--gold);background:rgba(196,164,90,0.06)}
+.drawer-item svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;opacity:0.7}
+.drawer-item.active svg{opacity:1}
+/* Hamburger button */
+.btn-hamburger-main{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:6px;transition:opacity 0.2s;flex-shrink:0}
+.btn-hamburger-main:hover{opacity:0.7}
+.btn-hamburger-main span{display:block;width:20px;height:1.5px;background:rgba(255,255,255,0.5);border-radius:2px}
+/* Panel system */
+.dash-panel{display:none}
+.dash-panel.active{display:block}
+.panel-header{margin-bottom:24px}
+.panel-title{font-family:var(--serif);font-size:1.6rem;font-weight:300;color:var(--navy);line-height:1.2;margin-bottom:4px}
+.panel-desc{font-size:14px;color:var(--text-muted)}
+.panel-link-card{display:flex;align-items:center;gap:16px;padding:18px 20px;border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;color:var(--navy);background:var(--white);box-shadow:var(--shadow-sm);transition:all 0.35s ease;margin-bottom:10px;position:relative;overflow:hidden}
+.panel-link-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform 0.4s ease}
+.panel-link-card:hover::before{transform:scaleX(1)}
+.panel-link-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:var(--border-gold)}
+.panel-link-icon{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy-mid));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.panel-link-icon svg{width:17px;height:17px;stroke:var(--gold-light);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.panel-link-body{flex:1}
+.panel-link-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.panel-link-title{font-family:var(--serif);font-size:1.05rem;font-weight:500;color:var(--navy)}
+.panel-link-desc{font-size:12px;color:var(--text-muted);margin-top:2px}
+.panel-link-arrow{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.3s}
+.panel-link-card:hover .panel-link-arrow{background:var(--gold);border-color:var(--gold)}
+.panel-link-arrow svg{width:13px;height:13px;stroke:var(--text-muted);fill:none;stroke-width:2;stroke-linecap:round;transition:stroke 0.3s}
+.panel-link-card:hover .panel-link-arrow svg{stroke:var(--navy-deep)}
+
+/* ═══════════════════════════════════════
    FOOTER
 ═══════════════════════════════════════ */
 .footer{background:var(--navy-deep);text-align:center;padding:44px 24px;position:relative}
@@ -1605,11 +1652,16 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     <div class="hgeo hgeo--diamond"></div>
     <div class="header-inner">
       <div class="header-brand">
-        <nav style="display:flex;align-items:center;gap:0;margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+          <button class="btn-hamburger-main" id="btn-drawer-open" title="Menu">
+            <span></span><span></span><span></span>
+          </button>
+          <nav style="display:flex;align-items:center;gap:0">
           <a href="https://institutomdtalk.github.io/welcome/" target="_blank" rel="noopener" style="font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);text-decoration:none;padding-right:20px;transition:color 0.3s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Welcome</a>
           <a href="https://calendar.app.google/9s8vRTnw3YE6p5fR9" target="_blank" rel="noopener" style="font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);text-decoration:none;padding:0 20px;border-left:1px solid rgba(196,164,90,0.15);transition:color 0.3s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Disponibilidade para Remanejo</a>
 
         </nav>
+        </div>
         <p class="brand-label">Instituto MD Talk</p>
         <h1 class="brand-title">Seu Portal de <em>Medical English</em></h1>
       </div>
@@ -2335,6 +2387,254 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   <button class="drive-zoom-btn" onclick="zoomViewer(1)" title="Ampliar">+</button>
 </div>
 
+<!-- DRAWER OVERLAY -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+
+<!-- DRAWER -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <span class="drawer-brand">Instituto MD Talk</span>
+    <button class="drawer-close" id="drawer-close">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <nav class="drawer-nav">
+    <p class="drawer-section-label">Geral</p>
+    <button class="drawer-item" onclick="openPanel('panel-welcome')">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+      Welcome
+    </button>
+    <button class="drawer-item" onclick="openPanel('panel-disponibilidade')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Disponibilidade para Remanejo
+    </button>
+    <button class="drawer-item" onclick="openPanel('panel-avisos')">
+      <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      Avisos
+    </button>
+
+    <p class="drawer-section-label">Recursos do Aluno</p>
+    <button class="drawer-item" onclick="openPanel('panel-gdocs')">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Google Docs
+    </button>
+    <button class="drawer-item" onclick="openPanel('panel-gdrive')">
+      <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+      Google Drive
+    </button>
+    <button class="drawer-item" onclick="openPanel('panel-homework')">
+      <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Envio de Atividades
+    </button>
+    <button class="drawer-item" onclick="openPanel('panel-calendario')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+      Meu Calendário de Aulas
+    </button>
+
+    <p class="drawer-section-label">Recursos e Links Úteis</p>
+    <button class="drawer-item" onclick="openPanel('panel-infograficos')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Coleção de Infográficos
+    </button>
+    <button class="drawer-item" onclick="openPanel('panel-ipa')">
+      <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>
+      Dicionário de Fonética
+    </button>
+    <button class="drawer-item" onclick="openPanel('panel-cambridge')">
+      <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+      Cambridge Dictionary
+    </button>
+    <button class="drawer-item" onclick="openPanel('panel-youglish')">
+      <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/></svg>
+      YouGlish
+    </button>
+
+    <p class="drawer-section-label">MD Talk</p>
+    <button class="drawer-item" onclick="openPanel('panel-treinamento')">
+      <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+      Treinamento Complementar
+    </button>
+    <button class="drawer-item" onclick="openPanel('panel-cursos')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      Outros Cursos
+    </button>
+    <button class="drawer-item" onclick="openPanel('panel-interesses')">
+      <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Personalize seu Curso
+    </button>
+    <button class="drawer-item" onclick="openPanel('panel-feedback')">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Sua Opinião
+    </button>
+  </nav>
+</div>
+
+<!-- PANELS CONTAINER -->
+<div id="panels-container" style="display:none;max-width:1100px;margin:0 auto;padding:28px 36px 60px">
+
+  <!-- BACK BUTTON -->
+  <button onclick="closePanel()" style="display:flex;align-items:center;gap:8px;background:none;border:none;color:var(--text-muted);font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;margin-bottom:28px;padding:0;transition:color 0.2s" onmouseover="this.style.color='var(--navy)'" onmouseout="this.style.color='var(--text-muted)'">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    Voltar ao Portal
+  </button>
+
+  <!-- PANEL: WELCOME -->
+  <div class="dash-panel" id="panel-welcome">
+    <div class="panel-header"><h2 class="panel-title">Welcome to MD Talk</h2><p class="panel-desc">Conheça o Instituto MD Talk e seu programa de Medical English.</p></div>
+    <a href="https://institutomdtalk.github.io/welcome/" target="_blank" rel="noopener" class="panel-link-card">
+      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <div class="panel-link-body"><p class="panel-link-label">Instituto MD Talk</p><p class="panel-link-title">Welcome to MD Talk</p><p class="panel-link-desc">Página de boas-vindas e apresentação do programa.</p></div>
+      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
+    </a>
+  </div>
+
+  <!-- PANEL: DISPONIBILIDADE -->
+  <div class="dash-panel" id="panel-disponibilidade">
+    <div class="panel-header"><h2 class="panel-title">Disponibilidade para Remanejo</h2><p class="panel-desc">Informe seus horários disponíveis para reagendamento de aulas.</p></div>
+    <a href="https://calendar.app.google/9s8vRTnw3YE6p5fR9" target="_blank" rel="noopener" class="panel-link-card">
+      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      <div class="panel-link-body"><p class="panel-link-label">Agenda</p><p class="panel-link-title">Disponibilidade para Remanejo</p><p class="panel-link-desc">Selecione os horários em que está disponível para reagendar.</p></div>
+      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
+    </a>
+  </div>
+
+  <!-- PANEL: AVISOS -->
+  <div class="dash-panel" id="panel-avisos">
+    <div class="panel-header"><h2 class="panel-title">Avisos</h2><p class="panel-desc">Comunicados e informações importantes do programa.</p></div>
+    <div id="panel-avisos-content" style="font-size:14px;color:var(--text-muted)">Carregando avisos...</div>
+  </div>
+
+  <!-- PANEL: GOOGLE DOCS -->
+  <div class="dash-panel" id="panel-gdocs">
+    <div class="panel-header"><h2 class="panel-title">Google Docs</h2><p class="panel-desc">Acesse seu documento pessoal do programa.</p></div>
+    <a id="panel-gdocs-link" href="#" target="_blank" rel="noopener" class="panel-link-card">
+      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+      <div class="panel-link-body"><p class="panel-link-label">Seus Documentos</p><p class="panel-link-title">Meu Google Docs</p><p class="panel-link-desc">Anotações de aula, vocabulário e registros do seu progresso.</p></div>
+      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
+    </a>
+  </div>
+
+  <!-- PANEL: GOOGLE DRIVE -->
+  <div class="dash-panel" id="panel-gdrive">
+    <div class="panel-header"><h2 class="panel-title">Google Drive</h2><p class="panel-desc">Sua pasta pessoal com todos os materiais do programa.</p></div>
+    <a id="panel-gdrive-link" href="#" target="_blank" rel="noopener" class="panel-link-card">
+      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
+      <div class="panel-link-body"><p class="panel-link-label">Seus Arquivos</p><p class="panel-link-title">Google Drive</p><p class="panel-link-desc">Materiais, atividades e recursos enviados pela sua mentora.</p></div>
+      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
+    </a>
+  </div>
+
+  <!-- PANEL: HOMEWORK -->
+  <div class="dash-panel" id="panel-homework">
+    <div class="panel-header"><h2 class="panel-title">Envio de Atividades</h2><p class="panel-desc">Submita as respostas das suas tarefas e atividades.</p></div>
+    <a href="https://institutomdtalk.github.io/homework/" target="_blank" rel="noopener" class="panel-link-card">
+      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+      <div class="panel-link-body"><p class="panel-link-label">Tarefas</p><p class="panel-link-title">Envio de Atividades</p><p class="panel-link-desc">Submita aqui as respostas das suas tarefas e atividades do programa.</p></div>
+      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
+    </a>
+  </div>
+
+  <!-- PANEL: CALENDÁRIO -->
+  <div class="dash-panel" id="panel-calendario">
+    <div class="panel-header"><h2 class="panel-title">Meu Calendário de Aulas</h2><p class="panel-desc">Histórico completo de presenças e faltas.</p></div>
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <button id="cal-btn-prev2" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8249;</button>
+        <span id="cal-month-label2" style="font-family:var(--serif);font-size:1.15rem;font-weight:500;color:var(--navy);min-width:140px;text-align:center"></span>
+        <button id="cal-btn-next2" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8250;</button>
+      </div>
+      <div id="cal-grid2" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
+      <div style="background:var(--off-white);border-radius:var(--radius);padding:14px 16px;margin-top:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border)">
+        <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)"><div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--success);line-height:1" id="cal-p2">0</div><p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Presenças</p></div>
+        <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)"><div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--danger);line-height:1" id="cal-f2">0</div><p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Faltas</p></div>
+        <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)"><div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--navy);line-height:1" id="cal-fr2">—</div><p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Frequência</p></div>
+        <div style="text-align:center;padding:4px 8px"><div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--gold);line-height:1" id="cal-e2">—</div><p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Esperadas</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL: INFOGRÁFICOS -->
+  <div class="dash-panel" id="panel-infograficos">
+    <div class="panel-header"><h2 class="panel-title">Coleção de Infográficos</h2><p class="panel-desc">Acervo visual de apoio para consolidar vocabulário e estruturas.</p></div>
+    <a href="https://institutomdtalk.github.io/infograficos/" target="_blank" rel="noopener" class="panel-link-card">
+      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+      <div class="panel-link-body"><p class="panel-link-label">Recursos Visuais</p><p class="panel-link-title">Coleção de Infográficos</p><p class="panel-link-desc">Material visual para consolidar vocabulário e estruturas.</p></div>
+      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
+    </a>
+  </div>
+
+  <!-- PANEL: IPA -->
+  <div class="dash-panel" id="panel-ipa">
+    <div class="panel-header"><h2 class="panel-title">Dicionário Internacional de Fonética</h2><p class="panel-desc">Domine a pronúncia correta de termos médicos em inglês.</p></div>
+    <a href="https://institutomdtalk.github.io/ipa/" target="_blank" rel="noopener" class="panel-link-card">
+      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg></div>
+      <div class="panel-link-body"><p class="panel-link-label">Pronúncia</p><p class="panel-link-title">Dicionário Internacional de Fonética</p><p class="panel-link-desc">Transcrições fonéticas precisas para termos médicos.</p></div>
+      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
+    </a>
+  </div>
+
+  <!-- PANEL: CAMBRIDGE -->
+  <div class="dash-panel" id="panel-cambridge">
+    <div class="panel-header"><h2 class="panel-title">Cambridge Dictionary</h2><p class="panel-desc">Dicionário inglês-português com pronúncia e exemplos.</p></div>
+    <a href="https://dictionary.cambridge.org/pt/dicionario/ingles-portugues/" target="_blank" rel="noopener" class="panel-link-card">
+      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M8 7h8"/><path d="M8 11h5"/></svg></div>
+      <div class="panel-link-body"><p class="panel-link-label">Dicionário</p><p class="panel-link-title">Cambridge Dictionary</p><p class="panel-link-desc">Inglês-português com pronúncia, exemplos e níveis de uso.</p></div>
+      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
+    </a>
+  </div>
+
+  <!-- PANEL: YOUGLISH -->
+  <div class="dash-panel" id="panel-youglish">
+    <div class="panel-header"><h2 class="panel-title">YouGlish</h2><p class="panel-desc">Pronúncias reais em contextos autênticos de vídeo.</p></div>
+    <a href="https://pt.youglish.com/" target="_blank" rel="noopener" class="panel-link-card">
+      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/><path d="M19.07 4.93a10 10 0 010 14.14"/></svg></div>
+      <div class="panel-link-body"><p class="panel-link-label">Pronúncia</p><p class="panel-link-title">YouGlish</p><p class="panel-link-desc">Pronúncias reais de termos técnicos em vídeos autênticos.</p></div>
+      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
+    </a>
+  </div>
+
+  <!-- PANEL: TREINAMENTO -->
+  <div class="dash-panel" id="panel-treinamento">
+    <div class="panel-header"><h2 class="panel-title">Treinamento Complementar</h2><p class="panel-desc">Congressos, Observership e Fellowship.</p></div>
+    <a href="https://institutomdtalk.github.io/treinamento/" target="_blank" rel="noopener" class="panel-link-card">
+      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
+      <div class="panel-link-body"><p class="panel-link-label">Treinamento</p><p class="panel-link-title">Congressos, Observership e Fellowship</p><p class="panel-link-desc">Treinamento especializado para apresentações internacionais.</p></div>
+      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
+    </a>
+  </div>
+
+  <!-- PANEL: OUTROS CURSOS -->
+  <div class="dash-panel" id="panel-cursos">
+    <div class="panel-header"><h2 class="panel-title">Outros Cursos MD Talk</h2><p class="panel-desc">Explore os cursos complementares do Instituto.</p></div>
+    <a href="https://institutomdtalk.github.io/expansao/" target="_blank" rel="noopener" class="panel-link-card">
+      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+      <div class="panel-link-body"><p class="panel-link-label">Outros Cursos MD Talk</p><p class="panel-link-title">Cursos de Expansão</p><p class="panel-link-desc">Amplie ainda mais seu repertório em inglês médico.</p></div>
+      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
+    </a>
+  </div>
+
+  <!-- PANEL: INTERESSES -->
+  <div class="dash-panel" id="panel-interesses">
+    <div class="panel-header"><h2 class="panel-title">Personalize seu Curso</h2><p class="panel-desc">Conte-nos seus interesses para personalizar suas aulas.</p></div>
+    <a href="https://forms.office.com/r/SfVaqefC18" target="_blank" rel="noopener" class="panel-link-card">
+      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+      <div class="panel-link-body"><p class="panel-link-label">Personalize seu Curso</p><p class="panel-link-title">Conte-nos seus interesses</p><p class="panel-link-desc">Preencha para que suas aulas sejam personalizadas.</p></div>
+      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
+    </a>
+  </div>
+
+  <!-- PANEL: FEEDBACK -->
+  <div class="dash-panel" id="panel-feedback">
+    <div class="panel-header"><h2 class="panel-title">Sua Opinião</h2><p class="panel-desc">Compartilhe como está sendo sua experiência conosco.</p></div>
+    <a href="COLE_AQUI_O_LINK_DO_FORMULARIO_DE_FEEDBACK" target="_blank" rel="noopener" class="panel-link-card">
+      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+      <div class="panel-link-body"><p class="panel-link-label">Sua Opinião</p><p class="panel-link-title">Como está sendo sua experiência?</p><p class="panel-link-desc">Sua percepção é fundamental para continuarmos evoluindo.</p></div>
+      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
+    </a>
+  </div>
+
+</div>
+
 <!-- LIVE CLASS PANEL -->
 <div id="live-panel">
   <div class="lp-head">
@@ -2702,6 +3002,48 @@ function parseCalDate(str) {
   var m2=str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
   if(m2)return new Date(parseInt(m2[3]),parseInt(m2[2])-1,parseInt(m2[1]));
   return null;
+}
+
+function renderCalendarGrid(grid, month, year, elP, elF, elFr, elE) {
+  if (!grid) return;
+  var lookup = {};
+  calData.forEach(function(h){
+    var d = parseCalDate(h.data_aula);
+    if (d) lookup[d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate()] = h.status;
+  });
+  var presencas=0, faltas=0;
+  calData.forEach(function(h){
+    var d = parseCalDate(h.data_aula);
+    if (d && d.getFullYear()===year && d.getMonth()===month){
+      if (h.status==='presente') presencas++;
+      else if (h.status==='falta') faltas++;
+    }
+  });
+  var total = presencas+faltas;
+  var freq  = total > 0 ? Math.round((presencas/total)*100)+'%' : '—';
+  var esp   = window._calFreq ? aulasEsperadasNoMes(year, month, window._calFreq) : null;
+  if (elP)  elP.textContent  = presencas;
+  if (elF)  elF.textContent  = faltas;
+  if (elFr) elFr.textContent = freq;
+  if (elE)  elE.textContent  = esp !== null ? esp : '—';
+  var today = new Date();
+  var first = new Date(year, month, 1);
+  var last  = new Date(year, month+1, 0);
+  var html  = DAYS_EN.map(function(d){ return '<div class="cal-day-label">'+d+'</div>'; }).join('');
+  for (var i=0; i<first.getDay(); i++) html += '<div class="cal-day other-month"></div>';
+  for (var day=1; day<=last.getDate(); day++){
+    var key    = year+'-'+month+'-'+day;
+    var status = lookup[key];
+    var isToday= (today.getFullYear()===year && today.getMonth()===month && today.getDate()===day);
+    var isFer  = isFeriado(new Date(year,month,day));
+    var cls='cal-day', mark='';
+    if (status==='presente'){cls+=' has-presenca';mark='✓';}
+    else if (status==='falta'){cls+=' has-falta';mark='✕';}
+    else if (isFer) cls+=' has-feriado';
+    if (isToday) cls+=' today';
+    html += '<div class="'+cls+'" title="'+(isFer?'Feriado':'')+'">'+day+(mark?'<div class="cal-mark">'+mark+'</div>':'')+'</div>';
+  }
+  grid.innerHTML = html;
 }
 
 function renderCalendar() {
@@ -3296,6 +3638,96 @@ function resetVerbos() {
   var key = 'mdtalk_verbos_' + (currentStudent ? currentStudent.login : 'guest');
   localStorage.removeItem(key);
   atualizarContadoresVerbos();
+}
+
+// ── DRAWER MENU ──
+function openDrawer() {
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawer-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function openPanel(panelId) {
+  closeDrawer();
+  // Hide dashboard, show panels container
+  var dashboard = document.querySelector('.dashboard');
+  var container = document.getElementById('panels-container');
+  if (dashboard) dashboard.style.display = 'none';
+  if (container) container.style.display = 'block';
+  // Hide all panels, show target
+  document.querySelectorAll('.dash-panel').forEach(function(p){ p.classList.remove('active'); });
+  var panel = document.getElementById(panelId);
+  if (panel) panel.classList.add('active');
+  // Mark active drawer item
+  document.querySelectorAll('.drawer-item').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelectorAll('.drawer-item').forEach(function(b){
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').indexOf(panelId) >= 0) b.classList.add('active');
+  });
+  // Special panel logic
+  if (panelId === 'panel-avisos') renderPanelAvisos();
+  if (panelId === 'panel-gdocs' && currentStudent) {
+    var link = document.getElementById('panel-gdocs-link');
+    if (link && currentStudent.link_docs) link.href = currentStudent.link_docs;
+  }
+  if (panelId === 'panel-gdrive' && currentStudent) {
+    var link2 = document.getElementById('panel-gdrive-link');
+    if (link2 && currentStudent.link_drive) link2.href = currentStudent.link_drive;
+  }
+  if (panelId === 'panel-calendario') {
+    setTimeout(function(){ renderCalendar2(); }, 50);
+  }
+  window.scrollTo(0, 0);
+}
+
+function closePanel() {
+  var dashboard = document.querySelector('.dashboard');
+  var container = document.getElementById('panels-container');
+  if (dashboard) dashboard.style.display = '';
+  if (container) container.style.display = 'none';
+  document.querySelectorAll('.dash-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.drawer-item').forEach(function(b){ b.classList.remove('active'); });
+}
+
+function renderPanelAvisos() {
+  var el = document.getElementById('panel-avisos-content');
+  if (!el) return;
+  if (!_avisos || !_avisos.length) {
+    el.innerHTML = '<p style="color:var(--text-muted);font-style:italic">Nenhum aviso no momento.</p>';
+    return;
+  }
+  el.innerHTML = _avisos.map(function(av) {
+    return '<div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:10px;box-shadow:var(--shadow-sm)">' +
+      '<p style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px">' + av.data + '</p>' +
+      '<p style="font-size:14px;color:var(--navy);line-height:1.6">' + av.texto + '</p>' +
+    '</div>';
+  }).join('');
+}
+
+// Second calendar instance for panel
+var _cal2Month, _cal2Year;
+function renderCalendar2() {
+  if (!currentStudent) return;
+  var now = new Date();
+  if (_cal2Month === undefined) { _cal2Month = now.getMonth(); _cal2Year = now.getFullYear(); }
+  var label = document.getElementById('cal-month-label2');
+  var grid  = document.getElementById('cal-grid2');
+  if (!label || !grid) return;
+  // Reuse the same calendar rendering logic
+  var months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  label.textContent = months[_cal2Month] + ' ' + _cal2Year;
+  // Build calendar grid using existing renderCalendarGrid logic
+  renderCalendarGrid(grid, _cal2Month, _cal2Year,
+    document.getElementById('cal-p2'),
+    document.getElementById('cal-f2'),
+    document.getElementById('cal-fr2'),
+    document.getElementById('cal-e2')
+  );
 }
 
 // ── LIVE CLASS MODE ──
@@ -3925,6 +4357,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var btnSignout = document.getElementById('btn-signout');
   if (btnSignout) btnSignout.addEventListener('click', function(){ doLogout(); });
+
+  // Drawer
+  var btnDrawerOpen = document.getElementById('btn-drawer-open');
+  if (btnDrawerOpen) btnDrawerOpen.addEventListener('click', openDrawer);
+  var btnDrawerClose = document.getElementById('drawer-close');
+  if (btnDrawerClose) btnDrawerClose.addEventListener('click', closeDrawer);
+  var drawerOverlay = document.getElementById('drawer-overlay');
+  if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+  // Cal panel nav
+  var calBtn2Prev = document.getElementById('cal-btn-prev2');
+  var calBtn2Next = document.getElementById('cal-btn-next2');
+  if (calBtn2Prev) calBtn2Prev.addEventListener('click', function(){
+    _cal2Month--; if(_cal2Month<0){_cal2Month=11;_cal2Year--;} renderCalendar2();
+  });
+  if (calBtn2Next) calBtn2Next.addEventListener('click', function(){
+    _cal2Month++; if(_cal2Month>11){_cal2Month=0;_cal2Year++;} renderCalendar2();
+  });
+  // ESC closes drawer
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeDrawer();
+  });
 
   // Live Class Mode
   var lpClose = document.getElementById('lp-close-btn');
