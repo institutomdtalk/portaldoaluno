@@ -894,28 +894,28 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 }
 .drive-card-footer{
   display:flex;align-items:center;justify-content:space-between;
-  padding:6px 10px;border-top:1px solid var(--border);
-  gap:6px;
+  padding:6px 8px;border-top:1px solid var(--border);
+  gap:4px;flex-wrap:wrap;
 }
-.drive-card-concluido{
-  display:flex;align-items:center;gap:4px;
-  font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+.drive-card-tag{
+  display:flex;align-items:center;gap:3px;
+  font-size:8px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;
   font-family:var(--sans);color:var(--text-muted);
-  background:none;border:none;cursor:pointer;padding:0;
-  transition:color 0.2s;white-space:nowrap;
+  background:none;border:1px solid var(--border);
+  border-radius:20px;cursor:pointer;padding:3px 7px;
+  transition:all 0.2s;white-space:nowrap;flex:1;justify-content:center;
 }
-.drive-card-concluido:hover{color:var(--success)}
-.drive-card-concluido.done{color:var(--success)}
-.drive-card-concluido svg{width:13px;height:13px;flex-shrink:0;transition:all 0.2s}
-.drive-card-item.concluded{border-color:rgba(45,106,79,0.3)}
-.drive-card-item.concluded .drive-card-thumb,
-.drive-card-item.concluded .drive-card-thumb-placeholder{opacity:0.7}
+.drive-card-tag svg{width:10px;height:10px;flex-shrink:0}
+.drive-card-tag:hover{border-color:var(--gold);color:var(--gold)}
+.drive-card-tag.done-concluido{background:#D8F3DC;border-color:#2D6A4F;color:#2D6A4F}
+.drive-card-tag.done-revisado{background:#EDE9FE;border-color:#6D28D9;color:#6D28D9}
+.drive-card-tag.done-homework{background:#FEF3C7;border-color:#92400E;color:#92400E}
+.drive-card-item.concluded{border-color:rgba(45,106,79,0.25)}
 .drive-card-concluded-badge{
   position:absolute;top:6px;right:6px;
   background:#22c55e;color:#fff;
   font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  padding:2px 8px;border-radius:20px;
-  display:none;
+  padding:2px 8px;border-radius:20px;display:none;
 }
 .drive-card-item.concluded .drive-card-concluded-badge{display:block}
 /* Viewer Modal */
@@ -2641,7 +2641,7 @@ var _allDriveFiles = [];
 var _driveConluidos = {};
 
 function getDriveConcluidosKey() {
-  return 'mdtalk_drive_concluidos_' + (currentStudent ? currentStudent.login : 'guest');
+  return 'mdtalk_drive_tags_' + (currentStudent ? currentStudent.login : 'guest');
 }
 
 function carregarDriveConcluidos() {
@@ -2649,21 +2649,43 @@ function carregarDriveConcluidos() {
   _driveConluidos = JSON.parse(localStorage.getItem(key) || '{}');
 }
 
-function toggleDriveConcluido(e, fileId) {
+var TAG_CONFIG = {
+  concluido: { label: 'Concluído', labelOff: 'Concluir', doneClass: 'done-concluido', cardClass: 'concluded' },
+  revisado:  { label: 'Revisado',  labelOff: 'Revisar',  doneClass: 'done-revisado',  cardClass: '' },
+  homework:  { label: 'Homework',  labelOff: 'Homework', doneClass: 'done-homework',  cardClass: '' }
+};
+
+function buildDriveTag(fileId, tag) {
+  var stateKey = 'drive_' + tag + '_' + fileId;
+  var isDone = _driveConluidos[stateKey] || false;
+  var cfg = TAG_CONFIG[tag];
+  var svgs = {
+    concluido: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+    revisado:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',
+    homework:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>'
+  };
+  return '<button class="drive-card-tag' + (isDone ? ' ' + cfg.doneClass : '') + '" id="dt_' + tag + '_' + fileId + '" onclick="toggleDriveTag(event,&quot;' + fileId + '&quot;,&quot;' + tag + '&quot;)">' +
+    svgs[tag] + (isDone ? cfg.label : cfg.labelOff) +
+  '</button>';
+}
+
+function toggleDriveTag(e, fileId, tag) {
   e.stopPropagation();
-  var fileKey = 'drive_' + fileId;
-  var isDone  = !(_driveConluidos[fileKey] || false);
-  _driveConluidos[fileKey] = isDone;
-  // Persist
+  var stateKey = 'drive_' + tag + '_' + fileId;
+  var isDone = !(_driveConluidos[stateKey] || false);
+  _driveConluidos[stateKey] = isDone;
   localStorage.setItem(getDriveConcluidosKey(), JSON.stringify(_driveConluidos));
-  // Update UI
-  var card = document.getElementById('dc_' + fileId);
-  var cardItem = card ? card.closest('.drive-card-item') : null;
-  if (card) {
-    card.classList.toggle('done', isDone);
-    card.innerHTML = '<svg viewBox="0 0 24 24" fill="' + (isDone ? '#2D6A4F' : 'none') + '" stroke="' + (isDone ? '#2D6A4F' : 'currentColor') + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>' + (isDone ? 'Concluído' : 'Concluir');
+  var btn = document.getElementById('dt_' + tag + '_' + fileId);
+  if (btn) {
+    var cfg = TAG_CONFIG[tag];
+    btn.className = 'drive-card-tag' + (isDone ? ' ' + cfg.doneClass : '');
+    var txt = btn.lastChild;
+    if (txt && txt.nodeType === 3) txt.textContent = isDone ? cfg.label : cfg.labelOff;
+    if (cfg.cardClass) {
+      var cardItem = btn.closest('.drive-card-item');
+      if (cardItem) cardItem.classList.toggle(cfg.cardClass, isDone);
+    }
   }
-  if (cardItem) cardItem.classList.toggle('concluded', isDone);
 }
 var _driveZoom = 1;
 
@@ -2696,10 +2718,9 @@ function buildDriveCard(f) {
     '</div>' +
     '<div class="drive-card-name" title="' + f.name.replace(/"/g,'&quot;') + '" style="cursor:pointer">' + f.name + '</div>' +
     '<div class="drive-card-footer">' +
-      '<button class="drive-card-concluido' + (isDone ? " done" : "") + '" id="dc_' + f.id + '" onclick="toggleDriveConcluido(event,&quot;' + f.id + '&quot;)">' +
-        '<svg viewBox="0 0 24 24" fill="' + (isDone ? '#2D6A4F' : 'none') + '" stroke="' + (isDone ? '#2D6A4F' : 'currentColor') + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><polyline points="20 6 9 17 4 12"/></svg>' +
-        (isDone ? 'Concluído' : 'Concluir') +
-      '</button>' +
+      buildDriveTag(f.id, 'concluido') +
+      buildDriveTag(f.id, 'revisado') +
+      buildDriveTag(f.id, 'homework') +
     '</div>';
   var thumbEl = div.querySelector('.drive-card-thumb, .drive-card-thumb-placeholder, [style*="cursor:pointer"]');
   var nameEl  = div.querySelector('.drive-card-name');
