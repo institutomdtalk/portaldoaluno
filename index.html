@@ -893,23 +893,27 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   border-top:1px solid var(--border);
 }
 .drive-card-footer{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:6px 8px;border-top:1px solid var(--border);
-  gap:4px;flex-wrap:wrap;
+  display:flex;align-items:center;justify-content:space-around;
+  padding:5px 6px;border-top:1px solid var(--border);
+  gap:2px;
 }
 .drive-card-tag{
-  display:flex;align-items:center;gap:3px;
-  font-size:8px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;
-  font-family:var(--sans);color:var(--text-muted);
-  background:none;border:1px solid var(--border);
-  border-radius:20px;cursor:pointer;padding:3px 7px;
-  transition:all 0.2s;white-space:nowrap;flex:1;justify-content:center;
+  display:flex;align-items:center;justify-content:center;gap:2px;
+  font-size:7px;font-weight:600;letter-spacing:0.3px;text-transform:uppercase;
+  font-family:var(--sans);color:rgba(107,101,96,0.45);
+  background:none;border:none;
+  cursor:pointer;padding:3px 4px;border-radius:var(--radius);
+  transition:all 0.2s;white-space:nowrap;flex:1;
 }
-.drive-card-tag svg{width:10px;height:10px;flex-shrink:0}
-.drive-card-tag:hover{border-color:var(--gold);color:var(--gold)}
-.drive-card-tag.done-concluido{background:#D8F3DC;border-color:#2D6A4F;color:#2D6A4F}
-.drive-card-tag.done-revisado{background:#EDE9FE;border-color:#6D28D9;color:#6D28D9}
-.drive-card-tag.done-homework{background:#FEF3C7;border-color:#92400E;color:#92400E}
+.drive-card-tag svg{width:9px;height:9px;flex-shrink:0;opacity:0.5}
+.drive-card-tag:hover{color:var(--text-muted)}
+.drive-card-tag:hover svg{opacity:0.8}
+.drive-card-tag.done-concluido{color:#2D6A4F}
+.drive-card-tag.done-concluido svg{opacity:1}
+.drive-card-tag.done-revisado{color:#6D28D9}
+.drive-card-tag.done-revisado svg{opacity:1}
+.drive-card-tag.done-homework{color:#92400E}
+.drive-card-tag.done-homework svg{opacity:1}
 .drive-card-item.concluded{border-color:rgba(45,106,79,0.25)}
 .drive-card-concluded-badge{
   position:absolute;top:6px;right:6px;
