@@ -3935,29 +3935,59 @@ function salvarLiveItem() {
   if (!ta) return;
   var text = ta.value.trim();
   if (!text) return;
+  var id   = 'lv_' + Date.now();
+  var hoje = new Date().toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric'});
   var item = {
-    id: 'lv_' + Date.now(),
-    tag: _liveTag,
+    id:   id,
+    tag:  _liveTag,
     text: text,
-    date: new Date().toLocaleDateString('pt-BR', {day:'2-digit',month:'short',year:'numeric'})
+    date: hoje
   };
   _liveItems.unshift(item);
   saveLiveItems();
   ta.value = '';
   ta.style.height = 'auto';
   renderLiveFeed();
-  renderTermoGrid();
-  renderSmartCards();
   updateLiveBadge();
+
+  // Map live tag to NT secao
+  var secaoMap = { vocabulario:'vocabulario', frases:'frases', termos:'termos', anotacoes:'anotacoes' };
+  var secao = secaoMap[_liveTag] || 'vocabulario';
+
+  // Add to NT_Termos array and re-render banco
+  var novoTermo = { id:id, secao:secao, termo:text, traducao:'', exemplo:'', fonte:'Live Class', confianca:'0', data_entrada:hoje };
+  _ntTermos.unshift(novoTermo);
+  renderNtGrid();
+  sc2Init();
+  renderNbProgresso();
+
+  // Save to planilha NT_Termos
+  if (currentStudent) {
+    callScript(
+      'action=salvar_nt_termo&login=' + encodeURIComponent(currentStudent.login) +
+      '&id=' + encodeURIComponent(id) +
+      '&secao=' + encodeURIComponent(secao) +
+      '&termo=' + encodeURIComponent(text) +
+      '&traducao=&exemplo=&fonte=' + encodeURIComponent('Live Class'),
+      function(d){ /* silently saved */ },
+      function(){ /* offline fallback ok */ }
+    );
+  }
 }
 
 function deleteLiveItem(id) {
   _liveItems = _liveItems.filter(function(i){ return i.id !== id; });
   saveLiveItems();
   renderLiveFeed();
-  renderTermoGrid();
-  renderSmartCards();
   updateLiveBadge();
+  // Also remove from NT_Termos
+  _ntTermos = _ntTermos.filter(function(t){ return t.id !== id; });
+  renderNtGrid();
+  sc2Init();
+  renderNbProgresso();
+  if (currentStudent) {
+    callScript('action=deletar_nt_termo&login=' + encodeURIComponent(currentStudent.login) + '&id=' + encodeURIComponent(id), function(){}, function(){});
+  }
 }
 
 function updateLiveBadge() {
