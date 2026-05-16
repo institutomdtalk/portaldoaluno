@@ -2666,6 +2666,35 @@ function renderDashboard(a, avisos) {
 
   document.getElementById('hdr-nome').textContent = a.nome_display || a.login;
 
+  // Greeting
+  var h = new Date().getHours();
+  var greet = h < 12 ? 'Good morning,' : h < 18 ? 'Good afternoon,' : 'Good evening,';
+  var hdrG = document.getElementById('hdr-greeting');
+  if (hdrG) hdrG.textContent = greet;
+
+  // Próxima aula
+  var proxEl = document.getElementById('proxima-aula-txt');
+  if (proxEl) proxEl.innerHTML = (a.proxima_aula && a.proxima_aula.trim())
+    ? a.proxima_aula
+    : '<span class="proxima-aula-vazia">Não informada</span>';
+
+  // Meet button
+  var meetBtn = document.getElementById('btn-meet');
+  if (meetBtn) {
+    if (a.link_meet && a.link_meet.trim()) {
+      meetBtn.href = a.link_meet;
+      meetBtn.style.display = 'flex';
+    } else {
+      meetBtn.style.display = 'none';
+    }
+  }
+
+  // Course info
+  var espacoTitulo = document.getElementById('espaco-titulo');
+  var espacoDesc   = document.getElementById('espaco-desc');
+  if (espacoTitulo && a.curso)            espacoTitulo.textContent = a.curso;
+  if (espacoDesc   && a.descricao_curso)  espacoDesc.textContent   = a.descricao_curso;
+
   // Init bell notifications
   initBell(avisos || []);
 
