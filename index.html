@@ -1767,7 +1767,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <div style="display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-top:10px">
           <button id="btn-live" onclick="toggleLiveMode()">
             <span class="live-pulse"></span>
-            Live
+            Registre durante a Aula
           </button>
 
 
@@ -2395,7 +2395,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   <div class="lp-head">
     <div class="lp-head-left">
       <span class="live-pulse"></span>
-      <span class="lp-title">Live Class Mode</span>
+      <span class="lp-title">Registre durante a Aula</span>
       <span id="lp-count-badge">0</span>
     </div>
     <button class="lp-close" id="lp-close-btn">
@@ -3840,7 +3840,7 @@ function salvarLiveItem() {
   var secao = secaoMap[_liveTag] || 'vocabulario';
 
   // Add to NT_Termos array and re-render banco
-  var novoTermo = { id:id, secao:secao, termo:text, traducao:'', exemplo:'', fonte:'Live Class', confianca:'0', data_entrada:hoje };
+  var novoTermo = { id:id, secao:secao, termo:text, traducao:'', exemplo:'', fonte:'Registre durante a Aula', confianca:'0', data_entrada:hoje };
   _ntTermos.unshift(novoTermo);
   renderNtGrid();
   sc2Init();
@@ -3853,7 +3853,7 @@ function salvarLiveItem() {
       '&id=' + encodeURIComponent(id) +
       '&secao=' + encodeURIComponent(secao) +
       '&termo=' + encodeURIComponent(text) +
-      '&traducao=&exemplo=&fonte=' + encodeURIComponent('Live Class'),
+      '&traducao=&exemplo=&fonte=' + encodeURIComponent('Registre durante a Aula'),
       function(d){ /* silently saved */ },
       function(){ /* offline fallback ok */ }
     );
@@ -4451,7 +4451,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.key === 'Escape') closeDrawer();
   });
 
-  // Live Class Mode
+  // Registre durante a Aula
   var lpClose = document.getElementById('lp-close-btn');
   if (lpClose) lpClose.addEventListener('click', toggleLiveMode);
   var lpSave = document.getElementById('lp-save-btn');
