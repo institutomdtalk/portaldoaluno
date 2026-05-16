@@ -2993,15 +2993,14 @@ function marcarTodosLidos() {
 var _trilhaOpen = false;
 function toggleTrilha() {
   var collapse = document.getElementById('trilha-more-rows');
-  var btn      = document.getElementById('btn-trilha-toggle');
+  var btn      = document.getElementById('btn-trilha-mais');
+  var chevron  = document.getElementById('trilha-mais-chevron');
   _trilhaOpen  = !_trilhaOpen;
   if (collapse) collapse.classList.toggle('open', _trilhaOpen);
-  if (btn) {
-    btn.classList.toggle('open', _trilhaOpen);
-    btn.innerHTML = (_trilhaOpen ? 'Ver menos' : 'Ver mais') +
-      ' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
-  }
+  if (btn) btn.firstChild.textContent = _trilhaOpen ? 'Ver menos ' : 'Ver mais ';
+  if (chevron) chevron.style.transform = _trilhaOpen ? 'rotate(180deg)' : '';
 }
+function toggleTrilhaMais() { toggleTrilha(); }
 
 // ── TOGGLE PDF EXTRA ──
 function togglePdfExtra(uid, btn) {
@@ -4242,19 +4241,13 @@ function closePdfModal() {
 
 // ── TRILHA DE APRENDIZADO ──
 function renderTrilha(trilha) {
-  var container = document.getElementById('trilha-content');
-  var resumo    = document.getElementById('trilha-resumo');
+  var container = document.getElementById('trilha-lista');
   if (!container) return;
   if (!trilha || !trilha.length) {
-    container.innerHTML = '<p class="trilha-empty">Sua trilha ainda não foi configurada.</p>';
-    if (resumo) resumo.textContent = 'Sua trilha personalizada aparecerá aqui.';
+    container.innerHTML = '<p style="font-size:13px;color:var(--text-muted);font-style:italic">Sua trilha ainda não foi configurada.</p>';
     return;
   }
   var concluidos = trilha.filter(function(m){ return m.concluido; }).length;
-  if (resumo) resumo.textContent = concluidos + ' de ' + trilha.length + ' lições concluídas · ' + Math.round((concluidos/trilha.length)*100) + '% completo';
-  var gramatica   = trilha.filter(function(m){ return m.tipo === 'gramatica' || m.tipo === 'gramática'; });
-  var vocabulario = trilha.filter(function(m){ return m.tipo === 'vocabulario' || m.tipo === 'vocabulário'; });
-  var outros      = trilha.filter(function(m){ return m.tipo !== 'gramatica' && m.tipo !== 'gramática' && m.tipo !== 'vocabulario' && m.tipo !== 'vocabulário'; });
   // First 3 cards visible, rest collapsible
   var allCards = trilha.map(buildTrilhaCard);
   var firstRow = allCards.slice(0, 3);
@@ -4262,11 +4255,11 @@ function renderTrilha(trilha) {
   var html = '<div class="trilha-grid" id="trilha-first-row">' + firstRow.join('') + '</div>';
   if (restRows.length) {
     html += '<div class="trilha-collapse" id="trilha-more-rows"><div class="trilha-grid" style="margin-top:16px">' + restRows.join('') + '</div></div>';
-    html += '<button class="btn-trilha-toggle" id="btn-trilha-toggle" onclick="toggleTrilha()">' +
-              'Ver mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>' +
-            '</button>';
   }
   container.innerHTML = html;
+  // Show "ver mais" button
+  var maisWrap = document.getElementById('trilha-mais-wrap');
+  if (maisWrap) maisWrap.style.display = restRows.length ? 'block' : 'none';
   container.querySelectorAll('.trilha-card[data-url]').forEach(function(card) {
     card.addEventListener('click', function(e) {
       if (e.target.closest('.trilha-check') || e.target.closest('.trilha-btn-pdf')) return;
@@ -4282,15 +4275,10 @@ function renderTrilha(trilha) {
       btn.classList.toggle('done', !done);
       var card = btn.closest('.trilha-card');
       if (card) card.classList.toggle('concluido', !done);
-      // Update button text
       var textNode = btn.lastChild;
       if (textNode && textNode.nodeType === 3) textNode.textContent = !done ? 'Concluído' : 'Concluir';
       var item = window._trilhaData && window._trilhaData.find(function(m){ return m.ordem === ordem; });
       if (item) item.concluido = !done;
-      var concl = (window._trilhaData || []).filter(function(m){ return m.concluido; }).length;
-      var total = (window._trilhaData || []).length;
-      var resumoEl = document.getElementById('trilha-resumo');
-      if (resumoEl) resumoEl.textContent = concl + ' de ' + total + ' lições concluídas · ' + Math.round((concl/total)*100) + '% completo';
       if (currentStudent) {
         callScript(
           'action=concluir_modulo&login=' + encodeURIComponent(currentStudent.login) + '&ordem=' + ordem + '&concluido=' + novoValor,
