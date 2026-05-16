@@ -1271,15 +1271,15 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .sc2-title em{font-style:italic;color:#c8a96e}
 .sc2-subtitle{font-size:13px;color:#888}
 .sc2-filters-row{display:flex;align-items:center;gap:8px;margin-bottom:24px;flex-wrap:wrap}
-.sc2-cat-btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:0.5px;padding:9px 18px;border-radius:50px;border:none;background:#1a1a2e;color:#fff;cursor:pointer;transition:all 0.2s}
-.sc2-cat-btn svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round}
-.sc2-cat-btn.inactive{background:rgba(26,26,46,0.08);color:#555}
-.sc2-cat-btn.inactive svg{stroke:#555}
+.sc2-cat-btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:0.5px;padding:9px 20px;border-radius:50px;border:none;background:#1a1a2e;color:#fff;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.sc2-cat-btn svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+.sc2-cat-btn.inactive{background:rgba(26,26,46,0.09);color:#666}
+.sc2-cat-btn.inactive svg{stroke:#666}
 .sc2-cat-btn:hover{opacity:0.85}
-.sc2-mode-group{display:flex;align-items:center;gap:0;border:1px solid rgba(0,0,0,0.12);border-radius:50px;overflow:hidden;background:#fff;margin-left:auto}
-.sc2-mode-btn{font-family:var(--sans);font-size:12px;font-weight:600;padding:8px 18px;border:none;background:transparent;color:#888;cursor:pointer;transition:all 0.2s;white-space:nowrap}
-.sc2-mode-btn.active{background:#1a1a2e;color:#fff;border-radius:50px}
-.sc2-mode-btn:hover:not(.active){color:#1a1a1a}
+.sc2-mode-group{display:flex;align-items:center;border:1.5px solid rgba(0,0,0,0.14);border-radius:50px;overflow:hidden;background:#fff;margin-left:auto}
+.sc2-mode-btn{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:0.3px;padding:8px 16px;border:none;background:transparent;color:#999;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.sc2-mode-btn.active{background:#1a1a2e;color:#fff;border-radius:50px;margin:2px}
+.sc2-mode-btn:hover:not(.active){color:#333}
 /* Instruction card */
 .sc2-instructions{background:#fff;border-radius:18px;padding:24px 28px;margin-bottom:28px;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
 .sc2-inst-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-bottom:16px}
@@ -1999,11 +1999,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <p class="sc2-subtitle" id="sc2-subtitle">0 cards disponíveis</p>
       </div>
       <div class="sc2-filters-row">
-        <button class="sc2-cat-btn active" data-sc="todos" onclick="sc2Filtrar('todos',this)">
-          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-          TODOS
-        </button>
-        <button class="sc2-cat-btn inactive" data-sc="vocabulario" onclick="sc2Filtrar('vocabulario',this)">
+        <button class="sc2-cat-btn active" data-sc="vocabulario" onclick="sc2Filtrar('vocabulario',this)">
           <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
           VOCABULÁRIO
         </button>
@@ -2016,7 +2012,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
           TERMOS
         </button>
         <div class="sc2-mode-group">
-          <button class="sc2-mode-btn active">TERMO → PT</button>
+          <button class="sc2-mode-btn active" onclick="sc2Filtrar('todos',null)">TERMO → PT</button>
           <button class="sc2-mode-btn">PT → TERMO</button>
           <button class="sc2-mode-btn" onclick="sc2Embaralhar()">ALEATÓRIO</button>
         </div>
