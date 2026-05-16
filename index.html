@@ -3191,17 +3191,18 @@ function _gravarRegistro(status) {
 
 // ── LOGOUT ──
 function doLogout() {
-  currentStudent=null; stopClock();
-  localStorage.removeItem('mdtalk_login');
-  localStorage.removeItem('mdtalk_senha');
-  document.getElementById('f-login').value=''; document.getElementById('f-senha').value='';
-  document.getElementById('login-err').style.display='none';
-  document.getElementById('mural-content').innerHTML='<div style="color:var(--text-muted);font-size:13px"><span class="spinner-inline"></span>Carregando...</div>';
-  var ms = document.getElementById('materiais-section'); if (ms) ms.style.display='none';
-  _anotData = []; _anotOpen = false; _matOpen = false;
-  var mc = document.getElementById('mat-collapse'); if(mc) mc.style.maxHeight='0';
-  var ach = document.getElementById('anot-chevron-svg'); if(ach) ach.style.transform='';
-  showPage('login');
+  try {
+    currentStudent = null;
+    stopClock();
+    localStorage.removeItem('mdtalk_login');
+    localStorage.removeItem('mdtalk_senha');
+    var fl = document.getElementById('f-login'); if(fl) fl.value='';
+    var fs = document.getElementById('f-senha'); if(fs) fs.value='';
+    var le = document.getElementById('login-err'); if(le) le.style.display='none';
+    _anotData = []; _anotOpen = false; _matOpen = false;
+  } catch(e) {}
+  // Force reload to login — cleanest approach
+  location.reload();
 }
 
 // ── TOAST ──
