@@ -385,7 +385,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 .header-student-name{
   font-family:var(--serif);
-  font-size:1.5rem;
+  font-size:1.2rem;
   font-weight:400;
   color:var(--white);
   line-height:1;
@@ -1239,7 +1239,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nt-card-tag.frases{background:#e8f5e9;color:#2e7d32}
 .nt-card-tag.termos{background:#ede7f6;color:#6d28d9}
 .nt-card-tag.anotacoes{background:#e8f5e9;color:#2e7d32}
-.nt-card-termo{font-family:var(--serif);font-size:1.3rem;font-weight:400;color:#1a1a1a;line-height:1.3;margin-bottom:6px}
+.nt-card-termo{font-family:var(--serif);font-size:1.05rem;font-weight:400;color:#1a1a1a;line-height:1.3;margin-bottom:6px}
 .nt-card-traducao{font-size:13px;color:#c8a96e;margin-bottom:10px;font-style:normal;font-weight:500}
 .nt-card-exemplo{font-size:12.5px;color:#888;line-height:1.55;margin-bottom:14px;font-style:italic}
 .nt-card-date{font-size:11px;color:#bbb;font-family:var(--sans)}
@@ -1248,11 +1248,26 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nt-card-del:hover{color:#e53e3e;background:#fff0f0}
 .nt-empty{text-align:center;padding:60px 20px;color:#aaa;font-size:14px;grid-column:1/-1}
 
+/* ── Modal Nova Entrada ── */
+.nt-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);z-index:800;align-items:center;justify-content:center;padding:20px;visibility:hidden}
+.nt-modal-overlay.active{display:flex;visibility:visible}
+.nt-modal{background:#fff;border-radius:20px;padding:28px 32px;max-width:500px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.2);animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both}
+.nt-modal-title{font-family:var(--serif);font-size:1.3rem;font-weight:400;color:#1a1a1a;margin-bottom:20px}
+.nt-form-row{margin-bottom:14px}
+.nt-form-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#aaa;margin-bottom:6px;display:block}
+.nt-form-input,.nt-form-select,.nt-form-textarea{width:100%;padding:10px 14px;border:1px solid rgba(0,0,0,0.12);border-radius:10px;font-family:var(--sans);font-size:13px;color:#1a1a1a;outline:none;transition:border-color 0.3s;background:#fff;box-sizing:border-box}
+.nt-form-input:focus,.nt-form-select:focus,.nt-form-textarea:focus{border-color:#c8a96e}
+.nt-form-textarea{resize:vertical;min-height:80px}
+.nt-form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.nt-modal-footer{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+.nt-btn-cancel{background:none;border:1px solid rgba(0,0,0,0.12);color:#888;padding:9px 18px;border-radius:50px;font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s}
+.nt-btn-cancel:hover{border-color:rgba(0,0,0,0.25);color:#1a1a1a}
+
 /* ── Smart Cards ── */
 .sc2-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:40px}
 .sc2-wrap{max-width:680px;margin:0 auto}
 .sc2-header{margin-bottom:28px}
-.sc2-title{font-family:var(--serif);font-size:1.9rem;font-weight:400;color:#1a1a1a;margin-bottom:4px}
+.sc2-title{font-family:var(--serif);font-size:1.2rem;font-weight:400;color:#1a1a1a;margin-bottom:4px}
 .sc2-title em{font-style:italic;color:#c8a96e}
 .sc2-subtitle{font-size:13px;color:#888}
 .sc2-filters-row{display:flex;align-items:center;gap:8px;margin-bottom:24px;flex-wrap:wrap}
@@ -1284,7 +1299,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .sc2-card-icon{width:44px;height:44px;border-radius:12px;background:#f5f3ee;border:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
 .sc2-card-icon svg{width:20px;height:20px;fill:none;stroke:#aaa;stroke-width:1.5;stroke-linecap:round}
 .sc2-card-section{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-bottom:10px}
-.sc2-card-termo{font-family:var(--serif);font-size:1.7rem;font-weight:400;color:#1a1a1a;margin-bottom:10px;line-height:1.2}
+.sc2-card-termo{font-family:var(--serif);font-size:1.3rem;font-weight:400;color:#1a1a1a;margin-bottom:10px;line-height:1.2}
 .sc2-card-hint{font-size:12px;color:#bbb;display:flex;align-items:center;gap:5px}
 .sc2-card-hint svg{width:12px;height:12px;fill:none;stroke:#bbb;stroke-width:2;stroke-linecap:round}
 /* Back face */
@@ -1542,7 +1557,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   .pag-mes-atual{background:linear-gradient(135deg,var(--navy-deep),var(--navy));border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative;overflow:hidden}
   .pag-mes-atual::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0.3}
   .pag-mes-atual-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
-  .pag-mes-atual-valor{font-family:var(--serif);font-size:1.5rem;font-weight:400;color:var(--white);line-height:1}
+  .pag-mes-atual-valor{font-family:var(--serif);font-size:1.2rem;font-weight:400;color:var(--white);line-height:1}
   .pag-mes-atual-venc{font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px}
 
   /* ═══ ANOTAÇÕES ═══ */
@@ -2073,43 +2088,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
           <svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
           Embaralhar
         </button>
-      </div>
-    </div>
-  </div>
-  <!-- ══ MODAL NOVA ENTRADA ══ -->
-  <div class="nt-modal-overlay" id="nt-modal">
-    <div class="nt-modal">
-      <h3 class="nt-modal-title">Nova Entrada</h3>
-      <div class="nt-form-row">
-        <label class="nt-form-label">Seção</label>
-        <select id="nt-secao" class="nt-form-select">
-          <option value="vocabulario">Vocabulário</option>
-          <option value="frases">Frases</option>
-          <option value="termos">Termos Clínicos</option>
-          <option value="anotacoes">Anotações</option>
-        </select>
-      </div>
-      <div class="nt-form-row">
-        <label class="nt-form-label">Termo / Título</label>
-        <input type="text" id="nt-termo" class="nt-form-input" placeholder="Ex: Dyspnea, Heart failure...">
-      </div>
-      <div class="nt-form-row-2">
-        <div class="nt-form-row" style="margin-bottom:0">
-          <label class="nt-form-label">Tradução (PT)</label>
-          <input type="text" id="nt-traducao" class="nt-form-input" placeholder="Ex: Dispneia">
-        </div>
-        <div class="nt-form-row" style="margin-bottom:0">
-          <label class="nt-form-label">Fonte</label>
-          <input type="text" id="nt-fonte" class="nt-form-input" placeholder="Ex: Aula, Artigo...">
-        </div>
-      </div>
-      <div class="nt-form-row">
-        <label class="nt-form-label">Exemplo em inglês</label>
-        <textarea id="nt-exemplo" class="nt-form-textarea" placeholder="Ex: The patient presents with severe dyspnea at rest."></textarea>
-      </div>
-      <div class="nt-modal-footer">
-        <button class="nt-btn-cancel" onclick="fecharModalNovoTermo()">Cancelar</button>
-        <button class="nt-btn nt-btn-primary" onclick="salvarNovoTermo()">Salvar Entrada</button>
       </div>
     </div>
   </div>
@@ -4702,6 +4680,45 @@ window.addEventListener('load', function(){
 </script>
 
 <!-- MODALS -->
+
+
+  <!-- ══ MODAL NOVA ENTRADA ══ -->
+  <div class="nt-modal-overlay" id="nt-modal">
+    <div class="nt-modal">
+      <h3 class="nt-modal-title">Nova Entrada</h3>
+      <div class="nt-form-row">
+        <label class="nt-form-label">Seção</label>
+        <select id="nt-secao" class="nt-form-select">
+          <option value="vocabulario">Vocabulário</option>
+          <option value="frases">Frases</option>
+          <option value="termos">Termos Clínicos</option>
+          <option value="anotacoes">Anotações</option>
+        </select>
+      </div>
+      <div class="nt-form-row">
+        <label class="nt-form-label">Termo / Título</label>
+        <input type="text" id="nt-termo" class="nt-form-input" placeholder="Ex: Dyspnea, Heart failure...">
+      </div>
+      <div class="nt-form-row-2">
+        <div class="nt-form-row" style="margin-bottom:0">
+          <label class="nt-form-label">Tradução (PT)</label>
+          <input type="text" id="nt-traducao" class="nt-form-input" placeholder="Ex: Dispneia">
+        </div>
+        <div class="nt-form-row" style="margin-bottom:0">
+          <label class="nt-form-label">Fonte</label>
+          <input type="text" id="nt-fonte" class="nt-form-input" placeholder="Ex: Aula, Artigo...">
+        </div>
+      </div>
+      <div class="nt-form-row">
+        <label class="nt-form-label">Exemplo em inglês</label>
+        <textarea id="nt-exemplo" class="nt-form-textarea" placeholder="Ex: The patient presents with severe dyspnea at rest."></textarea>
+      </div>
+      <div class="nt-modal-footer">
+        <button class="nt-btn-cancel" onclick="fecharModalNovoTermo()">Cancelar</button>
+        <button class="nt-btn nt-btn-primary" onclick="salvarNovoTermo()">Salvar Entrada</button>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
