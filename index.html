@@ -1140,6 +1140,107 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .cal-modal-close svg{width:12px;height:12px;stroke:var(--text-muted);fill:none;stroke-width:2.5;stroke-linecap:round}
 
 /* ═══════════════════════════════════════
+   LIVE CLASS MODE
+═══════════════════════════════════════ */
+#btn-live{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);
+  color:rgba(34,197,94,0.9);font-family:var(--sans);font-size:9px;
+  font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  padding:7px 14px;border-radius:20px;cursor:pointer;
+  transition:all 0.3s ease;flex-shrink:0;
+}
+#btn-live:hover,#btn-live.active{background:rgba(34,197,94,0.2);border-color:#22c55e;color:#22c55e}
+.live-pulse{
+  width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;
+  animation:pulsering 1.5s ease-out infinite;
+}
+/* Live Panel */
+#live-panel{
+  position:fixed;bottom:24px;right:24px;width:340px;
+  background:var(--navy-deep);border:1px solid rgba(196,164,90,0.25);
+  border-radius:var(--radius);box-shadow:0 24px 60px rgba(0,0,0,0.5);
+  z-index:600;display:none;flex-direction:column;
+  overflow:hidden;max-height:80vh;
+  animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both;
+}
+#live-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(34,197,94,0.5),transparent)}
+#live-panel.open{display:flex}
+.lp-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.07);flex-shrink:0}
+.lp-head-left{display:flex;align-items:center;gap:8px}
+.lp-title{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.7)}
+#lp-count-badge{font-family:var(--sans);font-size:9px;font-weight:700;background:rgba(34,197,94,0.2);color:#22c55e;padding:2px 8px;border-radius:20px;border:1px solid rgba(34,197,94,0.3)}
+.lp-close{background:none;border:1px solid rgba(255,255,255,0.15);border-radius:50%;width:24px;height:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.4);transition:all 0.2s;flex-shrink:0}
+.lp-close:hover{border-color:var(--gold);color:var(--gold)}
+/* Tags */
+.lp-tags-row{display:flex;gap:6px;padding:10px 16px;flex-shrink:0;flex-wrap:wrap}
+.lp-tag{font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:20px;border:1px solid rgba(255,255,255,0.12);background:none;color:rgba(255,255,255,0.35);cursor:pointer;transition:all 0.2s}
+.lp-tag:hover{border-color:var(--gold);color:var(--gold)}
+.lp-tag.active{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
+/* Input */
+.lp-body{padding:0 16px 12px;flex-shrink:0}
+.lp-textarea{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(196,164,90,0.2);border-radius:var(--radius);color:var(--white);font-family:var(--sans);font-size:13px;padding:10px 12px;resize:none;outline:none;line-height:1.6;transition:border-color 0.3s}
+.lp-textarea:focus{border-color:rgba(196,164,90,0.5)}
+.lp-textarea::placeholder{color:rgba(255,255,255,0.2)}
+.lp-save-btn{margin-top:8px;width:100%;display:flex;align-items:center;justify-content:center;gap:6px;background:#22c55e;color:#fff;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:10px;border:none;border-radius:var(--radius);cursor:pointer;transition:all 0.3s}
+.lp-save-btn:hover{background:#16a34a}
+.lp-enter-hint{font-size:9px;opacity:0.6;font-weight:400;letter-spacing:0}
+/* Feed */
+.lp-feed{flex:1;overflow-y:auto;padding:8px 16px 16px;display:flex;flex-direction:column;gap:6px;min-height:0}
+.lp-item{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius);padding:10px 12px;position:relative}
+.lp-item-tag{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;display:inline-block;padding:2px 8px;border-radius:20px}
+.lp-item-tag.vocabulario{background:rgba(196,164,90,0.15);color:var(--gold)}
+.lp-item-tag.frases{background:rgba(99,102,241,0.15);color:#818cf8}
+.lp-item-tag.termos{background:rgba(34,197,94,0.15);color:#4ade80}
+.lp-item-tag.anotacoes{background:rgba(251,146,60,0.15);color:#fb923c}
+.lp-item-text{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.5;font-family:var(--sans)}
+.lp-item-del{position:absolute;top:8px;right:8px;background:none;border:none;color:rgba(255,255,255,0.2);cursor:pointer;font-size:12px;line-height:1;padding:2px 4px;border-radius:3px;transition:all 0.2s}
+.lp-item-del:hover{color:#f87171;background:rgba(248,113,113,0.1)}
+.lp-empty{font-size:12px;color:rgba(255,255,255,0.2);text-align:center;padding:20px 0;font-style:italic}
+
+/* ═══════════════════════════════════════
+   BANCO DE TERMOS
+═══════════════════════════════════════ */
+.termo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-top:14px}
+.termo-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;transition:all 0.3s ease;position:relative}
+.termo-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:var(--border-gold)}
+.termo-card-tag{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px}
+.termo-card-tag.vocabulario{background:rgba(196,164,90,0.1);color:#92400E}
+.termo-card-tag.frases{background:#EDE9FE;color:#6D28D9}
+.termo-card-tag.termos{background:#D8F3DC;color:#2D6A4F}
+.termo-card-tag.anotacoes{background:#FEF3C7;color:#92400E}
+.termo-card-text{font-family:var(--serif);font-size:1rem;font-weight:500;color:var(--navy);line-height:1.3;margin-bottom:6px}
+.termo-card-date{font-size:10px;color:var(--text-muted)}
+.termo-card-del{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:12px;padding:2px 5px;border-radius:3px;transition:all 0.2s;opacity:0}
+.termo-card:hover .termo-card-del{opacity:1}
+.termo-card-del:hover{color:var(--danger);background:var(--danger-bg)}
+
+/* Smart Cards */
+.smartcard-wrap{perspective:1000px;cursor:pointer;height:160px}
+.smartcard{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1)}
+.smartcard.flipped{transform:rotateY(180deg)}
+.smartcard-face{
+  position:absolute;inset:0;backface-visibility:hidden;
+  border:1px solid var(--border);border-radius:var(--radius);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:16px;text-align:center;background:var(--white);
+}
+.smartcard-back{transform:rotateY(180deg);background:linear-gradient(135deg,var(--navy-deep),var(--navy))}
+.smartcard-face .sc-tag{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.smartcard-face .sc-text{font-family:var(--serif);font-size:1.1rem;font-weight:500;color:var(--navy);line-height:1.3}
+.smartcard-back .sc-text{color:var(--white);font-size:0.95rem}
+.smartcard-back .sc-tag{color:var(--gold-light)}
+.sc-hint{font-size:9px;color:var(--text-muted);margin-top:auto;letter-spacing:1px;text-transform:uppercase}
+.smartcard-back .sc-hint{color:rgba(255,255,255,0.3)}
+.sc-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px}
+.sc-nav-btn{background:none;border:1px solid var(--border);border-radius:50%;width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.25s;color:var(--text-muted)}
+.sc-nav-btn:hover{border-color:var(--gold);color:var(--gold)}
+.sc-counter{font-family:var(--serif);font-size:1rem;color:var(--navy)}
+.sc-filter-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.sc-filter{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--text-muted);cursor:pointer;transition:all 0.2s}
+.sc-filter.active{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
+
+/* ═══════════════════════════════════════
    SININHO DE AVISOS
 ═══════════════════════════════════════ */
 .bell-wrap{position:relative;flex-shrink:0}
@@ -1522,6 +1623,11 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
             </button>
             <span class="bell-badge hidden" id="bell-badge">0</span>
           </div>
+          <button id="btn-live" onclick="toggleLiveMode()">
+            <span class="live-pulse"></span>
+            Live
+          </button>
+
 
         </div>
       </div>
@@ -1620,6 +1726,79 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <button id="btn-drive-toggle" style="display:none;margin:16px auto 0;background:none;border:1px solid var(--border-gold);color:var(--gold);font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border-radius:var(--radius);cursor:pointer;transition:all 0.3s ease;width:fit-content" onclick="toggleDriveFiles()">
           Ver mais <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-left:4px" id="drive-toggle-chevron"><path d="M6 9l6 6 6-6"/></svg>
         </button>
+      </div>
+    </div>
+
+    <!-- BANCO DE TERMOS -->
+    <div class="card reveal" style="grid-column:1/-1">
+      <div class="card-pad">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:4px">
+          <div>
+            <p class="card-overline" style="margin-bottom:4px">Caderno do Aluno</p>
+            <h3 class="card-title" style="margin-bottom:0">Banco de Termos</h3>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <div class="sc-filter-bar" style="margin:0" id="termo-filter-bar">
+              <button class="sc-filter active" data-tag="todos" onclick="filtrarTermos('todos',this)">Todos</button>
+              <button class="sc-filter" data-tag="vocabulario" onclick="filtrarTermos('vocabulario',this)">Vocab</button>
+              <button class="sc-filter" data-tag="frases" onclick="filtrarTermos('frases',this)">Frases</button>
+              <button class="sc-filter" data-tag="termos" onclick="filtrarTermos('termos',this)">Termos</button>
+              <button class="sc-filter" data-tag="anotacoes" onclick="filtrarTermos('anotacoes',this)">Dúvidas</button>
+            </div>
+            <span id="termo-count" style="font-size:10px;color:var(--text-muted);font-family:var(--sans)">0 itens</span>
+          </div>
+        </div>
+        <p class="card-desc" style="margin-bottom:16px">Tudo que você anotou no Live Class Mode aparece aqui — organize, revise e transforme em Smart Cards.</p>
+        <div id="termo-grid" class="termo-grid">
+          <p style="font-size:13px;color:var(--text-muted);font-style:italic;grid-column:1/-1">Nenhum termo ainda. Use o Live Class Mode durante suas aulas!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SMART CARDS -->
+    <div class="card reveal" style="grid-column:1/-1">
+      <div class="card-pad">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:4px">
+          <div>
+            <p class="card-overline" style="margin-bottom:4px">Revisão Ativa</p>
+            <h3 class="card-title" style="margin-bottom:0">Smart Cards</h3>
+          </div>
+          <div class="sc-filter-bar" style="margin:0" id="sc-filter-bar">
+            <button class="sc-filter active" data-tag="todos" onclick="filtrarSmartCards('todos',this)">Todos</button>
+            <button class="sc-filter" data-tag="vocabulario" onclick="filtrarSmartCards('vocabulario',this)">Vocab</button>
+            <button class="sc-filter" data-tag="frases" onclick="filtrarSmartCards('frases',this)">Frases</button>
+            <button class="sc-filter" data-tag="termos" onclick="filtrarSmartCards('termos',this)">Termos</button>
+          </div>
+        </div>
+        <p class="card-desc" style="margin-bottom:20px">Clique no card para revelar o contexto. Use as setas para navegar.</p>
+        <div id="sc-empty" style="font-size:13px;color:var(--text-muted);font-style:italic;text-align:center;padding:24px 0">Adicione termos no Banco para criar Smart Cards automaticamente.</div>
+        <div id="sc-wrap" style="display:none">
+          <div id="sc-card-wrap" style="max-width:400px;margin:0 auto">
+            <div class="smartcard-wrap" onclick="flipSmartCard()">
+              <div class="smartcard" id="sc-card">
+                <div class="smartcard-face">
+                  <span class="sc-tag" id="sc-front-tag"></span>
+                  <p class="sc-text" id="sc-front-text"></p>
+                  <span class="sc-hint">Clique para ver mais</span>
+                </div>
+                <div class="smartcard-face smartcard-back">
+                  <span class="sc-tag">Contexto</span>
+                  <p class="sc-text" id="sc-back-text"></p>
+                  <span class="sc-hint">Clique para virar</span>
+                </div>
+              </div>
+            </div>
+            <div class="sc-nav">
+              <button class="sc-nav-btn" onclick="scPrev()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <span class="sc-counter"><span id="sc-idx">1</span> / <span id="sc-total">0</span></span>
+              <button class="sc-nav-btn" onclick="scNext()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -2156,6 +2335,36 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   <button class="drive-zoom-btn" onclick="zoomViewer(1)" title="Ampliar">+</button>
 </div>
 
+<!-- LIVE CLASS PANEL -->
+<div id="live-panel">
+  <div class="lp-head">
+    <div class="lp-head-left">
+      <span class="live-pulse"></span>
+      <span class="lp-title">Live Class Mode</span>
+      <span id="lp-count-badge">0</span>
+    </div>
+    <button class="lp-close" id="lp-close-btn">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="lp-tags-row">
+    <button class="lp-tag active" data-tag="vocabulario">Vocab</button>
+    <button class="lp-tag" data-tag="frases">Frase</button>
+    <button class="lp-tag" data-tag="termos">Termo</button>
+    <button class="lp-tag" data-tag="anotacoes">Dúvida</button>
+  </div>
+  <div class="lp-body">
+    <textarea id="lp-nota" class="lp-textarea" placeholder="Anote aqui — vocab, frase, termo ou dúvida..." rows="3"></textarea>
+    <button class="lp-save-btn" id="lp-save-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      Salvar <span class="lp-enter-hint">↵ Enter</span>
+    </button>
+  </div>
+  <div class="lp-feed" id="lp-feed">
+    <p class="lp-empty">Nenhuma anotação ainda. Comece a digitar!</p>
+  </div>
+</div>
+
 <!-- BELL DROPDOWN -->
 <div class="bell-dropdown" id="bell-dropdown">
   <div class="bell-dropdown-header">
@@ -2373,6 +2582,8 @@ function renderDashboard(a, avisos) {
   verificarRegistroHoje(a.historico);
   carregarAnotacoes(a.anotacoes || []);
   window._trilhaData = a.trilha || [];
+  // Load live class items
+  loadLiveItems();
   // Load Drive concluded state
   carregarDriveConcluidos();
   // Load Drive files
@@ -3087,6 +3298,185 @@ function resetVerbos() {
   atualizarContadoresVerbos();
 }
 
+// ── LIVE CLASS MODE ──
+var _liveOpen = false;
+var _liveTag = 'vocabulario';
+var _liveItems = [];
+var _scItems = [];
+var _scFiltered = [];
+var _scIdx = 0;
+
+function getLiveKey() {
+  return 'mdtalk_live_' + (currentStudent ? currentStudent.login : 'guest');
+}
+
+function loadLiveItems() {
+  _liveItems = JSON.parse(localStorage.getItem(getLiveKey()) || '[]');
+  renderLiveFeed();
+  renderTermoGrid();
+  renderSmartCards();
+}
+
+function saveLiveItems() {
+  localStorage.setItem(getLiveKey(), JSON.stringify(_liveItems));
+}
+
+function toggleLiveMode() {
+  _liveOpen = !_liveOpen;
+  var panel = document.getElementById('live-panel');
+  var btn   = document.getElementById('btn-live');
+  if (panel) panel.classList.toggle('open', _liveOpen);
+  if (btn)   btn.classList.toggle('active', _liveOpen);
+  if (_liveOpen) {
+    var ta = document.getElementById('lp-nota');
+    if (ta) setTimeout(function(){ ta.focus(); }, 100);
+  }
+}
+
+function salvarLiveItem() {
+  var ta = document.getElementById('lp-nota');
+  if (!ta) return;
+  var text = ta.value.trim();
+  if (!text) return;
+  var item = {
+    id: 'lv_' + Date.now(),
+    tag: _liveTag,
+    text: text,
+    date: new Date().toLocaleDateString('pt-BR', {day:'2-digit',month:'short',year:'numeric'})
+  };
+  _liveItems.unshift(item);
+  saveLiveItems();
+  ta.value = '';
+  ta.style.height = 'auto';
+  renderLiveFeed();
+  renderTermoGrid();
+  renderSmartCards();
+  updateLiveBadge();
+}
+
+function deleteLiveItem(id) {
+  _liveItems = _liveItems.filter(function(i){ return i.id !== id; });
+  saveLiveItems();
+  renderLiveFeed();
+  renderTermoGrid();
+  renderSmartCards();
+  updateLiveBadge();
+}
+
+function updateLiveBadge() {
+  var badge = document.getElementById('lp-count-badge');
+  if (badge) badge.textContent = _liveItems.length;
+}
+
+function renderLiveFeed() {
+  var feed = document.getElementById('lp-feed');
+  if (!feed) return;
+  updateLiveBadge();
+  if (!_liveItems.length) {
+    feed.innerHTML = '<p class="lp-empty">Nenhuma anotação ainda. Comece a digitar!</p>';
+    return;
+  }
+  feed.innerHTML = _liveItems.map(function(item) {
+    return '<div class="lp-item">' +
+      '<span class="lp-item-tag ' + item.tag + '">' + item.tag + '</span>' +
+      '<p class="lp-item-text">' + item.text + '</p>' +
+      '<button class="lp-item-del" onclick="deleteLiveItem(&quot;' + item.id + '&quot;)" title="Remover">✕</button>' +
+    '</div>';
+  }).join('');
+}
+
+// ── BANCO DE TERMOS ──
+var _termoFilter = 'todos';
+
+function renderTermoGrid() {
+  var grid    = document.getElementById('termo-grid');
+  var countEl = document.getElementById('termo-count');
+  if (!grid) return;
+  var items = _termoFilter === 'todos' ? _liveItems : _liveItems.filter(function(i){ return i.tag === _termoFilter; });
+  if (countEl) countEl.textContent = items.length + ' item' + (items.length !== 1 ? 's' : '');
+  if (!items.length) {
+    grid.innerHTML = '<p style="font-size:13px;color:var(--text-muted);font-style:italic;grid-column:1/-1">Nenhum item com este filtro.</p>';
+    return;
+  }
+  grid.innerHTML = items.map(function(item) {
+    return '<div class="termo-card">' +
+      '<span class="termo-card-tag ' + item.tag + '">' + item.tag + '</span>' +
+      '<p class="termo-card-text">' + item.text + '</p>' +
+      '<span class="termo-card-date">' + item.date + '</span>' +
+      '<button class="termo-card-del" onclick="deleteLiveItem(&quot;' + item.id + '&quot;)" title="Remover">✕</button>' +
+    '</div>';
+  }).join('');
+}
+
+function filtrarTermos(tag, btn) {
+  _termoFilter = tag;
+  document.querySelectorAll('#termo-filter-bar .sc-filter').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  renderTermoGrid();
+}
+
+// ── SMART CARDS ──
+var _scFilter = 'todos';
+
+function renderSmartCards() {
+  var tags = ['vocabulario','frases','termos'];
+  _scFiltered = (_scFilter === 'todos'
+    ? _liveItems.filter(function(i){ return tags.indexOf(i.tag) >= 0; })
+    : _liveItems.filter(function(i){ return i.tag === _scFilter; })
+  );
+  var empty = document.getElementById('sc-empty');
+  var wrap  = document.getElementById('sc-wrap');
+  var total = document.getElementById('sc-total');
+  if (!_scFiltered.length) {
+    if (empty) empty.style.display = 'block';
+    if (wrap)  wrap.style.display  = 'none';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+  if (wrap)  wrap.style.display  = 'block';
+  _scIdx = Math.min(_scIdx, _scFiltered.length - 1);
+  if (total) total.textContent = _scFiltered.length;
+  showSmartCard(_scIdx);
+}
+
+function showSmartCard(idx) {
+  var item = _scFiltered[idx];
+  if (!item) return;
+  var frontTag  = document.getElementById('sc-front-tag');
+  var frontText = document.getElementById('sc-front-text');
+  var backText  = document.getElementById('sc-back-text');
+  var idxEl     = document.getElementById('sc-idx');
+  var card      = document.getElementById('sc-card');
+  if (frontTag)  frontTag.textContent  = item.tag;
+  if (frontText) frontText.textContent = item.text;
+  if (backText)  backText.textContent  = item.text;
+  if (idxEl)     idxEl.textContent     = idx + 1;
+  if (card)      card.classList.remove('flipped');
+}
+
+function flipSmartCard() {
+  var card = document.getElementById('sc-card');
+  if (card) card.classList.toggle('flipped');
+}
+
+function scNext() {
+  _scIdx = (_scIdx + 1) % _scFiltered.length;
+  showSmartCard(_scIdx);
+}
+
+function scPrev() {
+  _scIdx = (_scIdx - 1 + _scFiltered.length) % _scFiltered.length;
+  showSmartCard(_scIdx);
+}
+
+function filtrarSmartCards(tag, btn) {
+  _scFilter = tag;
+  _scIdx = 0;
+  document.querySelectorAll('#sc-filter-bar .sc-filter').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  renderSmartCards();
+}
+
 // ── MODAL CALENDÁRIO ──
 function abrirModalCalendario() {
   var modal = document.getElementById('modal-calendario');
@@ -3535,6 +3925,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var btnSignout = document.getElementById('btn-signout');
   if (btnSignout) btnSignout.addEventListener('click', function(){ doLogout(); });
+
+  // Live Class Mode
+  var lpClose = document.getElementById('lp-close-btn');
+  if (lpClose) lpClose.addEventListener('click', toggleLiveMode);
+  var lpSave = document.getElementById('lp-save-btn');
+  if (lpSave) lpSave.addEventListener('click', salvarLiveItem);
+  var lpNota = document.getElementById('lp-nota');
+  if (lpNota) {
+    lpNota.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); salvarLiveItem(); }
+    });
+    lpNota.addEventListener('input', function(){ this.style.height='auto'; this.style.height=this.scrollHeight+'px'; });
+  }
+  document.querySelectorAll('.lp-tag').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.lp-tag').forEach(function(b){ b.classList.remove('active'); });
+      this.classList.add('active');
+      _liveTag = this.dataset.tag;
+    });
+  });
 
   var btnBell = document.getElementById('btn-bell');
   var bellDd  = document.getElementById('bell-dropdown');
