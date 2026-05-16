@@ -861,48 +861,51 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 ═══════════════════════════════════════ */
 .drive-card-grid{
   display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:12px;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
   margin-top:14px;
 }
-@media(max-width:768px){.drive-card-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:768px){.drive-card-grid{grid-template-columns:repeat(2,1fr)}}
 .drive-card-item{
   border:1px solid var(--border);border-radius:var(--radius);
-  overflow:hidden;cursor:pointer;
+  overflow:visible;
   transition:all 0.3s ease;background:var(--white);
   display:flex;flex-direction:column;
+  box-shadow:var(--shadow-sm);
+  position:relative;
 }
-.drive-card-item:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:var(--border-gold)}
+.drive-card-item:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:var(--border-gold)}
+.drive-card-item:hover::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:var(--radius) var(--radius) 0 0}
 .drive-card-thumb{
   width:100%;aspect-ratio:3/4;object-fit:cover;
   background:linear-gradient(135deg,var(--navy-deep),var(--navy));
-  display:block;
+  display:block;border-radius:var(--radius) var(--radius) 0 0;
 }
 .drive-card-thumb-placeholder{
   width:100%;aspect-ratio:3/4;
   background:linear-gradient(135deg,var(--navy-deep),var(--navy));
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:8px;
+  gap:8px;border-radius:var(--radius) var(--radius) 0 0;
 }
 .drive-card-thumb-placeholder svg{width:28px;height:28px;opacity:0.5;flex-shrink:0}
 .drive-card-thumb-placeholder span{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);font-family:var(--sans)}
 .drive-card-name{
-  padding:10px 12px 6px;
-  font-family:var(--serif);font-size:0.95rem;font-weight:500;color:var(--navy);
+  padding:10px 12px 4px;
+  font-family:var(--serif);font-size:0.9rem;font-weight:500;color:var(--navy);
   line-height:1.3;word-break:break-word;white-space:normal;
-  cursor:pointer;
+  cursor:pointer;flex:1;
 }
 .drive-card-footer{
   padding:8px 10px;border-top:1px solid var(--border);
   position:relative;
 }
 .drive-tag-btn{
-  display:inline-flex;align-items:center;gap:5px;
-  font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
   font-family:var(--sans);color:var(--text-muted);
   background:none;border:1px solid var(--border);
-  border-radius:20px;cursor:pointer;padding:5px 12px;
-  transition:all 0.25s;width:100%;justify-content:center;
+  border-radius:20px;cursor:pointer;padding:6px 14px;
+  transition:all 0.25s;width:100%;
 }
 .drive-tag-btn:hover{border-color:var(--gold);color:var(--gold)}
 .drive-tag-btn svg{width:11px;height:11px;flex-shrink:0}
@@ -2689,7 +2692,7 @@ function buildDriveTagMenu(fileId) {
   var r = _driveConluidos['drive_revisado_'  + fileId] || false;
   var h = _driveConluidos['drive_homework_'  + fileId] || false;
   var activeCount = (c?1:0)+(r?1:0)+(h?1:0);
-  var btnLabel = activeCount > 0 ? activeCount + ' marca' + (activeCount>1?'s':'') : 'Marcar';
+  var btnLabel = 'Selecionar';
   return '<button class="drive-tag-btn" onclick="toggleDriveMenu(event,&quot;' + fileId + '&quot;)">' +
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>' +
     btnLabel +
@@ -2742,7 +2745,7 @@ function toggleDriveTag(e, fileId, tag) {
   var mainBtn = cardItem ? cardItem.querySelector('.drive-tag-btn') : null;
   if (mainBtn) {
     var txt = mainBtn.lastChild;
-    if (txt && txt.nodeType === 3) txt.textContent = count > 0 ? count + ' marca' + (count>1?'s':'') : 'Marcar';
+    if (txt && txt.nodeType === 3) txt.textContent = 'Selecionar';
   }
 }
 var _driveZoom = 1;
@@ -2814,7 +2817,7 @@ function renderDriveFilesCard(files) {
   if (statusEl) statusEl.style.display = 'none';
   if (countEl)  countEl.textContent = files.length + ' arquivo' + (files.length > 1 ? 's' : '');
 
-  var cols = 6;
+  var cols = 5;
   var first = files.slice(0, cols);
   var rest  = files.slice(cols);
 
@@ -2841,7 +2844,7 @@ function filtrarDriveFiles(query) {
 
   if (!q) {
     // Reset to original layout
-    var cols = 6;
+    var cols = 5;
     _allDriveFiles.slice(0, cols).forEach(function(f){ firstRow.appendChild(buildDriveCard(f)); });
     var rest = _allDriveFiles.slice(cols);
     rest.forEach(function(f){ restRows.appendChild(buildDriveCard(f)); });
@@ -2934,7 +2937,7 @@ function ordenarDriveFiles(sortBy) {
   restRows.innerHTML = '';
   _driveFilesOpen = false;
   if (moreRows) moreRows.style.maxHeight = '0';
-  var cols = 6;
+  var cols = 5;
   sorted.slice(0, cols).forEach(function(f){ firstRow.appendChild(buildDriveCard(f)); });
   var rest = sorted.slice(cols);
   rest.forEach(function(f){ restRows.appendChild(buildDriveCard(f)); });
