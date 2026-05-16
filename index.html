@@ -2400,72 +2400,72 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   </div>
   <nav class="drawer-nav">
     <p class="drawer-section-label">Geral</p>
-    <button class="drawer-item" onclick="openPanel('panel-welcome')">
+    <a class="drawer-item" href="https://institutomdtalk.github.io/welcome/" target="_blank" rel="noopener" onclick="closeDrawer()">
       <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
       Welcome
-    </button>
-    <button class="drawer-item" onclick="openPanel('panel-disponibilidade')">
+    </a>
+    <a class="drawer-item" href="https://calendar.app.google/9s8vRTnw3YE6p5fR9" target="_blank" rel="noopener" onclick="closeDrawer()">
       <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       Disponibilidade para Remanejo
-    </button>
-    <button class="drawer-item" onclick="openPanel('panel-avisos')">
+    </a>
+    <button class="drawer-item" onclick="closeDrawer();openPopupAvisos()">
       <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
       Avisos
     </button>
 
     <p class="drawer-section-label">Recursos do Aluno</p>
-    <button class="drawer-item" onclick="openPanel('panel-gdocs')">
+    <button class="drawer-item" id="drawer-gdocs-btn" onclick="closeDrawer();abrirLinkAluno('link_docs')">
       <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       Google Docs
     </button>
-    <button class="drawer-item" onclick="openPanel('panel-gdrive')">
+    <button class="drawer-item" id="drawer-gdrive-btn" onclick="closeDrawer();abrirLinkAluno('link_drive')">
       <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
       Google Drive
     </button>
-    <button class="drawer-item" onclick="openPanel('panel-homework')">
+    <a class="drawer-item" href="https://institutomdtalk.github.io/homework/" target="_blank" rel="noopener" onclick="closeDrawer()">
       <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       Envio de Atividades
-    </button>
-    <button class="drawer-item" onclick="openPanel('panel-calendario')">
+    </a>
+    <button class="drawer-item" onclick="closeDrawer();abrirModalCalendario()">
       <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
       Meu Calendário de Aulas
     </button>
 
     <p class="drawer-section-label">Recursos e Links Úteis</p>
-    <button class="drawer-item" onclick="openPanel('panel-infograficos')">
+    <a class="drawer-item" href="https://institutomdtalk.github.io/infograficos/" target="_blank" rel="noopener" onclick="closeDrawer()">
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
       Coleção de Infográficos
-    </button>
-    <button class="drawer-item" onclick="openPanel('panel-ipa')">
+    </a>
+    <a class="drawer-item" href="https://institutomdtalk.github.io/ipa/" target="_blank" rel="noopener" onclick="closeDrawer()">
       <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>
       Dicionário de Fonética
-    </button>
-    <button class="drawer-item" onclick="openPanel('panel-cambridge')">
+    </a>
+    <a class="drawer-item" href="https://dictionary.cambridge.org/pt/dicionario/ingles-portugues/" target="_blank" rel="noopener" onclick="closeDrawer()">
       <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
       Cambridge Dictionary
-    </button>
-    <button class="drawer-item" onclick="openPanel('panel-youglish')">
+    </a>
+    <a class="drawer-item" href="https://pt.youglish.com/" target="_blank" rel="noopener" onclick="closeDrawer()">
       <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/></svg>
       YouGlish
-    </button>
+    </a>
 
     <p class="drawer-section-label">MD Talk</p>
-    <button class="drawer-item" onclick="openPanel('panel-treinamento')">
+    <a class="drawer-item" href="https://institutomdtalk.github.io/treinamento/" target="_blank" rel="noopener" onclick="closeDrawer()">
       <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
       Treinamento Complementar
-    </button>
-    <button class="drawer-item" onclick="openPanel('panel-cursos')">
+    </a>
+    <a class="drawer-item" href="https://institutomdtalk.github.io/expansao/" target="_blank" rel="noopener" onclick="closeDrawer()">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
       Outros Cursos
-    </button>
-    <button class="drawer-item" onclick="openPanel('panel-interesses')">
+    </a>
+    <a class="drawer-item" href="https://forms.office.com/r/SfVaqefC18" target="_blank" rel="noopener" onclick="closeDrawer()">
       <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       Personalize seu Curso
-    </button>
-    <button class="drawer-item" onclick="openPanel('panel-feedback')">
+    </a>
+    <a class="drawer-item" href="COLE_LINK_FEEDBACK_AQUI" target="_blank" rel="noopener" onclick="closeDrawer()">
       <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
       Sua Opinião
-    </button>
+    </a>
   </nav>
 </div>
 
@@ -2633,6 +2633,21 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     </a>
   </div>
 
+</div>
+
+<!-- POPUP AVISOS -->
+<div class="cal-modal-overlay" id="popup-avisos">
+  <div class="cal-modal-box" style="max-width:520px">
+    <div class="cal-modal-header">
+      <span class="cal-modal-title">Avisos</span>
+      <button class="cal-modal-close" onclick="document.getElementById('popup-avisos').classList.remove('active');document.body.style.overflow=''">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div id="popup-avisos-content" style="max-height:60vh;overflow-y:auto">
+      <p style="color:var(--text-muted);font-style:italic;font-size:14px">Carregando avisos...</p>
+    </div>
+  </div>
 </div>
 
 <!-- LIVE CLASS PANEL -->
@@ -3638,6 +3653,35 @@ function resetVerbos() {
   var key = 'mdtalk_verbos_' + (currentStudent ? currentStudent.login : 'guest');
   localStorage.removeItem(key);
   atualizarContadoresVerbos();
+}
+
+// ── DRAWER HELPERS ──
+function abrirLinkAluno(campo) {
+  if (!currentStudent) return;
+  var url = currentStudent[campo];
+  if (url && url.trim() && url.trim() !== 'undefined') {
+    window.open(url.trim(), '_blank');
+  } else {
+    showToast('Link não configurado. Fale com a Thaiana.', 'warning');
+  }
+}
+
+function openPopupAvisos() {
+  var popup  = document.getElementById('popup-avisos');
+  var content = document.getElementById('popup-avisos-content');
+  if (!popup || !content) return;
+  if (!_avisos || !_avisos.length) {
+    content.innerHTML = '<p style="color:var(--text-muted);font-style:italic;font-size:14px">Nenhum aviso no momento.</p>';
+  } else {
+    content.innerHTML = _avisos.map(function(av) {
+      return '<div style="border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:10px">' +
+        '<p style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px">' + av.data + '</p>' +
+        '<p style="font-size:14px;color:var(--navy);line-height:1.6">' + av.texto + '</p>' +
+      '</div>';
+    }).join('');
+  }
+  popup.classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
 
 // ── DRAWER MENU ──
