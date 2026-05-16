@@ -1094,8 +1094,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 /* ═══════════════════════════════════════
    MODAL CALENDÁRIO
 ═══════════════════════════════════════ */
-.cal-modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,13,26,0.7);backdrop-filter:blur(8px);z-index:350;align-items:center;justify-content:center;padding:24px}
-.cal-modal-overlay.active{display:flex}
+.cal-modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,13,26,0.7);backdrop-filter:blur(8px);z-index:350;align-items:center;justify-content:center;padding:24px;visibility:hidden}
+.cal-modal-overlay.active{display:flex;visibility:visible}
 .cal-modal-box{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:480px;width:100%;box-shadow:var(--shadow-lg);animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both;position:relative}
 .cal-modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .cal-modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
@@ -2082,80 +2082,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       </div>
     </div>
 
-    <!-- BANCO DE TERMOS -->
-    <div class="card reveal" style="grid-column:1/-1">
-      <div class="card-pad">
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:4px">
-          <div>
-            <p class="card-overline" style="margin-bottom:4px">Caderno do Aluno</p>
-            <h3 class="card-title" style="margin-bottom:0">Banco de Termos</h3>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-            <div class="sc-filter-bar" style="margin:0" id="termo-filter-bar">
-              <button class="sc-filter active" data-tag="todos" onclick="filtrarTermos('todos',this)">Todos</button>
-              <button class="sc-filter" data-tag="vocabulario" onclick="filtrarTermos('vocabulario',this)">Vocab</button>
-              <button class="sc-filter" data-tag="frases" onclick="filtrarTermos('frases',this)">Frases</button>
-              <button class="sc-filter" data-tag="termos" onclick="filtrarTermos('termos',this)">Termos</button>
-              <button class="sc-filter" data-tag="anotacoes" onclick="filtrarTermos('anotacoes',this)">Dúvidas</button>
-            </div>
-            <span id="termo-count" style="font-size:10px;color:var(--text-muted);font-family:var(--sans)">0 itens</span>
-          </div>
-        </div>
-        <p class="card-desc" style="margin-bottom:16px">Tudo que você anotou no Live Class Mode aparece aqui — organize, revise e transforme em Smart Cards.</p>
-        <div id="termo-grid" class="termo-grid">
-          <p style="font-size:13px;color:var(--text-muted);font-style:italic;grid-column:1/-1">Nenhum termo ainda. Use o Live Class Mode durante suas aulas!</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- SMART CARDS -->
-    <div class="card reveal" style="grid-column:1/-1">
-      <div class="card-pad">
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:4px">
-          <div>
-            <p class="card-overline" style="margin-bottom:4px">Revisão Ativa</p>
-            <h3 class="card-title" style="margin-bottom:0">Smart Cards</h3>
-          </div>
-          <div class="sc-filter-bar" style="margin:0" id="sc-filter-bar">
-            <button class="sc-filter active" data-tag="todos" onclick="filtrarSmartCards('todos',this)">Todos</button>
-            <button class="sc-filter" data-tag="vocabulario" onclick="filtrarSmartCards('vocabulario',this)">Vocab</button>
-            <button class="sc-filter" data-tag="frases" onclick="filtrarSmartCards('frases',this)">Frases</button>
-            <button class="sc-filter" data-tag="termos" onclick="filtrarSmartCards('termos',this)">Termos</button>
-          </div>
-        </div>
-        <p class="card-desc" style="margin-bottom:20px">Clique no card para revelar o contexto. Use as setas para navegar.</p>
-        <div id="sc-empty" style="font-size:13px;color:var(--text-muted);font-style:italic;text-align:center;padding:24px 0">Adicione termos no Banco para criar Smart Cards automaticamente.</div>
-        <div id="sc-wrap" style="display:none">
-          <div id="sc-card-wrap" style="max-width:400px;margin:0 auto">
-            <div class="smartcard-wrap" onclick="flipSmartCard()">
-              <div class="smartcard" id="sc-card">
-                <div class="smartcard-face">
-                  <span class="sc-tag" id="sc-front-tag"></span>
-                  <p class="sc-text" id="sc-front-text"></p>
-                  <span class="sc-hint">Clique para ver mais</span>
-                </div>
-                <div class="smartcard-face smartcard-back">
-                  <span class="sc-tag">Contexto</span>
-                  <p class="sc-text" id="sc-back-text"></p>
-                  <span class="sc-hint">Clique para virar</span>
-                </div>
-              </div>
-            </div>
-            <div class="sc-nav">
-              <button class="sc-nav-btn" onclick="scPrev()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
-              </button>
-              <span class="sc-counter"><span id="sc-idx">1</span> / <span id="sc-total">0</span></span>
-              <button class="sc-nav-btn" onclick="scNext()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
 
 
 
@@ -2184,6 +2110,33 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 </div>
 
+
+<!-- DRIVE VIEWER MODAL -->
+<div class="drive-viewer-overlay" id="drive-viewer">
+  <div class="drive-viewer-box">
+    <div class="drive-viewer-header">
+      <span class="drive-viewer-title" id="drive-viewer-title"></span>
+      <div class="drive-viewer-actions">
+        <a id="drive-viewer-download" href="#" target="_blank" rel="noopener" class="drive-viewer-btn primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download
+        </a>
+        <a id="drive-viewer-open" href="#" target="_blank" rel="noopener" class="drive-viewer-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Abrir no Drive
+        </a>
+        <button class="drive-viewer-close" onclick="closeDriveViewer()">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <iframe class="drive-viewer-iframe" id="drive-viewer-iframe" src="" allowfullscreen></iframe>
+  </div>
+</div>
+<div class="drive-viewer-zoom active" id="drive-viewer-zoom" style="display:none">
+  <button class="drive-zoom-btn" onclick="zoomViewer(-1)" title="Reduzir">−</button>
+  <button class="drive-zoom-btn" onclick="zoomViewer(1)" title="Ampliar">+</button>
+</div>
 <!-- MODAL CALENDÁRIO -->
 <div class="cal-modal-overlay" id="modal-calendario">
   <div class="cal-modal-box">
@@ -2221,31 +2174,17 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   </div>
 </div>
 
-<!-- DRIVE VIEWER MODAL -->
-<div class="drive-viewer-overlay" id="drive-viewer">
-  <div class="drive-viewer-box">
-    <div class="drive-viewer-header">
-      <span class="drive-viewer-title" id="drive-viewer-title"></span>
-      <div class="drive-viewer-actions">
-        <a id="drive-viewer-download" href="#" target="_blank" rel="noopener" class="drive-viewer-btn primary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download
-        </a>
-        <a id="drive-viewer-open" href="#" target="_blank" rel="noopener" class="drive-viewer-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          Abrir no Drive
-        </a>
-        <button class="drive-viewer-close" onclick="closeDriveViewer()">
-          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>
+<!-- POPUP AVISOS -->
+<div class="cal-modal-overlay" id="popup-avisos">
+  <div class="cal-modal-box" style="max-width:520px">
+    <div class="cal-modal-header">
+      <span class="cal-modal-title">Avisos</span>
+      <button class="cal-modal-close" onclick="document.getElementById('popup-avisos').classList.remove('active');document.body.style.overflow=''">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
-    <iframe class="drive-viewer-iframe" id="drive-viewer-iframe" src="" allowfullscreen></iframe>
+    <div id="popup-avisos-content" style="max-height:60vh;overflow-y:auto"></div>
   </div>
-</div>
-<div class="drive-viewer-zoom active" id="drive-viewer-zoom" style="display:none">
-  <button class="drive-zoom-btn" onclick="zoomViewer(-1)" title="Reduzir">−</button>
-  <button class="drive-zoom-btn" onclick="zoomViewer(1)" title="Ampliar">+</button>
 </div>
 
 <!-- DRAWER OVERLAY -->
@@ -2496,18 +2435,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 </div>
 
-<!-- POPUP AVISOS -->
-<div class="cal-modal-overlay" id="popup-avisos">
-  <div class="cal-modal-box" style="max-width:520px">
-    <div class="cal-modal-header">
-      <span class="cal-modal-title">Avisos</span>
-      <button class="cal-modal-close" onclick="document.getElementById('popup-avisos').classList.remove('active');document.body.style.overflow=''">
-        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <div id="popup-avisos-content" style="max-height:60vh;overflow-y:auto"></div>
-  </div>
-</div>
 
 <!-- LIVE CLASS PANEL -->
 <div id="live-panel">
@@ -4440,6 +4367,10 @@ function _gravarRegistro(status) {
 // ── LOGOUT ──
 function doLogout() {
   try {
+    // Close any open modals
+    document.querySelectorAll('.cal-modal-overlay,.drive-viewer-overlay,.nt-modal-overlay').forEach(function(m){
+      m.classList.remove('active');
+    });
     currentStudent = null;
     stopClock();
     localStorage.removeItem('mdtalk_login');
