@@ -893,23 +893,58 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   cursor:pointer;
 }
 .drive-card-footer{
-  display:flex;align-items:center;gap:6px;
   padding:8px 10px;border-top:1px solid var(--border);
-  flex-wrap:wrap;
+  position:relative;
 }
-.drive-card-tag{
+.drive-tag-btn{
   display:inline-flex;align-items:center;gap:5px;
   font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
   font-family:var(--sans);color:var(--text-muted);
   background:none;border:1px solid var(--border);
   border-radius:20px;cursor:pointer;padding:5px 12px;
-  transition:all 0.25s;white-space:nowrap;
+  transition:all 0.25s;width:100%;justify-content:center;
 }
-.drive-card-tag svg{width:11px;height:11px;flex-shrink:0}
-.drive-card-tag:hover{border-color:var(--text-muted);color:var(--text-body)}
-.drive-card-tag.done-concluido{background:#22c55e;border-color:#22c55e;color:#fff}
-.drive-card-tag.done-revisado{background:#7c3aed;border-color:#7c3aed;color:#fff}
-.drive-card-tag.done-homework{background:var(--gold);border-color:var(--gold);color:var(--navy-deep)}
+.drive-tag-btn:hover{border-color:var(--gold);color:var(--gold)}
+.drive-tag-btn svg{width:11px;height:11px;flex-shrink:0}
+.drive-tag-dropdown{
+  position:absolute;bottom:calc(100% + 4px);left:10px;right:10px;
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--radius);box-shadow:var(--shadow-md);
+  z-index:100;display:none;overflow:hidden;
+}
+.drive-tag-dropdown.open{display:block}
+.drive-tag-option{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 14px;font-size:11px;font-weight:600;
+  font-family:var(--sans);color:var(--text-body);
+  cursor:pointer;transition:background 0.15s;border:none;background:none;width:100%;text-align:left;
+}
+.drive-tag-option:hover{background:var(--off-white)}
+.drive-tag-option svg{width:13px;height:13px;flex-shrink:0}
+.drive-tag-option .tag-check{
+  width:14px;height:14px;border-radius:50%;
+  border:1.5px solid var(--border);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;margin-left:auto;
+}
+.drive-tag-option.active .tag-check{background:#22c55e;border-color:#22c55e}
+.drive-tag-option.active-revisado .tag-check{background:#7c3aed;border-color:#7c3aed}
+.drive-tag-option.active-homework .tag-check{background:var(--gold);border-color:var(--gold)}
+/* Badges on thumbnail */
+.drive-thumb-badges{
+  position:absolute;top:6px;left:6px;
+  display:flex;flex-direction:column;gap:3px;
+  pointer-events:none;
+}
+.drive-thumb-badge{
+  font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:2px 8px;border-radius:20px;display:none;
+}
+.drive-thumb-badge.concluido{background:#22c55e;color:#fff}
+.drive-thumb-badge.revisado{background:#7c3aed;color:#fff}
+.drive-thumb-badge.homework{background:var(--gold);color:var(--navy-deep)}
+.drive-card-item.tag-concluido .drive-thumb-badge.concluido{display:block}
+.drive-card-item.tag-revisado  .drive-thumb-badge.revisado{display:block}
+.drive-card-item.tag-homework  .drive-thumb-badge.homework{display:block}
 .drive-card-item.concluded{border-color:rgba(45,106,79,0.25)}
 .drive-card-concluded-badge{
   position:absolute;top:6px;right:6px;
@@ -2649,24 +2684,41 @@ function carregarDriveConcluidos() {
   _driveConluidos = JSON.parse(localStorage.getItem(key) || '{}');
 }
 
-var TAG_CONFIG = {
-  concluido: { label: 'Concluído', labelOff: 'Concluir', doneClass: 'done-concluido', cardClass: 'concluded' },
-  revisado:  { label: 'Revisado',  labelOff: 'Revisar',  doneClass: 'done-revisado',  cardClass: '' },
-  homework:  { label: 'Homework',  labelOff: 'Homework', doneClass: 'done-homework',  cardClass: '' }
-};
+function buildDriveTagMenu(fileId) {
+  var c = _driveConluidos['drive_concluido_' + fileId] || false;
+  var r = _driveConluidos['drive_revisado_'  + fileId] || false;
+  var h = _driveConluidos['drive_homework_'  + fileId] || false;
+  var activeCount = (c?1:0)+(r?1:0)+(h?1:0);
+  var btnLabel = activeCount > 0 ? activeCount + ' marca' + (activeCount>1?'s':'') : 'Marcar';
+  return '<button class="drive-tag-btn" onclick="toggleDriveMenu(event,&quot;' + fileId + '&quot;)">' +
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>' +
+    btnLabel +
+  '</button>' +
+  '<div class="drive-tag-dropdown" id="ddm_' + fileId + '">' +
+    buildTagOption(fileId, 'concluido', 'Concluído', 'M20 6L9 17l-5-5', c, 'active') +
+    buildTagOption(fileId, 'revisado',  'Revisado',  'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z M12 9a3 3 0 110 6 3 3 0 010-6', r, 'active-revisado') +
+    buildTagOption(fileId, 'homework',  'Homework',  'M12 20h9 M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z', h, 'active-homework') +
+  '</div>';
+}
 
-function buildDriveTag(fileId, tag) {
-  var stateKey = 'drive_' + tag + '_' + fileId;
-  var isDone = _driveConluidos[stateKey] || false;
-  var cfg = TAG_CONFIG[tag];
-  var svgs = {
-    concluido: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
-    revisado:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',
-    homework:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>'
-  };
-  return '<button class="drive-card-tag' + (isDone ? ' ' + cfg.doneClass : '') + '" id="dt_' + tag + '_' + fileId + '" onclick="toggleDriveTag(event,&quot;' + fileId + '&quot;,&quot;' + tag + '&quot;)">' +
-    svgs[tag] + (isDone ? cfg.label : cfg.labelOff) +
+function buildTagOption(fileId, tag, label, svgD, isActive, activeClass) {
+  var paths = svgD.split(' M').map(function(p,i){ return '<path d="'+(i===0?p:'M'+p)+'"/>'; }).join('');
+  return '<button class="drive-tag-option ' + (isActive ? activeClass : '') + '" id="dto_' + tag + '_' + fileId + '" onclick="toggleDriveTag(event,&quot;' + fileId + '&quot;,&quot;' + tag + '&quot;)">' +
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + paths + '</svg>' +
+    label +
+    '<span class="tag-check"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width:8px;height:8px"><polyline points="20 6 9 17 4 12"/></svg></span>' +
   '</button>';
+}
+
+function toggleDriveMenu(e, fileId) {
+  e.stopPropagation();
+  var dd = document.getElementById('ddm_' + fileId);
+  if (!dd) return;
+  // Close all other dropdowns
+  document.querySelectorAll('.drive-tag-dropdown.open').forEach(function(el){
+    if (el !== dd) el.classList.remove('open');
+  });
+  dd.classList.toggle('open');
 }
 
 function toggleDriveTag(e, fileId, tag) {
@@ -2675,16 +2727,22 @@ function toggleDriveTag(e, fileId, tag) {
   var isDone = !(_driveConluidos[stateKey] || false);
   _driveConluidos[stateKey] = isDone;
   localStorage.setItem(getDriveConcluidosKey(), JSON.stringify(_driveConluidos));
-  var btn = document.getElementById('dt_' + tag + '_' + fileId);
-  if (btn) {
-    var cfg = TAG_CONFIG[tag];
-    btn.className = 'drive-card-tag' + (isDone ? ' ' + cfg.doneClass : '');
-    var txt = btn.lastChild;
-    if (txt && txt.nodeType === 3) txt.textContent = isDone ? cfg.label : cfg.labelOff;
-    if (cfg.cardClass) {
-      var cardItem = btn.closest('.drive-card-item');
-      if (cardItem) cardItem.classList.toggle(cfg.cardClass, isDone);
-    }
+  // Update option button
+  var opt = document.getElementById('dto_' + tag + '_' + fileId);
+  var classMap = {concluido:'active', revisado:'active-revisado', homework:'active-homework'};
+  if (opt) opt.className = 'drive-tag-option ' + (isDone ? classMap[tag] : '');
+  // Update card classes
+  var cardItem = opt ? opt.closest('.drive-card-item') : null;
+  if (cardItem) cardItem.classList.toggle('tag-' + tag, isDone);
+  // Update main button label
+  var c = _driveConluidos['drive_concluido_' + fileId] || false;
+  var r = _driveConluidos['drive_revisado_'  + fileId] || false;
+  var h = _driveConluidos['drive_homework_'  + fileId] || false;
+  var count = (c?1:0)+(r?1:0)+(h?1:0);
+  var mainBtn = cardItem ? cardItem.querySelector('.drive-tag-btn') : null;
+  if (mainBtn) {
+    var txt = mainBtn.lastChild;
+    if (txt && txt.nodeType === 3) txt.textContent = count > 0 ? count + ' marca' + (count>1?'s':'') : 'Marcar';
   }
 }
 var _driveZoom = 1;
@@ -2711,16 +2769,25 @@ function buildDriveCard(f) {
     '</svg><span>' + label + '</span></div>';
   var fileKey = 'drive_' + f.id;
   var isDone = _driveConluidos[fileKey] || false;
-  div.className = 'drive-card-item' + (isDone ? ' concluded' : '');
-  div.title = f.name; // full name on hover
+  var tagConcluido = _driveConluidos['drive_concluido_' + f.id] || false;
+  var tagRevisado  = _driveConluidos['drive_revisado_'  + f.id] || false;
+  var tagHomework  = _driveConluidos['drive_homework_'  + f.id] || false;
+  var cardClasses  = 'drive-card-item' +
+    (tagConcluido ? ' tag-concluido' : '') +
+    (tagRevisado  ? ' tag-revisado'  : '') +
+    (tagHomework  ? ' tag-homework'  : '');
+  div.className = cardClasses;
+  div.title = f.name;
   div.innerHTML = '<div style="position:relative;cursor:pointer">' + thumbHtml +
-    '<span class="drive-card-concluded-badge">Concluído</span>' +
+    '<div class="drive-thumb-badges">' +
+      '<span class="drive-thumb-badge concluido">✓ Concluído</span>' +
+      '<span class="drive-thumb-badge revisado">⊙ Revisado</span>' +
+      '<span class="drive-thumb-badge homework">✎ Homework</span>' +
+    '</div>' +
     '</div>' +
     '<div class="drive-card-name" title="' + f.name.replace(/"/g,'&quot;') + '" style="cursor:pointer">' + f.name + '</div>' +
     '<div class="drive-card-footer">' +
-      buildDriveTag(f.id, 'concluido') +
-      buildDriveTag(f.id, 'revisado') +
-      buildDriveTag(f.id, 'homework') +
+      buildDriveTagMenu(f.id) +
     '</div>';
   var thumbEl = div.querySelector('.drive-card-thumb, .drive-card-thumb-placeholder, [style*="cursor:pointer"]');
   var nameEl  = div.querySelector('.drive-card-name');
@@ -3507,7 +3574,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if(e.key==='Escape') {
       fecharModalCalendario();
       closeDriveViewer();
+      document.querySelectorAll('.drive-tag-dropdown.open').forEach(function(el){ el.classList.remove('open'); });
     }
+  });
+  document.addEventListener('click', function() {
+    document.querySelectorAll('.drive-tag-dropdown.open').forEach(function(el){ el.classList.remove('open'); });
   });
   var driveViewerOverlay = document.getElementById('drive-viewer');
   if (driveViewerOverlay) driveViewerOverlay.addEventListener('click', function(e){ if(e.target===this) closeDriveViewer(); });
