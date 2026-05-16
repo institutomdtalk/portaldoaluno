@@ -890,8 +890,34 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   padding:8px 10px;
   font-size:11px;font-weight:500;color:var(--navy);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  border-top:1px solid var(--border);flex:1;
+  border-top:1px solid var(--border);
 }
+.drive-card-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:6px 10px;border-top:1px solid var(--border);
+  gap:6px;
+}
+.drive-card-concluido{
+  display:flex;align-items:center;gap:4px;
+  font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  font-family:var(--sans);color:var(--text-muted);
+  background:none;border:none;cursor:pointer;padding:0;
+  transition:color 0.2s;white-space:nowrap;
+}
+.drive-card-concluido:hover{color:var(--success)}
+.drive-card-concluido.done{color:var(--success)}
+.drive-card-concluido svg{width:13px;height:13px;flex-shrink:0;transition:all 0.2s}
+.drive-card-item.concluded{border-color:rgba(45,106,79,0.3)}
+.drive-card-item.concluded .drive-card-thumb,
+.drive-card-item.concluded .drive-card-thumb-placeholder{opacity:0.7}
+.drive-card-concluded-badge{
+  position:absolute;top:6px;right:6px;
+  background:#22c55e;color:#fff;
+  font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:2px 8px;border-radius:20px;
+  display:none;
+}
+.drive-card-item.concluded .drive-card-concluded-badge{display:block}
 /* Viewer Modal */
 .drive-viewer-overlay{
   display:none;position:fixed;inset:0;
@@ -2298,6 +2324,8 @@ function renderDashboard(a, avisos) {
   verificarRegistroHoje(a.historico);
   carregarAnotacoes(a.anotacoes || []);
   window._trilhaData = a.trilha || [];
+  // Load Drive concluded state
+  carregarDriveConcluidos();
   // Load Drive files
   var driveFirstRow = document.getElementById('drive-first-row');
   var driveRestRows = document.getElementById('drive-rest-rows');
@@ -2599,6 +2627,33 @@ function togglePdfExtra(uid, btn) {
 // ── PASTA DO DRIVE ──
 var _driveFilesOpen = false;
 var _allDriveFiles = [];
+var _driveConluidos = {};
+
+function getDriveConcluidosKey() {
+  return 'mdtalk_drive_concluidos_' + (currentStudent ? currentStudent.login : 'guest');
+}
+
+function carregarDriveConcluidos() {
+  var key = getDriveConcluidosKey();
+  _driveConluidos = JSON.parse(localStorage.getItem(key) || '{}');
+}
+
+function toggleDriveConcluido(e, fileId) {
+  e.stopPropagation();
+  var fileKey = 'drive_' + fileId;
+  var isDone  = !(_driveConluidos[fileKey] || false);
+  _driveConluidos[fileKey] = isDone;
+  // Persist
+  localStorage.setItem(getDriveConcluidosKey(), JSON.stringify(_driveConluidos));
+  // Update UI
+  var card = document.getElementById('dc_' + fileId);
+  var cardItem = card ? card.closest('.drive-card-item') : null;
+  if (card) {
+    card.classList.toggle('done', isDone);
+    card.innerHTML = '<svg viewBox="0 0 24 24" fill="' + (isDone ? '#2D6A4F' : 'none') + '" stroke="' + (isDone ? '#2D6A4F' : 'currentColor') + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>' + (isDone ? 'Concluído' : 'Concluir');
+  }
+  if (cardItem) cardItem.classList.toggle('concluded', isDone);
+}
 var _driveZoom = 1;
 
 function getMimeIcon(mimeType) {
@@ -2625,8 +2680,24 @@ function buildDriveCard(f) {
       paths.split(' ').map(function(d){ return '<path d="'+d+'"/>'; }).join('') +
       '</svg><span>' + label + '</span></div>';
   }
-  div.innerHTML = thumbHtml + '<div class="drive-card-name">' + f.name + '</div>';
-  div.addEventListener('click', function() { openDriveViewer(f); });
+  var fileKey = 'drive_' + f.id;
+  var isDone = _driveConluidos[fileKey] || false;
+  div.className = 'drive-card-item' + (isDone ? ' concluded' : '');
+  div.innerHTML = '<div style="position:relative">' + thumbHtml +
+    '<span class="drive-card-concluded-badge">Concluído</span>' +
+    '</div>' +
+    '<div class="drive-card-name">' + f.name + '</div>' +
+    '<div class="drive-card-footer">' +
+      '<button class="drive-card-concluido' + (isDone ? " done" : "") + '" id="dc_' + f.id + '" onclick="toggleDriveConcluido(event,&quot;' + f.id + '&quot;)">' +
+        '<svg viewBox="0 0 24 24" fill="' + (isDone ? '#2D6A4F' : 'none') + '" stroke="' + (isDone ? '#2D6A4F' : 'currentColor') + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
+        (isDone ? 'Concluído' : 'Concluir') +
+      '</button>' +
+    '</div>';
+  // Open viewer on thumbnail click only
+  var thumbEl = div.querySelector('.drive-card-thumb, .drive-card-thumb-placeholder');
+  if (thumbEl) thumbEl.addEventListener('click', function(e){ e.stopPropagation(); openDriveViewer(f); });
+  var nameEl = div.querySelector('.drive-card-name');
+  if (nameEl) nameEl.addEventListener('click', function(e){ e.stopPropagation(); openDriveViewer(f); });
   return div;
 }
 
