@@ -2772,41 +2772,29 @@ function filtrarDriveFiles(query) {
 }
 
 function loadThumbsBatch(files, batchSize, delay) {
-  // Load thumbnails in batches of batchSize with delay between each
-  var batches = [];
-  for (var i = 0; i < files.length; i += batchSize) {
-    batches.push(files.slice(i, i + batchSize));
-  }
-  function processBatch(idx) {
-    if (idx >= batches.length) return;
-    var batch = batches[idx];
-    var ids = batch.map(function(f){ return f.id; }).join(',');
+  // Load one thumbnail at a time sequentially
+  var idx = 0;
+  function next() {
+    if (idx >= files.length) return;
+    var f = files[idx++];
     callScript(
-      'action=get_thumbs&ids=' + encodeURIComponent(ids),
+      'action=get_thumbs&ids=' + encodeURIComponent(f.id),
       function(d) {
-        if (d.success && d.thumbs) {
-          Object.keys(d.thumbs).forEach(function(fileId) {
-            var thumb = d.thumbs[fileId];
-            if (!thumb || thumb.length < 100) return;
-            // Find placeholder and replace with image
-            var ph = document.getElementById('ph_' + fileId);
-            if (ph) {
-              var img = document.createElement('img');
-              img.className = 'drive-card-thumb';
-              img.src = thumb;
-              ph.parentNode.replaceChild(img, ph);
-            }
-          });
+        if (d.success && d.thumb && d.thumb.length > 100) {
+          var ph = document.getElementById('ph_' + d.id);
+          if (ph) {
+            var img = document.createElement('img');
+            img.className = 'drive-card-thumb';
+            img.src = d.thumb;
+            ph.parentNode.replaceChild(img, ph);
+          }
         }
-        // Process next batch after delay
-        setTimeout(function(){ processBatch(idx + 1); }, delay);
+        setTimeout(next, 300);
       },
-      function() {
-        setTimeout(function(){ processBatch(idx + 1); }, delay * 2);
-      }
+      function() { setTimeout(next, 1000); }
     );
   }
-  processBatch(0);
+  next();
 }
 
 function toggleDriveFiles() {
