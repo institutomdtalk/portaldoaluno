@@ -2662,24 +2662,31 @@ function toggleDriveTag(e, fileId, tag) {
 var _driveZoom = 1;
 
 function getMimeIcon(mimeType) {
-  if (mimeType === 'application/pdf') return ['#e53e3e', 'PDF', 'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8'];
-  if (mimeType && mimeType.indexOf('image/') === 0) return ['#38a169', 'IMG', 'M21 19V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2z M8.5 13.5l2.5-3 3.5 4 2-2 3 3.5'];
-  if (mimeType === 'application/vnd.google-apps.document') return ['#4285f4', 'DOC', 'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8'];
-  if (mimeType === 'application/vnd.google-apps.presentation') return ['#fbbc04', 'PPT', 'M21 3H3v18h18V3z M12 8v8 M8 12h8'];
-  if (mimeType === 'application/vnd.google-apps.spreadsheet') return ['#34a853', 'XLS', 'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M8 13h8 M8 17h8 M8 9h2'];
-  return ['#718096', 'FILE', 'M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z M13 2v7h7'];
+  if (mimeType === 'application/pdf')
+    return ['#e53e3e', 'PDF', '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>'];
+  if (mimeType && mimeType.indexOf('image/') === 0)
+    return ['#38a169', 'IMG', '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>'];
+  if (mimeType && mimeType.indexOf('audio/') === 0)
+    return ['#8b5cf6', 'MP3', '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'];
+  if (mimeType === 'application/vnd.google-apps.document')
+    return ['#4285f4', 'DOC', '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>'];
+  if (mimeType === 'application/vnd.google-apps.presentation')
+    return ['#fbbc04', 'PPT', '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/>'];
+  if (mimeType === 'application/vnd.google-apps.spreadsheet')
+    return ['#34a853', 'XLS', '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M8 13h8"/><path d="M8 17h8"/><path d="M8 9h2"/>'];
+  return ['#718096', 'FILE', '<path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/>'];
 }
 
 function buildDriveCard(f) {
   var div = document.createElement('div');
   div.className = 'drive-card-item';
   var info = getMimeIcon(f.mimeType);
-  var color = info[0], label = info[1], paths = info[2];
+  var color = info[0], label = info[1], svgPaths = info[2];
   var thumbHtml;
   // Show placeholder with id — thumbnail loaded lazily via batch
   thumbHtml = '<div class="drive-card-thumb-placeholder" id="ph_' + f.id + '">' +
-    '<svg viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="1.5">' +
-    paths.split(' ').map(function(d){ return '<path d="'+d+'"/>'; }).join('') +
+    '<svg viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+    svgPaths +
     '</svg><span>' + label + '</span></div>';
   var fileKey = 'drive_' + f.id;
   var isDone = _driveConluidos[fileKey] || false;
