@@ -1135,14 +1135,15 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 }
 .nb-tab.active svg{opacity:1}
 /* Notebook panels */
-.nb-panel{display:none;padding:32px 36px 60px;max-width:1200px;margin:0 auto}
+.nb-panel{display:none;padding:0;max-width:none;margin:0}
 .nb-panel.active{display:block}
 /* Dashboard stays as-is */
 .nb-dashboard-wrap{display:block}
 .nb-dashboard-wrap.hidden{display:none}
+.dashboard{background:var(--white)}
 
 /* ── Progresso Dashboard ── */
-.prog-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:36px 40px}
+.prog-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:36px 40px;width:100%;box-sizing:border-box}
 .prog-hero{margin-bottom:32px}
 .prog-greeting-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#c8a96e;margin-bottom:10px}
 .prog-greeting-tag::before{content:'';display:block;width:24px;height:1px;background:#c8a96e}
@@ -1236,7 +1237,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 /* ── Banco de Termos ── */
 /* ── Banco de Termos ── */
-.nt-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:32px 40px}
+.nt-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:32px 40px;width:100%;box-sizing:border-box}
 .nt-topbar{display:flex;align-items:center;gap:8px;margin-bottom:24px;flex-wrap:wrap}
 .nt-pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:13px;font-weight:600;padding:8px 20px;border-radius:50px;border:1.5px solid rgba(0,0,0,0.15);background:transparent;color:#6b6b6b;cursor:pointer;transition:all 0.2s;white-space:nowrap;text-decoration:none}
 .nt-pill svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;flex-shrink:0}
@@ -1298,8 +1299,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nt-btn-cancel:hover{border-color:rgba(0,0,0,0.25);color:#1a1a1a}
 
 /* ── Smart Cards ── */
-.sc2-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:40px}
-.sc2-wrap{max-width:680px;margin:0 auto}
+.sc2-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:40px;width:100%;box-sizing:border-box}
+.sc2-wrap{max-width:680px;margin:0 auto;width:100%}
 .sc2-header{margin-bottom:28px}
 .sc2-title{font-family:var(--serif);font-size:1.2rem;font-weight:400;color:#1a1a1a;margin-bottom:4px}
 .sc2-title em{font-style:italic;color:#c8a96e}
