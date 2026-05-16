@@ -1511,7 +1511,15 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
           <p class="card-overline" style="margin-bottom:0">Minha Pasta</p>
           <span id="drive-files-count" style="font-size:10px;color:var(--text-muted);font-family:var(--sans)"></span>
         </div>
-        <h3 class="card-title" style="margin-bottom:4px">Arquivos do Drive</h3>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:4px">
+          <h3 class="card-title" style="margin-bottom:0">Arquivos do Drive</h3>
+          <div style="position:relative;flex-shrink:0">
+            <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--text-muted);fill:none;stroke-width:2;stroke-linecap:round;pointer-events:none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input id="drive-search" type="text" placeholder="Buscar arquivo..." oninput="filtrarDriveFiles(this.value)"
+              style="padding:8px 12px 8px 32px;border:1px solid var(--border);border-radius:var(--radius);font-family:var(--sans);font-size:12px;color:var(--text-body);outline:none;width:220px;transition:border-color 0.3s;background:var(--white)"
+              onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+        </div>
         <p class="card-desc" id="drive-files-status" style="margin-bottom:0">Carregando seus arquivos...</p>
         <!-- First row always visible -->
         <div class="drive-card-grid" id="drive-first-row"></div>
@@ -2590,6 +2598,7 @@ function togglePdfExtra(uid, btn) {
 
 // ── PASTA DO DRIVE ──
 var _driveFilesOpen = false;
+var _allDriveFiles = [];
 var _driveZoom = 1;
 
 function getMimeIcon(mimeType) {
@@ -2607,27 +2616,15 @@ function buildDriveCard(f) {
   var info = getMimeIcon(f.mimeType);
   var color = info[0], label = info[1], paths = info[2];
   var thumbHtml;
-  // Show placeholder first, then load thumbnail via proxy
-  var imgId = 'dthumb_' + f.id;
-  thumbHtml = '<div class="drive-card-thumb-placeholder" id="ph_' + f.id + '">' +
-    '<svg viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="1.5">' +
-    paths.split(' ').map(function(d){ return '<path d="'+d+'"/>'; }).join('') +
-    '</svg><span>' + label + '</span></div>';
-  // Lazy load thumbnail after render
-  setTimeout(function() {
-    fetch(SCRIPT_URL + '?action=thumb&id=' + f.id)
-      .then(function(r){ return r.text(); })
-      .then(function(b64) {
-        if (!b64 || b64.length < 100) return;
-        var ph = document.getElementById('ph_' + f.id);
-        if (ph) {
-          var img = document.createElement('img');
-          img.className = 'drive-card-thumb';
-          img.src = 'data:image/png;base64,' + b64;
-          ph.parentNode.replaceChild(img, ph);
-        }
-      }).catch(function(){});
-  }, 100);
+  // Placeholder — thumbnail comes embedded from server in f.thumbnail
+  if (f.thumbnail && f.thumbnail.length > 100) {
+    thumbHtml = '<img class="drive-card-thumb" src="' + f.thumbnail + '" alt="" loading="lazy">';
+  } else {
+    thumbHtml = '<div class="drive-card-thumb-placeholder">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="1.5">' +
+      paths.split(' ').map(function(d){ return '<path d="'+d+'"/>'; }).join('') +
+      '</svg><span>' + label + '</span></div>';
+  }
   div.innerHTML = thumbHtml + '<div class="drive-card-name">' + f.name + '</div>';
   div.addEventListener('click', function() { openDriveViewer(f); });
   return div;
@@ -2647,20 +2644,62 @@ function renderDriveFilesCard(files) {
     return;
   }
 
+  _allDriveFiles = files;
   if (statusEl) statusEl.style.display = 'none';
   if (countEl)  countEl.textContent = files.length + ' arquivo' + (files.length > 1 ? 's' : '');
 
-  // Determine cols per row (4 on desktop)
   var cols = 6;
   var first = files.slice(0, cols);
   var rest  = files.slice(cols);
 
   first.forEach(function(f) { firstRow.appendChild(buildDriveCard(f)); });
-
   if (rest.length) {
     rest.forEach(function(f) { restRows.appendChild(buildDriveCard(f)); });
     toggleBtn.style.display = 'block';
   }
+}
+
+function filtrarDriveFiles(query) {
+  var firstRow  = document.getElementById('drive-first-row');
+  var restRows  = document.getElementById('drive-rest-rows');
+  var toggleBtn = document.getElementById('btn-drive-toggle');
+  var moreRows  = document.getElementById('drive-more-rows');
+  var countEl   = document.getElementById('drive-files-count');
+  if (!firstRow) return;
+
+  var q = query.trim().toLowerCase();
+  firstRow.innerHTML = '';
+  restRows.innerHTML = '';
+
+  if (!q) {
+    // Reset to original layout
+    var cols = 6;
+    _allDriveFiles.slice(0, cols).forEach(function(f){ firstRow.appendChild(buildDriveCard(f)); });
+    var rest = _allDriveFiles.slice(cols);
+    rest.forEach(function(f){ restRows.appendChild(buildDriveCard(f)); });
+    if (toggleBtn) toggleBtn.style.display = rest.length ? 'block' : 'none';
+    if (countEl) countEl.textContent = _allDriveFiles.length + ' arquivo' + (_allDriveFiles.length > 1 ? 's' : '');
+    return;
+  }
+
+  // Filter
+  var filtered = _allDriveFiles.filter(function(f){
+    return f.name.toLowerCase().indexOf(q) >= 0;
+  });
+
+  if (!filtered.length) {
+    firstRow.innerHTML = '<p style="grid-column:1/-1;font-size:13px;color:var(--text-muted);font-style:italic;padding:8px 0">Nenhum arquivo encontrado.</p>';
+    if (toggleBtn) toggleBtn.style.display = 'none';
+    if (moreRows) moreRows.style.maxHeight = '0';
+    if (countEl) countEl.textContent = '0 resultados';
+    return;
+  }
+
+  // Show all results in first row (no collapse during search)
+  filtered.forEach(function(f){ firstRow.appendChild(buildDriveCard(f)); });
+  if (moreRows) moreRows.style.maxHeight = '0';
+  if (toggleBtn) toggleBtn.style.display = 'none';
+  if (countEl) countEl.textContent = filtered.length + ' resultado' + (filtered.length > 1 ? 's' : '');
 }
 
 function toggleDriveFiles() {
