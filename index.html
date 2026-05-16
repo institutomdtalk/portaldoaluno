@@ -1202,32 +1202,50 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nb-dist-count{font-size:12px;font-weight:700;color:var(--navy);width:20px;text-align:right;flex-shrink:0}
 
 /* ── Banco de Termos ── */
-.nt-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
-.nt-filter-active{background:var(--navy);color:#fff;border-color:var(--navy)}
-.nt-search{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:8px 14px;flex:1;min-width:180px;max-width:280px}
-.nt-search input{border:none;outline:none;font-family:var(--sans);font-size:13px;color:var(--navy);background:transparent;width:100%}
-.nt-search svg{width:14px;height:14px;stroke:var(--text-muted);fill:none;flex-shrink:0}
-.nt-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:var(--radius);border:none;cursor:pointer;transition:all 0.25s}
-.nt-btn-primary{background:var(--navy);color:#fff}
-.nt-btn-primary:hover{background:var(--navy-light)}
-.nt-count{font-size:13px;color:var(--text-muted);margin-bottom:16px}
+.nt-page{background:#F5F2EE;min-height:calc(100vh - 45px);padding:28px 32px}
+.nt-topbar{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.nt-pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:12px;font-weight:600;padding:8px 18px;border-radius:50px;border:1.5px solid rgba(0,0,0,0.12);background:rgba(255,255,255,0.7);color:var(--text-muted);cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.nt-pill svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+.nt-pill:hover{background:#fff;border-color:rgba(0,0,0,0.2);color:var(--navy)}
+.nt-pill.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.nt-topbar-right{display:flex;align-items:center;gap:8px;margin-left:auto}
+.nt-search-box{display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid rgba(0,0,0,0.1);border-radius:50px;padding:8px 16px;min-width:200px;transition:border-color 0.2s}
+.nt-search-box:focus-within{border-color:rgba(0,0,0,0.25)}
+.nt-search-box input{border:none;outline:none;font-family:var(--sans);font-size:13px;color:var(--navy);background:transparent;width:100%}
+.nt-search-box input::placeholder{color:var(--text-muted)}
+.nt-search-box svg{width:14px;height:14px;stroke:var(--text-muted);fill:none;flex-shrink:0}
+.nt-icon-btn{width:38px;height:38px;border-radius:50%;background:#fff;border:1.5px solid rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;flex-shrink:0}
+.nt-icon-btn:hover{border-color:rgba(0,0,0,0.25);background:var(--off-white)}
+.nt-icon-btn svg{width:15px;height:15px;stroke:var(--text-muted);fill:none;stroke-width:2;stroke-linecap:round}
+.nt-btn-new{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:12px;font-weight:700;padding:9px 20px;border-radius:50px;border:none;background:var(--navy-deep);color:#fff;cursor:pointer;transition:all 0.25s;white-space:nowrap}
+.nt-btn-new:hover{background:var(--navy-light)}
+.nt-btn-new svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
+.nt-sort-dropdown{position:relative}
+.nt-sort-menu{position:absolute;top:calc(100% + 6px);right:0;background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.1);z-index:100;min-width:160px;overflow:hidden;display:none}
+.nt-sort-menu.open{display:block}
+.nt-sort-item{padding:10px 16px;font-size:13px;font-family:var(--sans);color:var(--navy);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background 0.15s}
+.nt-sort-item:hover{background:var(--off-white)}
+.nt-sort-item.active{color:var(--gold);font-weight:600}
+.nt-sort-item svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+.nt-count{font-size:13px;color:var(--text-muted);margin-bottom:16px;font-family:var(--sans)}
 .nt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 @media(max-width:900px){.nt-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.nt-grid{grid-template-columns:1fr}}
-.nt-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;transition:all 0.3s ease;position:relative;cursor:pointer}
-.nt-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
-.nt-card-tag{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:5px;margin-bottom:10px}
-.nt-card-tag.vocabulario{background:rgba(196,164,90,0.12);color:#92400E}
-.nt-card-tag.frases{background:rgba(13,148,136,0.1);color:#0d9488}
-.nt-card-tag.termos{background:rgba(124,58,237,0.1);color:#7c3aed}
-.nt-card-tag.anotacoes{background:rgba(22,163,74,0.1);color:#16a34a}
-.nt-card-termo{font-family:var(--serif);font-size:1.2rem;font-weight:500;color:var(--navy);line-height:1.2;margin-bottom:4px}
-.nt-card-traducao{font-size:13px;color:var(--gold);margin-bottom:8px;font-style:italic}
-.nt-card-exemplo{font-size:12px;color:var(--text-muted);line-height:1.5;margin-bottom:8px}
-.nt-card-date{font-size:10px;color:var(--text-muted)}
-.nt-card-del{position:absolute;top:12px;right:12px;background:none;border:none;color:var(--text-muted);cursor:pointer;opacity:0;transition:opacity 0.2s;font-size:14px;padding:2px 6px;border-radius:3px}
+.nt-card{background:#fff;border:none;border-radius:16px;padding:20px 22px 16px;transition:all 0.3s ease;position:relative;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,0.06),0 4px 12px rgba(0,0,0,0.04)}
+.nt-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.1);transform:translateY(-2px)}
+.nt-card-tag{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:5px;margin-bottom:12px}
+.nt-card-tag.vocabulario{background:#FEF3C7;color:#92400E}
+.nt-card-tag.frases{background:#E0F2FE;color:#0369a1}
+.nt-card-tag.termos{background:#EDE9FE;color:#6D28D9}
+.nt-card-tag.anotacoes{background:#DCFCE7;color:#166534}
+.nt-card-termo{font-family:var(--serif);font-size:1.25rem;font-weight:500;color:var(--navy);line-height:1.2;margin-bottom:4px}
+.nt-card-traducao{font-size:13px;color:var(--gold);margin-bottom:10px;font-style:italic;font-weight:500}
+.nt-card-exemplo{font-size:12.5px;color:var(--text-muted);line-height:1.55;margin-bottom:12px;font-style:italic}
+.nt-card-date{font-size:11px;color:var(--text-muted);font-family:var(--sans)}
+.nt-card-del{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--text-muted);cursor:pointer;opacity:0;transition:opacity 0.2s;font-size:14px;padding:4px 6px;border-radius:6px}
 .nt-card:hover .nt-card-del{opacity:1}
-.nt-card-del:hover{color:var(--danger);background:var(--danger-bg)}
+.nt-card-del:hover{color:var(--danger);background:#FEE2E2}
+.nt-empty{text-align:center;padding:60px 20px;color:var(--text-muted);font-style:italic;font-size:14px;grid-column:1/-1}
 /* Modal nova entrada */
 .nt-modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,13,26,0.6);backdrop-filter:blur(8px);z-index:800;align-items:center;justify-content:center;padding:20px}
 .nt-modal-overlay.active{display:flex}
@@ -1907,25 +1925,43 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   </div>
 
   <!-- ══ PAINEL BANCO DE TERMOS ══ -->
-  <div class="nb-panel" id="panel-termos">
-    <div class="nt-toolbar">
-      <button class="sc-filter active" data-nt="todos" onclick="ntFiltrar('todos',this)">Todos</button>
-      <button class="sc-filter" data-nt="vocabulario" onclick="ntFiltrar('vocabulario',this)">Vocabulário</button>
-      <button class="sc-filter" data-nt="frases" onclick="ntFiltrar('frases',this)">Frases</button>
-      <button class="sc-filter" data-nt="termos" onclick="ntFiltrar('termos',this)">Termos</button>
-      <button class="sc-filter" data-nt="anotacoes" onclick="ntFiltrar('anotacoes',this)">Anotações</button>
-      <div class="nt-search" style="margin-left:auto">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-        <input type="text" id="nt-busca" placeholder="Buscar..." oninput="ntBuscar(this.value)">
+  <div class="nb-panel nt-page" id="panel-termos">
+    <div class="nt-topbar">
+      <button class="nt-pill active" data-nt="todos" onclick="ntFiltrar('todos',this)">Todos</button>
+      <div class="nt-sort-dropdown">
+        <button class="nt-pill" id="nt-sort-btn" onclick="toggleNtSort(event)">
+          <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="10" y2="18"/></svg>
+          Filtrar
+        </button>
+        <div class="nt-sort-menu" id="nt-sort-menu">
+          <p style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);padding:10px 16px 4px">Seção</p>
+          <div class="nt-sort-item" onclick="ntFiltrar('vocabulario',null);fecharNtSort()"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Vocabulário</div>
+          <div class="nt-sort-item" onclick="ntFiltrar('frases',null);fecharNtSort()"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Frases</div>
+          <div class="nt-sort-item" onclick="ntFiltrar('termos',null);fecharNtSort()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 9a3 3 0 015.12 2.12c0 2-3 3-3 3M12 17h.01"/></svg>Termos</div>
+          <div class="nt-sort-item" onclick="ntFiltrar('anotacoes',null);fecharNtSort()"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Anotações</div>
+          <p style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);padding:10px 16px 4px;border-top:1px solid var(--border)">Ordenar por</p>
+          <div class="nt-sort-item active" onclick="ntOrdenar('recente');fecharNtSort()"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Mais recente</div>
+          <div class="nt-sort-item" onclick="ntOrdenar('antigo');fecharNtSort()"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Mais antigo</div>
+          <div class="nt-sort-item" onclick="ntOrdenar('az');fecharNtSort()"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h6"/></svg>A → Z</div>
+        </div>
       </div>
-      <button class="nt-btn nt-btn-primary" onclick="abrirModalNovaTermo()">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Nova Entrada
-      </button>
+      <div class="nt-topbar-right">
+        <div class="nt-search-box">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input type="text" id="nt-busca" placeholder="Buscar..." oninput="ntBuscar(this.value)">
+        </div>
+        <button class="nt-icon-btn" onclick="ntDownloadCSV()" title="Exportar CSV">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </button>
+        <button class="nt-btn-new" onclick="abrirModalNovaTermo()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nova Entrada
+        </button>
+      </div>
     </div>
     <p class="nt-count" id="nt-count">0 entradas</p>
     <div class="nt-grid" id="nt-grid">
-      <p style="color:var(--text-muted);font-style:italic;font-size:14px;grid-column:1/-1">Nenhum termo ainda. Adicione sua primeira entrada!</p>
+      <p class="nt-empty">Nenhum termo ainda. Adicione sua primeira entrada!</p>
     </div>
   </div>
 
@@ -3612,11 +3648,49 @@ function renderNbHeatmap() {
 }
 
 // ── BANCO DE TERMOS ──
+var _ntOrdem = 'recente';
+
+function toggleNtSort(e) {
+  e.stopPropagation();
+  var m = document.getElementById('nt-sort-menu');
+  if (m) m.classList.toggle('open');
+}
+function fecharNtSort() {
+  var m = document.getElementById('nt-sort-menu');
+  if (m) m.classList.remove('open');
+}
+document.addEventListener('click', function(){ fecharNtSort(); });
+
+function ntOrdenar(ordem) {
+  _ntOrdem = ordem;
+  document.querySelectorAll('.nt-sort-item').forEach(function(el){ el.classList.remove('active'); });
+  renderNtGrid();
+}
+
 function ntFiltrar(tag, btn) {
   _ntFiltro = tag;
-  document.querySelectorAll('#panel-termos .sc-filter').forEach(function(b){ b.classList.remove('active'); });
+  // Update active pill
+  document.querySelectorAll('#panel-termos .nt-pill[data-nt]').forEach(function(b){ b.classList.remove('active'); });
   if (btn) btn.classList.add('active');
+  else {
+    var allBtn = document.querySelector('.nt-pill[data-nt="todos"]');
+    if (tag === 'todos' && allBtn) allBtn.classList.add('active');
+  }
   renderNtGrid();
+}
+
+function ntDownloadCSV() {
+  var headers = ['Seção','Termo','Tradução','Exemplo','Fonte','Data'];
+  var rows = _ntTermos.map(function(t){
+    return [t.secao, t.termo, t.traducao, t.exemplo, t.fonte, t.data_entrada]
+      .map(function(v){ return '"' + (v||'').replace(/"/g,'""') + '"'; }).join(',');
+  });
+  var nl = String.fromCharCode(10);
+  var csv = headers.join(',') + nl + rows.join(nl);
+  var a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'banco-de-termos.csv';
+  a.click();
 }
 
 function ntBuscar(q) {
@@ -3633,6 +3707,9 @@ function renderNtGrid() {
     var matchQ   = !_ntBusca || (t.termo||'').toLowerCase().indexOf(_ntBusca) >= 0 || (t.traducao||'').toLowerCase().indexOf(_ntBusca) >= 0 || (t.exemplo||'').toLowerCase().indexOf(_ntBusca) >= 0;
     return matchTag && matchQ;
   });
+  // Apply ordering
+  if (_ntOrdem === 'az') items.sort(function(a,b){ return (a.termo||'').localeCompare(b.termo||''); });
+  else if (_ntOrdem === 'antigo') items.reverse();
   if (count) count.textContent = items.length + ' entrada' + (items.length !== 1 ? 's' : '');
   if (!items.length) {
     grid.innerHTML = '<p style="color:var(--text-muted);font-style:italic;font-size:14px;grid-column:1/-1">Nenhuma entrada encontrada.</p>';
@@ -3640,8 +3717,9 @@ function renderNtGrid() {
   }
   grid.innerHTML = items.map(function(t) {
     var tagLabels = {vocabulario:'Vocabulário',frases:'Frases',termos:'Termo Clínico',anotacoes:'Anotação'};
+    var tagIcons  = {vocabulario:'📖',frases:'💬',termos:'🔬',anotacoes:'✏️'};
     return '<div class="nt-card">' +
-      '<span class="nt-card-tag ' + (t.secao||'vocabulario') + '">' + (tagLabels[t.secao]||t.secao) + '</span>' +
+      '<span class="nt-card-tag ' + (t.secao||'vocabulario') + '">' + (tagLabels[t.secao]||t.secao).toUpperCase() + '</span>' +
       '<p class="nt-card-termo">' + (t.termo||'') + '</p>' +
       (t.traducao ? '<p class="nt-card-traducao">— ' + t.traducao + '</p>' : '') +
       (t.exemplo  ? '<p class="nt-card-exemplo">' + t.exemplo + '</p>' : '') +
