@@ -1202,112 +1202,123 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nb-dist-count{font-size:12px;font-weight:700;color:var(--navy);width:20px;text-align:right;flex-shrink:0}
 
 /* ── Banco de Termos ── */
-.nt-page{background:#F5F2EE;min-height:calc(100vh - 45px);padding:28px 32px}
-.nt-topbar{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
-.nt-pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:12px;font-weight:600;padding:8px 18px;border-radius:50px;border:1.5px solid rgba(0,0,0,0.12);background:rgba(255,255,255,0.7);color:var(--text-muted);cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.nt-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:32px 40px}
+.nt-topbar{display:flex;align-items:center;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.nt-pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:13px;font-weight:600;padding:8px 20px;border-radius:50px;border:1.5px solid rgba(0,0,0,0.15);background:transparent;color:#6b6b6b;cursor:pointer;transition:all 0.2s;white-space:nowrap;text-decoration:none}
 .nt-pill svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;flex-shrink:0}
-.nt-pill:hover{background:#fff;border-color:rgba(0,0,0,0.2);color:var(--navy)}
-.nt-pill.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.nt-pill:hover{background:rgba(255,255,255,0.8);color:#1a1a1a}
+.nt-pill.active{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px;color:#1a1a1a;border-color:transparent;background:transparent;text-decoration-color:#c8a96e}
 .nt-topbar-right{display:flex;align-items:center;gap:8px;margin-left:auto}
-.nt-search-box{display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid rgba(0,0,0,0.1);border-radius:50px;padding:8px 16px;min-width:200px;transition:border-color 0.2s}
-.nt-search-box:focus-within{border-color:rgba(0,0,0,0.25)}
-.nt-search-box input{border:none;outline:none;font-family:var(--sans);font-size:13px;color:var(--navy);background:transparent;width:100%}
-.nt-search-box input::placeholder{color:var(--text-muted)}
-.nt-search-box svg{width:14px;height:14px;stroke:var(--text-muted);fill:none;flex-shrink:0}
-.nt-icon-btn{width:38px;height:38px;border-radius:50%;background:#fff;border:1.5px solid rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;flex-shrink:0}
-.nt-icon-btn:hover{border-color:rgba(0,0,0,0.25);background:var(--off-white)}
-.nt-icon-btn svg{width:15px;height:15px;stroke:var(--text-muted);fill:none;stroke-width:2;stroke-linecap:round}
-.nt-btn-new{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:12px;font-weight:700;padding:9px 20px;border-radius:50px;border:none;background:var(--navy-deep);color:#fff;cursor:pointer;transition:all 0.25s;white-space:nowrap}
-.nt-btn-new:hover{background:var(--navy-light)}
+.nt-search-box{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid rgba(0,0,0,0.12);border-radius:50px;padding:9px 18px;min-width:220px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.nt-search-box input{border:none;outline:none;font-family:var(--sans);font-size:13px;color:#1a1a1a;background:transparent;width:100%}
+.nt-search-box input::placeholder{color:#aaa}
+.nt-search-box svg{width:14px;height:14px;stroke:#aaa;fill:none;flex-shrink:0}
+.nt-icon-btn{width:40px;height:40px;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,0.12);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.nt-icon-btn:hover{background:#f5f5f5}
+.nt-icon-btn svg{width:16px;height:16px;stroke:#555;fill:none;stroke-width:1.8;stroke-linecap:round}
+.nt-btn-new{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:13px;font-weight:700;padding:10px 22px;border-radius:50px;border:none;background:#1a1a2e;color:#fff;cursor:pointer;transition:all 0.25s;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.nt-btn-new:hover{background:#2d2d4e}
 .nt-btn-new svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
 .nt-sort-dropdown{position:relative}
-.nt-sort-menu{position:absolute;top:calc(100% + 6px);right:0;background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.1);z-index:100;min-width:160px;overflow:hidden;display:none}
+.nt-sort-menu{position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,0.12);z-index:300;min-width:200px;overflow:hidden;display:none;padding:6px 0}
 .nt-sort-menu.open{display:block}
-.nt-sort-item{padding:10px 16px;font-size:13px;font-family:var(--sans);color:var(--navy);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background 0.15s}
-.nt-sort-item:hover{background:var(--off-white)}
-.nt-sort-item.active{color:var(--gold);font-weight:600}
-.nt-sort-item svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
-.nt-count{font-size:13px;color:var(--text-muted);margin-bottom:16px;font-family:var(--sans)}
-.nt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.nt-sort-section{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#aaa;padding:10px 16px 4px}
+.nt-sort-item{padding:10px 16px;font-size:13px;font-family:var(--sans);color:#1a1a1a;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.15s;border:none;background:none;width:100%;text-align:left}
+.nt-sort-item:hover{background:#f5f3ee}
+.nt-sort-item.active{font-weight:600}
+.nt-sort-item svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;flex-shrink:0}
+.nt-count{font-size:13px;color:#888;margin-bottom:20px;font-family:var(--sans)}
+.nt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 @media(max-width:900px){.nt-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.nt-grid{grid-template-columns:1fr}}
-.nt-card{background:#fff;border:none;border-radius:16px;padding:20px 22px 16px;transition:all 0.3s ease;position:relative;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,0.06),0 4px 12px rgba(0,0,0,0.04)}
-.nt-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.1);transform:translateY(-2px)}
-.nt-card-tag{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:5px;margin-bottom:12px}
-.nt-card-tag.vocabulario{background:#FEF3C7;color:#92400E}
-.nt-card-tag.frases{background:#E0F2FE;color:#0369a1}
-.nt-card-tag.termos{background:#EDE9FE;color:#6D28D9}
-.nt-card-tag.anotacoes{background:#DCFCE7;color:#166534}
-.nt-card-termo{font-family:var(--serif);font-size:1.25rem;font-weight:500;color:var(--navy);line-height:1.2;margin-bottom:4px}
-.nt-card-traducao{font-size:13px;color:var(--gold);margin-bottom:10px;font-style:italic;font-weight:500}
-.nt-card-exemplo{font-size:12.5px;color:var(--text-muted);line-height:1.55;margin-bottom:12px;font-style:italic}
-.nt-card-date{font-size:11px;color:var(--text-muted);font-family:var(--sans)}
-.nt-card-del{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--text-muted);cursor:pointer;opacity:0;transition:opacity 0.2s;font-size:14px;padding:4px 6px;border-radius:6px}
+.nt-card{background:#fff;border:none;border-radius:18px;padding:22px 24px 18px;transition:all 0.25s ease;position:relative;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 14px rgba(0,0,0,0.05)}
+.nt-card:hover{box-shadow:0 4px 20px rgba(0,0,0,0.1);transform:translateY(-2px)}
+.nt-card-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:50px;display:inline-flex;align-items:center;gap:5px;margin-bottom:14px}
+.nt-card-tag svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.nt-card-tag.vocabulario{background:#e8f5e9;color:#2e7d32}
+.nt-card-tag.frases{background:#e8f5e9;color:#2e7d32}
+.nt-card-tag.termos{background:#ede7f6;color:#6d28d9}
+.nt-card-tag.anotacoes{background:#e8f5e9;color:#2e7d32}
+.nt-card-termo{font-family:var(--serif);font-size:1.3rem;font-weight:400;color:#1a1a1a;line-height:1.3;margin-bottom:6px}
+.nt-card-traducao{font-size:13px;color:#c8a96e;margin-bottom:10px;font-style:normal;font-weight:500}
+.nt-card-exemplo{font-size:12.5px;color:#888;line-height:1.55;margin-bottom:14px;font-style:italic}
+.nt-card-date{font-size:11px;color:#bbb;font-family:var(--sans)}
+.nt-card-del{position:absolute;top:16px;right:16px;background:none;border:none;color:#ccc;cursor:pointer;opacity:0;transition:opacity 0.2s;font-size:16px;padding:4px 6px;border-radius:6px;line-height:1}
 .nt-card:hover .nt-card-del{opacity:1}
-.nt-card-del:hover{color:var(--danger);background:#FEE2E2}
-.nt-empty{text-align:center;padding:60px 20px;color:var(--text-muted);font-style:italic;font-size:14px;grid-column:1/-1}
-/* Modal nova entrada */
-.nt-modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,13,26,0.6);backdrop-filter:blur(8px);z-index:800;align-items:center;justify-content:center;padding:20px}
-.nt-modal-overlay.active{display:flex}
-.nt-modal{background:var(--white);border-radius:var(--radius);padding:28px 32px;max-width:520px;width:100%;box-shadow:var(--shadow-lg);animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both;position:relative}
-.nt-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:var(--radius) var(--radius) 0 0}
-.nt-modal-title{font-family:var(--serif);font-size:1.3rem;font-weight:500;color:var(--navy);margin-bottom:20px}
-.nt-form-row{margin-bottom:14px}
-.nt-form-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;display:block}
-.nt-form-input,.nt-form-select,.nt-form-textarea{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius);font-family:var(--sans);font-size:13px;color:var(--navy);outline:none;transition:border-color 0.3s;background:var(--white)}
-.nt-form-input:focus,.nt-form-select:focus,.nt-form-textarea:focus{border-color:var(--gold)}
-.nt-form-textarea{resize:vertical;min-height:80px}
-.nt-form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.nt-modal-footer{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
-.nt-btn-cancel{background:none;border:1px solid var(--border);color:var(--text-muted);padding:9px 18px;border-radius:var(--radius);font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.25s}
-.nt-btn-cancel:hover{border-color:var(--text-muted)}
+.nt-card-del:hover{color:#e53e3e;background:#fff0f0}
+.nt-empty{text-align:center;padding:60px 20px;color:#aaa;font-size:14px;grid-column:1/-1}
 
 /* ── Smart Cards ── */
-.sc2-wrap{max-width:560px;margin:0 auto}
-.sc2-header{text-align:center;margin-bottom:28px}
-.sc2-title{font-family:var(--serif);font-size:1.8rem;font-weight:300;color:var(--navy)}
-.sc2-title em{font-style:italic;color:var(--gold)}
-.sc2-subtitle{font-size:13px;color:var(--text-muted);margin-top:4px}
-.sc2-filters{display:flex;justify-content:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
-.sc2-filter{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--text-muted);cursor:pointer;transition:all 0.25s}
-.sc2-filter:hover{border-color:var(--navy);color:var(--navy)}
-.sc2-filter.active{background:var(--navy);color:#fff;border-color:var(--navy)}
-.sc2-card-wrap{perspective:1200px;cursor:pointer;margin-bottom:20px;min-height:220px}
-.sc2-card{width:100%;min-height:220px;position:relative;transform-style:preserve-3d;transition:transform 0.6s cubic-bezier(0.22,1,0.36,1)}
-.sc2-card.flipped{transform:rotateY(180deg)}
-.sc2-face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;background:var(--white);box-shadow:var(--shadow-md)}
-.sc2-back{transform:rotateY(180deg);background:linear-gradient(135deg,var(--navy-deep),var(--navy))}
-.sc2-face .sc2-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;background:var(--off-white)}
-.sc2-face .sc2-icon svg{width:20px;height:20px;fill:none;stroke:var(--text-muted);stroke-width:1.5;stroke-linecap:round}
-.sc2-face .sc2-tag{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px}
-.sc2-face .sc2-termo{font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--navy);margin-bottom:8px;line-height:1.2}
-.sc2-face .sc2-hint{font-size:11px;color:var(--text-muted);margin-top:8px}
-.sc2-back .sc2-tag{color:rgba(196,164,90,0.7)}
-.sc2-back .sc2-termo{color:var(--white)}
-.sc2-back .sc2-traducao{font-size:13px;color:var(--gold);margin-top:4px;font-style:italic}
-.sc2-back .sc2-exemplo{font-size:12px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.5}
-.sc2-back .sc2-hint{color:rgba(255,255,255,0.3)}
-.sc2-actions{display:flex;justify-content:center;gap:20px;margin-bottom:16px}
-.sc2-action-btn{display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:none;cursor:pointer;transition:all 0.25s}
-.sc2-action-btn .sc2-action-circle{width:52px;height:52px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all 0.25s;background:var(--white)}
-.sc2-action-btn svg{width:20px;height:20px;fill:none;stroke-width:2;stroke-linecap:round}
-.sc2-action-btn span{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted)}
-.sc2-action-btn.revisar .sc2-action-circle{border-color:#ea580c}
-.sc2-action-btn.revisar svg{stroke:#ea580c}
-.sc2-action-btn.revisar span{color:#ea580c}
-.sc2-action-btn.virar .sc2-action-circle:hover{border-color:var(--navy);background:var(--navy)}
-.sc2-action-btn.virar svg{stroke:var(--text-muted)}
-.sc2-action-btn.virar .sc2-action-circle:hover svg{stroke:#fff}
-.sc2-action-btn.sabia .sc2-action-circle{border-color:#16a34a}
-.sc2-action-btn.sabia svg{stroke:#16a34a}
-.sc2-action-btn.sabia span{color:#16a34a}
-.sc2-progress-row{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:8px}
-.sc2-progress-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
-.sc2-progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width 0.5s ease}
-.sc2-empty{text-align:center;padding:60px 20px;color:var(--text-muted)}
-.sc2-empty svg{width:48px;height:48px;stroke:var(--border);fill:none;stroke-width:1;margin:0 auto 16px;display:block}
+.sc2-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:40px}
+.sc2-wrap{max-width:680px;margin:0 auto}
+.sc2-header{margin-bottom:28px}
+.sc2-title{font-family:var(--serif);font-size:1.9rem;font-weight:400;color:#1a1a1a;margin-bottom:4px}
+.sc2-title em{font-style:italic;color:#c8a96e}
+.sc2-subtitle{font-size:13px;color:#888}
+.sc2-filters-row{display:flex;align-items:center;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.sc2-cat-btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:0.5px;padding:9px 18px;border-radius:50px;border:none;background:#1a1a2e;color:#fff;cursor:pointer;transition:all 0.2s}
+.sc2-cat-btn svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round}
+.sc2-cat-btn.inactive{background:rgba(26,26,46,0.08);color:#555}
+.sc2-cat-btn.inactive svg{stroke:#555}
+.sc2-cat-btn:hover{opacity:0.85}
+.sc2-mode-group{display:flex;align-items:center;gap:0;border:1px solid rgba(0,0,0,0.12);border-radius:50px;overflow:hidden;background:#fff;margin-left:auto}
+.sc2-mode-btn{font-family:var(--sans);font-size:12px;font-weight:600;padding:8px 18px;border:none;background:transparent;color:#888;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.sc2-mode-btn.active{background:#1a1a2e;color:#fff;border-radius:50px}
+.sc2-mode-btn:hover:not(.active){color:#1a1a1a}
+/* Instruction card */
+.sc2-instructions{background:#fff;border-radius:18px;padding:24px 28px;margin-bottom:28px;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+.sc2-inst-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-bottom:16px}
+.sc2-inst-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;font-size:13px;color:#555;line-height:1.5}
+.sc2-inst-item:last-child{margin-bottom:0}
+.sc2-inst-num{width:24px;height:24px;border-radius:50%;background:#1a1a2e;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sc2-inst-item strong{color:#1a1a1a}
+.sc2-inst-item .sc2-green{color:#2e7d32;font-weight:600}
+.sc2-inst-item .sc2-gold{color:#c8a96e;font-weight:600}
+/* Progress bar */
+.sc2-prog-row{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#888;margin-bottom:6px}
+.sc2-prog-bar-wrap{height:2px;background:rgba(0,0,0,0.08);border-radius:2px;margin-bottom:24px;overflow:hidden}
+.sc2-prog-bar-fill{height:100%;background:#1a1a2e;border-radius:2px;transition:width 0.5s ease}
+/* Flash card */
+.sc2-card-area{background:#fff;border-radius:20px;padding:40px 36px;margin-bottom:24px;text-align:center;min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 14px rgba(0,0,0,0.06);cursor:pointer;transition:all 0.3s;position:relative}
+.sc2-card-area:hover{box-shadow:0 4px 20px rgba(0,0,0,0.1)}
+.sc2-card-icon{width:44px;height:44px;border-radius:12px;background:#f5f3ee;border:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.sc2-card-icon svg{width:20px;height:20px;fill:none;stroke:#aaa;stroke-width:1.5;stroke-linecap:round}
+.sc2-card-section{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-bottom:10px}
+.sc2-card-termo{font-family:var(--serif);font-size:1.7rem;font-weight:400;color:#1a1a1a;margin-bottom:10px;line-height:1.2}
+.sc2-card-hint{font-size:12px;color:#bbb;display:flex;align-items:center;gap:5px}
+.sc2-card-hint svg{width:12px;height:12px;fill:none;stroke:#bbb;stroke-width:2;stroke-linecap:round}
+/* Back face */
+.sc2-card-traducao{font-size:14px;color:#c8a96e;font-weight:500;margin-bottom:8px}
+.sc2-card-exemplo-back{font-size:13px;color:#888;font-style:italic;line-height:1.5}
+/* Actions */
+.sc2-actions-row{display:flex;align-items:center;justify-content:center;gap:28px;margin-bottom:16px}
+.sc2-act{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;background:none;border:none}
+.sc2-act-circle{width:56px;height:56px;border-radius:50%;border:1.5px solid rgba(0,0,0,0.12);display:flex;align-items:center;justify-content:center;background:#fff;transition:all 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+.sc2-act svg{width:22px;height:22px;fill:none;stroke-width:2;stroke-linecap:round}
+.sc2-act-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.sc2-act.revisar .sc2-act-circle{border-color:#e57a2e}
+.sc2-act.revisar svg{stroke:#e57a2e}
+.sc2-act.revisar .sc2-act-label{color:#e57a2e}
+.sc2-act.virar .sc2-act-circle:hover{background:#f5f3ee}
+.sc2-act.virar svg{stroke:#888}
+.sc2-act.virar .sc2-act-label{color:#888}
+.sc2-act.sabia .sc2-act-circle{border-color:#2e7d32}
+.sc2-act.sabia svg{stroke:#2e7d32}
+.sc2-act.sabia .sc2-act-label{color:#2e7d32}
+.sc2-shuffle-btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:12px;font-weight:600;padding:10px 22px;border-radius:50px;border:1.5px solid rgba(0,0,0,0.12);background:#fff;color:#555;cursor:pointer;transition:all 0.2s;margin:0 auto;display:block}
+.sc2-shuffle-btn:hover{background:#f5f3ee;border-color:rgba(0,0,0,0.2)}
+.sc2-shuffle-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+/* Scores row */
+.sc2-scores{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.sc2-score-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-family:var(--sans);color:#888;background:none;border:none;cursor:pointer;padding:0;transition:color 0.2s}
+.sc2-score-btn.sabia-score{color:#2e7d32}
+.sc2-score-btn.revisar-score{color:#e57a2e}
+.sc2-score-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.sc2-empty-state{text-align:center;padding:60px 20px;color:#aaa}
+.sc2-empty-state svg{width:48px;height:48px;stroke:#ddd;fill:none;stroke-width:1;margin:0 auto 16px;display:block}
 
 /* ═══════════════════════════════════════
+   LIVE CLASS MODE/* ═══════════════════════════════════════
    LIVE CLASS MODE
 ═══════════════════════════════════════ */
 #btn-live{
@@ -1966,66 +1977,105 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   </div>
 
   <!-- ══ PAINEL SMART CARDS ══ -->
-  <div class="nb-panel" id="panel-smartcards">
+  <div class="nb-panel sc2-page" id="panel-smartcards">
     <div class="sc2-wrap">
       <div class="sc2-header">
         <h2 class="sc2-title">Meus <em>Smart Cards para Revisão</em></h2>
         <p class="sc2-subtitle" id="sc2-subtitle">0 cards disponíveis</p>
       </div>
-      <div class="sc2-filters">
-        <button class="sc2-filter active" data-sc="todos" onclick="sc2Filtrar('todos',this)">Todos</button>
-        <button class="sc2-filter" data-sc="vocabulario" onclick="sc2Filtrar('vocabulario',this)">Vocabulário</button>
-        <button class="sc2-filter" data-sc="frases" onclick="sc2Filtrar('frases',this)">Frases</button>
-        <button class="sc2-filter" data-sc="termos" onclick="sc2Filtrar('termos',this)">Termos</button>
-        <button class="sc2-filter" data-sc="anotacoes" onclick="sc2Filtrar('anotacoes',this)">Anotações</button>
+      <div class="sc2-filters-row">
+        <button class="sc2-cat-btn active" data-sc="todos" onclick="sc2Filtrar('todos',this)">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          TODOS
+        </button>
+        <button class="sc2-cat-btn inactive" data-sc="vocabulario" onclick="sc2Filtrar('vocabulario',this)">
+          <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          VOCABULÁRIO
+        </button>
+        <button class="sc2-cat-btn inactive" data-sc="frases" onclick="sc2Filtrar('frases',this)">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          FRASES
+        </button>
+        <button class="sc2-cat-btn inactive" data-sc="termos" onclick="sc2Filtrar('termos',this)">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 9a3 3 0 015.12 2.12c0 2-3 3-3 3M12 17h.01"/></svg>
+          TERMOS
+        </button>
+        <div class="sc2-mode-group">
+          <button class="sc2-mode-btn active">TERMO → PT</button>
+          <button class="sc2-mode-btn">PT → TERMO</button>
+          <button class="sc2-mode-btn" onclick="sc2Embaralhar()">ALEATÓRIO</button>
+        </div>
       </div>
-      <div id="sc2-progress-row" class="sc2-progress-row" style="display:none">
-        <span id="sc2-pos">1 / 0</span>
-        <span id="sc2-pct">0% concluído</span>
-      </div>
-      <div id="sc2-progress-bar" class="sc2-progress-bar" style="margin-bottom:20px;display:none">
-        <div class="sc2-progress-fill" id="sc2-fill" style="width:0%"></div>
-      </div>
-      <div id="sc2-empty" class="sc2-empty">
+      <!-- Empty state -->
+      <div id="sc2-empty" class="sc2-empty-state">
         <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
         <p>Adicione termos no Banco para criar Smart Cards automaticamente.</p>
       </div>
+      <!-- Card content -->
       <div id="sc2-content" style="display:none">
-        <div class="sc2-card-wrap" onclick="sc2Virar()">
-          <div class="sc2-card" id="sc2-card">
-            <div class="sc2-face">
-              <div class="sc2-icon" id="sc2-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 9a3 3 0 015.12 2.12c0 2-3 3-3 3M12 17h.01"/></svg></div>
-              <p class="sc2-tag" id="sc2-tag-front"></p>
-              <p class="sc2-termo" id="sc2-termo-front"></p>
-              <p class="sc2-hint">Clique para revelar</p>
-            </div>
-            <div class="sc2-face sc2-back">
-              <p class="sc2-tag" id="sc2-tag-back">Tradução</p>
-              <p class="sc2-termo" id="sc2-back-termo"></p>
-              <p class="sc2-traducao" id="sc2-back-traducao"></p>
-              <p class="sc2-exemplo" id="sc2-back-exemplo"></p>
-              <p class="sc2-hint">Clique para virar</p>
-            </div>
+        <!-- Scores row -->
+        <div class="sc2-scores">
+          <button class="sc2-score-btn sabia-score">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            o sabia
+          </button>
+          <button class="sc2-score-btn revisar-score">
+            <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+            o revisar
+          </button>
+        </div>
+        <!-- Progress -->
+        <div class="sc2-prog-row">
+          <span id="sc2-pos">1 / 0</span>
+          <span id="sc2-pct">0% concluído</span>
+        </div>
+        <div class="sc2-prog-bar-wrap">
+          <div class="sc2-prog-bar-fill" id="sc2-fill" style="width:0%"></div>
+        </div>
+        <!-- Card -->
+        <div class="sc2-card-area" id="sc2-card-area" onclick="sc2Virar()">
+          <div class="sc2-card-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 9a3 3 0 015.12 2.12c0 2-3 3-3 3M12 17h.01"/></svg>
+          </div>
+          <p class="sc2-card-section" id="sc2-tag-front">TERMO</p>
+          <p class="sc2-card-termo" id="sc2-termo-front"></p>
+          <p class="sc2-card-hint" id="sc2-front-hint">
+            <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+            Clique para revelar
+          </p>
+          <div id="sc2-back-content" style="display:none">
+            <p class="sc2-card-traducao" id="sc2-back-traducao"></p>
+            <p class="sc2-card-exemplo-back" id="sc2-back-exemplo"></p>
           </div>
         </div>
-        <div class="sc2-actions">
-          <button class="sc2-action-btn revisar" onclick="sc2Avaliar('revisar')">
-            <div class="sc2-action-circle"><svg viewBox="0 0 24 24" stroke="#ea580c"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg></div>
-            <span>Revisar</span>
+        <!-- Actions -->
+        <div class="sc2-actions-row">
+          <button class="sc2-act revisar" onclick="sc2Avaliar('revisar')">
+            <div class="sc2-act-circle">
+              <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+            </div>
+            <span class="sc2-act-label">REVISAR</span>
           </button>
-          <button class="sc2-action-btn virar" onclick="sc2Virar()">
-            <div class="sc2-action-circle"><svg viewBox="0 0 24 24" stroke="var(--text-muted)"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg></div>
-            <span>Virar</span>
+          <button class="sc2-act virar" onclick="sc2Virar()">
+            <div class="sc2-act-circle">
+              <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+            </div>
+            <span class="sc2-act-label">VIRAR</span>
           </button>
-          <button class="sc2-action-btn sabia" onclick="sc2Avaliar('sabia')">
-            <div class="sc2-action-circle"><svg viewBox="0 0 24 24" stroke="#16a34a"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <span>Sabia!</span>
+          <button class="sc2-act sabia" onclick="sc2Avaliar('sabia')">
+            <div class="sc2-act-circle">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="sc2-act-label">SABIA!</span>
           </button>
         </div>
+        <button class="sc2-shuffle-btn" onclick="sc2Embaralhar()">
+          <svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+          Embaralhar
+        </button>
       </div>
     </div>
   </div>
-
   <!-- ══ MODAL NOVA ENTRADA ══ -->
   <div class="nt-modal-overlay" id="nt-modal">
     <div class="nt-modal">
@@ -3787,8 +3837,11 @@ function sc2Filtrar(tag, btn) {
   _sc2Filtro = tag;
   _sc2Idx = 0;
   _sc2Sabia = 0;
-  document.querySelectorAll('.sc2-filter').forEach(function(b){ b.classList.remove('active'); });
-  if (btn) btn.classList.add('active');
+  document.querySelectorAll('.sc2-cat-btn').forEach(function(b){
+    b.classList.remove('active');
+    b.classList.add('inactive');
+  });
+  if (btn) { btn.classList.add('active'); btn.classList.remove('inactive'); }
   sc2Init();
 }
 
@@ -3817,30 +3870,45 @@ function sc2Init() {
   sc2Mostrar();
 }
 
+var _sc2Revealed = false;
+
 function sc2Mostrar() {
   var t = _sc2Items[_sc2Idx];
   if (!t) return;
-  var card = document.getElementById('sc2-card');
-  if (card) card.classList.remove('flipped');
+  _sc2Revealed = false;
   var tagLabels = {vocabulario:'VOCABULÁRIO',frases:'FRASE',termos:'TERMO CLÍNICO',anotacoes:'ANOTAÇÃO'};
   var el = function(id){ return document.getElementById(id); };
   if (el('sc2-tag-front')) el('sc2-tag-front').textContent = tagLabels[t.secao] || t.secao.toUpperCase();
   if (el('sc2-termo-front')) el('sc2-termo-front').textContent = t.termo || '';
-  if (el('sc2-tag-back')) el('sc2-tag-back').textContent = 'Tradução / Contexto';
-  if (el('sc2-back-termo')) el('sc2-back-termo').textContent = t.termo || '';
   if (el('sc2-back-traducao')) el('sc2-back-traducao').textContent = t.traducao ? '— ' + t.traducao : '';
   if (el('sc2-back-exemplo')) el('sc2-back-exemplo').textContent = t.exemplo || '';
+  // Hide back
+  var back = el('sc2-back-content');
+  var hint = el('sc2-front-hint');
+  if (back) back.style.display = 'none';
+  if (hint) hint.style.display = 'flex';
   // Progress
   var total = _sc2Items.length;
-  var pct   = Math.round((_sc2Idx / total) * 100);
   if (el('sc2-pos')) el('sc2-pos').textContent = (_sc2Idx + 1) + ' / ' + total;
-  if (el('sc2-pct')) el('sc2-pct').textContent = Math.round((_sc2Sabia/total)*100) + '% concluído';
-  if (el('sc2-fill')) el('sc2-fill').style.width = Math.round((_sc2Sabia/total)*100) + '%';
+  if (el('sc2-pct')) el('sc2-pct').textContent = Math.round((_sc2Sabia/Math.max(total,1))*100) + '% concluído';
+  if (el('sc2-fill')) el('sc2-fill').style.width = Math.round((_sc2Sabia/Math.max(total,1))*100) + '%';
 }
 
 function sc2Virar() {
-  var card = document.getElementById('sc2-card');
-  if (card) card.classList.toggle('flipped');
+  _sc2Revealed = !_sc2Revealed;
+  var back = document.getElementById('sc2-back-content');
+  var hint = document.getElementById('sc2-front-hint');
+  if (back) back.style.display = _sc2Revealed ? 'block' : 'none';
+  if (hint) hint.style.display = _sc2Revealed ? 'none' : 'flex';
+}
+
+function sc2Embaralhar() {
+  for (var i = _sc2Items.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = _sc2Items[i]; _sc2Items[i] = _sc2Items[j]; _sc2Items[j] = tmp;
+  }
+  _sc2Idx = 0; _sc2Sabia = 0;
+  sc2Mostrar();
 }
 
 function sc2Avaliar(tipo) {
