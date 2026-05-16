@@ -2109,9 +2109,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
-    <div id="popup-avisos-content" style="max-height:60vh;overflow-y:auto">
-      <p style="color:var(--text-muted);font-style:italic;font-size:14px">Carregando avisos...</p>
-    </div>
+    <div id="popup-avisos-content" style="max-height:60vh;overflow-y:auto"></div>
   </div>
 </div>
 
@@ -3015,7 +3013,9 @@ function abrirLinkAluno(campo) {
 }
 
 function openPopupAvisos() {
-  var popup  = document.getElementById('popup-avisos');
+  // Close calendar if open
+  fecharModalCalendario();
+  var popup   = document.getElementById('popup-avisos');
   var content = document.getElementById('popup-avisos-content');
   if (!popup || !content) return;
   if (!_avisos || !_avisos.length) {
@@ -3303,6 +3303,9 @@ function filtrarSmartCards(tag, btn) {
 
 // ── MODAL CALENDÁRIO ──
 function abrirModalCalendario() {
+  // Close avisos if open
+  var avisos = document.getElementById('popup-avisos');
+  if (avisos) avisos.classList.remove('active');
   var modal = document.getElementById('modal-calendario');
   if (modal) {
     modal.classList.add('active');
