@@ -1096,7 +1096,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 ═══════════════════════════════════════ */
 .cal-modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,13,26,0.7);backdrop-filter:blur(8px);z-index:350;align-items:center;justify-content:center;padding:24px;visibility:hidden}
 .cal-modal-overlay.active{display:flex;visibility:visible}
-.cal-modal-box{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:480px;width:100%;box-shadow:var(--shadow-lg);animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both;position:relative}
+.cal-modal-box{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:480px;width:100%;box-shadow:var(--shadow-lg);animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both;position:relative;pointer-events:none}
+.cal-modal-overlay.active .cal-modal-box{pointer-events:all}
 .cal-modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .cal-modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .cal-modal-title{font-family:var(--serif);font-size:1.25rem;font-weight:500;color:var(--navy)}
@@ -2086,6 +2087,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 
 
+  </main><!-- end .dashboard -->
+
   <footer class="footer">
     <p class="footer-brand">Instituto MD Talk</p>
     <p class="footer-tagline">Precisão linguística para a excelência médica.</p>
@@ -2094,7 +2097,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(196,164,90,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><path d="M17.5 6.5h.01"/></svg>
         <span style="font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,0.35)">@inglesmedico.thaifaria</span>
       </a>
-      <a href="#" id="link-email" style="display:flex;align-items:center;gap:10px;text-decoration:none;transition:opacity 0.3s" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+      <a href="mailto:mdtalk.office@gmail.com" style="display:flex;align-items:center;gap:10px;text-decoration:none;transition:opacity 0.3s" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(196,164,90,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         <span style="font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,0.35)">mdtalk.office&#64;gmail.com</span>
       </a>
@@ -2103,12 +2106,11 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <span style="font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,0.35)">WhatsApp</span>
       </a>
     </div>
-
     <p class="footer-copy">&copy; 2026 Instituto MD Talk &mdash; Todos os direitos reservados.</p>
     <p style="margin-top:16px"><a href="#" onclick="doLogout();return false;" style="font-family:var(--sans);font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:2px;text-decoration:none;transition:color 0.3s" onmouseover="this.style.color='rgba(255,255,255,0.5)'" onmouseout="this.style.color='rgba(255,255,255,0.2)'">Sair da conta</a></p>
   </footer>
 
-</div>
+</div><!-- end #page-dashboard -->
 
 
 <!-- DRIVE VIEWER MODAL -->
@@ -2137,56 +2139,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   <button class="drive-zoom-btn" onclick="zoomViewer(-1)" title="Reduzir">−</button>
   <button class="drive-zoom-btn" onclick="zoomViewer(1)" title="Ampliar">+</button>
 </div>
-<!-- MODAL CALENDÁRIO -->
-<div class="cal-modal-overlay" id="modal-calendario">
-  <div class="cal-modal-box">
-    <div class="cal-modal-header">
-      <span class="cal-modal-title">Histórico de Presenças</span>
-      <button class="cal-modal-close" onclick="fecharModalCalendario()">
-        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-      <button id="cal-btn-prev" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s ease">&#8249;</button>
-      <span id="cal-month-label" style="font-family:var(--serif);font-size:1.15rem;font-weight:500;color:var(--navy);min-width:140px;text-align:center"></span>
-      <button id="cal-btn-next" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s ease">&#8250;</button>
-    </div>
-    <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
-    <div style="background:var(--off-white);border-radius:var(--radius);padding:14px 16px;margin-top:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border)">
-      <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
-        <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--success);line-height:1" id="cal-presencas-mes">0</div>
-        <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Presenças</p>
-      </div>
-      <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
-        <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--danger);line-height:1" id="cal-faltas-mes">0</div>
-        <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Falta<span id="cal-plural">s</span></p>
-      </div>
-      <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
-        <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--navy);line-height:1" id="cal-freq-mes">—</div>
-        <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Frequência</p>
-      </div>
-      <div style="text-align:center;padding:4px 8px">
-        <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--gold);line-height:1" id="cal-esperadas-mes">—</div>
-        <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Esperadas</p>
-      </div>
-    </div>
-    <p id="cal-nav-aviso" style="font-size:11px;color:var(--text-muted);margin-top:8px;text-align:center;font-style:italic;display:none">Visualização de mês anterior — somente leitura</p>
-  </div>
-</div>
-
-<!-- POPUP AVISOS -->
-<div class="cal-modal-overlay" id="popup-avisos">
-  <div class="cal-modal-box" style="max-width:520px">
-    <div class="cal-modal-header">
-      <span class="cal-modal-title">Avisos</span>
-      <button class="cal-modal-close" onclick="document.getElementById('popup-avisos').classList.remove('active');document.body.style.overflow=''">
-        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <div id="popup-avisos-content" style="max-height:60vh;overflow-y:auto"></div>
-  </div>
-</div>
-
 <!-- DRAWER OVERLAY -->
 <div class="drawer-overlay" id="drawer-overlay"></div>
 
@@ -4545,5 +4497,57 @@ window.addEventListener('load', function(){
   showPage('login'); // no saved credentials
 });
 </script>
+
+<!-- MODALS -->
+<!-- MODAL CALENDÁRIO -->
+<div class="cal-modal-overlay" id="modal-calendario">
+  <div class="cal-modal-box">
+    <div class="cal-modal-header">
+      <span class="cal-modal-title">Histórico de Presenças</span>
+      <button class="cal-modal-close" onclick="fecharModalCalendario()">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <button id="cal-btn-prev" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s ease">&#8249;</button>
+      <span id="cal-month-label" style="font-family:var(--serif);font-size:1.15rem;font-weight:500;color:var(--navy);min-width:140px;text-align:center"></span>
+      <button id="cal-btn-next" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s ease">&#8250;</button>
+    </div>
+    <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
+    <div style="background:var(--off-white);border-radius:var(--radius);padding:14px 16px;margin-top:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border)">
+      <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
+        <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--success);line-height:1" id="cal-presencas-mes">0</div>
+        <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Presenças</p>
+      </div>
+      <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
+        <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--danger);line-height:1" id="cal-faltas-mes">0</div>
+        <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Falta<span id="cal-plural">s</span></p>
+      </div>
+      <div style="text-align:center;padding:4px 8px;border-right:1px solid var(--border)">
+        <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--navy);line-height:1" id="cal-freq-mes">—</div>
+        <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Frequência</p>
+      </div>
+      <div style="text-align:center;padding:4px 8px">
+        <div style="font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--gold);line-height:1" id="cal-esperadas-mes">—</div>
+        <p style="font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px">Esperadas</p>
+      </div>
+    </div>
+    <p id="cal-nav-aviso" style="font-size:11px;color:var(--text-muted);margin-top:8px;text-align:center;font-style:italic;display:none">Visualização de mês anterior — somente leitura</p>
+  </div>
+</div>
+
+<!-- POPUP AVISOS -->
+<div class="cal-modal-overlay" id="popup-avisos">
+  <div class="cal-modal-box" style="max-width:520px">
+    <div class="cal-modal-header">
+      <span class="cal-modal-title">Avisos</span>
+      <button class="cal-modal-close" onclick="document.getElementById('popup-avisos').classList.remove('active');document.body.style.overflow=''">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div id="popup-avisos-content" style="max-height:60vh;overflow-y:auto"></div>
+  </div>
+</div>
+
 </body>
 </html>
