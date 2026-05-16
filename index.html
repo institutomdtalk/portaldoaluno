@@ -1554,11 +1554,22 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:4px">
           <h3 class="card-title" style="margin-bottom:0">Arquivos do Drive</h3>
-          <div style="position:relative;flex-shrink:0">
-            <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--text-muted);fill:none;stroke-width:2;stroke-linecap:round;pointer-events:none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-            <input id="drive-search" type="text" placeholder="Buscar arquivo..." oninput="filtrarDriveFiles(this.value)"
-              style="padding:8px 12px 8px 32px;border:1px solid var(--border);border-radius:var(--radius);font-family:var(--sans);font-size:12px;color:var(--text-body);outline:none;width:220px;transition:border-color 0.3s;background:var(--white)"
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <div style="position:relative;flex-shrink:0">
+              <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--text-muted);fill:none;stroke-width:2;stroke-linecap:round;pointer-events:none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              <input id="drive-search" type="text" placeholder="Buscar arquivo..." oninput="filtrarDriveFiles(this.value)"
+                style="padding:8px 12px 8px 32px;border:1px solid var(--border);border-radius:var(--radius);font-family:var(--sans);font-size:12px;color:var(--text-body);outline:none;width:200px;transition:border-color 0.3s;background:var(--white)"
+                onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
+            </div>
+            <select id="drive-sort" onchange="ordenarDriveFiles(this.value)"
+              style="padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-family:var(--sans);font-size:12px;color:var(--text-muted);outline:none;background:var(--white);cursor:pointer;transition:border-color 0.3s"
               onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
+              <option value="date-desc">Mais recente</option>
+              <option value="date-asc">Mais antigo</option>
+              <option value="name-asc">A → Z</option>
+              <option value="name-desc">Z → A</option>
+              <option value="type">Tipo</option>
+            </select>
           </div>
         </div>
         <p class="card-desc" id="drive-files-status" style="margin-bottom:0">Carregando seus arquivos...</p>
@@ -2799,6 +2810,49 @@ function loadThumbsBatch(files, batchSize, delay) {
   for (var i = 0; i < Math.min(PARALLEL, files.length); i++) {
     next();
   }
+}
+
+function getMimeCategory(mimeType) {
+  if (!mimeType) return 'outro';
+  if (mimeType.indexOf('audio/') === 0) return 'áudio';
+  if (mimeType === 'application/pdf') return 'pdf';
+  if (mimeType.indexOf('image/') === 0) return 'imagem';
+  if (mimeType === 'application/vnd.google-apps.document') return 'documento';
+  if (mimeType === 'application/vnd.google-apps.presentation') return 'apresentação';
+  if (mimeType === 'application/vnd.google-apps.spreadsheet') return 'planilha';
+  return 'outro';
+}
+
+function ordenarDriveFiles(sortBy) {
+  var sorted = _allDriveFiles.slice(); // copy
+  if (sortBy === 'name-asc') {
+    sorted.sort(function(a,b){ return a.name.localeCompare(b.name); });
+  } else if (sortBy === 'name-desc') {
+    sorted.sort(function(a,b){ return b.name.localeCompare(a.name); });
+  } else if (sortBy === 'date-asc') {
+    sorted.sort(function(a,b){ return new Date(a.date) - new Date(b.date); });
+  } else if (sortBy === 'date-desc') {
+    sorted.sort(function(a,b){ return new Date(b.date) - new Date(a.date); });
+  } else if (sortBy === 'type') {
+    sorted.sort(function(a,b){ return getMimeCategory(a.mimeType).localeCompare(getMimeCategory(b.mimeType)); });
+  }
+  // Re-render grid
+  var firstRow = document.getElementById('drive-first-row');
+  var restRows = document.getElementById('drive-rest-rows');
+  var toggleBtn = document.getElementById('btn-drive-toggle');
+  var moreRows = document.getElementById('drive-more-rows');
+  if (!firstRow) return;
+  firstRow.innerHTML = '';
+  restRows.innerHTML = '';
+  _driveFilesOpen = false;
+  if (moreRows) moreRows.style.maxHeight = '0';
+  var cols = 6;
+  sorted.slice(0, cols).forEach(function(f){ firstRow.appendChild(buildDriveCard(f)); });
+  var rest = sorted.slice(cols);
+  rest.forEach(function(f){ restRows.appendChild(buildDriveCard(f)); });
+  if (toggleBtn) toggleBtn.style.display = rest.length ? 'block' : 'none';
+  // Reload thumbnails in new order
+  loadThumbsBatch(sorted, 6, 2000);
 }
 
 function toggleDriveFiles() {
