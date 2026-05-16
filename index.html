@@ -1048,80 +1048,45 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 /* ═══════════════════════════════════════
    CADERNO INTELIGENTE
 ═══════════════════════════════════════ */
-.caderno-orbit-wrap{
-  position:relative;width:40px;height:40px;
-  display:flex;align-items:center;justify-content:center;
-}
+
 .caderno-orbit-wrap .form-icon-svg{
   width:20px;height:20px;position:relative;z-index:1;
 }
-.caderno-orbit-dot{
-  position:absolute;top:50%;left:50%;
-  width:4px;height:4px;border-radius:50%;
-  background:currentColor;opacity:0.5;
-  animation:orbitDot 2.4s linear infinite;
-}
-.caderno-orbit-dot:nth-child(1){animation-delay:0s}
-.caderno-orbit-dot:nth-child(2){animation-delay:0.8s}
-.caderno-orbit-dot:nth-child(3){animation-delay:1.6s}
-@keyframes orbitDot{
-  0%  {transform:translate(-50%,-50%) rotate(0deg)   translateX(20px) scale(1);opacity:0.6}
+
+
+
+
+
   50% {transform:translate(-50%,-50%) rotate(180deg) translateX(20px) scale(0.6);opacity:0.3}
   100%{transform:translate(-50%,-50%) rotate(360deg) translateX(20px) scale(1);opacity:0.6}
 }
-.card--caderno-locked{
-  filter:grayscale(1);opacity:0.7;
-}
+
 .card--caderno-locked .form-btn{
   filter:none !important;
   opacity:1 !important;
 }
 
-.caderno-lock-icon{
-  position:absolute;top:-20px;left:20px;transform:none;
-  display:flex;align-items:center;justify-content:center;
-  width:40px;height:40px;flex-shrink:0;
-  z-index:10;
-  filter:none !important;
-}
-.lock-core{
-  position:relative;z-index:2;
-  width:36px;height:36px;border-radius:50%;
-  background:linear-gradient(135deg,var(--gold),var(--gold-light));
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 16px rgba(196,164,90,0.5),0 0 32px rgba(196,164,90,0.2);
-  animation:lockPulse 2.5s ease-in-out infinite;
-}
+
+
 .lock-core svg{width:15px;height:15px;stroke:var(--navy-deep);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-@keyframes lockPulse{
-  0%,100%{box-shadow:0 0 16px rgba(196,164,90,0.5),0 0 32px rgba(196,164,90,0.2);transform:scale(1)}
+
   50%{box-shadow:0 0 24px rgba(196,164,90,0.8),0 0 48px rgba(196,164,90,0.35);transform:scale(1.06)}
 }
-.lock-rings{position:absolute;inset:0;z-index:1}
-.lock-ring{
-  position:absolute;border-radius:50%;border:1px solid rgba(196,164,90,0.4);
-  top:50%;left:50%;transform:translate(-50%,-50%);
-}
-.lock-ring-1{width:52px;height:52px;animation:ringExpand 2.5s ease-out infinite}
-.lock-ring-2{width:52px;height:52px;animation:ringExpand 2.5s ease-out infinite 0.8s}
-.lock-ring-3{width:52px;height:52px;animation:ringExpand 2.5s ease-out infinite 1.6s}
-@keyframes ringExpand{
-  0%{width:40px;height:40px;opacity:0.8}
+
+
+
+
+
+
   100%{width:70px;height:70px;opacity:0}
 }
-.lock-sparks{position:absolute;inset:0;z-index:3;pointer-events:none}
-.lock-spark{
-  position:absolute;top:50%;left:50%;
-  width:3px;height:3px;border-radius:50%;
-  background:var(--gold-light);
-  animation:sparkFloat 3s ease-in-out infinite;
-}
+
+
 .lock-spark:nth-child(1){animation-delay:0s;transform-origin:-18px 0}
 .lock-spark:nth-child(2){animation-delay:0.75s;transform-origin:0 -18px}
 .lock-spark:nth-child(3){animation-delay:1.5s;transform-origin:18px 0}
 .lock-spark:nth-child(4){animation-delay:2.25s;transform-origin:0 18px}
-@keyframes sparkFloat{
-  0%,100%{opacity:0;transform:rotate(0deg) translateX(18px) scale(0)}
+
   20%{opacity:1;transform:rotate(45deg) translateX(22px) scale(1)}
   80%{opacity:0.3;transform:rotate(180deg) translateX(26px) scale(0.5)}
 }
@@ -1239,55 +1204,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .sc-filter-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
 .sc-filter{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--text-muted);cursor:pointer;transition:all 0.2s}
 .sc-filter.active{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
-
-/* ═══════════════════════════════════════
-   SININHO DE AVISOS
-═══════════════════════════════════════ */
-.bell-wrap{position:relative;flex-shrink:0}
-.btn-bell{
-  background:rgba(255,255,255,0.06);border:1px solid rgba(196,164,90,0.2);
-  border-radius:50%;width:38px;height:38px;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all 0.3s ease;position:relative;
-}
-.btn-bell:hover{border-color:var(--gold);background:rgba(196,164,90,0.08)}
-.btn-bell svg{width:17px;height:17px;stroke:rgba(255,255,255,0.6);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke 0.3s}
-.btn-bell:hover svg{stroke:var(--gold)}
-.bell-badge{
-  position:absolute;top:-4px;right:-4px;
-  background:#ef4444;color:#fff;
-  font-family:var(--sans);font-size:9px;font-weight:700;
-  min-width:17px;height:17px;border-radius:10px;
-  display:flex;align-items:center;justify-content:center;
-  padding:0 4px;border:1.5px solid var(--navy-deep);
-  transition:all 0.3s ease;
-}
-.bell-badge.hidden{display:none}
-.bell-dropdown{
-  position:fixed;top:80px;right:24px;
-  width:300px;max-height:420px;overflow-y:auto;
-  background:var(--white);border:1px solid var(--border);
-  border-radius:var(--radius);box-shadow:var(--shadow-lg);
-  z-index:9999;display:none;
-  animation:heroReveal 0.25s cubic-bezier(0.22,1,0.36,1) both;
-}
-.bell-dropdown.open{display:block}
-.bell-dropdown-header{
-  padding:14px 18px 10px;
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-}
-.bell-dropdown-title{font-family:var(--serif);font-size:1rem;font-weight:500;color:var(--navy)}
-.bell-dropdown-clear{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);background:none;border:none;cursor:pointer;font-family:var(--sans);transition:opacity 0.2s}
-.bell-dropdown-clear:hover{opacity:0.7}
-.bell-aviso-item{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border);transition:background 0.2s}
-.bell-aviso-item:last-child{border-bottom:none}
-.bell-aviso-item.lido{background:var(--off-white);opacity:0.6}
-.bell-aviso-check{width:16px;height:16px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;margin-top:2px}
-.bell-aviso-body{flex:1}
-.bell-aviso-data{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
-.bell-aviso-texto{font-size:13px;color:var(--text-body);line-height:1.6}
-.bell-empty{padding:24px 18px;text-align:center;font-size:13px;color:var(--text-muted);font-style:italic}
 
 /* ═══════════════════════════════════════
    DRAWER MENU
@@ -2367,77 +2283,6 @@ function renderDashboard(a, avisos) {
 
   document.getElementById('hdr-nome').textContent = a.nome_display || a.login;
 
-  var ld = document.getElementById('link-drive');
-  if (ld) { if (a.link_drive) { ld.href = a.link_drive; } else { ld.classList.add('disabled'); } }
-  var cardDrive = document.getElementById('card-meu-drive');
-  if (cardDrive) { if (a.link_drive) { cardDrive.href = a.link_drive; } else { cardDrive.style.opacity='0.35'; cardDrive.style.pointerEvents='none'; } }
-  var cardDocs = document.getElementById('card-meu-docs');
-  if (cardDocs && a.link_docs && a.link_docs.trim()) { cardDocs.href = a.link_docs; }
-  // Caderno Inteligente
-  var cardCaderno = document.getElementById('card-caderno');
-  var cadernoLock = document.getElementById('caderno-lock');
-  var cadernoBtnEl = document.getElementById('caderno-btn');
-  if (cardCaderno) {
-    if (a.caderno_ativo === 'sim') {
-      // Unlocked — full color, accessible
-      if (cadernoLock) cadernoLock.style.display = 'none';
-    } else {
-      // Locked — grayscale, no pointer events, show lock
-      cardCaderno.classList.add('card--caderno-locked');
-      cardCaderno.setAttribute('href', 'https://wa.me/5514997758941?text=' + encodeURIComponent('Gostaria de ter acesso a todos os recursos do portal'));
-      cardCaderno.style.pointerEvents = 'auto';
-      if (cadernoBtnEl) {
-        cadernoBtnEl.textContent = 'Assinar';
-        cadernoBtnEl.style.cssText = 'filter:none !important;opacity:1 !important;width:auto;height:auto;border-radius:4px;background:var(--gold);color:var(--navy-deep);border:none;padding:15px 20px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:8px;flex-shrink:0;';
-      }
-      // Swap icon to lock SVG with orbiting dots
-      var iconWrap = document.getElementById('caderno-icon-wrap');
-      if (iconWrap) {
-        iconWrap.innerHTML =
-          '<div class="caderno-orbit-wrap">' +
-            '<span class="caderno-orbit-dot"></span>' +
-            '<span class="caderno-orbit-dot"></span>' +
-            '<span class="caderno-orbit-dot"></span>' +
-            '<svg class="form-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
-              '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>' +
-              '<path d="M7 11V7a5 5 0 0110 0v4"/>' +
-            '</svg>' +
-          '</div>';
-      }
-    }
-  }
-
-  var proxEl = document.getElementById('proxima-aula-txt');
-  if (proxEl && a.proxima_aula && a.proxima_aula.trim()) proxEl.textContent = a.proxima_aula;
-
-  var meetBtn = document.getElementById('btn-meet');
-  var meetDiv = document.getElementById('meet-divider');
-  var meetPh  = document.getElementById('meet-placeholder');
-  if (meetBtn) {
-    if (a.link_meet && a.link_meet.trim()) {
-      meetBtn.href = a.link_meet;
-      meetBtn.style.display = 'flex';
-      if (meetDiv) meetDiv.style.display = 'block';
-    } else {
-      if (meetPh) meetPh.style.display = 'block';
-      if (meetDiv) meetDiv.style.display = 'block';
-    }
-  }
-
-  var espacoTitulo = document.getElementById('espaco-titulo');
-  var espacoDesc   = document.getElementById('espaco-desc');
-  if (espacoTitulo && a.curso)           espacoTitulo.textContent = a.curso;
-  if (espacoDesc   && a.descricao_curso) espacoDesc.textContent   = a.descricao_curso;
-
-  var materiaisSection  = document.getElementById('materiais-section');
-  var materiaisContent  = document.getElementById('materiais-content');
-  if (materiaisSection && materiaisContent && a.materiais && a.materiais.length) {
-    materiaisSection.style.display = 'block';
-    materiaisContent.innerHTML = a.materiais.map(function(m) {
-      return '<a class="mat-item" href="'+m.link+'" target="_blank" rel="noopener"><div class="mat-dot"></div><span class="mat-nome">'+m.nome+'</span><span class="mat-tipo">'+(m.tipo||'')+'</span></a>';
-    }).join('');
-  }
-
   // Init bell notifications
   initBell(avisos || []);
 
@@ -2470,41 +2315,14 @@ function renderDashboard(a, avisos) {
   // Load known verbs
   setTimeout(function(){ carregarVerbos(a.verbos_conhecidos || []); }, 200);
   renderTrilha(a.trilha || []);
-  var driveFilesSection = document.getElementById('drive-files-section');
-  var driveFilesGrid    = document.getElementById('drive-files-grid');
-  if (driveFilesSection && driveFilesGrid && a.link_drive && a.link_drive.trim()) {
-    driveFilesSection.style.display = 'block';
-    driveFilesGrid.innerHTML = '<p style="font-size:12px;color:var(--text-muted);grid-column:1/-1">Carregando arquivos...</p>';
-    callScript(
-      'action=get_drive_files&login=' + encodeURIComponent(a.login),
-      function(d) {
-        var s = document.getElementById('drive-files-section');
-        if (d.success && d.files && d.files.length) { renderDriveFiles(d.files); }
-        else if (s) { s.style.display = 'none'; }
-      },
-      function() { var s = document.getElementById('drive-files-section'); if (s) s.style.display = 'none'; }
-    );
-  }
+  
   showPage('dashboard');
-  startClock();
   setTimeout(function(){ initReveal(); animateCards(); }, 80);
 }
 
 // ── RELÓGIO ──
 var clockInterval = null;
-function startClock() { updateClock(); clockInterval = setInterval(updateClock, 1000); }
-function stopClock()  { if (clockInterval) { clearInterval(clockInterval); clockInterval = null; } }
-function updateClock() {
-  var now = new Date();
-  var h = now.getHours();
-  var m = String(now.getMinutes()).padStart(2,'0');
-  var s = String(now.getSeconds()).padStart(2,'0');
-  var g = h>=5&&h<12?'Good morning,':h>=12&&h<18?'Good afternoon,':'Good evening,';
-  var grEl = document.getElementById('hdr-greeting');
-  var clEl = document.getElementById('hdr-clock');
-  if (grEl) grEl.textContent = g;
-  if (clEl) clEl.textContent = String(h).padStart(2,'0')+':'+m+':'+s;
-}
+
 
 // ── CALENDÁRIO ──
 var calYear, calMonth, calData = [];
@@ -2695,23 +2513,6 @@ function buildStatusBadge(status) {
   return '<span class="pag-status-pill ' + cls + '">' + dot + label + '</span>';
 }
 
-function copiarPix() {
-  var key = '38315226851';
-  var btn = document.getElementById('pix-copy-btn');
-  navigator.clipboard.writeText(key).then(function(){
-    btn.textContent = 'Copiado!';
-    btn.style.background = 'var(--success)';
-    btn.style.color = 'var(--white)';
-    setTimeout(function(){ btn.textContent = 'Copiar'; btn.style.background = ''; btn.style.color = ''; }, 2000);
-  }).catch(function(){
-    var el = document.getElementById('pix-key-display');
-    var range = document.createRange(); range.selectNode(el);
-    window.getSelection().removeAllRanges(); window.getSelection().addRange(range);
-    document.execCommand('copy');
-    btn.textContent = 'Copiado!';
-    setTimeout(function(){ btn.textContent = 'Copiar'; }, 2000);
-  });
-}
 
 // ── SININHO DE AVISOS ──
 var _avisos = [];
@@ -3161,9 +2962,7 @@ function atualizarContadoresVerbos() {
     var countEl = document.getElementById('vb-count-' + nivel);
     if (countEl) countEl.textContent = conhecidos + ' / ' + checks.length + ' conhecidos';
   });
-  var totalEl = document.getElementById('vb-total-badge');
   var total = document.querySelectorAll('.vb-check').length;
-  if (totalEl) totalEl.textContent = totalConhecidos + ' / ' + total + ' conhecidos';
 }
 
 function carregarVerbos(verbosConhecidos) {
@@ -3518,27 +3317,9 @@ function fecharModalCalendario() {
 
 // ── TOGGLE MURAL ──
 var _muralOpen = false;
-function toggleMural() {
-  var collapse = document.getElementById('mural-collapse');
-  var chevron  = document.getElementById('mural-chevron-svg');
-  var wrap     = document.getElementById('mural-chevron-wrap');
-  _muralOpen = !_muralOpen;
-  collapse.style.maxHeight = _muralOpen ? collapse.scrollHeight + 400 + 'px' : '0';
-  if (chevron) chevron.style.transform = _muralOpen ? 'rotate(180deg)' : '';
-  if (wrap) wrap.style.background = _muralOpen ? 'var(--gold-faint)' : '';
-}
 
 // ── ANOTAÇÕES ──
 var _matOpen = false;
-function toggleMateriais() {
-  var collapse = document.getElementById('mat-collapse');
-  var chevron  = document.getElementById('mat-chevron-svg');
-  var wrap     = document.getElementById('mat-chevron-wrap');
-  _matOpen = !_matOpen;
-  collapse.style.maxHeight = _matOpen ? collapse.scrollHeight + 200 + 'px' : '0';
-  if (chevron) chevron.style.transform = _matOpen ? 'rotate(180deg)' : '';
-  if (wrap) wrap.style.background = _matOpen ? 'var(--gold-faint)' : '';
-}
 
 var _anotOpen = false;
 var _anotData = [];
@@ -3618,24 +3399,6 @@ function agendarSalvar(id, valor) {
   _anotSaveTimer = setTimeout(salvarAnotacoes, 1000);
 }
 
-function salvarAnotacoes() {
-  if (!currentStudent) return;
-  var ind = document.getElementById('anot-save-ind');
-  if (ind) { ind.textContent = ''; ind.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Salvando...'; ind.classList.add('visible'); }
-  callScript(
-    'action=salvar_anotacoes&login=' + encodeURIComponent(currentStudent.login) +
-    '&anotacoes=' + encodeURIComponent(JSON.stringify(_anotData)),
-    function(d) {
-      if (ind) {
-        ind.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Salvo';
-        setTimeout(function(){ ind.classList.remove('visible'); }, 2000);
-      }
-    },
-    function() {
-      if (ind) { ind.innerHTML = '✕ Erro ao salvar'; setTimeout(function(){ ind.classList.remove('visible'); }, 2000); }
-    }
-  );
-}
 
 function carregarAnotacoes(anotacoes) {
   _anotData = anotacoes || [];
@@ -3645,35 +3408,6 @@ function carregarAnotacoes(anotacoes) {
   }, 100);
 }
 
-// ── DRIVE FILES ──
-function renderDriveFiles(files) {
-  var section = document.getElementById('drive-files-section');
-  var grid    = document.getElementById('drive-files-grid');
-  if (!section || !grid || !files || !files.length) return;
-  section.style.display = 'block';
-  grid.innerHTML = '';
-  files.forEach(function(f) {
-    var div = document.createElement('div');
-    div.className = 'drive-file';
-    var thumb;
-    if (f.mimeType === 'application/pdf') {
-      thumb = '<div class="drive-file-thumb-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>';
-    } else {
-      thumb = '<img class="drive-file-thumb" src="' + f.thumbnail + '" alt="" loading="lazy">';
-    }
-    div.innerHTML = thumb +
-      '<div class="drive-file-info">' +
-        '<p class="drive-file-name">' + f.name + '</p>' +
-        '<div class="drive-file-actions">' +
-          '<button class="drive-file-btn primary" data-embed="' + f.embedUrl + '" data-name="' + f.name + '" data-view="' + f.viewUrl + '">Abrir aqui</button>' +
-          '<a class="drive-file-btn" href="' + f.viewUrl + '" target="_blank" rel="noopener">Drive</a>' +
-        '</div>' +
-      '</div>';
-    var btn = div.querySelector('.drive-file-btn.primary');
-    btn.addEventListener('click', function() { openPdfModal(this.dataset.embed, this.dataset.name, this.dataset.view); });
-    grid.appendChild(div);
-  });
-}
 
 function openPdfModal(embedUrl, name, viewUrl) {
   var modal   = document.getElementById('pdf-modal');
