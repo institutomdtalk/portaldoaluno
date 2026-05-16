@@ -2440,7 +2440,7 @@ function renderDashboard(a, avisos) {
   window._calFreq = a.frequencia_semanal ? parseInt(a.frequencia_semanal) : null;
   renderHistorico(a.historico);
   verificarRegistroHoje(a.historico);
-  carregarAnotacoes(a.anotacoes || []);
+  // carregarAnotacoes disabled — UI elements removed from dashboard
   window._trilhaData = a.trilha || [];
   // Load live class items
   loadLiveItems();
@@ -3543,11 +3543,13 @@ var MAX_ANOT = 20;
 
 function renderAnotacoes() {
   var tarefas = _anotData.filter(function(a){ return a.tipo === 'tarefa'; });
-  document.getElementById('anot-lista-tarefa').innerHTML = tarefas.length
+  var listEl = document.getElementById('anot-lista-tarefa');
+  if (listEl) listEl.innerHTML = tarefas.length
     ? tarefas.map(function(a){ return buildAnotItem(a); }).join('')
     : '<p class="anot-empty">Nenhuma tarefa ainda.</p>';
   var total = _anotData.length;
-  document.getElementById('anot-counter').textContent = total + ' / ' + MAX_ANOT + ' itens';
+  var counterEl = document.getElementById('anot-counter');
+  if (counterEl) counterEl.textContent = total + ' / ' + MAX_ANOT + ' itens';
   var pendentes = _anotData.filter(function(a){ return a.tipo==='tarefa' && !a.feito; }).length;
   var resumo = document.getElementById('anot-resumo');
   if (resumo) {
