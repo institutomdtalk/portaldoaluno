@@ -861,10 +861,11 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 ═══════════════════════════════════════ */
 .drive-card-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  grid-template-columns:repeat(6,1fr);
   gap:12px;
   margin-top:14px;
 }
+@media(max-width:768px){.drive-card-grid{grid-template-columns:repeat(3,1fr)}}
 .drive-card-item{
   border:1px solid var(--border);border-radius:var(--radius);
   overflow:hidden;cursor:pointer;
@@ -2637,7 +2638,7 @@ function renderDriveFilesCard(files) {
   if (countEl)  countEl.textContent = files.length + ' arquivo' + (files.length > 1 ? 's' : '');
 
   // Determine cols per row (4 on desktop)
-  var cols = 4;
+  var cols = 6;
   var first = files.slice(0, cols);
   var rest  = files.slice(cols);
 
