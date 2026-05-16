@@ -1266,8 +1266,12 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 @media(max-width:900px){.nt-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.nt-grid{grid-template-columns:1fr}}
-.nt-card{background:#fff;border:none;border-radius:18px;padding:22px 24px 18px;transition:all 0.25s ease;position:relative;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 14px rgba(0,0,0,0.05)}
-.nt-card:hover{box-shadow:0 4px 20px rgba(0,0,0,0.1);transform:translateY(-2px)}
+.nt-card{background:#fff;border:none;border-radius:18px;padding:22px 24px 18px;transition:all 0.4s cubic-bezier(0.22,1,0.36,1);position:relative;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 14px rgba(0,0,0,0.04);overflow:hidden}
+.nt-card::before{content:'';position:absolute;inset:0;border-radius:18px;opacity:0;background:radial-gradient(circle at 60% 0%,rgba(200,169,110,0.08),transparent 65%);transition:opacity 0.4s ease;pointer-events:none}
+.nt-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:18px 18px 0 0;background:linear-gradient(90deg,transparent,rgba(200,169,110,0.4),transparent);opacity:0;transition:opacity 0.4s ease}
+.nt-card:hover{box-shadow:0 8px 28px rgba(0,0,0,0.09),0 2px 8px rgba(0,0,0,0.05);transform:translateY(-3px)}
+.nt-card:hover::before{opacity:1}
+.nt-card:hover::after{opacity:1}
 .nt-card-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:50px;display:inline-flex;align-items:center;gap:5px;margin-bottom:14px}
 .nt-card-tag svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 .nt-card-tag.vocabulario{background:#e8f5e9;color:#2e7d32}
