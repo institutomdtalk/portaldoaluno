@@ -2772,8 +2772,9 @@ function filtrarDriveFiles(query) {
 }
 
 function loadThumbsBatch(files, batchSize, delay) {
-  // Load one thumbnail at a time sequentially
+  // Run 5 parallel streams
   var idx = 0;
+  var PARALLEL = 5;
   function next() {
     if (idx >= files.length) return;
     var f = files[idx++];
@@ -2789,12 +2790,15 @@ function loadThumbsBatch(files, batchSize, delay) {
             ph.parentNode.replaceChild(img, ph);
           }
         }
-        setTimeout(next, 300);
+        next(); // immediately fetch next
       },
-      function() { setTimeout(next, 1000); }
+      function() { setTimeout(next, 500); }
     );
   }
-  next();
+  // Start PARALLEL streams simultaneously
+  for (var i = 0; i < Math.min(PARALLEL, files.length); i++) {
+    next();
+  }
 }
 
 function toggleDriveFiles() {
