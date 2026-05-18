@@ -1363,6 +1363,19 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .sc2-prog-bar-wrap{height:2px;background:rgba(0,0,0,0.08);border-radius:2px;margin-bottom:24px;overflow:hidden}
 .sc2-prog-bar-fill{height:100%;background:#1a1a2e;border-radius:2px;transition:width 0.5s ease}
 /* Flash card */
+/* SC2 flip */
+.sc2-flip-wrap{perspective:1400px;margin-bottom:24px;cursor:pointer}
+.sc2-flip-inner{position:relative;transform-style:preserve-3d;transition:transform 0.65s cubic-bezier(0.22,1,0.36,1);height:280px}
+.sc2-flip-inner.flipped{transform:rotateY(180deg)}
+.sc2-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px 40px;text-align:center}
+.sc2-face-front{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 16px rgba(0,0,0,0.07)}
+.sc2-face-back{background:linear-gradient(135deg,var(--navy-deep),var(--navy));transform:rotateY(180deg);box-shadow:0 4px 24px rgba(11,29,58,0.35)}
+.sc2-face-back .sc2-card-section{color:rgba(196,164,90,0.7)}
+.sc2-face-back .sc2-card-termo{color:#fff}
+.sc2-face-back .sc2-card-traducao{color:var(--gold)}
+.sc2-face-back .sc2-card-exemplo-back{color:rgba(255,255,255,0.45)}
+.sc2-face-back .sc2-card-hint{color:rgba(255,255,255,0.2)}
+.sc2-face-back .sc2-card-hint svg{stroke:rgba(255,255,255,0.2)}
 .sc2-card-area{background:#fff;border-radius:20px;padding:40px 36px;margin-bottom:24px;text-align:center;min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .sc2-card-area:hover{box-shadow:0 4px 20px rgba(0,0,0,0.1)}
 .sc2-card-icon{width:44px;height:44px;border-radius:12px;background:#f5f3ee;border:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
