@@ -2269,6 +2269,27 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     <p style="margin-top:16px"><a href="#" onclick="doLogout();return false;" style="font-family:var(--sans);font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:2px;text-decoration:none;transition:color 0.3s" onmouseover="this.style.color='rgba(255,255,255,0.5)'" onmouseout="this.style.color='rgba(255,255,255,0.2)'">Sair da conta</a></p>
   </footer>
 
+<!-- ══ LIVE CLASS PANEL ══ -->
+<div id="live-panel">
+  <div class="lp-header">
+    <span class="lp-title">Registre durante a Aula</span>
+    <button class="lp-close" onclick="toggleLiveMode()">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="lp-tags">
+    <button class="lp-tag active" data-tag="vocabulario" onclick="setLiveTag('vocabulario',this)">Vocab</button>
+    <button class="lp-tag" data-tag="frases" onclick="setLiveTag('frases',this)">Frase</button>
+    <button class="lp-tag" data-tag="termos" onclick="setLiveTag('termos',this)">Termo</button>
+    <button class="lp-tag" data-tag="anotacoes" onclick="setLiveTag('anotacoes',this)">Nota</button>
+  </div>
+  <textarea id="lp-nota" class="lp-textarea" placeholder="Digite o termo, frase ou anotação... (Enter para salvar)" rows="2"></textarea>
+  <div class="lp-footer">
+    <button class="lp-save" id="lp-save">Salvar</button>
+  </div>
+  <div id="lp-feed" class="lp-feed"></div>
+</div>
+
 </div><!-- end #page-dashboard -->
 
 
@@ -4812,6 +4833,45 @@ window.addEventListener('load', function(){
 </script>
 
 <!-- MODALS -->
+
+<!-- ══ MODAL EDITAR ENTRADA ══ -->
+<div class="nt-modal-overlay" id="nt-edit-modal">
+  <div class="nt-modal">
+    <h3 class="nt-modal-title">Editar Entrada</h3>
+    <input type="hidden" id="nt-edit-id">
+    <div class="nt-form-row">
+      <label class="nt-form-label">Seção</label>
+      <select id="nt-edit-secao" class="nt-form-select">
+        <option value="vocabulario">Vocabulário</option>
+        <option value="frases">Frases</option>
+        <option value="termos">Termos Clínicos</option>
+        <option value="anotacoes">Anotações</option>
+      </select>
+    </div>
+    <div class="nt-form-row">
+      <label class="nt-form-label">Termo / Título</label>
+      <input type="text" id="nt-edit-termo" class="nt-form-input">
+    </div>
+    <div class="nt-form-row-2">
+      <div class="nt-form-row" style="margin-bottom:0">
+        <label class="nt-form-label">Tradução (PT)</label>
+        <input type="text" id="nt-edit-traducao" class="nt-form-input">
+      </div>
+      <div class="nt-form-row" style="margin-bottom:0">
+        <label class="nt-form-label">Fonte</label>
+        <input type="text" id="nt-edit-fonte" class="nt-form-input">
+      </div>
+    </div>
+    <div class="nt-form-row">
+      <label class="nt-form-label">Exemplo em inglês</label>
+      <textarea id="nt-edit-exemplo" class="nt-form-textarea"></textarea>
+    </div>
+    <div class="nt-modal-footer">
+      <button class="nt-btn-cancel" onclick="fecharEditarTermo()">Cancelar</button>
+      <button class="nt-btn nt-btn-primary" onclick="salvarEdicaoTermo()">Salvar Alterações</button>
+    </div>
+  </div>
+</div>
 
 
   <!-- ══ MODAL NOVA ENTRADA ══ -->
