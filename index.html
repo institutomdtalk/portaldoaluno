@@ -3065,6 +3065,16 @@ function getDriveTag(fileId, tag) {
   return _driveConluidos['drive_' + tag + '_' + fileId] || false;
 }
 
+var TAG_CONFIG = {
+  a_concluir:     { label: 'A Concluir',     labelOff: 'A Concluir',     doneClass: 'done-a-concluir',     cardClass: '' },
+  concluido:      { label: 'Concluído',      labelOff: 'Concluído',      doneClass: 'done-concluido',      cardClass: 'concluded' },
+  revisar:        { label: 'Revisar',        labelOff: 'Revisar',        doneClass: 'done-revisar',        cardClass: '' },
+  revisado:       { label: 'Revisado',       labelOff: 'Revisado',       doneClass: 'done-revisado',       cardClass: '' },
+  homework:       { label: 'Homework',       labelOff: 'Homework',       doneClass: 'done-homework',       cardClass: '' },
+  homework_feito: { label: 'Homework Feito', labelOff: 'Homework Feito', doneClass: 'done-homework-feito', cardClass: '' },
+  curadoria:      { label: 'Curadoria',      labelOff: 'Curadoria',      doneClass: 'done-curadoria',      cardClass: '' }
+};
+
 function buildDriveTagMenu(fileId) {
   var tags = ['a_concluir','concluido','revisar','revisado','homework','homework_feito','curadoria'];
   var activeCount = tags.filter(function(t){ return getDriveTag(fileId, t); }).length;
