@@ -908,9 +908,11 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .drive-tag-btn:hover{border-color:var(--gold);color:var(--gold)}
 .drive-tag-btn svg{width:11px;height:11px;flex-shrink:0}
 .drive-tag-dropdown{
-  position:absolute;bottom:calc(100% + 4px);left:10px;right:10px;
-  background:var(--white);border:1px solid var(--border);
-  border-radius:var(--radius)}
+  position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);
+  width:200px;background:var(--white);border:1px solid var(--border);
+  border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);
+  z-index:200;display:none;overflow:hidden;
+}
 .drive-tag-dropdown.open{display:block}
 .drive-tag-option{
   display:flex;align-items:center;gap:8px;
@@ -1911,7 +1913,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   <div class="nb-tabs-bar" id="nb-tabs-bar">
     <button class="nb-tab" id="tab-dashboard" onclick="switchTab('dashboard')">
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      Portal
+      Conteúdo
     </button>
     <button class="nb-tab" id="tab-progresso" onclick="switchTab('progresso')">
       <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -1923,7 +1925,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     </button>
     <button class="nb-tab" id="tab-smartcards" onclick="switchTab('smartcards')">
       <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-      Smart Cards para Revisão
+      Flashcards
     </button>
   </div>
 
