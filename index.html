@@ -875,12 +875,12 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .drive-card-item:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:var(--border-gold)}
 .drive-card-item:hover::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:var(--radius) var(--radius) 0 0}
 .drive-card-thumb{
-  width:100%;aspect-ratio:3/4;object-fit:cover;
+  width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top center;
   background:linear-gradient(135deg,var(--navy-deep),var(--navy));
   display:block;border-radius:var(--radius) var(--radius) 0 0;
 }
 .drive-card-thumb-placeholder{
-  width:100%;aspect-ratio:3/4;
+  width:100%;aspect-ratio:16/10;
   background:linear-gradient(135deg,var(--navy-deep),var(--navy));
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:8px;border-radius:var(--radius) var(--radius) 0 0;
