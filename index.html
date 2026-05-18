@@ -1332,9 +1332,10 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nt-btn-primary:hover{background:var(--navy-light)}
 
 /* ── Smart Cards ── */
-.sc2-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:40px;width:100%;box-sizing:border-box}
-.sc2-wrap{max-width:680px;margin:0 auto;width:100%}
+.sc2-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:36px 40px;width:100%;box-sizing:border-box}
+.sc2-wrap{max-width:100%;margin:0;width:100%}
 .sc2-header{margin-bottom:28px}
+.sc2-content-inner{max-width:720px;margin:0 auto;width:100%}
 .sc2-title{font-family:var(--serif);font-size:1.2rem;font-weight:400;color:#1a1a1a;margin-bottom:4px}
 .sc2-title em{font-style:italic;color:#c8a96e}
 .sc2-subtitle{font-size:13px;color:#888}
@@ -2131,6 +2132,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       </div>
       <!-- Card content -->
       <div id="sc2-content" style="display:none">
+        <div class="sc2-content-inner">
         <!-- Scores row -->
         <div class="sc2-scores">
           <button class="sc2-score-btn sabia-score">
@@ -2191,6 +2193,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
           <svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
           Embaralhar
         </button>
+        </div><!-- end sc2-content-inner -->
       </div>
     </div>
   </div>
