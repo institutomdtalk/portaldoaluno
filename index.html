@@ -935,7 +935,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .drive-tag-option.active-a-concluir .tag-check{background:#f97316;border-color:#f97316}
 .drive-tag-option.active-revisar .tag-check{background:#0d9488;border-color:#0d9488}
 .drive-tag-option.active-homework-feito .tag-check{background:#92400e;border-color:#92400e}
-.drive-tag-option.active-curadoria .tag-check{background:#0ea5e9;border-color:#0ea5e9}
+.drive-tag-option.active-curadoria .tag-check{background:#C4A45A;border-color:#C4A45A}
 .drive-tag-option.active-a-concluir .tag-check{background:#f97316;border-color:#f97316}
 .drive-tag-option.active-revisar .tag-check{background:#0d9488;border-color:#0d9488}
 .drive-tag-option.active-homework-feito .tag-check{background:#92400e;border-color:#92400e}
@@ -3199,7 +3199,7 @@ function buildDriveCard(f) {
     '</svg><span>' + label + '</span></div>';
   var fileKey = 'drive_' + f.id;
   var isDone = _driveConluidos[fileKey] || false;
-  var tagClasses = ['a_concluir','concluido','revisar','revisado','homework','homework_feito']
+  var tagClasses = ['a_concluir','concluido','revisar','revisado','homework','homework_feito','curadoria']
     .filter(function(t){ return _driveConluidos['drive_' + t + '_' + f.id]; })
     .map(function(t){ return 'tag-' + t.replace(/_/g,'-'); })
     .join(' ');
