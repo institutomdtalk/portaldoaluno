@@ -941,23 +941,28 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .drive-tag-option.active-homework-feito .tag-check{background:#92400e;border-color:#92400e}
 /* Badges on thumbnail */
 .drive-thumb-badges{
-  position:absolute;top:6px;left:6px;
-  display:flex;flex-direction:column;gap:3px;
+  position:absolute;top:8px;left:8px;
+  display:flex;flex-direction:column;gap:4px;
   pointer-events:none;z-index:2;
 }
 .drive-thumb-badge{
-  font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  padding:3px 9px;border-radius:20px;display:none;width:fit-content;
+  font-size:8px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;display:none;width:fit-content;
+  backdrop-filter:blur(8px);box-shadow:0 1px 6px rgba(0,0,0,0.18);
 }
-/* Verde: concluido, revisado, homework_feito */
-.drive-thumb-badge.concluido     {background:rgba(22,163,74,0.92);color:#fff}
-.drive-thumb-badge.revisado      {background:rgba(22,163,74,0.92);color:#fff}
-.drive-thumb-badge.homework-feito{background:rgba(22,163,74,0.92);color:#fff}
-/* Vermelho: a-concluir, revisar, homework */
-.drive-thumb-badge.a-concluir    {background:rgba(220,38,38,0.88);color:#fff}
-.drive-thumb-badge.revisar       {background:rgba(220,38,38,0.88);color:#fff}
-.drive-thumb-badge.homework      {background:rgba(220,38,38,0.88);color:#fff}
-/* Dourado: curadoria */
+/* A Concluir — âmbar */
+.drive-thumb-badge.a-concluir    {background:rgba(251,191,36,0.88);color:#78350f}
+/* Concluído — esmeralda */
+.drive-thumb-badge.concluido     {background:rgba(16,185,129,0.88);color:#fff}
+/* Revisar — laranja */
+.drive-thumb-badge.revisar       {background:rgba(249,115,22,0.88);color:#fff}
+/* Revisado — violeta */
+.drive-thumb-badge.revisado      {background:rgba(139,92,246,0.88);color:#fff}
+/* Homework — azul índigo */
+.drive-thumb-badge.homework      {background:rgba(99,102,241,0.88);color:#fff}
+/* Homework Feito — teal */
+.drive-thumb-badge.homework-feito{background:rgba(20,184,166,0.88);color:#fff}
+/* Curadoria — dourado */
 .drive-thumb-badge.curadoria     {background:rgba(196,164,90,0.92);color:#1a1a2e}
 /* Show tags */
 .drive-card-item.tag-concluido      .drive-thumb-badge.concluido     {display:block}
@@ -967,7 +972,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .drive-card-item.tag-revisar        .drive-thumb-badge.revisar       {display:block}
 .drive-card-item.tag-homework       .drive-thumb-badge.homework      {display:block}
 .drive-card-item.tag-curadoria      .drive-thumb-badge.curadoria     {display:block}
-.drive-card-item.concluded{border-color:rgba(22,163,74,0.25)}
+.drive-card-item.concluded{border-color:rgba(16,185,129,0.3)}
 .drive-card-concluded-badge{
   position:absolute;top:6px;right:6px;
   background:#22c55e;color:#fff;
