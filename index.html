@@ -1414,7 +1414,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 /* Live Panel */
 #live-panel{
   position:fixed;bottom:24px;right:24px;width:340px;
-  display:none;
+  display:none;z-index:1000;
   background:var(--navy-deep);border:1px solid rgba(196,164,90,0.25);
   border-radius:var(--radius)}
 #live-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(34,197,94,0.5),transparent)}
@@ -2273,34 +2273,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     <p style="margin-top:16px"><a href="#" onclick="doLogout();return false;" style="font-family:var(--sans);font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:2px;text-decoration:none;transition:color 0.3s" onmouseover="this.style.color='rgba(255,255,255,0.5)'" onmouseout="this.style.color='rgba(255,255,255,0.2)'">Sair da conta</a></p>
   </footer>
 
-<!-- ══ LIVE CLASS PANEL ══ -->
-<div id="live-panel">
-  <div class="lp-head">
-    <div class="lp-head-left">
-      <span class="lp-title">Registre durante a Aula</span>
-      <span id="lp-count-badge" style="display:none">0</span>
-    </div>
-    <button class="lp-close" onclick="toggleLiveMode()">
-      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
-  </div>
-  <div class="lp-tags-row">
-    <button class="lp-tag active" data-tag="vocabulario" onclick="setLiveTag('vocabulario',this)">Vocab</button>
-    <button class="lp-tag" data-tag="frases" onclick="setLiveTag('frases',this)">Frase</button>
-    <button class="lp-tag" data-tag="termos" onclick="setLiveTag('termos',this)">Termo</button>
-    <button class="lp-tag" data-tag="anotacoes" onclick="setLiveTag('anotacoes',this)">Nota</button>
-  </div>
-  <div class="lp-body">
-    <textarea id="lp-nota" class="lp-textarea" placeholder="Digite aqui... (Enter para salvar)" rows="3"></textarea>
-    <button class="lp-save-btn" id="lp-save">
-      Salvar
-      <span class="lp-enter-hint">(Enter)</span>
-    </button>
-  </div>
-  <div id="lp-feed" class="lp-feed">
-    <p class="lp-empty">Nenhuma anotação ainda. Comece a digitar!</p>
-  </div>
-</div>
 
 </div><!-- end #page-dashboard -->
 
@@ -4924,5 +4896,35 @@ window.addEventListener('load', function(){
     </div>
   </div>
 
+
+
+<!-- ══ LIVE CLASS PANEL ══ -->
+<div id="live-panel">
+  <div class="lp-head">
+    <div class="lp-head-left">
+      <span class="lp-title">Registre durante a Aula</span>
+      <span id="lp-count-badge" style="display:none">0</span>
+    </div>
+    <button class="lp-close" onclick="toggleLiveMode()">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="lp-tags-row">
+    <button class="lp-tag active" data-tag="vocabulario" onclick="setLiveTag('vocabulario',this)">Vocab</button>
+    <button class="lp-tag" data-tag="frases" onclick="setLiveTag('frases',this)">Frase</button>
+    <button class="lp-tag" data-tag="termos" onclick="setLiveTag('termos',this)">Termo</button>
+    <button class="lp-tag" data-tag="anotacoes" onclick="setLiveTag('anotacoes',this)">Nota</button>
+  </div>
+  <div class="lp-body">
+    <textarea id="lp-nota" class="lp-textarea" placeholder="Digite aqui... (Enter para salvar)" rows="3"></textarea>
+    <button class="lp-save-btn" id="lp-save">
+      Salvar
+      <span class="lp-enter-hint">(Enter)</span>
+    </button>
+  </div>
+  <div id="lp-feed" class="lp-feed">
+    <p class="lp-empty">Nenhuma anotação ainda. Comece a digitar!</p>
+  </div>
+</div>
 </body>
 </html>
