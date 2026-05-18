@@ -932,6 +932,13 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .drive-tag-option.active .tag-check{background:#22c55e;border-color:#22c55e}
 .drive-tag-option.active-revisado .tag-check{background:#7c3aed;border-color:#7c3aed}
 .drive-tag-option.active-homework .tag-check{background:var(--gold);border-color:var(--gold)}
+.drive-tag-option.active-a-concluir .tag-check{background:#f97316;border-color:#f97316}
+.drive-tag-option.active-revisar .tag-check{background:#0d9488;border-color:#0d9488}
+.drive-tag-option.active-homework-feito .tag-check{background:#92400e;border-color:#92400e}
+.drive-tag-option.active-curadoria .tag-check{background:#0ea5e9;border-color:#0ea5e9}
+.drive-tag-option.active-a-concluir .tag-check{background:#f97316;border-color:#f97316}
+.drive-tag-option.active-revisar .tag-check{background:#0d9488;border-color:#0d9488}
+.drive-tag-option.active-homework-feito .tag-check{background:#92400e;border-color:#92400e}
 /* Badges on thumbnail */
 .drive-thumb-badges{
   position:absolute;top:6px;left:6px;
@@ -948,6 +955,13 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .drive-card-item.tag-concluido .drive-thumb-badge.concluido{display:block}
 .drive-card-item.tag-revisado  .drive-thumb-badge.revisado{display:block}
 .drive-card-item.tag-homework  .drive-thumb-badge.homework{display:block}
+.drive-card-item.tag-a-concluir .drive-thumb-badge.a-concluir{display:block}
+.drive-card-item.tag-revisar    .drive-thumb-badge.revisar{display:block}
+.drive-card-item.tag-homework-feito .drive-thumb-badge.homework-feito{display:block}
+.drive-card-item.tag-curadoria .drive-thumb-badge.curadoria{display:block}
+.drive-card-item.tag-a-concluir .drive-thumb-badge.a-concluir{display:block}
+.drive-card-item.tag-revisar    .drive-thumb-badge.revisar{display:block}
+.drive-card-item.tag-homework-feito .drive-thumb-badge.homework-feito{display:block}
 .drive-card-item.concluded{border-color:rgba(45,106,79,0.25)}
 .drive-card-concluded-badge{
   position:absolute;top:6px;right:6px;
@@ -2171,21 +2185,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
   <main class="dashboard">
 
-    <!-- TRILHA DE APRENDIZADO -->
-    <div class="card reveal" style="grid-column:1/-1" id="card-trilha">
-      <div class="card-pad">
-        <p class="card-overline">Programa de Proficiência em Inglês Médico</p>
-        <h3 class="card-title">Minha Trilha de Aprendizado</h3>
-        <p class="card-desc" style="margin-bottom:20px">Acompanhe sua jornada e marque os módulos concluídos.</p>
-        <div id="trilha-lista"></div>
-        <div id="trilha-mais-wrap" style="display:none;margin-top:16px;text-align:center">
-          <button id="btn-trilha-mais" onclick="toggleTrilhaMais()" style="background:none;border:1px solid var(--border-gold);color:var(--gold);font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border-radius:var(--radius);cursor:pointer;transition:all 0.3s ease">
-            Ver mais <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-left:4px" id="trilha-mais-chevron"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-
     <!-- PASTA DO DRIVE -->
     <div class="card reveal" style="grid-column:1/-1" id="card-drive-files">
       <div class="card-pad">
@@ -3047,21 +3046,38 @@ function carregarDriveConcluidos() {
   _driveConluidos = JSON.parse(localStorage.getItem(key) || '{}');
 }
 
+function getDriveTag(fileId, tag) {
+  return _driveConluidos['drive_' + tag + '_' + fileId] || false;
+}
+
 function buildDriveTagMenu(fileId) {
-  var c = _driveConluidos['drive_concluido_' + fileId] || false;
-  var r = _driveConluidos['drive_revisado_'  + fileId] || false;
-  var h = _driveConluidos['drive_homework_'  + fileId] || false;
-  var activeCount = (c?1:0)+(r?1:0)+(h?1:0);
+  var tags = ['a_concluir','concluido','revisar','revisado','homework','homework_feito','curadoria'];
+  var activeCount = tags.filter(function(t){ return getDriveTag(fileId, t); }).length;
   var btnLabel = 'Selecionar';
-  return '<button class="drive-tag-btn" onclick="toggleDriveMenu(event,&quot;' + fileId + '&quot;)">' +
+  var svgs = {
+    a_concluir:     'M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z M12 8v4l3 3',
+    concluido:      'M20 6L9 17l-5-5',
+    revisar:        'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z M12 9a3 3 0 110 6 3 3 0 010-6',
+    revisado:       'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z M12 9a3 3 0 110 6 3 3 0 010-6',
+    homework:       'M12 20h9 M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z',
+    homework_feito: 'M9 11l3 3L22 4 M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11',
+    curadoria:      'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'
+  };
+  var classMap = {
+    a_concluir:'active-a-concluir', concluido:'active', revisar:'active-revisar',
+    revisado:'active-revisado', homework:'active-homework', homework_feito:'active-homework-feito',
+    curadoria:'active-curadoria'
+  };
+  var html = '<button class="drive-tag-btn" onclick="toggleDriveMenu(event,&quot;' + fileId + '&quot;)">' +
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>' +
-    btnLabel +
-  '</button>' +
-  '<div class="drive-tag-dropdown" id="ddm_' + fileId + '">' +
-    buildTagOption(fileId, 'concluido', 'Concluído', 'M20 6L9 17l-5-5', c, 'active') +
-    buildTagOption(fileId, 'revisado',  'Revisado',  'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z M12 9a3 3 0 110 6 3 3 0 010-6', r, 'active-revisado') +
-    buildTagOption(fileId, 'homework',  'Homework',  'M12 20h9 M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z', h, 'active-homework') +
-  '</div>';
+    btnLabel + '</button>' +
+    '<div class="drive-tag-dropdown" id="ddm_' + fileId + '">';
+  tags.forEach(function(tag) {
+    var isActive = getDriveTag(fileId, tag);
+    html += buildTagOption(fileId, tag, TAG_CONFIG[tag].label, svgs[tag], isActive, classMap[tag]);
+  });
+  html += '</div>';
+  return html;
 }
 
 function buildTagOption(fileId, tag, label, svgD, isActive, activeClass) {
@@ -3092,7 +3108,7 @@ function toggleDriveTag(e, fileId, tag) {
   localStorage.setItem(getDriveConcluidosKey(), JSON.stringify(_driveConluidos));
   // Update option button
   var opt = document.getElementById('dto_' + tag + '_' + fileId);
-  var classMap = {concluido:'active', revisado:'active-revisado', homework:'active-homework'};
+  var classMap = {a_concluir:'active-a-concluir',concluido:'active',revisar:'active-revisar',revisado:'active-revisado',homework:'active-homework',homework_feito:'active-homework-feito'};
   if (opt) opt.className = 'drive-tag-option ' + (isDone ? classMap[tag] : '');
   // Update card classes
   var cardItem = opt ? opt.closest('.drive-card-item') : null;
@@ -3139,20 +3155,22 @@ function buildDriveCard(f) {
     '</svg><span>' + label + '</span></div>';
   var fileKey = 'drive_' + f.id;
   var isDone = _driveConluidos[fileKey] || false;
-  var tagConcluido = _driveConluidos['drive_concluido_' + f.id] || false;
-  var tagRevisado  = _driveConluidos['drive_revisado_'  + f.id] || false;
-  var tagHomework  = _driveConluidos['drive_homework_'  + f.id] || false;
-  var cardClasses  = 'drive-card-item' +
-    (tagConcluido ? ' tag-concluido' : '') +
-    (tagRevisado  ? ' tag-revisado'  : '') +
-    (tagHomework  ? ' tag-homework'  : '');
+  var tagClasses = ['a_concluir','concluido','revisar','revisado','homework','homework_feito']
+    .filter(function(t){ return _driveConluidos['drive_' + t + '_' + f.id]; })
+    .map(function(t){ return 'tag-' + t.replace(/_/g,'-'); })
+    .join(' ');
+  var cardClasses = 'drive-card-item' + (tagClasses ? ' ' + tagClasses : '');
   div.className = cardClasses;
   div.title = f.name;
   div.innerHTML = '<div style="position:relative;cursor:pointer">' + thumbHtml +
     '<div class="drive-thumb-badges">' +
+      '<span class="drive-thumb-badge a-concluir">◷ A Concluir</span>' +
       '<span class="drive-thumb-badge concluido">✓ Concluído</span>' +
-      '<span class="drive-thumb-badge revisado">⊙ Revisado</span>' +
+      '<span class="drive-thumb-badge revisar">⊙ Revisar</span>' +
+      '<span class="drive-thumb-badge revisado">✓ Revisado</span>' +
       '<span class="drive-thumb-badge homework">✎ Homework</span>' +
+      '<span class="drive-thumb-badge homework-feito">✓ HW Feito</span>' +
+      '<span class="drive-thumb-badge curadoria">★ Curadoria</span>' +
     '</div>' +
     '</div>' +
     '<div class="drive-card-name" title="' + f.name.replace(/"/g,'&quot;') + '" style="cursor:pointer">' + f.name + '</div>' +
@@ -4898,3 +4916,18 @@ window.addEventListener('load', function(){
 
 </body>
 </html>
+
+    <!-- TRILHA DE APRENDIZADO -->
+    <div class="card reveal" style="grid-column:1/-1" id="card-trilha">
+      <div class="card-pad">
+        <p class="card-overline">Programa de Proficiência em Inglês Médico</p>
+        <h3 class="card-title">Minha Trilha de Aprendizado</h3>
+        <p class="card-desc" style="margin-bottom:20px">Acompanhe sua jornada e marque os módulos concluídos.</p>
+        <div id="trilha-lista"></div>
+        <div id="trilha-mais-wrap" style="display:none;margin-top:16px;text-align:center">
+          <button id="btn-trilha-mais" onclick="toggleTrilhaMais()" style="background:none;border:1px solid var(--border-gold);color:var(--gold);font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border-radius:var(--radius);cursor:pointer;transition:all 0.3s ease">
+            Ver mais <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-left:4px" id="trilha-mais-chevron"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
