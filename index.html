@@ -1271,7 +1271,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nt-btn-new:hover{background:#2d2d4e}
 .nt-btn-new svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
 .nt-sort-dropdown{position:relative}
-.nt-sort-menu{position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:14px}
+.nt-sort-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:14px}
 .nt-sort-menu.open{display:block}
 .nt-sort-section{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#aaa;padding:10px 16px 4px}
 .nt-sort-item{padding:10px 16px;font-size:13px;font-family:var(--sans);color:#1a1a1a;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.15s;border:none;background:none;width:100%;text-align:left}
@@ -1298,8 +1298,12 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nt-card-traducao{font-size:13px;color:#c8a96e;margin-bottom:10px;font-style:normal;font-weight:500}
 .nt-card-exemplo{font-size:12.5px;color:#888;line-height:1.55;margin-bottom:14px;font-style:italic}
 .nt-card-date{font-size:11px;color:#bbb;font-family:var(--sans)}
-.nt-card-del{position:absolute;top:16px;right:16px;background:none;border:none;color:#ccc;cursor:pointer;opacity:0;transition:opacity 0.2s;font-size:16px;padding:4px 6px;border-radius:6px;line-height:1}
-.nt-card:hover .nt-card-del{opacity:1}
+.nt-card-del,.nt-card-edit{position:absolute;top:14px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:all 0.25s;border:1px solid var(--border);background:var(--white);color:var(--text-muted)}
+.nt-card-del{right:14px}
+.nt-card-edit{right:46px}
+.nt-card:hover .nt-card-del,.nt-card:hover .nt-card-edit{opacity:1}
+.nt-card-del:hover{color:#e53e3e;border-color:#e53e3e;background:#FEF2F2}
+.nt-card-edit:hover{color:var(--gold);border-color:var(--gold);background:rgba(196,164,90,0.06)}
 .nt-card-del:hover{color:#e53e3e;background:#fff0f0}
 .nt-empty{text-align:center;padding:60px 20px;color:#aaa;font-size:14px;grid-column:1/-1}
 
@@ -3752,7 +3756,7 @@ function fecharNtSort() {
   var m = document.getElementById('nt-sort-menu');
   if (m) m.classList.remove('open');
 }
-document.addEventListener('click', function(){ fecharNtSort(); });
+// (global close registered in DOMContentLoaded)
 
 function ntOrdenar(ordem) {
   _ntOrdem = ordem;
@@ -3817,8 +3821,8 @@ function renderNtGrid() {
       (t.traducao ? '<p class="nt-card-traducao">— ' + t.traducao + '</p>' : '') +
       (t.exemplo  ? '<p class="nt-card-exemplo">' + t.exemplo + '</p>' : '') +
       '<p class="nt-card-date">' + (t.data_entrada||'') + '</p>' +
-      '<button class="nt-card-del" onclick="ntDeletar(&quot;' + (t.id||'') + '&quot;,event)" title="Remover">✕</button>' +
-      '<button class="nt-card-edit" onclick="ntEditar(&quot;' + (t.id||'') + '&quot;,event)" title="Editar">✎</button>' +
+      '<button class="nt-card-del" onclick="ntDeletar(&quot;' + (t.id||'') + '&quot;,event)" title="Remover"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>' +
+      '<button class="nt-card-edit" onclick="ntEditar(&quot;' + (t.id||'') + '&quot;,event)" title="Editar"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>' +
     '</div>';
   }).join('');
 }
@@ -3877,18 +3881,24 @@ function ntDeletar(id, e) {
 }
 
 function ntEditar(id, e) {
-  if (e) e.stopPropagation();
+  if (e) { e.stopPropagation(); e.preventDefault(); }
   var t = _ntTermos.find(function(x){ return x.id === id; });
-  if (!t) return;
-  document.getElementById('nt-edit-id').value        = t.id;
-  document.getElementById('nt-edit-secao').value     = t.secao || 'vocabulario';
-  document.getElementById('nt-edit-termo').value     = t.termo || '';
-  document.getElementById('nt-edit-traducao').value  = t.traducao || '';
-  document.getElementById('nt-edit-fonte').value     = t.fonte || '';
-  document.getElementById('nt-edit-exemplo').value   = t.exemplo || '';
-  var m = document.getElementById('nt-edit-modal');
-  if (m) { m.classList.add('active'); document.body.style.overflow = 'hidden'; }
-  setTimeout(function(){ var el = document.getElementById('nt-edit-termo'); if(el) el.focus(); }, 100);
+  if (!t) { console.warn('Termo not found:', id); return; }
+  var el = function(i){ return document.getElementById(i); };
+  if (el('nt-edit-id'))       el('nt-edit-id').value       = t.id;
+  if (el('nt-edit-secao'))    el('nt-edit-secao').value    = t.secao || 'vocabulario';
+  if (el('nt-edit-termo'))    el('nt-edit-termo').value    = t.termo || '';
+  if (el('nt-edit-traducao')) el('nt-edit-traducao').value = t.traducao || '';
+  if (el('nt-edit-fonte'))    el('nt-edit-fonte').value    = t.fonte || '';
+  if (el('nt-edit-exemplo'))  el('nt-edit-exemplo').value  = t.exemplo || '';
+  var m = el('nt-edit-modal');
+  if (m) {
+    m.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    // Close on backdrop click
+    m.onclick = function(ev){ if (ev.target === m) fecharEditarTermo(); };
+  }
+  setTimeout(function(){ var inp = el('nt-edit-termo'); if(inp) inp.focus(); }, 100);
 }
 
 function fecharEditarTermo() {
@@ -4731,6 +4741,11 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('.drive-tag-dropdown.open').forEach(function(el){
         el.classList.remove('open');
       });
+    }
+    // Close NT sort menu
+    if (!e.target.closest('.nt-sort-dropdown')) {
+      var m = document.getElementById('nt-sort-menu');
+      if (m) m.classList.remove('open');
     }
   });
   var driveViewerOverlay = document.getElementById('drive-viewer');
