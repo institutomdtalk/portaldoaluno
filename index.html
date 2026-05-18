@@ -3108,21 +3108,31 @@ function toggleDriveTag(e, fileId, tag) {
   localStorage.setItem(getDriveConcluidosKey(), JSON.stringify(_driveConluidos));
   // Update option button
   var opt = document.getElementById('dto_' + tag + '_' + fileId);
-  var classMap = {a_concluir:'active-a-concluir',concluido:'active',revisar:'active-revisar',revisado:'active-revisado',homework:'active-homework',homework_feito:'active-homework-feito'};
-  if (opt) opt.className = 'drive-tag-option ' + (isDone ? classMap[tag] : '');
+  var classMap = {a_concluir:'active-a-concluir',concluido:'active',revisar:'active-revisar',revisado:'active-revisado',homework:'active-homework',homework_feito:'active-homework-feito',curadoria:'active-curadoria'};
+  if (opt) opt.className = 'drive-tag-option ' + (isDone ? (classMap[tag]||'') : '');
   // Update card classes
   var cardItem = opt ? opt.closest('.drive-card-item') : null;
-  if (cardItem) cardItem.classList.toggle('tag-' + tag, isDone);
-  // Update main button label
-  var c = _driveConluidos['drive_concluido_' + fileId] || false;
-  var r = _driveConluidos['drive_revisado_'  + fileId] || false;
-  var h = _driveConluidos['drive_homework_'  + fileId] || false;
-  var count = (c?1:0)+(r?1:0)+(h?1:0);
-  var mainBtn = cardItem ? cardItem.querySelector('.drive-tag-btn') : null;
-  if (mainBtn) {
-    var txt = mainBtn.lastChild;
-    if (txt && txt.nodeType === 3) txt.textContent = 'Selecionar';
-  }
+  if (cardItem) cardItem.classList.toggle('tag-' + tag.replace(/_/g,'-'), isDone);
+  // Save to planilha in real time
+  saveDriveTagsToSheet(fileId, cardItem);
+}
+
+function saveDriveTagsToSheet(fileId, cardItem) {
+  if (!currentStudent) return;
+  var allTags = Object.keys(TAG_CONFIG);
+  var activeTags = allTags.filter(function(t){
+    return _driveConluidos['drive_' + t + '_' + fileId];
+  }).join(',');
+  var nameEl = cardItem ? cardItem.querySelector('.drive-card-name') : null;
+  var fileName = nameEl ? nameEl.textContent.trim() : '';
+  callScript(
+    'action=salvar_drive_tags' +
+    '&login='     + encodeURIComponent(currentStudent.login) +
+    '&file_id='   + encodeURIComponent(fileId) +
+    '&file_name=' + encodeURIComponent(fileName) +
+    '&tags='      + encodeURIComponent(activeTags),
+    function(){}, function(){}
+  );
 }
 var _driveZoom = 1;
 
