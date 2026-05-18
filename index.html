@@ -943,26 +943,31 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .drive-thumb-badges{
   position:absolute;top:6px;left:6px;
   display:flex;flex-direction:column;gap:3px;
-  pointer-events:none;
+  pointer-events:none;z-index:2;
 }
 .drive-thumb-badge{
   font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  padding:2px 8px;border-radius:20px;display:none;
+  padding:3px 9px;border-radius:20px;display:none;width:fit-content;
 }
-.drive-thumb-badge.concluido{background:#22c55e;color:#fff}
-.drive-thumb-badge.revisado{background:#7c3aed;color:#fff}
-.drive-thumb-badge.homework{background:var(--gold);color:var(--navy-deep)}
-.drive-card-item.tag-concluido .drive-thumb-badge.concluido{display:block}
-.drive-card-item.tag-revisado  .drive-thumb-badge.revisado{display:block}
-.drive-card-item.tag-homework  .drive-thumb-badge.homework{display:block}
-.drive-card-item.tag-a-concluir .drive-thumb-badge.a-concluir{display:block}
-.drive-card-item.tag-revisar    .drive-thumb-badge.revisar{display:block}
+/* Verde: concluido, revisado, homework_feito */
+.drive-thumb-badge.concluido     {background:rgba(22,163,74,0.92);color:#fff}
+.drive-thumb-badge.revisado      {background:rgba(22,163,74,0.92);color:#fff}
+.drive-thumb-badge.homework-feito{background:rgba(22,163,74,0.92);color:#fff}
+/* Vermelho: a-concluir, revisar, homework */
+.drive-thumb-badge.a-concluir    {background:rgba(220,38,38,0.88);color:#fff}
+.drive-thumb-badge.revisar       {background:rgba(220,38,38,0.88);color:#fff}
+.drive-thumb-badge.homework      {background:rgba(220,38,38,0.88);color:#fff}
+/* Dourado: curadoria */
+.drive-thumb-badge.curadoria     {background:rgba(196,164,90,0.92);color:#1a1a2e}
+/* Show tags */
+.drive-card-item.tag-concluido      .drive-thumb-badge.concluido     {display:block}
+.drive-card-item.tag-revisado       .drive-thumb-badge.revisado      {display:block}
 .drive-card-item.tag-homework-feito .drive-thumb-badge.homework-feito{display:block}
-.drive-card-item.tag-curadoria .drive-thumb-badge.curadoria{display:block}
-.drive-card-item.tag-a-concluir .drive-thumb-badge.a-concluir{display:block}
-.drive-card-item.tag-revisar    .drive-thumb-badge.revisar{display:block}
-.drive-card-item.tag-homework-feito .drive-thumb-badge.homework-feito{display:block}
-.drive-card-item.concluded{border-color:rgba(45,106,79,0.25)}
+.drive-card-item.tag-a-concluir     .drive-thumb-badge.a-concluir    {display:block}
+.drive-card-item.tag-revisar        .drive-thumb-badge.revisar       {display:block}
+.drive-card-item.tag-homework       .drive-thumb-badge.homework      {display:block}
+.drive-card-item.tag-curadoria      .drive-thumb-badge.curadoria     {display:block}
+.drive-card-item.concluded{border-color:rgba(22,163,74,0.25)}
 .drive-card-concluded-badge{
   position:absolute;top:6px;right:6px;
   background:#22c55e;color:#fff;
@@ -3201,10 +3206,10 @@ function buildDriveCard(f) {
     '<div class="drive-thumb-badges">' +
       '<span class="drive-thumb-badge a-concluir">◷ A Concluir</span>' +
       '<span class="drive-thumb-badge concluido">✓ Concluído</span>' +
-      '<span class="drive-thumb-badge revisar">⊙ Revisar</span>' +
       '<span class="drive-thumb-badge revisado">✓ Revisado</span>' +
-      '<span class="drive-thumb-badge homework">✎ Homework</span>' +
       '<span class="drive-thumb-badge homework-feito">✓ HW Feito</span>' +
+      '<span class="drive-thumb-badge revisar">↺ Revisar</span>' +
+      '<span class="drive-thumb-badge homework">✎ Homework</span>' +
       '<span class="drive-thumb-badge curadoria">★ Curadoria</span>' +
     '</div>' +
     '</div>' +
