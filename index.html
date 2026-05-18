@@ -859,8 +859,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 ═══════════════════════════════════════ */
 .drive-card-grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
   margin-top:14px;
 }
 @media(max-width:768px){.drive-card-grid{grid-template-columns:repeat(2,1fr)}}
@@ -875,21 +875,27 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .drive-card-item:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:var(--border-gold)}
 .drive-card-item:hover::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:var(--radius) var(--radius) 0 0}
 .drive-card-thumb{
-  width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top center;
+  width:100%;aspect-ratio:21/9;object-fit:cover;object-position:top center;
   background:linear-gradient(135deg,var(--navy-deep),var(--navy));
-  display:block;border-radius:var(--radius) var(--radius) 0 0;
+  display:block;
 }
 .drive-card-thumb-placeholder{
-  width:100%;aspect-ratio:16/10;
+  width:100%;aspect-ratio:21/9;
   background:linear-gradient(135deg,var(--navy-deep),var(--navy));
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:8px;border-radius:var(--radius) var(--radius) 0 0;
+  gap:8px;
 }
 .drive-card-thumb-placeholder svg{width:28px;height:28px;opacity:0.5;flex-shrink:0}
 .drive-card-thumb-placeholder span{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);font-family:var(--sans)}
+.drive-card-body{padding:14px 16px;flex:1;display:flex;flex-direction:column}
+.drive-card-tipo{
+  font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:8px;width:fit-content;
+  background:var(--gold-faint);color:#92400E;
+}
 .drive-card-name{
-  padding:10px 12px 4px;
-  font-family:var(--serif);font-size:0.9rem;font-weight:500;color:var(--navy);
+  padding:0;
+  font-family:var(--serif);font-size:1.1rem;font-weight:500;color:var(--navy);
   line-height:1.3;word-break:break-word;white-space:normal;
   cursor:pointer;flex:1;
 }
@@ -3035,7 +3041,14 @@ function buildDriveCard(f) {
   var cardClasses = 'drive-card-item' + (tagClasses ? ' ' + tagClasses : '');
   div.className = cardClasses;
   div.title = f.name;
-  div.innerHTML = '<div style="position:relative;cursor:pointer">' + thumbHtml +
+  // Tipo badge
+  var tipoLabel = 'Arquivo', tipoClass = 'vocabulario';
+  if (f.mimeType === 'application/pdf') { tipoLabel = 'PDF'; tipoClass = 'gramatica'; }
+  else if (f.mimeType && f.mimeType.indexOf('audio/') === 0) { tipoLabel = 'Áudio'; tipoClass = 'vocabulario'; }
+  else if (f.mimeType === 'application/vnd.google-apps.document') { tipoLabel = 'Documento'; tipoClass = 'vocabulario'; }
+  else if (f.mimeType === 'application/vnd.google-apps.presentation') { tipoLabel = 'Slides'; tipoClass = 'vocabulario'; }
+
+  div.innerHTML = '<div style="position:relative;">' + thumbHtml +
     '<div class="drive-thumb-badges">' +
       '<span class="drive-thumb-badge a-concluir">A Concluir</span>' +
       '<span class="drive-thumb-badge concluido">Concluído</span>' +
@@ -3045,15 +3058,19 @@ function buildDriveCard(f) {
       '<span class="drive-thumb-badge homework">Homework</span>' +
       '<span class="drive-thumb-badge curadoria">Curadoria</span>' +
     '</div>' +
-    '</div>' +
-    '<div class="drive-card-name" title="' + f.name.replace(/"/g,'&quot;') + '" style="cursor:pointer">' + f.name + '</div>' +
-    '<div class="drive-card-footer">' +
-      buildDriveTagMenu(f.id) +
-    '</div>';
-  var thumbEl = div.querySelector('.drive-card-thumb, .drive-card-thumb-placeholder, [style*="cursor:pointer"]');
+  '</div>' +
+  '<div class="drive-card-body">' +
+    '<span class="drive-card-tipo ' + tipoClass + '">' + tipoLabel + '</span>' +
+    '<div class="drive-card-name" title="' + f.name.replace(/"/g,'&quot;') + '">' + f.name + '</div>' +
+  '</div>' +
+  '<div class="drive-card-footer">' +
+    buildDriveTagMenu(f.id) +
+  '</div>';
+  var thumbEl = div.querySelector('.drive-card-thumb, .drive-card-thumb-placeholder');
   var nameEl  = div.querySelector('.drive-card-name');
+  var bodyEl  = div.querySelector('.drive-card-body');
   if (thumbEl) thumbEl.addEventListener('click', function(e){ e.stopPropagation(); openDriveViewer(f); });
-  if (nameEl)  nameEl.addEventListener('click',  function(e){ e.stopPropagation(); openDriveViewer(f); });
+  if (bodyEl)  bodyEl.addEventListener('click',  function(e){ e.stopPropagation(); openDriveViewer(f); });
   return div;
 }
 
