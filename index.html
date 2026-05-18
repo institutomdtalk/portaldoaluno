@@ -4722,8 +4722,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // Registre durante a Aula
   var lpClose = document.getElementById('lp-close-btn');
   if (lpClose) lpClose.addEventListener('click', toggleLiveMode);
-  var lpSave = document.getElementById('lp-save-btn');
+  var lpSave = document.getElementById('lp-save');
   if (lpSave) lpSave.addEventListener('click', salvarLiveItem);
+  var lpNota = document.getElementById('lp-nota');
+  if (lpNota) lpNota.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); salvarLiveItem(); }
+  });
   var lpNota = document.getElementById('lp-nota');
   if (lpNota) {
     lpNota.addEventListener('keydown', function(e) {
