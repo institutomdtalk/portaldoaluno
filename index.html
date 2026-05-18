@@ -908,10 +908,10 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .drive-tag-btn:hover{border-color:var(--gold);color:var(--gold)}
 .drive-tag-btn svg{width:11px;height:11px;flex-shrink:0}
 .drive-tag-dropdown{
-  position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);
-  width:200px;background:var(--white);border:1px solid var(--border);
+  position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);
+  width:190px;background:var(--white);border:1px solid var(--border);
   border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);
-  z-index:200;display:none;overflow:hidden;
+  z-index:400;display:none;overflow:hidden;
 }
 .drive-tag-dropdown.open{display:block}
 .drive-tag-option{
@@ -3818,6 +3818,7 @@ function renderNtGrid() {
       (t.exemplo  ? '<p class="nt-card-exemplo">' + t.exemplo + '</p>' : '') +
       '<p class="nt-card-date">' + (t.data_entrada||'') + '</p>' +
       '<button class="nt-card-del" onclick="ntDeletar(&quot;' + (t.id||'') + '&quot;,event)" title="Remover">✕</button>' +
+      '<button class="nt-card-edit" onclick="ntEditar(&quot;' + (t.id||'') + '&quot;,event)" title="Editar">✎</button>' +
     '</div>';
   }).join('');
 }
@@ -3873,6 +3874,59 @@ function ntDeletar(id, e) {
   sc2Init();
   renderNbProgresso();
   callScript('action=deletar_nt_termo&login=' + encodeURIComponent(currentStudent.login) + '&id=' + encodeURIComponent(id), function(){}, function(){});
+}
+
+function ntEditar(id, e) {
+  if (e) e.stopPropagation();
+  var t = _ntTermos.find(function(x){ return x.id === id; });
+  if (!t) return;
+  document.getElementById('nt-edit-id').value        = t.id;
+  document.getElementById('nt-edit-secao').value     = t.secao || 'vocabulario';
+  document.getElementById('nt-edit-termo').value     = t.termo || '';
+  document.getElementById('nt-edit-traducao').value  = t.traducao || '';
+  document.getElementById('nt-edit-fonte').value     = t.fonte || '';
+  document.getElementById('nt-edit-exemplo').value   = t.exemplo || '';
+  var m = document.getElementById('nt-edit-modal');
+  if (m) { m.classList.add('active'); document.body.style.overflow = 'hidden'; }
+  setTimeout(function(){ var el = document.getElementById('nt-edit-termo'); if(el) el.focus(); }, 100);
+}
+
+function fecharEditarTermo() {
+  var m = document.getElementById('nt-edit-modal');
+  if (m) { m.classList.remove('active'); document.body.style.overflow = ''; }
+}
+
+function salvarEdicaoTermo() {
+  var id       = document.getElementById('nt-edit-id').value;
+  var secao    = document.getElementById('nt-edit-secao').value;
+  var termo    = document.getElementById('nt-edit-termo').value.trim();
+  var traducao = document.getElementById('nt-edit-traducao').value.trim();
+  var fonte    = document.getElementById('nt-edit-fonte').value.trim();
+  var exemplo  = document.getElementById('nt-edit-exemplo').value.trim();
+  if (!termo) { showToast('Digite o termo.', 'error'); return; }
+  // Update local array
+  var t = _ntTermos.find(function(x){ return x.id === id; });
+  if (t) {
+    t.secao = secao; t.termo = termo; t.traducao = traducao;
+    t.fonte = fonte; t.exemplo = exemplo;
+  }
+  fecharEditarTermo();
+  renderNtGrid();
+  sc2Init();
+  renderNbProgresso();
+  // Save to planilha
+  callScript(
+    'action=editar_nt_termo' +
+    '&login='    + encodeURIComponent(currentStudent.login) +
+    '&id='       + encodeURIComponent(id) +
+    '&secao='    + encodeURIComponent(secao) +
+    '&termo='    + encodeURIComponent(termo) +
+    '&traducao=' + encodeURIComponent(traducao) +
+    '&exemplo='  + encodeURIComponent(exemplo) +
+    '&fonte='    + encodeURIComponent(fonte),
+    function(d){ showToast(d.success ? 'Alterações salvas!' : 'Erro ao salvar.', d.success ? 'success' : 'error'); },
+    function(){ showToast('Erro de conexão.', 'error'); }
+  );
 }
 
 // ── SMART CARDS 2 ──
@@ -4671,8 +4725,13 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('.drive-tag-dropdown.open').forEach(function(el){ el.classList.remove('open'); });
     }
   });
-  document.addEventListener('click', function() {
-    document.querySelectorAll('.drive-tag-dropdown.open').forEach(function(el){ el.classList.remove('open'); });
+  // Close drive tag dropdowns on outside click
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.drive-card-footer')) {
+      document.querySelectorAll('.drive-tag-dropdown.open').forEach(function(el){
+        el.classList.remove('open');
+      });
+    }
   });
   var driveViewerOverlay = document.getElementById('drive-viewer');
   if (driveViewerOverlay) driveViewerOverlay.addEventListener('click', function(e){ if(e.target===this) closeDriveViewer(); });
