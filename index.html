@@ -2153,19 +2153,31 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
           <div class="sc2-prog-bar-fill" id="sc2-fill" style="width:0%"></div>
         </div>
         <!-- Card -->
-        <div class="sc2-card-area" id="sc2-card-area" onclick="sc2Virar()">
-          <div class="sc2-card-icon">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 9a3 3 0 015.12 2.12c0 2-3 3-3 3M12 17h.01"/></svg>
-          </div>
-          <p class="sc2-card-section" id="sc2-tag-front">TERMO</p>
-          <p class="sc2-card-termo" id="sc2-termo-front"></p>
-          <p class="sc2-card-hint" id="sc2-front-hint">
-            <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
-            Clique para revelar
-          </p>
-          <div id="sc2-back-content" style="display:none">
-            <p class="sc2-card-traducao" id="sc2-back-traducao"></p>
-            <p class="sc2-card-exemplo-back" id="sc2-back-exemplo"></p>
+        <div class="sc2-flip-wrap" onclick="sc2Virar()">
+          <div class="sc2-flip-inner" id="sc2-flip-inner">
+            <!-- FRENTE -->
+            <div class="sc2-face sc2-face-front">
+              <div class="sc2-card-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 9a3 3 0 015.12 2.12c0 2-3 3-3 3M12 17h.01"/></svg>
+              </div>
+              <p class="sc2-card-section" id="sc2-tag-front">TERMO</p>
+              <p class="sc2-card-termo" id="sc2-termo-front"></p>
+              <p class="sc2-card-hint" id="sc2-front-hint">
+                <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+                Clique para revelar
+              </p>
+            </div>
+            <!-- VERSO (navy) -->
+            <div class="sc2-face sc2-face-back">
+              <p class="sc2-card-section" id="sc2-tag-back">Tradução</p>
+              <p class="sc2-card-termo" id="sc2-back-termo"></p>
+              <p class="sc2-card-traducao" id="sc2-back-traducao"></p>
+              <p class="sc2-card-exemplo-back" id="sc2-back-exemplo"></p>
+              <p class="sc2-card-hint">
+                <svg viewBox="0 0 24 24"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
+                Clique para virar
+              </p>
+            </div>
           </div>
         </div>
         <!-- Actions -->
@@ -4010,28 +4022,26 @@ function sc2Mostrar() {
   _sc2Revealed = false;
   var tagLabels = {vocabulario:'VOCABULÁRIO',frases:'FRASE',termos:'TERMO CLÍNICO',anotacoes:'ANOTAÇÃO'};
   var el = function(id){ return document.getElementById(id); };
-  if (el('sc2-tag-front')) el('sc2-tag-front').textContent = tagLabels[t.secao] || t.secao.toUpperCase();
-  if (el('sc2-termo-front')) el('sc2-termo-front').textContent = t.termo || '';
+  // Reset flip
+  var inner = el('sc2-flip-inner');
+  if (inner) inner.classList.remove('flipped');
+  if (el('sc2-tag-front'))    el('sc2-tag-front').textContent    = tagLabels[t.secao] || t.secao.toUpperCase();
+  if (el('sc2-termo-front'))  el('sc2-termo-front').textContent  = t.termo || '';
+  if (el('sc2-tag-back'))     el('sc2-tag-back').textContent     = 'Tradução / Contexto';
+  if (el('sc2-back-termo'))   el('sc2-back-termo').textContent   = t.termo || '';
   if (el('sc2-back-traducao')) el('sc2-back-traducao').textContent = t.traducao ? '— ' + t.traducao : '';
   if (el('sc2-back-exemplo')) el('sc2-back-exemplo').textContent = t.exemplo || '';
-  // Hide back
-  var back = el('sc2-back-content');
-  var hint = el('sc2-front-hint');
-  if (back) back.style.display = 'none';
-  if (hint) hint.style.display = 'flex';
   // Progress
   var total = _sc2Items.length;
-  if (el('sc2-pos')) el('sc2-pos').textContent = (_sc2Idx + 1) + ' / ' + total;
-  if (el('sc2-pct')) el('sc2-pct').textContent = Math.round((_sc2Sabia/Math.max(total,1))*100) + '% concluído';
+  if (el('sc2-pos'))  el('sc2-pos').textContent  = (_sc2Idx + 1) + ' / ' + total;
+  if (el('sc2-pct'))  el('sc2-pct').textContent  = Math.round((_sc2Sabia/Math.max(total,1))*100) + '% concluído';
   if (el('sc2-fill')) el('sc2-fill').style.width = Math.round((_sc2Sabia/Math.max(total,1))*100) + '%';
 }
 
 function sc2Virar() {
   _sc2Revealed = !_sc2Revealed;
-  var back = document.getElementById('sc2-back-content');
-  var hint = document.getElementById('sc2-front-hint');
-  if (back) back.style.display = _sc2Revealed ? 'block' : 'none';
-  if (hint) hint.style.display = _sc2Revealed ? 'none' : 'flex';
+  var inner = document.getElementById('sc2-flip-inner');
+  if (inner) inner.classList.toggle('flipped', _sc2Revealed);
 }
 
 function sc2Embaralhar() {
