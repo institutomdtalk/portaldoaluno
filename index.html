@@ -1427,19 +1427,19 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .notas-editor-titulo{width:100%;border:none;outline:none;font-family:var(--serif);font-size:1.5rem;font-weight:500;color:#1a1a1a;padding:0 0 12px;border-bottom:1px solid rgba(0,0,0,0.08);margin-bottom:10px;background:transparent;box-sizing:border-box;display:block}
 .notas-editor-titulo::placeholder{color:#ccc}
 .notas-toolbar{display:flex;align-items:center;gap:2px;padding:6px 0 8px;border-bottom:1px solid rgba(0,0,0,0.07);margin-bottom:10px;flex-wrap:wrap}
-.notas-fmt-select{font-family:var(--sans);font-size:11px;border:1px solid rgba(0,0,0,0.1);border-radius:6px;padding:4px 6px;color:#555;background:#fff;cursor:pointer;outline:none;height:26px}
+.notas-fmt-select{font-family:var(--sans);font-size:12px;border:1px solid rgba(0,0,0,0.1);border-radius:7px;padding:5px 8px;color:#555;background:#fff;cursor:pointer;outline:none;height:32px}
 .notas-fmt-select:focus{border-color:var(--gold)}
-.notas-size-ctrl{display:flex;align-items:center;gap:2px;background:rgba(0,0,0,0.04);border-radius:6px;padding:2px 4px;height:26px}
+.notas-size-ctrl{display:flex;align-items:center;gap:2px;background:rgba(0,0,0,0.04);border-radius:7px;padding:2px 6px;height:32px}
 .notas-size-btn{width:18px;height:18px;border:none;background:none;cursor:pointer;font-size:14px;color:#666;line-height:1;display:flex;align-items:center;justify-content:center;border-radius:3px;transition:background 0.15s}
 .notas-size-btn:hover{background:rgba(0,0,0,0.08)}
-.notas-size-display{font-size:11px;font-weight:600;color:#444;min-width:20px;text-align:center;font-family:var(--sans)}
-.notas-fmt-btn{min-width:26px;height:26px;border-radius:6px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;color:#666;font-size:12px;padding:0 4px}
+.notas-size-display{font-size:12px;font-weight:600;color:#444;min-width:22px;text-align:center;font-family:var(--sans)}
+.notas-fmt-btn{min-width:32px;height:32px;border-radius:7px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;color:#555;font-size:13px;padding:0 5px}
 .notas-fmt-btn:hover{background:rgba(0,0,0,0.07)}
 .notas-fmt-btn svg{width:13px;height:13px;flex-shrink:0}
 .notas-fmt-i em{font-style:italic;font-family:Georgia,serif;font-size:13px}
 .notas-color-group{display:flex;align-items:center;gap:1px}
 .notas-color-btn{padding:0;min-width:22px}
-.notas-color-swatch{display:block;width:13px;height:13px;border-radius:50%}
+.notas-color-swatch{display:block;width:15px;height:15px;border-radius:50%}
 .notas-fmt-divider{width:1px;height:16px;background:rgba(0,0,0,0.1);margin:0 3px;flex-shrink:0}
 .notas-editor-body{min-height:100px;outline:none;font-family:var(--sans);font-size:16px;color:#444;line-height:1.7;width:100%;cursor:text;word-break:break-word}
 .notas-editor-body:empty::before{content:attr(data-placeholder);color:#ccc;pointer-events:none}
@@ -1470,12 +1470,12 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nota-action-btn.del:hover{color:#e53e3e;border-color:#e53e3e;background:#FEF2F2}
 .nota-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);z-index:800;align-items:center;justify-content:center;padding:20px;visibility:hidden}
 .nota-modal-overlay.active{display:flex;visibility:visible}
-.nota-modal{background:#fff;border-radius:20px;padding:28px 32px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both;position:relative}
+.nota-modal{background:#fff;border-radius:20px;padding:28px 32px;max-width:640px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both;position:relative}
 .nota-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:20px 20px 0 0}
 .nota-modal-title{font-family:var(--serif);font-size:1.4rem;font-weight:400;color:#1a1a1a;margin-bottom:14px}
 .nota-edit-titulo{width:100%;border:1px solid rgba(0,0,0,0.12);border-radius:10px;padding:10px 14px;font-family:var(--serif);font-size:1.15rem;color:#1a1a1a;outline:none;margin-bottom:10px;transition:border-color 0.3s;box-sizing:border-box;display:block}
 .nota-edit-titulo:focus,.nota-edit-body:focus{border-color:#c8a96e}
-.nota-edit-body{width:100%;min-height:140px;max-height:340px;overflow-y:auto;border:1px solid rgba(0,0,0,0.12);border-radius:10px;padding:10px 14px;font-family:var(--sans);font-size:15px;color:#1a1a1a;outline:none;transition:border-color 0.3s;box-sizing:border-box;word-break:break-word;line-height:1.7}
+.nota-edit-body{width:100%;min-height:200px;max-height:55vh;overflow-y:auto;border:1px solid rgba(0,0,0,0.12);border-radius:10px;padding:10px 14px;font-family:var(--sans);font-size:15px;color:#1a1a1a;outline:none;transition:border-color 0.3s;box-sizing:border-box;word-break:break-word;line-height:1.7}
 .nota-edit-body:empty::before{content:attr(data-placeholder);color:#ccc;pointer-events:none}
 .nota-view-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);z-index:850;align-items:center;justify-content:center;padding:24px;visibility:hidden}
 .nota-view-overlay.active{display:flex;visibility:visible}
@@ -2259,6 +2259,26 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <!-- Borracha -->
         <button class="notas-fmt-btn" onclick="notaFmtApply('nota','clear')" title="Limpar formatação">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 20H7L3 16l10-10 7 7-2.5 2.5"/><path d="M6.5 17.5l5-5"/></svg>
+        </button>
+        <div class="notas-fmt-divider"></div>
+        <!-- Ícones SVG -->
+        <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','check')" title="✓ Check">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+        <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','cross')" title="✕ Cross">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','arrow-right')" title="→">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','arrow-left')" title="←">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        </button>
+        <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','arrow-up')" title="↑">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+        </button>
+        <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','arrow-down')" title="↓">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
         </button>
       </div>
       <div id="nota-corpo-input" class="notas-editor-body" contenteditable="true" data-placeholder="Escreva sua nota aqui..."></div>
@@ -4281,8 +4301,78 @@ function loadNotas() {
   );
 }
 
-// ── Formatting ──
-var _notaFontSize = { nota: 14, 'nota-edit': 14 };
+// ── Insert SVG Icon ──
+var NOTA_ICONS = {
+  'check':       '<svg style="display:inline;vertical-align:middle;width:16px;height:16px;margin:0 2px" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>',
+  'cross':       '<svg style="display:inline;vertical-align:middle;width:16px;height:16px;margin:0 2px" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+  'arrow-right': '<svg style="display:inline;vertical-align:middle;width:16px;height:16px;margin:0 2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>',
+  'arrow-left':  '<svg style="display:inline;vertical-align:middle;width:16px;height:16px;margin:0 2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>',
+  'arrow-up':    '<svg style="display:inline;vertical-align:middle;width:16px;height:16px;margin:0 2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>',
+  'arrow-down':  '<svg style="display:inline;vertical-align:middle;width:16px;height:16px;margin:0 2px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>'
+};
+
+function notaInsertIcon(prefix, iconName) {
+  var editorId = prefix === 'nota' ? 'nota-corpo-input' : 'nota-edit-corpo';
+  var el = document.getElementById(editorId);
+  if (!el) return;
+  el.focus();
+  var html = NOTA_ICONS[iconName];
+  if (!html) return;
+  document.execCommand('insertHTML', false, html);
+}
+
+// ── Auto bullet: * at line start → bullet ──
+function initNotaAutoBullet() {
+  ['nota-corpo-input', 'nota-edit-corpo'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el || el._bulletWired) return;
+    el._bulletWired = true;
+    el.addEventListener('keyup', function(e) {
+      if (e.key !== ' ') return;
+      var sel = window.getSelection();
+      if (!sel.rangeCount) return;
+      var range = sel.getRangeAt(0);
+      var node = range.startContainer;
+      if (node.nodeType !== 3) return;
+      var text = node.textContent;
+      var offset = range.startOffset;
+      // Check if line starts with "* "
+      var lineStart = text.lastIndexOf('\n', offset - 2) + 1;
+      var lineText = text.substring(lineStart, offset);
+      if (lineText === '* ') {
+        // Replace "* " with bullet
+        var newText = text.substring(0, lineStart) + '• ' + text.substring(offset);
+        node.textContent = newText;
+        var newRange = document.createRange();
+        newRange.setStart(node, lineStart + 2);
+        newRange.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(newRange);
+      }
+    });
+  });
+}
+
+// ── PDF Download ──
+function downloadNotaPDF(id) {
+  var n = _notas.find(function(x){ return x.id === id; });
+  if (!n) return;
+  var win = window.open('', '_blank');
+  win.document.write('<!DOCTYPE html><html><head><meta charset="utf-8">' +
+    '<title>' + (n.titulo || 'Nota') + '</title>' +
+    '<style>body{font-family:Georgia,serif;max-width:680px;margin:40px auto;padding:0 20px;color:#1a1a1a;line-height:1.8}' +
+    'h1{font-size:1.6rem;font-weight:500;margin-bottom:8px;border-bottom:2px solid #c8a96e;padding-bottom:8px}' +
+    '.meta{font-size:11px;color:#999;margin-bottom:24px}' +
+    '.corpo{font-size:14px}.nota-hl{border-radius:2px;padding:0 1px}' +
+    '@media print{body{margin:20px}}' +
+    '</style></head><body>' +
+    '<h1>' + (n.titulo || 'Nota sem título') + '</h1>' +
+    '<p class="meta">Instituto MD Talk · ' + (n.data || '') + '</p>' +
+    '<div class="corpo">' + (n.corpo || '') + '</div>' +
+    '<script>setTimeout(function(){ window.print(); window.close(); }, 300);<\/script>' +
+    '</body></html>');
+  win.document.close();
+}
 
 function notaFmt(type)      { notaFmtApply('nota',      type); }
 function notaFmtModal(type) { notaFmtApply('nota-edit', type); }
@@ -4358,6 +4448,9 @@ function renderNotasGrid() {
       '<div class="nota-card-footer">' +
         '<span class="nota-card-date">' + (n.data||'') + '</span>' +
         '<div class="nota-card-actions">' +
+          '<button class="nota-action-btn" onclick="event.stopPropagation();downloadNotaPDF(&quot;' + n.id + '&quot;)" title="Download PDF">' +
+            '<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+          '</button>' +
           '<button class="nota-action-btn edit" onclick="event.stopPropagation();editarNota(&quot;' + n.id + '&quot;)" title="Editar">' +
             '<svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
           '</button>' +
@@ -4439,7 +4532,11 @@ function editarNota(id) {
     document.body.style.overflow = 'hidden';
     m.onclick = function(e){ if (e.target === m) fecharEditarNota(); };
   }
-  setTimeout(function(){ document.getElementById('nota-edit-corpo').focus(); }, 100);
+  setTimeout(function(){
+    var el = document.getElementById('nota-edit-corpo');
+    if (el) { el.focus(); }
+    initNotaAutoBullet();
+  }, 100);
 }
 
 function fecharEditarNota() {
