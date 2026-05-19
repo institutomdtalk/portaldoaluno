@@ -1166,7 +1166,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .dashboard{background:var(--white)}
 
 /* ── Progresso Dashboard ── */
-.prog-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:36px 40px;width:100%;box-sizing:border-box}
+.prog-page{background:#F0EDE8;min-height:0;padding:36px 40px;width:100%;box-sizing:border-box}
 .prog-hero{margin-bottom:32px}
 .prog-greeting-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#c8a96e;margin-bottom:10px}
 .prog-greeting-tag::before{content:'';display:block;width:24px;height:1px;background:#c8a96e}
@@ -1260,7 +1260,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 /* ── Banco de Termos ── */
 /* ── Banco de Termos ── */
-.nt-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:32px 40px;width:100%;box-sizing:border-box}
+.nt-page{background:#F0EDE8;min-height:0;padding:32px 40px;width:100%;box-sizing:border-box}
 .nt-topbar{display:flex;align-items:center;gap:8px;margin-bottom:24px;flex-wrap:wrap}
 .nt-pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:13px;font-weight:600;padding:8px 20px;border-radius:50px;border:1.5px solid rgba(0,0,0,0.15);background:transparent;color:#6b6b6b;cursor:pointer;transition:all 0.2s;white-space:nowrap;text-decoration:none}
 .nt-pill svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;flex-shrink:0}
@@ -1333,7 +1333,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nt-btn-primary:hover{background:var(--navy-light)}
 
 /* ── Smart Cards ── */
-.sc2-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:36px 40px;width:100%;box-sizing:border-box}
+.sc2-page{background:#F0EDE8;min-height:0;padding:36px 40px;width:100%;box-sizing:border-box}
 .sc2-wrap{max-width:100%;margin:0;width:100%}
 .sc2-header{margin-bottom:28px}
 .sc2-content-inner{max-width:720px;margin:0 auto;width:100%}
@@ -1418,7 +1418,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 /* ═══════════════════════════════════════
    NOTAS
 ═══════════════════════════════════════ */
-.notas-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:36px 40px;width:100%;box-sizing:border-box}
+.notas-page{background:#F0EDE8;min-height:0;padding:36px 40px;width:100%;box-sizing:border-box}
 .notas-title-block{margin-bottom:24px}
 .notas-title-block h2{font-family:var(--serif);font-size:1.8rem;font-weight:300;color:#1a1a1a;margin-bottom:4px}
 .notas-title-block h2 em{font-style:italic;color:#c8a96e}
@@ -4501,21 +4501,18 @@ function notaFmtApply(prefix, type, value) {
     var disp = document.getElementById(prefix + '-size-display');
     if (disp) disp.textContent = cur;
     var sel = window.getSelection();
-    if (!sel.rangeCount || sel.getRangeAt(0).collapsed) return;
-    var range = sel.getRangeAt(0);
-    var selectedText = range.toString();
-    if (!selectedText) return;
-    var frag = range.extractContents();
-    var span = document.createElement('span');
-    span.style.fontSize = cur + 'px';
-    span.style.lineHeight = '1.6';
-    span.appendChild(frag);
-    range.insertNode(span);
-    // Re-select the span
-    var newRange = document.createRange();
-    newRange.selectNodeContents(span);
-    sel.removeAllRanges();
-    sel.addRange(newRange);
+    if (!sel || !sel.rangeCount || sel.getRangeAt(0).collapsed) return;
+    // Use execCommand fontSize (sets size=7) then replace with pixel span
+    document.execCommand('fontSize', false, '7');
+    var editorId = prefix === 'nota' ? 'nota-corpo-input' : 'nota-edit-corpo';
+    var editor = document.getElementById(editorId);
+    if (!editor) return;
+    editor.querySelectorAll('font[size="7"]').forEach(function(font) {
+      var span = document.createElement('span');
+      span.style.fontSize = cur + 'px';
+      span.innerHTML = font.innerHTML;
+      font.parentNode.replaceChild(span, font);
+    });
     return;
   }
 
@@ -7918,21 +7915,18 @@ function notaFmtApply(prefix, type, value) {
     var disp = document.getElementById(prefix + '-size-display');
     if (disp) disp.textContent = cur;
     var sel = window.getSelection();
-    if (!sel.rangeCount || sel.getRangeAt(0).collapsed) return;
-    var range = sel.getRangeAt(0);
-    var selectedText = range.toString();
-    if (!selectedText) return;
-    var frag = range.extractContents();
-    var span = document.createElement('span');
-    span.style.fontSize = cur + 'px';
-    span.style.lineHeight = '1.6';
-    span.appendChild(frag);
-    range.insertNode(span);
-    // Re-select the span
-    var newRange = document.createRange();
-    newRange.selectNodeContents(span);
-    sel.removeAllRanges();
-    sel.addRange(newRange);
+    if (!sel || !sel.rangeCount || sel.getRangeAt(0).collapsed) return;
+    // Use execCommand fontSize (sets size=7) then replace with pixel span
+    document.execCommand('fontSize', false, '7');
+    var editorId = prefix === 'nota' ? 'nota-corpo-input' : 'nota-edit-corpo';
+    var editor = document.getElementById(editorId);
+    if (!editor) return;
+    editor.querySelectorAll('font[size="7"]').forEach(function(font) {
+      var span = document.createElement('span');
+      span.style.fontSize = cur + 'px';
+      span.innerHTML = font.innerHTML;
+      font.parentNode.replaceChild(span, font);
+    });
     return;
   }
 
