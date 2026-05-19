@@ -2123,6 +2123,10 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         </h1>
       </div>
       <div class="header-right">
+        <div style="text-align:right;margin-bottom:14px">
+          <div id="hero-clock" style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:rgba(255,255,255,0.82);letter-spacing:2px;line-height:1">00:00:00</div>
+          <div id="hero-date" style="font-family:Raleway,sans-serif;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.32);margin-top:6px">— —</div>
+        </div>
         <div style="display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-top:10px">
           <button id="btn-live" onclick="toggleLiveMode()">
             <span class="live-pulse"></span>
@@ -2961,6 +2965,26 @@ function renderDashboard(a, avisos) {
 
   var hdrNome = document.getElementById('hdr-nome');
   if (hdrNome) hdrNome.textContent = a.nome_display || a.login;
+
+  // Live clock
+  var dias = ['DOM','SEG','TER','QUA','QUI','SEX','SÁB'];
+  var meses = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
+  function tickClock() {
+    var now = new Date();
+    var hh = String(now.getHours()).padStart(2,'0');
+    var mm = String(now.getMinutes()).padStart(2,'0');
+    var ss = String(now.getSeconds()).padStart(2,'0');
+    var dia = dias[now.getDay()];
+    var d   = String(now.getDate()).padStart(2,'0');
+    var mes = meses[now.getMonth()];
+    var ano = now.getFullYear();
+    var clockEl = document.getElementById('hero-clock');
+    var dateEl  = document.getElementById('hero-date');
+    if (clockEl) clockEl.textContent = hh+':'+mm+':'+ss;
+    if (dateEl)  dateEl.textContent  = dia+' · '+d+' '+mes+' '+ano;
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
 
   // Greeting PT
   var h = new Date().getHours();
