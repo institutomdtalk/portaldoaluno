@@ -1419,27 +1419,27 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 ═══════════════════════════════════════ */
 .notas-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:36px 40px;width:100%;box-sizing:border-box}
 .notas-title-block{margin-bottom:24px}
-.notas-title-block h2{font-family:var(--serif);font-size:1.5rem;font-weight:300;color:#1a1a1a;margin-bottom:4px}
+.notas-title-block h2{font-family:var(--serif);font-size:1.8rem;font-weight:300;color:#1a1a1a;margin-bottom:4px}
 .notas-title-block h2 em{font-style:italic;color:#c8a96e}
-.notas-title-block p{font-size:13px;color:#aaa}
+.notas-title-block p{font-size:15px;color:#aaa}
 .notas-editor{background:#fff;border-radius:20px;padding:22px 28px;margin-bottom:28px;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 12px rgba(0,0,0,0.04)}
-.notas-editor-titulo{width:100%;border:none;outline:none;font-family:var(--serif);font-size:1.2rem;font-weight:500;color:#1a1a1a;padding:0 0 12px;border-bottom:1px solid rgba(0,0,0,0.08);margin-bottom:10px;background:transparent;box-sizing:border-box;display:block}
+.notas-editor-titulo{width:100%;border:none;outline:none;font-family:var(--serif);font-size:1.5rem;font-weight:500;color:#1a1a1a;padding:0 0 12px;border-bottom:1px solid rgba(0,0,0,0.08);margin-bottom:10px;background:transparent;box-sizing:border-box;display:block}
 .notas-editor-titulo::placeholder{color:#ccc}
 .notas-toolbar{display:flex;align-items:center;gap:3px;padding:6px 0 8px;border-bottom:1px solid rgba(0,0,0,0.07);margin-bottom:10px}
 .notas-fmt-btn{width:28px;height:28px;border-radius:7px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;color:#888}
 .notas-fmt-btn:hover{background:rgba(0,0,0,0.06)}
 .notas-fmt-btn svg{width:13px;height:13px;flex-shrink:0}
 .notas-fmt-divider{width:1px;height:16px;background:rgba(0,0,0,0.1);margin:0 3px}
-.notas-editor-body{min-height:100px;outline:none;font-family:var(--sans);font-size:14px;color:#444;line-height:1.7;width:100%;cursor:text;word-break:break-word}
+.notas-editor-body{min-height:100px;outline:none;font-family:var(--sans);font-size:16px;color:#444;line-height:1.7;width:100%;cursor:text;word-break:break-word}
 .notas-editor-body:empty::before{content:attr(data-placeholder);color:#ccc;pointer-events:none}
 .nota-red{color:#e53e3e}
 .nota-hl{background:#FFFF00;color:#1a1a1a;border-radius:2px;padding:0 1px}
 .notas-editor-footer{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid rgba(0,0,0,0.06)}
-.notas-editor-hint{font-size:11px;color:#ccc;font-family:var(--sans)}
-.notas-save-btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:0.5px;padding:9px 20px;border-radius:50px;border:none;background:#1a1a2e;color:#fff;cursor:pointer;transition:all 0.25s}
+.notas-editor-hint{font-size:12px;color:#ccc;font-family:var(--sans)}
+.notas-save-btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:0.5px;padding:9px 20px;border-radius:50px;border:none;background:#1a1a2e;color:#fff;cursor:pointer;transition:all 0.25s}
 .notas-save-btn:hover{background:var(--navy-light)}
 .notas-save-btn svg{width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
-.notas-section-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#bbb;margin-bottom:16px;display:flex;align-items:center;gap:12px;font-family:var(--sans)}
+.notas-section-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#bbb;margin-bottom:16px;display:flex;align-items:center;gap:12px;font-family:var(--sans)}
 .notas-section-label::after{content:'';flex:1;height:1px;background:rgba(0,0,0,0.08)}
 .notas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 @media(max-width:900px){.notas-grid{grid-template-columns:repeat(2,1fr)}}
@@ -1447,10 +1447,10 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nota-card{background:#fff;border-radius:18px;padding:22px 24px 16px;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 12px rgba(0,0,0,0.04);transition:all 0.3s ease;position:relative;overflow:hidden;display:flex;flex-direction:column}
 .nota-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),rgba(196,164,90,0.3));border-radius:18px 18px 0 0}
 .nota-card:hover{box-shadow:0 6px 24px rgba(0,0,0,0.09);transform:translateY(-2px)}
-.nota-card-titulo{font-family:var(--serif);font-size:1.05rem;font-weight:500;color:#1a1a1a;margin-bottom:8px;line-height:1.3}
-.nota-card-corpo{font-size:13px;color:#666;line-height:1.6;flex:1;margin-bottom:14px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical}
+.nota-card-titulo{font-family:var(--serif);font-size:1.25rem;font-weight:500;color:#1a1a1a;margin-bottom:8px;line-height:1.3}
+.nota-card-corpo{font-size:14.5px;color:#666;line-height:1.6;flex:1;margin-bottom:14px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical}
 .nota-card-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(0,0,0,0.05);padding-top:10px;margin-top:auto}
-.nota-card-date{font-size:10px;color:#bbb;font-family:var(--sans)}
+.nota-card-date{font-size:11px;color:#bbb;font-family:var(--sans)}
 .nota-card-actions{display:flex;gap:6px;opacity:0;transition:opacity 0.2s}
 .nota-card:hover .nota-card-actions{opacity:1}
 .nota-action-btn{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,0.1);background:#fff;cursor:pointer;transition:all 0.2s;color:#aaa}
@@ -1461,10 +1461,10 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nota-modal-overlay.active{display:flex;visibility:visible}
 .nota-modal{background:#fff;border-radius:20px;padding:28px 32px;max-width:560px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.2);animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both;position:relative}
 .nota-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:20px 20px 0 0}
-.nota-modal-title{font-family:var(--serif);font-size:1.2rem;font-weight:400;color:#1a1a1a;margin-bottom:14px}
-.nota-edit-titulo{width:100%;border:1px solid rgba(0,0,0,0.12);border-radius:10px;padding:10px 14px;font-family:var(--serif);font-size:1rem;color:#1a1a1a;outline:none;margin-bottom:10px;transition:border-color 0.3s;box-sizing:border-box;display:block}
+.nota-modal-title{font-family:var(--serif);font-size:1.4rem;font-weight:400;color:#1a1a1a;margin-bottom:14px}
+.nota-edit-titulo{width:100%;border:1px solid rgba(0,0,0,0.12);border-radius:10px;padding:10px 14px;font-family:var(--serif);font-size:1.15rem;color:#1a1a1a;outline:none;margin-bottom:10px;transition:border-color 0.3s;box-sizing:border-box;display:block}
 .nota-edit-titulo:focus,.nota-edit-body:focus{border-color:#c8a96e}
-.nota-edit-body{width:100%;min-height:140px;border:1px solid rgba(0,0,0,0.12);border-radius:10px;padding:10px 14px;font-family:var(--sans);font-size:13px;color:#1a1a1a;outline:none;transition:border-color 0.3s;box-sizing:border-box;word-break:break-word;line-height:1.7}
+.nota-edit-body{width:100%;min-height:140px;border:1px solid rgba(0,0,0,0.12);border-radius:10px;padding:10px 14px;font-family:var(--sans);font-size:15px;color:#1a1a1a;outline:none;transition:border-color 0.3s;box-sizing:border-box;word-break:break-word;line-height:1.7}
 .nota-edit-body:empty::before{content:attr(data-placeholder);color:#ccc;pointer-events:none}
 .notas-empty{text-align:center;padding:60px 20px;color:#bbb;font-size:14px;grid-column:1/-1;font-style:italic}
 
