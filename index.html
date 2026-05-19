@@ -2138,6 +2138,30 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       </div>
     </div>
 
+    <!-- PRESENÇA NO HERO -->
+    <div style="position:relative;z-index:1;border-top:1px solid rgba(196,164,90,0.12)">
+      <div style="max-width:1100px;margin:0 auto;padding:28px 36px 36px;display:flex;justify-content:flex-end;align-items:flex-start;gap:32px;flex-wrap:wrap">
+        <!-- ── BOTÕES DE PRESENÇA ── -->
+        <div class="presenca-right">
+          <div style="display:none"><span id="stat-presencas"></span><span id="stat-faltas"></span><span id="stat-freq"></span></div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;gap:8px">
+              <button class="btn-confirmar" id="btn-presente">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Confirmar Presença
+              </button>
+              <button class="btn-confirmar" id="btn-falta" style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.12)">
+                Registrar Falta
+              </button>
+            </div>
+            <a class="btn-meet" id="btn-meet" href="#" target="_blank" rel="noopener" style="display:none">
+              <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              Entrar no Google Meet
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="header-gold-line"></div>
   </header>
 
@@ -3195,21 +3219,22 @@ function renderCalendar() {
 
 // ── HISTÓRICO / STATS ──
 function renderHistorico(historico) {
+  var elP=document.getElementById('stat-presencas');
+  var elF=document.getElementById('stat-faltas');
+  var elFreq=document.getElementById('stat-freq');
   if(!historico||!historico.length){
-    document.getElementById('stat-presencas').textContent='0';
-    document.getElementById('stat-faltas').textContent='0';
-    document.getElementById('stat-freq').textContent='—';
+    if(elP) elP.textContent='0';
+    if(elF) elF.textContent='0';
+    if(elFreq) elFreq.textContent='—';
     initCalendar([], window._calFreq||null); return;
   }
   var presencas=historico.filter(function(h){return h.status==='presente';}).length;
   var faltas=historico.filter(function(h){return h.status==='falta';}).length;
   var total=presencas+faltas;
   var freq=total>0?Math.round((presencas/total)*100)+'%':'—';
-  var elP=document.getElementById('stat-presencas');
-  var elF=document.getElementById('stat-faltas');
-  elP.textContent='0'; elF.textContent='0';
-  setTimeout(function(){ animateCounter(elP,presencas); animateCounter(elF,faltas); }, 400);
-  document.getElementById('stat-freq').textContent=freq;
+  if(elP) { elP.textContent='0'; setTimeout(function(){ animateCounter(elP,presencas); }, 400); }
+  if(elF) { elF.textContent='0'; setTimeout(function(){ animateCounter(elF,faltas); }, 400); }
+  if(elFreq) elFreq.textContent=freq;
   initCalendar(historico, window._calFreq||null);
 }
 
