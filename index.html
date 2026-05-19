@@ -2187,10 +2187,23 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <button class="notas-fmt-btn" onclick="notaFmt('italic')" title="Itálico">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
         </button>
+        <button class="notas-fmt-btn" onclick="notaFmt('strike')" title="Tachado">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="17" y1="12" x2="7" y2="12"/><path d="M12 6c-2.21 0-4 .895-4 2.5S9.79 11 12 11c2.21 0 4 .895 4 2.5S14.21 18 12 18c-2.21 0-4-.895-4-2.5"/></svg>
+        </button>
         <div class="notas-fmt-divider"></div>
-        <button class="notas-fmt-btn" onclick="notaFmt('red')" title="Texto vermelho">
+        <button class="notas-fmt-btn" onclick="notaFmt('red')" title="Vermelho">
           <span style="font-weight:800;font-size:13px;color:#e53e3e;font-family:serif;line-height:1">A</span>
         </button>
+        <button class="notas-fmt-btn" onclick="notaFmt('purple')" title="Roxo">
+          <span style="font-weight:800;font-size:13px;color:#7c3aed;font-family:serif;line-height:1">A</span>
+        </button>
+        <button class="notas-fmt-btn" onclick="notaFmt('green')" title="Verde escuro">
+          <span style="font-weight:800;font-size:13px;color:#166534;font-family:serif;line-height:1">A</span>
+        </button>
+        <button class="notas-fmt-btn" onclick="notaFmt('blue')" title="Azul">
+          <span style="font-weight:800;font-size:13px;color:#1d4ed8;font-family:serif;line-height:1">A</span>
+        </button>
+        <div class="notas-fmt-divider"></div>
         <button class="notas-fmt-btn" onclick="notaFmt('highlight')" title="Destaque neon">
           <span style="background:#FFFF00;color:#1a1a1a;font-weight:800;font-size:11px;padding:1px 4px;border-radius:2px;font-family:sans-serif;line-height:1.4">A</span>
         </button>
@@ -4206,21 +4219,18 @@ function notaFmtModal(type) {
 function applyFmt(type) {
   if (type === 'bold')      { document.execCommand('bold',      false, null); return; }
   if (type === 'italic')    { document.execCommand('italic',    false, null); return; }
-  if (type === 'red') {
+  if (type === 'strike')    { document.execCommand('strikeThrough', false, null); return; }
+  var colorMap = { red:'#e53e3e', purple:'#7c3aed', green:'#166534', blue:'#1d4ed8' };
+  if (colorMap[type]) {
     var sel = window.getSelection();
-    if (!sel.rangeCount) return;
-    var range = sel.getRangeAt(0);
-    if (range.collapsed) return;
-    var span = document.createElement('span');
-    span.className = 'nota-red';
-    try { range.surroundContents(span); } catch(e) { document.execCommand('foreColor', false, '#e53e3e'); }
+    if (!sel.rangeCount || sel.getRangeAt(0).collapsed) return;
+    document.execCommand('foreColor', false, colorMap[type]);
     return;
   }
   if (type === 'highlight') {
     var sel2 = window.getSelection();
-    if (!sel2.rangeCount) return;
+    if (!sel2.rangeCount || sel2.getRangeAt(0).collapsed) return;
     var range2 = sel2.getRangeAt(0);
-    if (range2.collapsed) return;
     var span2 = document.createElement('span');
     span2.className = 'nota-hl';
     try { range2.surroundContents(span2); } catch(e) { document.execCommand('backColor', false, '#FFFF00'); }
@@ -5286,10 +5296,23 @@ window.addEventListener('load', function(){
       <button class="notas-fmt-btn" onclick="notaFmtModal('italic')" title="Itálico">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
       </button>
+      <button class="notas-fmt-btn" onclick="notaFmtModal('strike')" title="Tachado">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="17" y1="12" x2="7" y2="12"/><path d="M12 6c-2.21 0-4 .895-4 2.5S9.79 11 12 11c2.21 0 4 .895 4 2.5S14.21 18 12 18c-2.21 0-4-.895-4-2.5"/></svg>
+      </button>
       <div class="notas-fmt-divider"></div>
       <button class="notas-fmt-btn" onclick="notaFmtModal('red')" title="Vermelho">
         <span style="font-weight:800;font-size:13px;color:#e53e3e;font-family:serif;line-height:1">A</span>
       </button>
+      <button class="notas-fmt-btn" onclick="notaFmtModal('purple')" title="Roxo">
+        <span style="font-weight:800;font-size:13px;color:#7c3aed;font-family:serif;line-height:1">A</span>
+      </button>
+      <button class="notas-fmt-btn" onclick="notaFmtModal('green')" title="Verde escuro">
+        <span style="font-weight:800;font-size:13px;color:#166534;font-family:serif;line-height:1">A</span>
+      </button>
+      <button class="notas-fmt-btn" onclick="notaFmtModal('blue')" title="Azul">
+        <span style="font-weight:800;font-size:13px;color:#1d4ed8;font-family:serif;line-height:1">A</span>
+      </button>
+      <div class="notas-fmt-divider"></div>
       <button class="notas-fmt-btn" onclick="notaFmtModal('highlight')" title="Destaque neon">
         <span style="background:#FFFF00;color:#1a1a1a;font-weight:800;font-size:11px;padding:1px 4px;border-radius:2px;line-height:1.4">A</span>
       </button>
