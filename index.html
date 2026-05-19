@@ -1434,7 +1434,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .notas-editor-body{min-height:100px;outline:none;font-family:var(--sans);font-size:16px;color:#444;line-height:1.7;width:100%;cursor:text;word-break:break-word}
 .notas-editor-body:empty::before{content:attr(data-placeholder);color:#ccc;pointer-events:none}
 .nota-red{color:#e53e3e}
-.nota-hl{background:#FFFF00;color:#1a1a1a;border-radius:2px;padding:0 1px}
+.nota-hl{border-radius:2px;padding:0 1px}
 .notas-editor-footer{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid rgba(0,0,0,0.06)}
 .notas-editor-hint{font-size:12px;color:#ccc;font-family:var(--sans)}
 .notas-save-btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:0.5px;padding:9px 20px;border-radius:50px;border:none;background:#1a1a2e;color:#fff;cursor:pointer;transition:all 0.25s}
@@ -2203,9 +2203,18 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <button class="notas-fmt-btn" onclick="notaFmt('blue')" title="Azul">
           <span style="font-weight:800;font-size:13px;color:#1d4ed8;font-family:serif;line-height:1">A</span>
         </button>
+        <button class="notas-fmt-btn" onclick="notaFmt('black')" title="Preto">
+          <span style="font-weight:800;font-size:13px;color:#1a1a1a;font-family:serif;line-height:1">A</span>
+        </button>
         <div class="notas-fmt-divider"></div>
-        <button class="notas-fmt-btn" onclick="notaFmt('highlight')" title="Destaque neon">
+        <button class="notas-fmt-btn" onclick="notaFmt('highlight')" title="Destaque amarelo neon">
           <span style="background:#FFFF00;color:#1a1a1a;font-weight:800;font-size:11px;padding:1px 4px;border-radius:2px;font-family:sans-serif;line-height:1.4">A</span>
+        </button>
+        <button class="notas-fmt-btn" onclick="notaFmt('highlight-gray')" title="Grifo cinza suave">
+          <span style="background:#e2e2e2;color:#1a1a1a;font-weight:800;font-size:11px;padding:1px 4px;border-radius:2px;font-family:sans-serif;line-height:1.4">A</span>
+        </button>
+        <button class="notas-fmt-btn" onclick="notaFmt('highlight-lilac')" title="Grifo lilás clarinho">
+          <span style="background:#e9d5ff;color:#4c1d95;font-weight:800;font-size:11px;padding:1px 4px;border-radius:2px;font-family:sans-serif;line-height:1.4">A</span>
         </button>
       </div>
       <div id="nota-corpo-input" class="notas-editor-body" contenteditable="true" data-placeholder="Escreva sua nota aqui..."></div>
@@ -4217,23 +4226,26 @@ function notaFmtModal(type) {
   if (el) { el.focus(); applyFmt(type); }
 }
 function applyFmt(type) {
-  if (type === 'bold')      { document.execCommand('bold',      false, null); return; }
-  if (type === 'italic')    { document.execCommand('italic',    false, null); return; }
-  if (type === 'strike')    { document.execCommand('strikeThrough', false, null); return; }
-  var colorMap = { red:'#e53e3e', purple:'#7c3aed', green:'#166534', blue:'#1d4ed8' };
+  if (type === 'bold')   { document.execCommand('bold',          false, null); return; }
+  if (type === 'italic') { document.execCommand('italic',        false, null); return; }
+  if (type === 'strike') { document.execCommand('strikeThrough', false, null); return; }
+  var colorMap = { red:'#e53e3e', purple:'#7c3aed', green:'#166534', blue:'#1d4ed8', black:'#1a1a1a' };
   if (colorMap[type]) {
     var sel = window.getSelection();
     if (!sel.rangeCount || sel.getRangeAt(0).collapsed) return;
     document.execCommand('foreColor', false, colorMap[type]);
     return;
   }
-  if (type === 'highlight') {
+  var highlightMap = { 'highlight':'#FFFF00', 'highlight-gray':'#e2e2e2', 'highlight-lilac':'#e9d5ff' };
+  if (highlightMap[type]) {
     var sel2 = window.getSelection();
     if (!sel2.rangeCount || sel2.getRangeAt(0).collapsed) return;
     var range2 = sel2.getRangeAt(0);
     var span2 = document.createElement('span');
     span2.className = 'nota-hl';
-    try { range2.surroundContents(span2); } catch(e) { document.execCommand('backColor', false, '#FFFF00'); }
+    span2.style.background = highlightMap[type];
+    if (type === 'highlight-lilac') span2.style.color = '#4c1d95';
+    try { range2.surroundContents(span2); } catch(e) { document.execCommand('backColor', false, highlightMap[type]); }
     return;
   }
 }
@@ -5312,9 +5324,18 @@ window.addEventListener('load', function(){
       <button class="notas-fmt-btn" onclick="notaFmtModal('blue')" title="Azul">
         <span style="font-weight:800;font-size:13px;color:#1d4ed8;font-family:serif;line-height:1">A</span>
       </button>
+      <button class="notas-fmt-btn" onclick="notaFmtModal('black')" title="Preto">
+        <span style="font-weight:800;font-size:13px;color:#1a1a1a;font-family:serif;line-height:1">A</span>
+      </button>
       <div class="notas-fmt-divider"></div>
-      <button class="notas-fmt-btn" onclick="notaFmtModal('highlight')" title="Destaque neon">
+      <button class="notas-fmt-btn" onclick="notaFmtModal('highlight')" title="Destaque amarelo neon">
         <span style="background:#FFFF00;color:#1a1a1a;font-weight:800;font-size:11px;padding:1px 4px;border-radius:2px;line-height:1.4">A</span>
+      </button>
+      <button class="notas-fmt-btn" onclick="notaFmtModal('highlight-gray')" title="Grifo cinza suave">
+        <span style="background:#e2e2e2;color:#1a1a1a;font-weight:800;font-size:11px;padding:1px 4px;border-radius:2px;line-height:1.4">A</span>
+      </button>
+      <button class="notas-fmt-btn" onclick="notaFmtModal('highlight-lilac')" title="Grifo lilás clarinho">
+        <span style="background:#e9d5ff;color:#4c1d95;font-weight:800;font-size:11px;padding:1px 4px;border-radius:2px;line-height:1.4">A</span>
       </button>
     </div>
     <div id="nota-edit-corpo" class="nota-edit-body" contenteditable="true" data-placeholder="Conteúdo da nota..."></div>
