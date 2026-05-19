@@ -2959,7 +2959,8 @@ function renderDashboard(a, avisos) {
     btnF.style.opacity = '';
   }
 
-  document.getElementById('hdr-nome').textContent = a.nome_display || a.login;
+  var hdrNome = document.getElementById('hdr-nome');
+  if (hdrNome) hdrNome.textContent = a.nome_display || a.login;
 
   // Greeting PT
   var h = new Date().getHours();
