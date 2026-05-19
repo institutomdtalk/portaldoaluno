@@ -2187,6 +2187,10 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       Notas
     </button>
+    <button class="nb-tab" id="tab-recursos" onclick="switchTab('recursos')">
+      <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+      Recursos
+    </button>
   </div>
 
   <!-- ══ PAINEL PROGRESSO ══ -->
@@ -2468,6 +2472,17 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     <p class="notas-section-label">Suas Notas</p>
     <div class="notas-grid" id="notas-grid">
       <p class="notas-empty">Nenhuma nota ainda. Escreva sua primeira nota acima.</p>
+    </div>
+  </div>
+
+  <!-- ══ PAINEL RECURSOS ══ -->
+  <div class="nb-panel notas-page" id="panel-recursos">
+    <div style="max-width:900px;margin:0 auto;padding:8px 0 40px">
+      <h2 style="font-family:var(--serif);font-size:1.6rem;font-weight:400;color:var(--navy);margin-bottom:6px">Meus <em style="font-style:italic;color:var(--gold)">Recursos</em></h2>
+      <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);letter-spacing:0.3px;margin-bottom:32px">Links e materiais do seu programa.</p>
+      <div id="recursos-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">
+        <!-- cards inseridos aqui -->
+      </div>
     </div>
   </div>
 
@@ -3928,7 +3943,7 @@ var _sc2Filtro   = 'todos';
 // ── TAB SWITCHING ──
 function switchTab(tab) {
   // Hide all panels and dashboard
-  ['progresso','termos','smartcards','notas'].forEach(function(t){
+  ['progresso','termos','smartcards','notas','recursos'].forEach(function(t){
     var p = document.getElementById('panel-' + t);
     if (p) p.classList.remove('active');
   });
