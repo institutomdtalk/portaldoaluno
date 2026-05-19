@@ -1460,12 +1460,12 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nota-action-btn.del:hover{color:#e53e3e;border-color:#e53e3e;background:#FEF2F2}
 .nota-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);z-index:800;align-items:center;justify-content:center;padding:20px;visibility:hidden}
 .nota-modal-overlay.active{display:flex;visibility:visible}
-.nota-modal{background:#fff;border-radius:20px;padding:28px 32px;max-width:560px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.2);animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both;position:relative}
+.nota-modal{background:#fff;border-radius:20px;padding:28px 32px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both;position:relative}
 .nota-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:20px 20px 0 0}
 .nota-modal-title{font-family:var(--serif);font-size:1.4rem;font-weight:400;color:#1a1a1a;margin-bottom:14px}
 .nota-edit-titulo{width:100%;border:1px solid rgba(0,0,0,0.12);border-radius:10px;padding:10px 14px;font-family:var(--serif);font-size:1.15rem;color:#1a1a1a;outline:none;margin-bottom:10px;transition:border-color 0.3s;box-sizing:border-box;display:block}
 .nota-edit-titulo:focus,.nota-edit-body:focus{border-color:#c8a96e}
-.nota-edit-body{width:100%;min-height:140px;border:1px solid rgba(0,0,0,0.12);border-radius:10px;padding:10px 14px;font-family:var(--sans);font-size:15px;color:#1a1a1a;outline:none;transition:border-color 0.3s;box-sizing:border-box;word-break:break-word;line-height:1.7}
+.nota-edit-body{width:100%;min-height:140px;max-height:340px;overflow-y:auto;border:1px solid rgba(0,0,0,0.12);border-radius:10px;padding:10px 14px;font-family:var(--sans);font-size:15px;color:#1a1a1a;outline:none;transition:border-color 0.3s;box-sizing:border-box;word-break:break-word;line-height:1.7}
 .nota-edit-body:empty::before{content:attr(data-placeholder);color:#ccc;pointer-events:none}
 .nota-view-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);z-index:850;align-items:center;justify-content:center;padding:24px;visibility:hidden}
 .nota-view-overlay.active{display:flex;visibility:visible}
