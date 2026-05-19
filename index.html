@@ -4326,7 +4326,17 @@ function notaInsertIcon(prefix, iconName) {
   el.focus();
   var html = NOTA_ICONS[iconName];
   if (!html) return;
-  document.execCommand('insertHTML', false, html);
+  // Insert SVG + zero-width space to anchor cursor after icon
+  document.execCommand('insertHTML', false, html + '&#8203;');
+  // Move cursor to end of editor content
+  var sel = window.getSelection();
+  if (sel && sel.rangeCount) {
+    var range = sel.getRangeAt(0);
+    range.collapse(false);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+  el.focus();
 }
 
 // ── Auto bullet: * at line start → bullet ──
