@@ -2117,7 +2117,10 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
           </button>
         </div>
         <p class="brand-label">Instituto MD Talk</p>
-        <h1 class="brand-title">Seu Portal de <em>Medical English</em></h1>
+        <h1 class="brand-title">
+          <span id="hero-greeting">Bem-vindo,</span><br>
+          <em id="hero-nome"></em>
+        </h1>
       </div>
       <div class="header-right">
         <p class="header-greeting" id="hdr-greeting">Good morning,</p>
@@ -2960,8 +2963,15 @@ function renderDashboard(a, avisos) {
 
   document.getElementById('hdr-nome').textContent = a.nome_display || a.login;
 
-  // Greeting
+  // Greeting PT
   var h = new Date().getHours();
+  var greetPT = h < 12 ? 'Bom dia,' : h < 18 ? 'Boa tarde,' : 'Boa noite,';
+  var heroG = document.getElementById('hero-greeting');
+  var heroN = document.getElementById('hero-nome');
+  if (heroG) heroG.textContent = greetPT;
+  if (heroN) heroN.textContent = a.nome_display || a.login;
+
+  // Greeting EN
   var greet = h < 12 ? 'Good morning,' : h < 18 ? 'Good afternoon,' : 'Good evening,';
   var hdrG = document.getElementById('hdr-greeting');
   if (hdrG) hdrG.textContent = greet;
