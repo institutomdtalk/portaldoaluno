@@ -2895,6 +2895,17 @@ function callScript(params, onSuccess, onError) {
   document.body.appendChild(script);
 }
 
+function callScriptPOST(payload, onSuccess, onError) {
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(d) { onSuccess && onSuccess(d); })
+  .catch(function() { onError && onError(); });
+}
+
 // ── PAGES ──
 function showPage(id) {
   document.getElementById('page-login').classList.remove('active');
@@ -4748,11 +4759,8 @@ function salvarNota() {
     if (tituloEl) tituloEl.value = '';
     if (corpoEl)  corpoEl.innerHTML = '';
     renderNotasGrid();
-    callScript(
-      'action=editar_nota&login=' + encodeURIComponent(currentStudent.login) +
-      '&id=' + encodeURIComponent(_notaEditandoId) +
-      '&titulo=' + encodeURIComponent(titulo) +
-      '&corpo=' + encodeURIComponent(corpo),
+    callScriptPOST(
+      { action: 'editar_nota', login: currentStudent.login, id: _notaEditandoId, titulo: titulo, corpo: corpo },
       function(d){ showToast(d.success ? 'Nota atualizada!' : 'Erro.', d.success ? 'success' : 'error'); },
       function(){ showToast('Erro de conexão.','error'); }
     );
@@ -4766,12 +4774,8 @@ function salvarNota() {
   if (tituloEl) tituloEl.value = '';
   if (corpoEl)  corpoEl.innerHTML = '';
   renderNotasGrid();
-  callScript(
-    'action=salvar_nota' +
-    '&login='  + encodeURIComponent(currentStudent.login) +
-    '&id='     + encodeURIComponent(id) +
-    '&titulo=' + encodeURIComponent(titulo) +
-    '&corpo='  + encodeURIComponent(corpo),
+  callScriptPOST(
+    { action: 'salvar_nota', login: currentStudent.login, id: id, titulo: titulo, corpo: corpo },
     function(d){ showToast(d.success ? 'Nota salva!' : 'Erro ao salvar.', d.success ? 'success' : 'error'); },
     function(){ showToast('Salvo localmente.','warning'); }
   );
@@ -4881,12 +4885,8 @@ function salvarEdicaoNota() {
   saveNotasLocal();
   fecharEditarNota();
   renderNotasGrid();
-  callScript(
-    'action=editar_nota' +
-    '&login='  + encodeURIComponent(currentStudent.login) +
-    '&id='     + encodeURIComponent(id) +
-    '&titulo=' + encodeURIComponent(titulo) +
-    '&corpo='  + encodeURIComponent(corpo),
+  callScriptPOST(
+    { action: 'editar_nota', login: currentStudent.login, id: id, titulo: titulo, corpo: corpo },
     function(d){ showToast(d.success ? 'Nota atualizada!' : 'Erro.', d.success ? 'success' : 'error'); },
     function(){ showToast('Erro de conexão.','error'); }
   );
