@@ -1415,7 +1415,105 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .sc2-empty-state svg{width:48px;height:48px;stroke:#ddd;fill:none;stroke-width:1;margin:0 auto 16px;display:block}
 
 /* ═══════════════════════════════════════
-   LIVE CLASS MODE/* ═══════════════════════════════════════
+   NOTAS
+═══════════════════════════════════════ */
+.notas-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:36px 40px;width:100%;box-sizing:border-box}
+.notas-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px}
+.notas-title-block h2{font-family:var(--serif);font-size:1.6rem;font-weight:300;color:#1a1a1a;margin-bottom:4px}
+.notas-title-block h2 em{font-style:italic;color:#c8a96e}
+.notas-title-block p{font-size:13px;color:#aaa}
+/* Editor */
+.notas-editor{background:#fff;border-radius:20px;padding:24px 28px;margin-bottom:28px;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 12px rgba(0,0,0,0.04)}
+.notas-editor-titulo{width:100%;border:none;outline:none;font-family:var(--serif);font-size:1.3rem;font-weight:500;color:#1a1a1a;padding:0 0 12px;border-bottom:1px solid rgba(0,0,0,0.08);margin-bottom:14px;background:transparent}
+.notas-editor-titulo::placeholder{color:#ccc}
+.notas-editor-corpo{width:100%;border:none;outline:none;font-family:var(--sans);font-size:14px;color:#444;line-height:1.7;resize:none;min-height:120px;background:transparent;padding:0}
+.notas-editor-corpo::placeholder{color:#ccc}
+.notas-editor-footer{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid rgba(0,0,0,0.06)}
+.notas-editor-hint{font-size:11px;color:#ccc;font-family:var(--sans)}
+.notas-save-btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:0.5px;padding:9px 20px;border-radius:50px;border:none;background:#1a1a2e;color:#fff;cursor:pointer;transition:all 0.25s}
+.notas-save-btn:hover{background:var(--navy-light)}
+.notas-save-btn svg{width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
+/* Section label */
+.notas-section-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#bbb;margin-bottom:16px;display:flex;align-items:center;gap:12px;font-family:var(--sans)}
+.notas-section-label::after{content:'';flex:1;height:1px;background:rgba(0,0,0,0.08)}
+/* Grid */
+.notas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:900px){.notas-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.notas-grid{grid-template-columns:1fr}}
+/* Card */
+.nota-card{background:#fff;border-radius:18px;padding:22px 24px 16px;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 12px rgba(0,0,0,0.04);transition:all 0.3s ease;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.nota-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),rgba(196,164,90,0.3));border-radius:18px 18px 0 0}
+.nota-card:hover{box-shadow:0 6px 24px rgba(0,0,0,0.09);transform:translateY(-2px)}
+.nota-card-titulo{font-family:var(--serif);font-size:1.05rem;font-weight:500;color:#1a1a1a;margin-bottom:8px;line-height:1.3}
+.nota-card-corpo{font-size:13px;color:#666;line-height:1.6;flex:1;margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.nota-card-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(0,0,0,0.05);padding-top:10px;margin-top:auto}
+.nota-card-date{font-size:10px;color:#bbb;font-family:var(--sans)}
+.nota-card-actions{display:flex;gap:6px;opacity:0;transition:opacity 0.2s}
+.nota-card:hover .nota-card-actions{opacity:1}
+.nota-action-btn{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,0.1);background:#fff;cursor:pointer;transition:all 0.2s;color:#aaa}
+.nota-action-btn svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.nota-action-btn.edit:hover{color:var(--gold);border-color:var(--gold);background:rgba(196,164,90,0.06)}
+.nota-action-btn.del:hover{color:#e53e3e;border-color:#e53e3e;background:#FEF2F2}
+/* Edit modal */
+.nota-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);z-index:800;align-items:center;justify-content:center;padding:20px;visibility:hidden}
+.nota-modal-overlay.active{display:flex;visibility:visible}
+.nota-modal{background:#fff;border-radius:20px;padding:28px 32px;max-width:560px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.2);animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both;position:relative}
+.nota-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:20px 20px 0 0}
+.nota-modal-title{font-family:var(--serif);font-size:1.2rem;font-weight:400;color:#1a1a1a;margin-bottom:18px}
+.nota-edit-titulo{width:100%;border:1px solid rgba(0,0,0,0.12);border-radius:10px;padding:10px 14px;font-family:var(--serif);font-size:1rem;color:#1a1a1a;outline:none;margin-bottom:12px;transition:border-color 0.3s;box-sizing:border-box}
+.nota-edit-titulo:focus{border-color:#c8a96e}
+.nota-edit-corpo{width:100%;border:1px solid rgba(0,0,0,0.12);border-radius:10px;padding:10px 14px;font-family:var(--sans);font-size:13px;color:#1a1a1a;outline:none;resize:vertical;min-height:140px;transition:border-color 0.3s;box-sizing:border-box}
+.nota-edit-corpo:focus{border-color:#c8a96e}
+.nota-modal-footer{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+
+/* ═══════════════════════════════════════
+   NOTAS
+═══════════════════════════════════════ */
+.notas-page{background:#F0EDE8;min-height:calc(100vh - 45px);padding:36px 40px;width:100%;box-sizing:border-box}
+.notas-title-block{margin-bottom:24px}
+.notas-title-block h2{font-family:var(--serif);font-size:1.5rem;font-weight:300;color:#1a1a1a;margin-bottom:4px}
+.notas-title-block h2 em{font-style:italic;color:#c8a96e}
+.notas-title-block p{font-size:13px;color:#aaa}
+.notas-editor{background:#fff;border-radius:20px;padding:24px 28px;margin-bottom:28px;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 12px rgba(0,0,0,0.04)}
+.notas-editor-titulo{width:100%;border:none;outline:none;font-family:var(--serif);font-size:1.2rem;font-weight:500;color:#1a1a1a;padding:0 0 12px;border-bottom:1px solid rgba(0,0,0,0.08);margin-bottom:14px;background:transparent;box-sizing:border-box}
+.notas-editor-titulo::placeholder{color:#ccc}
+.notas-editor-corpo{width:100%;border:none;outline:none;font-family:var(--sans);font-size:14px;color:#444;line-height:1.7;resize:none;min-height:110px;background:transparent;padding:0;box-sizing:border-box}
+.notas-editor-corpo::placeholder{color:#ccc}
+.notas-editor-footer{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid rgba(0,0,0,0.06)}
+.notas-editor-hint{font-size:11px;color:#ccc;font-family:var(--sans)}
+.notas-save-btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:0.5px;padding:9px 20px;border-radius:50px;border:none;background:#1a1a2e;color:#fff;cursor:pointer;transition:all 0.25s}
+.notas-save-btn:hover{background:var(--navy-light)}
+.notas-save-btn svg{width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
+.notas-section-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#bbb;margin-bottom:16px;display:flex;align-items:center;gap:12px;font-family:var(--sans)}
+.notas-section-label::after{content:'';flex:1;height:1px;background:rgba(0,0,0,0.08)}
+.notas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:900px){.notas-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.notas-grid{grid-template-columns:1fr}}
+.nota-card{background:#fff;border-radius:18px;padding:22px 24px 16px;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 12px rgba(0,0,0,0.04);transition:all 0.3s ease;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.nota-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),rgba(196,164,90,0.3));border-radius:18px 18px 0 0}
+.nota-card:hover{box-shadow:0 6px 24px rgba(0,0,0,0.09);transform:translateY(-2px)}
+.nota-card-titulo{font-family:var(--serif);font-size:1.05rem;font-weight:500;color:#1a1a1a;margin-bottom:8px;line-height:1.3}
+.nota-card-corpo{font-size:13px;color:#666;line-height:1.6;flex:1;margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.nota-card-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(0,0,0,0.05);padding-top:10px;margin-top:auto}
+.nota-card-date{font-size:10px;color:#bbb;font-family:var(--sans)}
+.nota-card-actions{display:flex;gap:6px;opacity:0;transition:opacity 0.2s}
+.nota-card:hover .nota-card-actions{opacity:1}
+.nota-action-btn{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,0.1);background:#fff;cursor:pointer;transition:all 0.2s;color:#aaa}
+.nota-action-btn svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.nota-action-btn.edit:hover{color:var(--gold);border-color:var(--gold);background:rgba(196,164,90,0.06)}
+.nota-action-btn.del:hover{color:#e53e3e;border-color:#e53e3e;background:#FEF2F2}
+.nota-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);z-index:800;align-items:center;justify-content:center;padding:20px;visibility:hidden}
+.nota-modal-overlay.active{display:flex;visibility:visible}
+.nota-modal{background:#fff;border-radius:20px;padding:28px 32px;max-width:560px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.2);animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both;position:relative}
+.nota-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:20px 20px 0 0}
+.nota-modal-title{font-family:var(--serif);font-size:1.2rem;font-weight:400;color:#1a1a1a;margin-bottom:18px}
+.nota-edit-titulo{width:100%;border:1px solid rgba(0,0,0,0.12);border-radius:10px;padding:10px 14px;font-family:var(--serif);font-size:1rem;color:#1a1a1a;outline:none;margin-bottom:12px;transition:border-color 0.3s;box-sizing:border-box}
+.nota-edit-titulo:focus,.nota-edit-corpo:focus{border-color:#c8a96e}
+.nota-edit-corpo{width:100%;border:1px solid rgba(0,0,0,0.12);border-radius:10px;padding:10px 14px;font-family:var(--sans);font-size:13px;color:#1a1a1a;outline:none;resize:vertical;min-height:140px;transition:border-color 0.3s;box-sizing:border-box}
+.nota-modal-footer{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+.notas-empty{text-align:center;padding:60px 20px;color:#bbb;font-size:14px;grid-column:1/-1;font-style:italic}
+
+/* ═══════════════════════════════════════
    LIVE CLASS MODE
 ═══════════════════════════════════════ */
 #btn-live{
@@ -1955,6 +2053,10 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
       Flashcards
     </button>
+    <button class="nb-tab" id="tab-notas" onclick="switchTab('notas')">
+      <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Notas
+    </button>
   </div>
 
   <!-- ══ PAINEL PROGRESSO ══ -->
@@ -2109,6 +2211,54 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     <p class="nt-count" id="nt-count">0 entradas</p>
     <div class="nt-grid" id="nt-grid">
       <p class="nt-empty">Nenhum termo ainda. Adicione sua primeira entrada!</p>
+    </div>
+  </div>
+
+  <!-- ══ PAINEL NOTAS ══ -->
+  <div class="nb-panel notas-page" id="panel-notas">
+    <div class="notas-title-block">
+      <h2>Minhas <em>Notas</em></h2>
+      <p id="notas-count">0 notas</p>
+    </div>
+    <!-- Editor -->
+    <div class="notas-editor">
+      <input type="text" id="nota-titulo-input" class="notas-editor-titulo" placeholder="Título da nota (opcional)">
+      <textarea id="nota-corpo-input" class="notas-editor-corpo" placeholder="Escreva sua nota aqui..."></textarea>
+      <div class="notas-editor-footer">
+        <span class="notas-editor-hint">Ctrl+Enter para salvar</span>
+        <button class="notas-save-btn" onclick="salvarNota()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Adicionar Nota
+        </button>
+      </div>
+    </div>
+    <!-- Grid -->
+    <p class="notas-section-label">Suas Notas</p>
+    <div class="notas-grid" id="notas-grid">
+      <p class="notas-empty">Nenhuma nota ainda. Escreva sua primeira nota acima.</p>
+    </div>
+  </div>
+
+  <!-- ══ PAINEL NOTAS ══ -->
+  <div class="nb-panel notas-page" id="panel-notas">
+    <div class="notas-title-block">
+      <h2>Minhas <em>Notas</em></h2>
+      <p id="notas-count">0 notas</p>
+    </div>
+    <div class="notas-editor">
+      <input type="text" id="nota-titulo-input" class="notas-editor-titulo" placeholder="Título da nota (opcional)">
+      <textarea id="nota-corpo-input" class="notas-editor-corpo" placeholder="Escreva sua nota aqui..."></textarea>
+      <div class="notas-editor-footer">
+        <span class="notas-editor-hint">Ctrl+Enter para salvar</span>
+        <button class="notas-save-btn" onclick="salvarNota()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Adicionar Nota
+        </button>
+      </div>
+    </div>
+    <p class="notas-section-label">Suas Notas</p>
+    <div class="notas-grid" id="notas-grid">
+      <p class="notas-empty">Nenhuma nota ainda. Escreva sua primeira nota acima.</p>
     </div>
   </div>
 
@@ -3544,6 +3694,7 @@ function switchTab(tab) {
     if (tab === 'progresso') renderNbProgresso();
     if (tab === 'termos')    renderNtGrid();
     if (tab === 'smartcards') sc2Init();
+    if (tab === 'notas') { loadNotas(); }
   }
 }
 
@@ -4079,6 +4230,120 @@ function sc2Avaliar(tipo) {
   // Next card
   _sc2Idx = (_sc2Idx + 1) % _sc2Items.length;
   sc2Mostrar();
+}
+
+// ══════════════════════════════════════
+// NOTAS
+// ══════════════════════════════════════
+var _notas = [];
+
+function loadNotas() {
+  if (!currentStudent) return;
+  callScript(
+    'action=get_notas&login=' + encodeURIComponent(currentStudent.login),
+    function(d) {
+      if (d.success) { _notas = d.notas || []; renderNotasGrid(); }
+    },
+    function(){}
+  );
+}
+
+function renderNotasGrid() {
+  var grid  = document.getElementById('notas-grid');
+  var count = document.getElementById('notas-count');
+  if (!grid) return;
+  if (count) count.textContent = _notas.length + ' nota' + (_notas.length !== 1 ? 's' : '');
+  if (!_notas.length) {
+    grid.innerHTML = '<p class="notas-empty">Nenhuma nota ainda. Escreva sua primeira nota acima.</p>';
+    return;
+  }
+  grid.innerHTML = _notas.map(function(n) {
+    var titulo = n.titulo ? '<p class="nota-card-titulo">' + n.titulo + '</p>' : '';
+    return '<div class="nota-card">' +
+      titulo +
+      '<p class="nota-card-corpo">' + (n.corpo||'').replace(/\n/g,'<br>') + '</p>' +
+      '<div class="nota-card-footer">' +
+        '<span class="nota-card-date">' + (n.data||'') + '</span>' +
+        '<div class="nota-card-actions">' +
+          '<button class="nota-action-btn edit" onclick="editarNota(&quot;' + n.id + '&quot;)" title="Editar">' +
+            '<svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+          '</button>' +
+          '<button class="nota-action-btn del" onclick="deletarNota(&quot;' + n.id + '&quot;)" title="Deletar">' +
+            '<svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>' +
+          '</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function salvarNota() {
+  var titulo = (document.getElementById('nota-titulo-input')||{}).value||'';
+  var corpo  = (document.getElementById('nota-corpo-input') ||{}).value||'';
+  if (!corpo.trim() && !titulo.trim()) { showToast('Escreva algo antes de salvar.','error'); return; }
+  var id   = 'nt_' + Date.now();
+  var hoje = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
+  var nota = { id:id, titulo:titulo.trim(), corpo:corpo.trim(), data:hoje };
+  _notas.unshift(nota);
+  document.getElementById('nota-titulo-input').value = '';
+  document.getElementById('nota-corpo-input').value  = '';
+  renderNotasGrid();
+  callScript(
+    'action=salvar_nota' +
+    '&login='  + encodeURIComponent(currentStudent.login) +
+    '&id='     + encodeURIComponent(id) +
+    '&titulo=' + encodeURIComponent(titulo.trim()) +
+    '&corpo='  + encodeURIComponent(corpo.trim()),
+    function(d){ showToast(d.success ? 'Nota salva!' : 'Erro ao salvar.', d.success ? 'success' : 'error'); },
+    function(){ showToast('Erro de conexão.','error'); }
+  );
+}
+
+function deletarNota(id) {
+  if (!confirm('Remover esta nota?')) return;
+  _notas = _notas.filter(function(n){ return n.id !== id; });
+  renderNotasGrid();
+  callScript('action=deletar_nota&login=' + encodeURIComponent(currentStudent.login) + '&id=' + encodeURIComponent(id), function(){}, function(){});
+}
+
+function editarNota(id) {
+  var n = _notas.find(function(x){ return x.id === id; });
+  if (!n) return;
+  document.getElementById('nota-edit-id').value    = n.id;
+  document.getElementById('nota-edit-titulo').value = n.titulo || '';
+  document.getElementById('nota-edit-corpo').value  = n.corpo  || '';
+  var m = document.getElementById('nota-edit-modal');
+  if (m) {
+    m.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    m.onclick = function(e){ if (e.target === m) fecharEditarNota(); };
+  }
+  setTimeout(function(){ document.getElementById('nota-edit-corpo').focus(); }, 100);
+}
+
+function fecharEditarNota() {
+  var m = document.getElementById('nota-edit-modal');
+  if (m) { m.classList.remove('active'); document.body.style.overflow = ''; }
+}
+
+function salvarEdicaoNota() {
+  var id     = document.getElementById('nota-edit-id').value;
+  var titulo = document.getElementById('nota-edit-titulo').value.trim();
+  var corpo  = document.getElementById('nota-edit-corpo').value.trim();
+  if (!corpo && !titulo) { showToast('A nota não pode estar vazia.','error'); return; }
+  var n = _notas.find(function(x){ return x.id === id; });
+  if (n) { n.titulo = titulo; n.corpo = corpo; }
+  fecharEditarNota();
+  renderNotasGrid();
+  callScript(
+    'action=editar_nota' +
+    '&login='  + encodeURIComponent(currentStudent.login) +
+    '&id='     + encodeURIComponent(id) +
+    '&titulo=' + encodeURIComponent(titulo) +
+    '&corpo='  + encodeURIComponent(corpo),
+    function(d){ showToast(d.success ? 'Nota atualizada!' : 'Erro.', d.success ? 'success' : 'error'); },
+    function(){ showToast('Erro de conexão.','error'); }
+  );
 }
 
 // ── LIVE CLASS MODE ──
@@ -4973,5 +5238,33 @@ window.addEventListener('load', function(){
     <p class="lp-empty">Nenhuma anotação ainda. Comece a digitar!</p>
   </div>
 </div>
+<!-- ══ MODAL EDITAR NOTA ══ -->
+<div class="nota-modal-overlay" id="nota-edit-modal">
+  <div class="nota-modal">
+    <h3 class="nota-modal-title">Editar Nota</h3>
+    <input type="hidden" id="nota-edit-id">
+    <input type="text" id="nota-edit-titulo" class="nota-edit-titulo" placeholder="Título (opcional)">
+    <textarea id="nota-edit-corpo" class="nota-edit-corpo" placeholder="Conteúdo da nota..."></textarea>
+    <div class="nota-modal-footer">
+      <button class="nt-btn-cancel" onclick="fecharEditarNota()">Cancelar</button>
+      <button class="notas-save-btn" onclick="salvarEdicaoNota()">Salvar Alterações</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL EDITAR NOTA ══ -->
+<div class="nota-modal-overlay" id="nota-edit-modal">
+  <div class="nota-modal">
+    <h3 class="nota-modal-title">Editar Nota</h3>
+    <input type="hidden" id="nota-edit-id">
+    <input type="text" id="nota-edit-titulo" class="nota-edit-titulo" placeholder="Título (opcional)">
+    <textarea id="nota-edit-corpo" class="nota-edit-corpo" placeholder="Conteúdo da nota..."></textarea>
+    <div class="nota-modal-footer">
+      <button class="nt-btn-cancel" onclick="fecharEditarNota()">Cancelar</button>
+      <button class="notas-save-btn" onclick="salvarEdicaoNota()">Salvar Alterações</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
