@@ -1445,7 +1445,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .notas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 @media(max-width:900px){.notas-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.notas-grid{grid-template-columns:1fr}}
-.nota-card{background:#fff;border-radius:18px;padding:22px 24px 16px;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 12px rgba(0,0,0,0.04);transition:all 0.3s ease;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.nota-card{background:#fff;border-radius:18px;padding:22px 24px 16px;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 12px rgba(0,0,0,0.04);transition:all 0.3s ease;position:relative;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;height:220px}
 .nota-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),rgba(196,164,90,0.3));border-radius:18px 18px 0 0}
 .nota-card:hover{box-shadow:0 6px 24px rgba(0,0,0,0.09);transform:translateY(-2px)}
 .nota-card-titulo{font-family:var(--serif);font-size:1.25rem;font-weight:500;color:#1a1a1a;margin-bottom:8px;line-height:1.3}
@@ -1467,6 +1467,32 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nota-edit-titulo:focus,.nota-edit-body:focus{border-color:#c8a96e}
 .nota-edit-body{width:100%;min-height:140px;border:1px solid rgba(0,0,0,0.12);border-radius:10px;padding:10px 14px;font-family:var(--sans);font-size:15px;color:#1a1a1a;outline:none;transition:border-color 0.3s;box-sizing:border-box;word-break:break-word;line-height:1.7}
 .nota-edit-body:empty::before{content:attr(data-placeholder);color:#ccc;pointer-events:none}
+.nota-view-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);z-index:850;align-items:center;justify-content:center;padding:24px;visibility:hidden}
+.nota-view-overlay.active{display:flex;visibility:visible}
+.nota-view-modal{background:#fff;border-radius:20px;max-width:680px;width:100%;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,0.2);animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both;position:relative;overflow:hidden}
+.nota-view-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.nota-view-header{display:flex;align-items:flex-start;justify-content:space-between;padding:24px 28px 16px;border-bottom:1px solid rgba(0,0,0,0.06);flex-shrink:0}
+.nota-view-titulo{font-family:var(--serif);font-size:1.4rem;font-weight:500;color:#1a1a1a;line-height:1.3;flex:1;margin-right:16px}
+.nota-view-close{width:32px;height:32px;border-radius:50%;border:1px solid rgba(0,0,0,0.1);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#aaa;flex-shrink:0;transition:all 0.2s}
+.nota-view-close:hover{background:rgba(0,0,0,0.06);color:#1a1a1a}
+.nota-view-close svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round}
+.nota-view-corpo{padding:20px 28px 24px;overflow-y:auto;font-family:var(--sans);font-size:15px;color:#444;line-height:1.8;flex:1}
+.nota-view-footer{padding:12px 28px;border-top:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#fafafa}
+.nota-view-date{font-size:11px;color:#bbb;font-family:var(--sans)}
+.nota-view-actions{display:flex;gap:8px}
+.nota-view-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);z-index:850;align-items:center;justify-content:center;padding:24px;visibility:hidden}
+.nota-view-overlay.active{display:flex;visibility:visible}
+.nota-view-modal{background:#fff;border-radius:20px;max-width:680px;width:100%;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,0.2);animation:heroReveal 0.3s cubic-bezier(0.22,1,0.36,1) both;position:relative;overflow:hidden}
+.nota-view-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.nota-view-header{display:flex;align-items:flex-start;justify-content:space-between;padding:24px 28px 16px;border-bottom:1px solid rgba(0,0,0,0.06);flex-shrink:0}
+.nota-view-titulo{font-family:var(--serif);font-size:1.4rem;font-weight:500;color:#1a1a1a;line-height:1.3;flex:1;margin-right:16px}
+.nota-view-close{width:32px;height:32px;border-radius:50%;border:1px solid rgba(0,0,0,0.1);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#aaa;flex-shrink:0;transition:all 0.2s}
+.nota-view-close:hover{background:rgba(0,0,0,0.06);color:#1a1a1a}
+.nota-view-close svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round}
+.nota-view-corpo{padding:20px 28px 24px;overflow-y:auto;font-family:var(--sans);font-size:15px;color:#444;line-height:1.8;flex:1}
+.nota-view-footer{padding:12px 28px;border-top:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#fafafa}
+.nota-view-date{font-size:11px;color:#bbb;font-family:var(--sans)}
+.nota-view-actions{display:flex;gap:8px}
 .notas-empty{text-align:center;padding:60px 20px;color:#bbb;font-size:14px;grid-column:1/-1;font-style:italic}
 
 /* ═══════════════════════════════════════
@@ -4261,17 +4287,16 @@ function renderNotasGrid() {
   }
   grid.innerHTML = _notas.map(function(n) {
     var titulo = n.titulo ? '<p class="nota-card-titulo">' + n.titulo + '</p>' : '';
-    // corpo is stored as HTML
-    return '<div class="nota-card">' +
+    return '<div class="nota-card" onclick="verNota(&quot;' + n.id + '&quot;)">' +
       titulo +
       '<div class="nota-card-corpo">' + (n.corpo||'') + '</div>' +
       '<div class="nota-card-footer">' +
         '<span class="nota-card-date">' + (n.data||'') + '</span>' +
         '<div class="nota-card-actions">' +
-          '<button class="nota-action-btn edit" onclick="editarNota(&quot;' + n.id + '&quot;)" title="Editar">' +
+          '<button class="nota-action-btn edit" onclick="event.stopPropagation();editarNota(&quot;' + n.id + '&quot;)" title="Editar">' +
             '<svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
           '</button>' +
-          '<button class="nota-action-btn del" onclick="deletarNota(&quot;' + n.id + '&quot;)" title="Deletar">' +
+          '<button class="nota-action-btn del" onclick="event.stopPropagation();deletarNota(&quot;' + n.id + '&quot;)" title="Deletar">' +
             '<svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>' +
           '</button>' +
         '</div>' +
@@ -4304,6 +4329,28 @@ function salvarNota() {
     function(d){ showToast(d.success ? 'Nota salva!' : 'Erro ao salvar.', d.success ? 'success' : 'error'); },
     function(){ showToast('Salvo localmente.','warning'); }
   );
+}
+
+function verNota(id) {
+  var n = _notas.find(function(x){ return x.id === id; });
+  if (!n) return;
+  var m = document.getElementById('nota-view-modal');
+  if (!m) return;
+  document.getElementById('nota-view-titulo').textContent = n.titulo || '';
+  document.getElementById('nota-view-corpo').innerHTML    = n.corpo  || '';
+  document.getElementById('nota-view-date').textContent   = n.data   || '';
+  var editBtn = document.getElementById('nota-view-edit-btn');
+  var delBtn  = document.getElementById('nota-view-del-btn');
+  if (editBtn) editBtn.onclick = function(){ fecharVerNota(); editarNota(id); };
+  if (delBtn)  delBtn.onclick  = function(){ fecharVerNota(); deletarNota(id); };
+  m.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  m.onclick = function(e){ if (e.target === m) fecharVerNota(); };
+}
+
+function fecharVerNota() {
+  var m = document.getElementById('nota-view-modal');
+  if (m) { m.classList.remove('active'); document.body.style.overflow = ''; }
 }
 
 function deletarNota(id) {
@@ -5342,6 +5389,31 @@ window.addEventListener('load', function(){
     <div class="nota-modal-footer">
       <button class="nt-btn-cancel" onclick="fecharEditarNota()">Cancelar</button>
       <button class="notas-save-btn" onclick="salvarEdicaoNota()">Salvar Alterações</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ MODAL VER NOTA ══ -->
+<div class="nota-view-overlay" id="nota-view-modal">
+  <div class="nota-view-modal">
+    <div class="nota-view-header">
+      <p class="nota-view-titulo" id="nota-view-titulo"></p>
+      <button class="nota-view-close" onclick="fecharVerNota()">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="nota-view-corpo" id="nota-view-corpo"></div>
+    <div class="nota-view-footer">
+      <span class="nota-view-date" id="nota-view-date"></span>
+      <div class="nota-view-actions">
+        <button class="nota-action-btn edit" id="nota-view-edit-btn" title="Editar">
+          <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+        <button class="nota-action-btn del" id="nota-view-del-btn" title="Deletar">
+          <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 </div>
