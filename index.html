@@ -5505,7 +5505,10 @@ function doLogout() {
     document.querySelectorAll('.cal-modal-overlay,.drive-viewer-overlay,.nt-modal-overlay').forEach(function(m){
       m.classList.remove('active');
     });
+    // Clear live feed for this session (data already saved to planilha)
+    if (currentStudent) localStorage.removeItem(getLiveKey());
     currentStudent = null;
+    _liveItems = [];
     localStorage.removeItem('mdtalk_login');
     localStorage.removeItem('mdtalk_senha');
   } catch(e) {}
