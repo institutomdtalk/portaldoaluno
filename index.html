@@ -1426,11 +1426,21 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .notas-editor{background:#fff;border-radius:20px;padding:22px 28px;margin-bottom:28px;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 4px 12px rgba(0,0,0,0.04)}
 .notas-editor-titulo{width:100%;border:none;outline:none;font-family:var(--serif);font-size:1.5rem;font-weight:500;color:#1a1a1a;padding:0 0 12px;border-bottom:1px solid rgba(0,0,0,0.08);margin-bottom:10px;background:transparent;box-sizing:border-box;display:block}
 .notas-editor-titulo::placeholder{color:#ccc}
-.notas-toolbar{display:flex;align-items:center;gap:3px;padding:6px 0 8px;border-bottom:1px solid rgba(0,0,0,0.07);margin-bottom:10px}
-.notas-fmt-btn{width:28px;height:28px;border-radius:7px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;color:#888}
-.notas-fmt-btn:hover{background:rgba(0,0,0,0.06)}
+.notas-toolbar{display:flex;align-items:center;gap:2px;padding:6px 0 8px;border-bottom:1px solid rgba(0,0,0,0.07);margin-bottom:10px;flex-wrap:wrap}
+.notas-fmt-select{font-family:var(--sans);font-size:11px;border:1px solid rgba(0,0,0,0.1);border-radius:6px;padding:4px 6px;color:#555;background:#fff;cursor:pointer;outline:none;height:26px}
+.notas-fmt-select:focus{border-color:var(--gold)}
+.notas-size-ctrl{display:flex;align-items:center;gap:2px;background:rgba(0,0,0,0.04);border-radius:6px;padding:2px 4px;height:26px}
+.notas-size-btn{width:18px;height:18px;border:none;background:none;cursor:pointer;font-size:14px;color:#666;line-height:1;display:flex;align-items:center;justify-content:center;border-radius:3px;transition:background 0.15s}
+.notas-size-btn:hover{background:rgba(0,0,0,0.08)}
+.notas-size-display{font-size:11px;font-weight:600;color:#444;min-width:20px;text-align:center;font-family:var(--sans)}
+.notas-fmt-btn{min-width:26px;height:26px;border-radius:6px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;color:#666;font-size:12px;padding:0 4px}
+.notas-fmt-btn:hover{background:rgba(0,0,0,0.07)}
 .notas-fmt-btn svg{width:13px;height:13px;flex-shrink:0}
-.notas-fmt-divider{width:1px;height:16px;background:rgba(0,0,0,0.1);margin:0 3px}
+.notas-fmt-i em{font-style:italic;font-family:Georgia,serif;font-size:13px}
+.notas-color-group{display:flex;align-items:center;gap:1px}
+.notas-color-btn{padding:0;min-width:22px}
+.notas-color-swatch{display:block;width:13px;height:13px;border-radius:50%}
+.notas-fmt-divider{width:1px;height:16px;background:rgba(0,0,0,0.1);margin:0 3px;flex-shrink:0}
 .notas-editor-body{min-height:100px;outline:none;font-family:var(--sans);font-size:16px;color:#444;line-height:1.7;width:100%;cursor:text;word-break:break-word}
 .notas-editor-body:empty::before{content:attr(data-placeholder);color:#ccc;pointer-events:none}
 .nota-red{color:#e53e3e}
@@ -2206,41 +2216,49 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     </div>
     <div class="notas-editor">
       <input type="text" id="nota-titulo-input" class="notas-editor-titulo" placeholder="Título da nota (opcional)">
-      <div class="notas-toolbar">
-        <button class="notas-fmt-btn" onclick="notaFmt('bold')" title="Negrito">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 4h8a4 4 0 014 4 4 4 0 01-4 4H6z"/><path d="M6 12h9a4 4 0 014 4 4 4 0 01-4 4H6z"/></svg>
-        </button>
-        <button class="notas-fmt-btn" onclick="notaFmt('italic')" title="Itálico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
-        </button>
-        <button class="notas-fmt-btn" onclick="notaFmt('strike')" title="Tachado">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="17" y1="12" x2="7" y2="12"/><path d="M12 6c-2.21 0-4 .895-4 2.5S9.79 11 12 11c2.21 0 4 .895 4 2.5S14.21 18 12 18c-2.21 0-4-.895-4-2.5"/></svg>
-        </button>
+      <div class="notas-toolbar" id="nota-toolbar">
+        <!-- Fonte -->
+        <select class="notas-fmt-select" onchange="notaFmtApply('nota','font',this.value)" title="Fonte">
+          <option value="inherit">Fonte</option>
+          <option value="Cormorant Garamond, serif">Cormorant</option>
+          <option value="Raleway, sans-serif">Raleway</option>
+          <option value="Georgia, serif">Georgia</option>
+          <option value="Arial, sans-serif">Arial</option>
+          <option value="Courier New, monospace">Courier</option>
+        </select>
         <div class="notas-fmt-divider"></div>
-        <button class="notas-fmt-btn" onclick="notaFmt('red')" title="Vermelho">
-          <span style="font-weight:800;font-size:13px;color:#e53e3e;font-family:serif;line-height:1">A</span>
-        </button>
-        <button class="notas-fmt-btn" onclick="notaFmt('purple')" title="Roxo">
-          <span style="font-weight:800;font-size:13px;color:#7c3aed;font-family:serif;line-height:1">A</span>
-        </button>
-        <button class="notas-fmt-btn" onclick="notaFmt('green')" title="Verde escuro">
-          <span style="font-weight:800;font-size:13px;color:#166534;font-family:serif;line-height:1">A</span>
-        </button>
-        <button class="notas-fmt-btn" onclick="notaFmt('blue')" title="Azul">
-          <span style="font-weight:800;font-size:13px;color:#1d4ed8;font-family:serif;line-height:1">A</span>
-        </button>
-        <button class="notas-fmt-btn" onclick="notaFmt('black')" title="Preto">
-          <span style="font-weight:800;font-size:13px;color:#1a1a1a;font-family:serif;line-height:1">A</span>
-        </button>
+        <!-- Tamanho -->
+        <div class="notas-size-ctrl">
+          <button class="notas-size-btn" onclick="notaFmtApply('nota','size',-1)">−</button>
+          <span class="notas-size-display" id="nota-size-display">14</span>
+          <button class="notas-size-btn" onclick="notaFmtApply('nota','size',1)">+</button>
+        </div>
         <div class="notas-fmt-divider"></div>
-        <button class="notas-fmt-btn" onclick="notaFmt('highlight')" title="Destaque amarelo neon">
-          <span style="background:#FFFF00;color:#1a1a1a;font-weight:800;font-size:11px;padding:1px 4px;border-radius:2px;font-family:sans-serif;line-height:1.4">A</span>
-        </button>
-        <button class="notas-fmt-btn" onclick="notaFmt('highlight-gray')" title="Grifo cinza suave">
-          <span style="background:#e2e2e2;color:#1a1a1a;font-weight:800;font-size:11px;padding:1px 4px;border-radius:2px;font-family:sans-serif;line-height:1.4">A</span>
-        </button>
-        <button class="notas-fmt-btn" onclick="notaFmt('highlight-lilac')" title="Grifo lilás clarinho">
-          <span style="background:#e9d5ff;color:#4c1d95;font-weight:800;font-size:11px;padding:1px 4px;border-radius:2px;font-family:sans-serif;line-height:1.4">A</span>
+        <!-- B I U -->
+        <button class="notas-fmt-btn" onclick="notaFmtApply('nota','bold')" title="Negrito"><strong>B</strong></button>
+        <button class="notas-fmt-btn notas-fmt-i" onclick="notaFmtApply('nota','italic')" title="Itálico"><em>I</em></button>
+        <button class="notas-fmt-btn" onclick="notaFmtApply('nota','underline')" title="Sublinhado"><span style="text-decoration:underline">U</span></button>
+        <button class="notas-fmt-btn" onclick="notaFmtApply('nota','strike')" title="Tachado"><span style="text-decoration:line-through">S</span></button>
+        <div class="notas-fmt-divider"></div>
+        <!-- Cor de texto -->
+        <div class="notas-color-group">
+          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','color','#1a1a1a')" title="Preto"><span class="notas-color-swatch" style="background:#1a1a1a"></span></button>
+          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','color','#e53e3e')" title="Vermelho"><span class="notas-color-swatch" style="background:#e53e3e"></span></button>
+          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','color','#7c3aed')" title="Roxo"><span class="notas-color-swatch" style="background:#7c3aed"></span></button>
+          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','color','#166534')" title="Verde"><span class="notas-color-swatch" style="background:#166534"></span></button>
+          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','color','#1d4ed8')" title="Azul"><span class="notas-color-swatch" style="background:#1d4ed8"></span></button>
+        </div>
+        <div class="notas-fmt-divider"></div>
+        <!-- Grifo -->
+        <div class="notas-color-group">
+          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','highlight','#FFFF00')" title="Amarelo neon"><span class="notas-color-swatch" style="background:#FFFF00;border:1px solid #ccc"></span></button>
+          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','highlight','#e2e2e2')" title="Cinza suave"><span class="notas-color-swatch" style="background:#e2e2e2"></span></button>
+          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','highlight','#e9d5ff')" title="Lilás"><span class="notas-color-swatch" style="background:#e9d5ff"></span></button>
+        </div>
+        <div class="notas-fmt-divider"></div>
+        <!-- Borracha -->
+        <button class="notas-fmt-btn" onclick="notaFmtApply('nota','clear')" title="Limpar formatação">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 20H7L3 16l10-10 7 7-2.5 2.5"/><path d="M6.5 17.5l5-5"/></svg>
         </button>
       </div>
       <div id="nota-corpo-input" class="notas-editor-body" contenteditable="true" data-placeholder="Escreva sua nota aqui..."></div>
@@ -4233,45 +4251,92 @@ function sc2Avaliar(tipo) {
 // ══════════════════════════════════════
 var _notas = [];
 
+function getNotasLocalKey() { return 'mdtalk_notas_' + (currentStudent ? currentStudent.login : 'guest'); }
+
+function saveNotasLocal() {
+  try { localStorage.setItem(getNotasLocalKey(), JSON.stringify(_notas)); } catch(e) {}
+}
+
 function loadNotas() {
   if (!currentStudent) return;
+  // Load from localStorage immediately as fallback
+  try {
+    var local = JSON.parse(localStorage.getItem(getNotasLocalKey()) || '[]');
+    if (local.length) { _notas = local; renderNotasGrid(); }
+  } catch(e) {}
+  // Then sync with server
   callScript(
     'action=get_notas&login=' + encodeURIComponent(currentStudent.login),
-    function(d) { if (d.success) { _notas = d.notas || []; renderNotasGrid(); } },
-    function(){}
+    function(d) {
+      if (d.success) {
+        if (d.notas && d.notas.length) {
+          _notas = d.notas;
+          saveNotasLocal();
+        }
+        // If server empty but local has data, keep local
+        renderNotasGrid();
+      }
+    },
+    function(){ /* offline — keep local */ }
   );
 }
 
 // ── Formatting ──
-function notaFmt(type) {
-  var el = document.getElementById('nota-corpo-input');
-  if (el) { el.focus(); applyFmt(type); }
-}
-function notaFmtModal(type) {
-  var el = document.getElementById('nota-edit-corpo');
-  if (el) { el.focus(); applyFmt(type); }
-}
-function applyFmt(type) {
-  if (type === 'bold')   { document.execCommand('bold',          false, null); return; }
-  if (type === 'italic') { document.execCommand('italic',        false, null); return; }
-  if (type === 'strike') { document.execCommand('strikeThrough', false, null); return; }
-  var colorMap = { red:'#e53e3e', purple:'#7c3aed', green:'#166534', blue:'#1d4ed8', black:'#1a1a1a' };
-  if (colorMap[type]) {
-    var sel = window.getSelection();
-    if (!sel.rangeCount || sel.getRangeAt(0).collapsed) return;
-    document.execCommand('foreColor', false, colorMap[type]);
+var _notaFontSize = { nota: 14, 'nota-edit': 14 };
+
+function notaFmt(type)      { notaFmtApply('nota',      type); }
+function notaFmtModal(type) { notaFmtApply('nota-edit', type); }
+
+function notaFmtApply(prefix, type, value) {
+  var editorId = prefix === 'nota' ? 'nota-corpo-input' : 'nota-edit-corpo';
+  var el = document.getElementById(editorId);
+  if (el) el.focus();
+
+  if (type === 'bold')      { document.execCommand('bold',          false, null); return; }
+  if (type === 'italic')    { document.execCommand('italic',        false, null); return; }
+  if (type === 'underline') { document.execCommand('underline',     false, null); return; }
+  if (type === 'strike')    { document.execCommand('strikeThrough', false, null); return; }
+
+  if (type === 'font') {
+    if (value && value !== 'inherit') document.execCommand('fontName', false, value);
     return;
   }
-  var highlightMap = { 'highlight':'#FFFF00', 'highlight-gray':'#e2e2e2', 'highlight-lilac':'#e9d5ff' };
-  if (highlightMap[type]) {
+
+  if (type === 'size') {
+    // value is +1 or -1
+    var cur = _notaFontSize[prefix] || 14;
+    cur = Math.max(8, Math.min(48, cur + (value * 2)));
+    _notaFontSize[prefix] = cur;
+    var disp = document.getElementById(prefix + '-size-display');
+    if (disp) disp.textContent = cur;
+    // Wrap selection in span
+    var sel = window.getSelection();
+    if (sel.rangeCount && !sel.getRangeAt(0).collapsed) {
+      var span = document.createElement('span');
+      span.style.fontSize = cur + 'px';
+      try { sel.getRangeAt(0).surroundContents(span); } catch(e) {}
+    }
+    return;
+  }
+
+  if (type === 'color') {
+    document.execCommand('foreColor', false, value);
+    return;
+  }
+
+  if (type === 'highlight') {
     var sel2 = window.getSelection();
     if (!sel2.rangeCount || sel2.getRangeAt(0).collapsed) return;
-    var range2 = sel2.getRangeAt(0);
     var span2 = document.createElement('span');
-    span2.className = 'nota-hl';
-    span2.style.background = highlightMap[type];
-    if (type === 'highlight-lilac') span2.style.color = '#4c1d95';
-    try { range2.surroundContents(span2); } catch(e) { document.execCommand('backColor', false, highlightMap[type]); }
+    span2.style.background = value;
+    if (value === '#e9d5ff') span2.style.color = '#4c1d95';
+    try { sel2.getRangeAt(0).surroundContents(span2); }
+    catch(e) { document.execCommand('backColor', false, value); }
+    return;
+  }
+
+  if (type === 'clear') {
+    document.execCommand('removeFormat', false, null);
     return;
   }
 }
@@ -4317,6 +4382,7 @@ function salvarNota() {
   var hoje = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
   var nota = { id:id, titulo:titulo, corpo:corpo, data:hoje };
   _notas.push(nota);
+  saveNotasLocal();
   if (tituloEl) tituloEl.value = '';
   if (corpoEl)  corpoEl.innerHTML = '';
   renderNotasGrid();
@@ -4356,6 +4422,7 @@ function fecharVerNota() {
 function deletarNota(id) {
   if (!confirm('Remover esta nota?')) return;
   _notas = _notas.filter(function(n){ return n.id !== id; });
+  saveNotasLocal();
   renderNotasGrid();
   callScript('action=deletar_nota&login=' + encodeURIComponent(currentStudent.login) + '&id=' + encodeURIComponent(id), function(){}, function(){});
 }
@@ -4388,6 +4455,7 @@ function salvarEdicaoNota() {
   if (!corpo && !titulo) { showToast('A nota não pode estar vazia.','error'); return; }
   var n = _notas.find(function(x){ return x.id === id; });
   if (n) { n.titulo = titulo; n.corpo = corpo; }
+  saveNotasLocal();
   fecharEditarNota();
   renderNotasGrid();
   callScript(
@@ -5312,41 +5380,49 @@ window.addEventListener('load', function(){
     <h3 class="nota-modal-title">Editar Nota</h3>
     <input type="hidden" id="nota-edit-id">
     <input type="text" id="nota-edit-titulo" class="nota-edit-titulo" placeholder="Título (opcional)">
-    <div class="notas-toolbar" style="border:1px solid rgba(0,0,0,0.1);border-radius:8px;padding:4px 8px;margin-bottom:8px">
-      <button class="notas-fmt-btn" onclick="notaFmtModal('bold')" title="Negrito">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 4h8a4 4 0 014 4 4 4 0 01-4 4H6z"/><path d="M6 12h9a4 4 0 014 4 4 4 0 01-4 4H6z"/></svg>
-      </button>
-      <button class="notas-fmt-btn" onclick="notaFmtModal('italic')" title="Itálico">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
-      </button>
-      <button class="notas-fmt-btn" onclick="notaFmtModal('strike')" title="Tachado">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="17" y1="12" x2="7" y2="12"/><path d="M12 6c-2.21 0-4 .895-4 2.5S9.79 11 12 11c2.21 0 4 .895 4 2.5S14.21 18 12 18c-2.21 0-4-.895-4-2.5"/></svg>
-      </button>
+    <div class="notas-toolbar" id="nota-edit-toolbar">
+      <!-- Fonte -->
+      <select class="notas-fmt-select" onchange="notaFmtApply('nota-edit','font',this.value)" title="Fonte">
+        <option value="inherit">Fonte</option>
+        <option value="Cormorant Garamond, serif">Cormorant</option>
+        <option value="Raleway, sans-serif">Raleway</option>
+        <option value="Georgia, serif">Georgia</option>
+        <option value="Arial, sans-serif">Arial</option>
+        <option value="Courier New, monospace">Courier</option>
+      </select>
       <div class="notas-fmt-divider"></div>
-      <button class="notas-fmt-btn" onclick="notaFmtModal('red')" title="Vermelho">
-        <span style="font-weight:800;font-size:13px;color:#e53e3e;font-family:serif;line-height:1">A</span>
-      </button>
-      <button class="notas-fmt-btn" onclick="notaFmtModal('purple')" title="Roxo">
-        <span style="font-weight:800;font-size:13px;color:#7c3aed;font-family:serif;line-height:1">A</span>
-      </button>
-      <button class="notas-fmt-btn" onclick="notaFmtModal('green')" title="Verde escuro">
-        <span style="font-weight:800;font-size:13px;color:#166534;font-family:serif;line-height:1">A</span>
-      </button>
-      <button class="notas-fmt-btn" onclick="notaFmtModal('blue')" title="Azul">
-        <span style="font-weight:800;font-size:13px;color:#1d4ed8;font-family:serif;line-height:1">A</span>
-      </button>
-      <button class="notas-fmt-btn" onclick="notaFmtModal('black')" title="Preto">
-        <span style="font-weight:800;font-size:13px;color:#1a1a1a;font-family:serif;line-height:1">A</span>
-      </button>
+      <!-- Tamanho -->
+      <div class="notas-size-ctrl">
+        <button class="notas-size-btn" onclick="notaFmtApply('nota-edit','size',-1)">−</button>
+        <span class="notas-size-display" id="nota-edit-size-display">14</span>
+        <button class="notas-size-btn" onclick="notaFmtApply('nota-edit','size',1)">+</button>
+      </div>
       <div class="notas-fmt-divider"></div>
-      <button class="notas-fmt-btn" onclick="notaFmtModal('highlight')" title="Destaque amarelo neon">
-        <span style="background:#FFFF00;color:#1a1a1a;font-weight:800;font-size:11px;padding:1px 4px;border-radius:2px;line-height:1.4">A</span>
-      </button>
-      <button class="notas-fmt-btn" onclick="notaFmtModal('highlight-gray')" title="Grifo cinza suave">
-        <span style="background:#e2e2e2;color:#1a1a1a;font-weight:800;font-size:11px;padding:1px 4px;border-radius:2px;line-height:1.4">A</span>
-      </button>
-      <button class="notas-fmt-btn" onclick="notaFmtModal('highlight-lilac')" title="Grifo lilás clarinho">
-        <span style="background:#e9d5ff;color:#4c1d95;font-weight:800;font-size:11px;padding:1px 4px;border-radius:2px;line-height:1.4">A</span>
+      <!-- B I U -->
+      <button class="notas-fmt-btn" onclick="notaFmtApply('nota-edit','bold')" title="Negrito"><strong>B</strong></button>
+      <button class="notas-fmt-btn notas-fmt-i" onclick="notaFmtApply('nota-edit','italic')" title="Itálico"><em>I</em></button>
+      <button class="notas-fmt-btn" onclick="notaFmtApply('nota-edit','underline')" title="Sublinhado"><span style="text-decoration:underline">U</span></button>
+      <button class="notas-fmt-btn" onclick="notaFmtApply('nota-edit','strike')" title="Tachado"><span style="text-decoration:line-through">S</span></button>
+      <div class="notas-fmt-divider"></div>
+      <!-- Cor de texto -->
+      <div class="notas-color-group">
+        <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota-edit','color','#1a1a1a')" title="Preto"><span class="notas-color-swatch" style="background:#1a1a1a"></span></button>
+        <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota-edit','color','#e53e3e')" title="Vermelho"><span class="notas-color-swatch" style="background:#e53e3e"></span></button>
+        <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota-edit','color','#7c3aed')" title="Roxo"><span class="notas-color-swatch" style="background:#7c3aed"></span></button>
+        <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota-edit','color','#166534')" title="Verde"><span class="notas-color-swatch" style="background:#166534"></span></button>
+        <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota-edit','color','#1d4ed8')" title="Azul"><span class="notas-color-swatch" style="background:#1d4ed8"></span></button>
+      </div>
+      <div class="notas-fmt-divider"></div>
+      <!-- Grifo -->
+      <div class="notas-color-group">
+        <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota-edit','highlight','#FFFF00')" title="Amarelo neon"><span class="notas-color-swatch" style="background:#FFFF00;border:1px solid #ccc"></span></button>
+        <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota-edit','highlight','#e2e2e2')" title="Cinza suave"><span class="notas-color-swatch" style="background:#e2e2e2"></span></button>
+        <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota-edit','highlight','#e9d5ff')" title="Lilás"><span class="notas-color-swatch" style="background:#e9d5ff"></span></button>
+      </div>
+      <div class="notas-fmt-divider"></div>
+      <!-- Borracha -->
+      <button class="notas-fmt-btn" onclick="notaFmtApply('nota-edit','clear')" title="Limpar formatação">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 20H7L3 16l10-10 7 7-2.5 2.5"/><path d="M6.5 17.5l5-5"/></svg>
       </button>
     </div>
     <div id="nota-edit-corpo" class="nota-edit-body" contenteditable="true" data-placeholder="Conteúdo da nota..."></div>
