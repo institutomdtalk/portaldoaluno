@@ -2677,35 +2677,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       <p class="footer-copy">&copy; 2026 Instituto MD Talk &mdash; Todos os direitos reservados.</p>
       <a href="#" onclick="doLogout();return false;" class="footer-logout">Sair da conta</a>
     </div>
-  <!-- ══ MODAL PRESENÇA CONFIRMADA ══ -->
-  <div class="cal-modal-overlay" id="modal-presenca" style="z-index:9999">
-    <div class="cal-modal-box" style="max-width:420px;text-align:center;padding:48px 36px">
-      <div style="width:64px;height:64px;background:rgba(34,197,94,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <h3 style="font-family:var(--serif);font-size:1.5rem;color:var(--navy);margin-bottom:10px">Presença confirmada!</h3>
-      <p style="font-family:var(--sans);font-size:13px;color:var(--text-muted);margin-bottom:28px">Sua presença nesta aula foi registrada com sucesso.</p>
-      <button onclick="fecharPresencaModal()" style="background:var(--navy);color:#fff;border:none;padding:12px 32px;border-radius:8px;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer">Fechar</button>
-    </div>
-  </div>
+  </footer>
 
-  <!-- ══ MODAL REGISTRAR FALTA ══ -->
-  <div class="cal-modal-overlay" id="modal-falta" style="z-index:9999">
-    <div class="cal-modal-box" style="max-width:420px;text-align:center;padding:48px 36px">
-      <div style="width:64px;height:64px;background:rgba(239,68,68,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      </div>
-      <h3 style="font-family:var(--serif);font-size:1.5rem;color:var(--navy);margin-bottom:10px">Registrar falta?</h3>
-      <p style="font-family:var(--sans);font-size:13px;color:var(--text-muted);margin-bottom:8px">Sua falta será registrada e você será redirecionado para reagendar sua aula.</p>
-      <p style="font-family:var(--sans);font-size:12px;color:#ef4444;font-weight:600;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:6px;padding:10px 14px;margin-bottom:28px;line-height:1.5">
-        Atenção: o reagendamento só é permitido com até <strong>2 horas de antecedência</strong> do início da aula. Após esse prazo, a aula será contabilizada como realizada.
-      </p>
-      <div style="display:flex;gap:12px;justify-content:center">
-        <button onclick="fecharModalFalta()" style="background:transparent;color:var(--text-muted);border:1px solid #e2e8f0;padding:12px 28px;border-radius:8px;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer">Cancelar</button>
-        <button onclick="confirmarFalta()" style="background:#ef4444;color:#fff;border:none;padding:12px 28px;border-radius:8px;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer">Confirmar Falta</button>
-      </div>
-    </div>
-  </div>
 
 </div><!-- end #page-dashboard -->
 
@@ -5491,10 +5464,55 @@ function registrarPresenca(status) {
   if(status==='falta'){showModalFalta();return;}
   _gravarRegistro('presente');
 }
-function showPresencaModal(){ document.getElementById('modal-presenca').classList.add('active'); }
-function fecharPresencaModal(){ document.getElementById('modal-presenca').classList.remove('active'); }
-function showModalFalta(){document.getElementById('modal-falta').classList.add('active')}
-function fecharModalFalta(){document.getElementById('modal-falta').classList.remove('active')}
+function showPresencaModal(){
+  var m = document.getElementById('modal-presenca');
+  if(m) m.style.display='flex';
+}
+function fecharPresencaModal(){
+  var m = document.getElementById('modal-presenca');
+  if(m) m.style.display='none';
+}
+function showModalFalta(){
+  var m = document.getElementById('modal-falta');
+  if(m) m.style.display='flex';
+}
+function fecharModalFalta(){
+  var m = document.getElementById('modal-falta');
+  if(m) m.style.display='none';
+}
+
+// Inject presence modals directly into body to avoid fixed-position context issues
+(function(){
+  var style = 'position:fixed;inset:0;background:rgba(5,13,26,0.75);backdrop-filter:blur(8px);z-index:99999;display:none;align-items:center;justify-content:center;padding:24px';
+  var boxStyle = 'background:#fff;border-radius:16px;padding:48px 36px;max-width:420px;width:100%;text-align:center;position:relative';
+
+  var mp = document.createElement('div');
+  mp.id = 'modal-presenca';
+  mp.style.cssText = style;
+  mp.innerHTML = '<div style="'+boxStyle+'">'
+    + '<div style="width:64px;height:64px;background:rgba(34,197,94,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">'
+    + '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>'
+    + '<h3 style="font-family:Cormorant Garamond,serif;font-size:1.5rem;color:#0B1D3A;margin-bottom:10px">Presença confirmada!</h3>'
+    + '<p style="font-family:Raleway,sans-serif;font-size:13px;color:#64748b;margin-bottom:28px">Sua presença nesta aula foi registrada com sucesso.</p>'
+    + '<button onclick="fecharPresencaModal()" style="background:#0B1D3A;color:#fff;border:none;padding:12px 32px;border-radius:8px;font-family:Raleway,sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer">Fechar</button>'
+    + '</div>';
+  document.body.appendChild(mp);
+
+  var mf = document.createElement('div');
+  mf.id = 'modal-falta';
+  mf.style.cssText = style;
+  mf.innerHTML = '<div style="'+boxStyle+'">'
+    + '<div style="width:64px;height:64px;background:rgba(239,68,68,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">'
+    + '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>'
+    + '<h3 style="font-family:Cormorant Garamond,serif;font-size:1.5rem;color:#0B1D3A;margin-bottom:10px">Registrar falta?</h3>'
+    + '<p style="font-family:Raleway,sans-serif;font-size:13px;color:#64748b;margin-bottom:8px">Sua falta será registrada e você será redirecionado para reagendar sua aula.</p>'
+    + '<p style="font-family:Raleway,sans-serif;font-size:12px;color:#ef4444;font-weight:600;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:6px;padding:10px 14px;margin-bottom:28px;line-height:1.5">Atenção: o reagendamento só é permitido com até <strong>2 horas de antecedência</strong> do início da aula. Após esse prazo, a aula será contabilizada como realizada.</p>'
+    + '<div style="display:flex;gap:12px;justify-content:center">'
+    + '<button onclick="fecharModalFalta()" style="background:transparent;color:#64748b;border:1px solid #e2e8f0;padding:12px 28px;border-radius:8px;font-family:Raleway,sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer">Cancelar</button>'
+    + '<button onclick="confirmarFalta()" style="background:#ef4444;color:#fff;border:none;padding:12px 28px;border-radius:8px;font-family:Raleway,sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer">Confirmar Falta</button>'
+    + '</div></div>';
+  document.body.appendChild(mf);
+})();
 function confirmarFalta(){fecharModalFalta();_gravarRegistro('falta');setTimeout(function(){window.open('https://calendar.app.google/RAURJTpXNw35Lzht5','_blank');},600);}
 
 function _gravarRegistro(status) {
