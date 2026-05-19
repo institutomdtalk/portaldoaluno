@@ -1655,11 +1655,154 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 /* ═══════════════════════════════════════
    FOOTER
 ═══════════════════════════════════════ */
-.footer{background:var(--navy-deep);text-align:center;padding:44px 24px;position:relative}
-.footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0.25}
-.footer-brand{font-family:var(--serif);font-size:1.15rem;color:var(--gold);margin-bottom:8px;letter-spacing:1px}
-.footer-tagline{font-family:var(--serif);font-style:italic;font-size:13px;color:rgba(255,255,255,0.22);margin-bottom:16px}
-.footer-copy{font-size:10px;color:rgba(255,255,255,0.18);letter-spacing:0.5px}
+.footer{
+  background:var(--navy-deep);
+  text-align:center;
+  padding:64px 40px 44px;
+  position:relative;
+  overflow:hidden;
+}
+.footer::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent 0%,rgba(196,164,90,0.15) 20%,var(--gold) 50%,rgba(196,164,90,0.15) 80%,transparent 100%);
+}
+.footer::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(196,164,90,0.04) 0%, transparent 60%);
+  pointer-events:none;
+}
+.footer-inner{position:relative;z-index:1;max-width:680px;margin:0 auto}
+.footer-geo-line{
+  display:flex;align-items:center;justify-content:center;gap:16px;
+  margin-bottom:32px;
+}
+.footer-geo-line::before,.footer-geo-line::after{
+  content:'';flex:1;max-width:80px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(196,164,90,0.25));
+}
+.footer-geo-line::after{
+  background:linear-gradient(270deg,transparent,rgba(196,164,90,0.25));
+}
+.footer-geo-diamond{
+  width:6px;height:6px;
+  border:1px solid rgba(196,164,90,0.5);
+  transform:rotate(45deg);
+  flex-shrink:0;
+}
+.footer-overline{
+  font-family:var(--sans);
+  font-size:9px;font-weight:700;
+  letter-spacing:5px;
+  text-transform:uppercase;
+  color:var(--gold);
+  opacity:0.6;
+  margin-bottom:14px;
+}
+.footer-brand{
+  font-family:var(--serif);
+  font-size:1.65rem;
+  font-weight:300;
+  color:var(--white);
+  letter-spacing:1px;
+  margin-bottom:10px;
+  line-height:1.1;
+}
+.footer-brand em{
+  font-style:italic;
+  font-weight:400;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.footer-tagline{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:13.5px;
+  color:rgba(255,255,255,0.28);
+  margin-bottom:36px;
+  letter-spacing:0.3px;
+}
+.footer-divider{
+  width:32px;height:1px;
+  background:rgba(196,164,90,0.3);
+  margin:0 auto 36px;
+}
+.footer-links{
+  display:flex;justify-content:center;
+  align-items:center;gap:0;
+  margin-bottom:40px;
+  flex-wrap:wrap;
+}
+.footer-link{
+  display:flex;align-items:center;gap:9px;
+  text-decoration:none;
+  padding:10px 24px;
+  border:1px solid rgba(196,164,90,0.1);
+  transition:all 0.35s ease;
+  position:relative;
+}
+.footer-link:first-child{border-radius:3px 0 0 3px}
+.footer-link:last-child{border-radius:0 3px 3px 0}
+.footer-link+.footer-link{border-left:none}
+.footer-link::before{
+  content:'';
+  position:absolute;inset:0;
+  background:rgba(196,164,90,0.04);
+  opacity:0;
+  transition:opacity 0.3s;
+}
+.footer-link:hover::before{opacity:1}
+.footer-link:hover{border-color:rgba(196,164,90,0.3)}
+.footer-link svg{
+  width:14px;height:14px;
+  stroke:rgba(196,164,90,0.5);
+  fill:none;stroke-width:1.5;
+  stroke-linecap:round;stroke-linejoin:round;
+  flex-shrink:0;
+  transition:stroke 0.3s;
+}
+.footer-link:hover svg{stroke:var(--gold)}
+.footer-link span{
+  font-family:var(--sans);
+  font-size:10px;font-weight:600;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.3);
+  transition:color 0.3s;
+}
+.footer-link:hover span{color:rgba(255,255,255,0.7)}
+.footer-copy{
+  font-family:var(--sans);
+  font-size:9.5px;
+  color:rgba(255,255,255,0.13);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+.footer-logout{
+  display:inline-block;
+  font-family:var(--sans);
+  font-size:9px;
+  color:rgba(255,255,255,0.12);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  text-decoration:none;
+  padding:6px 16px;
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:2px;
+  transition:all 0.3s;
+}
+.footer-logout:hover{
+  color:rgba(255,255,255,0.4);
+  border-color:rgba(255,255,255,0.15);
+}
 
 /* ═══════════════════════════════════════
    SPINNER / TOAST / MODAL
@@ -2504,24 +2647,29 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   </main><!-- end .dashboard -->
 
   <footer class="footer">
-    <p class="footer-brand">Instituto MD Talk</p>
-    <p class="footer-tagline">Precisão linguística para a excelência médica.</p>
-    <div style="display:flex;justify-content:center;gap:32px;margin:28px 0;flex-wrap:wrap">
-      <a href="https://instagram.com/inglesmedico.thaifaria" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;text-decoration:none;transition:opacity 0.3s" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(196,164,90,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><path d="M17.5 6.5h.01"/></svg>
-        <span style="font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,0.35)">@inglesmedico.thaifaria</span>
-      </a>
-      <a href="mailto:mdtalk.office@gmail.com" style="display:flex;align-items:center;gap:10px;text-decoration:none;transition:opacity 0.3s" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(196,164,90,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        <span style="font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,0.35)">mdtalk.office&#64;gmail.com</span>
-      </a>
-      <a href="https://wa.me/5514997758941" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;text-decoration:none;transition:opacity 0.3s" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(196,164,90,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-        <span style="font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,0.35)">WhatsApp</span>
-      </a>
+    <div class="footer-inner">
+      <div class="footer-geo-line"><div class="footer-geo-diamond"></div></div>
+      <p class="footer-overline">Instituto MD Talk</p>
+      <p class="footer-brand">Medical <em>English</em></p>
+      <p class="footer-tagline">Precisão linguística para a excelência médica.</p>
+      <div class="footer-divider"></div>
+      <div class="footer-links">
+        <a href="https://instagram.com/inglesmedico.thaifaria" target="_blank" rel="noopener" class="footer-link">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><path d="M17.5 6.5h.01"/></svg>
+          <span>@inglesmedico.thaifaria</span>
+        </a>
+        <a href="mailto:mdtalk.office@gmail.com" class="footer-link">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span>mdtalk.office&#64;gmail.com</span>
+        </a>
+        <a href="https://wa.me/5514997758941" target="_blank" rel="noopener" class="footer-link">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Instituto MD Talk &mdash; Todos os direitos reservados.</p>
+      <a href="#" onclick="doLogout();return false;" class="footer-logout">Sair da conta</a>
     </div>
-    <p class="footer-copy">&copy; 2026 Instituto MD Talk &mdash; Todos os direitos reservados.</p>
-    <p style="margin-top:16px"><a href="#" onclick="doLogout();return false;" style="font-family:var(--sans);font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:2px;text-decoration:none;transition:color 0.3s" onmouseover="this.style.color='rgba(255,255,255,0.5)'" onmouseout="this.style.color='rgba(255,255,255,0.2)'">Sair da conta</a></p>
   </footer>
 
 
