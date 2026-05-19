@@ -4474,9 +4474,10 @@ function loadNotas() {
           _notas = d.notas;
           saveNotasLocal();
         }
-        // If server empty but local has data, keep local
+        // If server returns empty but local has data, keep local — never overwrite with []
         renderNotasGrid();
       }
+      // on success:false, keep whatever is in _notas (already loaded from local)
     },
     function(){ /* offline — keep local */ }
   );
@@ -4877,19 +4878,6 @@ function salvarEdicaoNota() {
     function(){ showToast('Erro de conexão.','error'); }
   );
 }
-
-function loadNotas() {
-  if (!currentStudent) return;
-  callScript(
-    'action=get_notas&login=' + encodeURIComponent(currentStudent.login),
-    function(d) {
-      if (d.success) { _notas = d.notas || []; renderNotasGrid(); }
-    },
-    function(){}
-  );
-}
-
-
 
 // ── LIVE CLASS MODE ──
 var _liveOpen = false;
