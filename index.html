@@ -4269,7 +4269,7 @@ function salvarNota() {
   var id   = 'nt_' + Date.now();
   var hoje = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
   var nota = { id:id, titulo:titulo, corpo:corpo, data:hoje };
-  _notas.unshift(nota);
+  _notas.push(nota);
   if (tituloEl) tituloEl.value = '';
   if (corpoEl)  corpoEl.innerHTML = '';
   renderNotasGrid();
@@ -4380,45 +4380,6 @@ function deletarNota(id) {
   callScript('action=deletar_nota&login=' + encodeURIComponent(currentStudent.login) + '&id=' + encodeURIComponent(id), function(){}, function(){});
 }
 
-function editarNota(id) {
-  var n = _notas.find(function(x){ return x.id === id; });
-  if (!n) return;
-  document.getElementById('nota-edit-id').value    = n.id;
-  document.getElementById('nota-edit-titulo').value = n.titulo || '';
-  document.getElementById('nota-edit-corpo').value  = n.corpo  || '';
-  var m = document.getElementById('nota-edit-modal');
-  if (m) {
-    m.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    m.onclick = function(e){ if (e.target === m) fecharEditarNota(); };
-  }
-  setTimeout(function(){ document.getElementById('nota-edit-corpo').focus(); }, 100);
-}
-
-function fecharEditarNota() {
-  var m = document.getElementById('nota-edit-modal');
-  if (m) { m.classList.remove('active'); document.body.style.overflow = ''; }
-}
-
-function salvarEdicaoNota() {
-  var id     = document.getElementById('nota-edit-id').value;
-  var titulo = document.getElementById('nota-edit-titulo').value.trim();
-  var corpo  = document.getElementById('nota-edit-corpo').value.trim();
-  if (!corpo && !titulo) { showToast('A nota não pode estar vazia.','error'); return; }
-  var n = _notas.find(function(x){ return x.id === id; });
-  if (n) { n.titulo = titulo; n.corpo = corpo; }
-  fecharEditarNota();
-  renderNotasGrid();
-  callScript(
-    'action=editar_nota' +
-    '&login='  + encodeURIComponent(currentStudent.login) +
-    '&id='     + encodeURIComponent(id) +
-    '&titulo=' + encodeURIComponent(titulo) +
-    '&corpo='  + encodeURIComponent(corpo),
-    function(d){ showToast(d.success ? 'Nota atualizada!' : 'Erro.', d.success ? 'success' : 'error'); },
-    function(){ showToast('Erro de conexão.','error'); }
-  );
-}
 
 // ── LIVE CLASS MODE ──
 var _liveOpen = false;
