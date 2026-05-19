@@ -4371,27 +4371,6 @@ function renderNotasGrid() {
   }).join('');
 }
 
-function salvarNota() {
-  var titulo = (document.getElementById('nota-titulo-input')||{}).value||'';
-  var corpo  = (document.getElementById('nota-corpo-input') ||{}).value||'';
-  if (!corpo.trim() && !titulo.trim()) { showToast('Escreva algo antes de salvar.','error'); return; }
-  var id   = 'nt_' + Date.now();
-  var hoje = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
-  var nota = { id:id, titulo:titulo.trim(), corpo:corpo.trim(), data:hoje };
-  _notas.unshift(nota);
-  document.getElementById('nota-titulo-input').value = '';
-  document.getElementById('nota-corpo-input').value  = '';
-  renderNotasGrid();
-  callScript(
-    'action=salvar_nota' +
-    '&login='  + encodeURIComponent(currentStudent.login) +
-    '&id='     + encodeURIComponent(id) +
-    '&titulo=' + encodeURIComponent(titulo.trim()) +
-    '&corpo='  + encodeURIComponent(corpo.trim()),
-    function(d){ showToast(d.success ? 'Nota salva!' : 'Erro ao salvar.', d.success ? 'success' : 'error'); },
-    function(){ showToast('Erro de conexão.','error'); }
-  );
-}
 
 function deletarNota(id) {
   if (!confirm('Remover esta nota?')) return;
