@@ -357,7 +357,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   z-index:1;
   max-width:1100px;
   margin:-18px auto 0;
-  padding:52px 36px 72px;
+  padding:72px 36px 96px;
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
@@ -2962,14 +2962,19 @@ function callScript(params, onSuccess, onError) {
 }
 
 function callScriptPOST(payload, onSuccess, onError) {
-  fetch(SCRIPT_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-  .then(function(r) { return r.json(); })
-  .then(function(d) { onSuccess && onSuccess(d); })
-  .catch(function() { onError && onError(); });
+  // Apps Script doesn't support CORS POST — use JSONP GET
+  // Strip HTML tags from corpo to keep URL length safe
+  function stripHtml(html) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = html || '';
+    return tmp.textContent || tmp.innerText || '';
+  }
+  var p = Object.assign({}, payload);
+  if (p.corpo) p.corpo = stripHtml(p.corpo);
+  var params = Object.keys(p).map(function(k){
+    return encodeURIComponent(k) + '=' + encodeURIComponent(p[k]);
+  }).join('&');
+  callScript(params, onSuccess, onError);
 }
 
 // ── PAGES ──
