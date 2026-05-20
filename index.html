@@ -347,7 +347,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   z-index:1;
 }
 
-.hgeo{position:absolute;pointer-events:none;z-index:0}
+.header-particles{position:absolute;inset:0;pointer-events:none;z-index:2;overflow:hidden}
 .hgeo--ring{width:280px;height:280px;border:1px solid rgba(196,164,90,0.05);border-radius:50%;top:-80px;right:-60px;animation:geoFloat 22s ease-in-out infinite}
 .hgeo--line{width:1px;height:100px;background:linear-gradient(180deg,transparent,rgba(196,164,90,0.12),transparent);top:15%;left:8%;animation:geoFloat 18s ease-in-out infinite}
 .hgeo--diamond{width:10px;height:10px;border:1px solid rgba(196,164,90,0.15);transform:rotate(45deg);top:40%;right:12%;animation:geoPulse 7s ease-in-out infinite}
@@ -2128,6 +2128,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
   <header class="header">
     <div class="header-bg-img" id="hero-bg"></div>
+    <canvas class="header-particles" id="hero-particles"></canvas>
     <div class="hgeo hgeo--line"></div>
     <div class="hgeo hgeo--diamond"></div>
     <div class="header-inner">
@@ -3049,6 +3050,63 @@ function renderDashboard(a, avisos) {
 
   var hdrNome = document.getElementById('hdr-nome');
   if (hdrNome) hdrNome.textContent = a.nome_display || a.login;
+
+  // Soot particles
+  (function(){
+    var canvas = document.getElementById('hero-particles');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var particles = [];
+    var N = 55;
+
+    function resize(){
+      canvas.width  = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function rand(a,b){ return a + Math.random()*(b-a); }
+
+    for(var i=0;i<N;i++){
+      particles.push({
+        x: rand(0,1),
+        y: rand(0,1),
+        r: rand(0.8,2.2),
+        vx: rand(-0.06,0.06),
+        vy: rand(-0.12,-0.04),
+        o: rand(0.06,0.22),
+        wo: rand(0.06,0.22),
+        phase: rand(0, Math.PI*2),
+        freq: rand(0.003,0.009)
+      });
+    }
+
+    var frame = 0;
+    function draw(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      frame++;
+      particles.forEach(function(p){
+        // drift
+        p.x += p.vx * 0.003;
+        p.y += p.vy * 0.003;
+        // subtle horizontal sway
+        p.x += Math.sin(frame * p.freq + p.phase) * 0.0003;
+        // wrap
+        if(p.y < -0.02) p.y = 1.02;
+        if(p.x < -0.02) p.x = 1.02;
+        if(p.x >  1.02) p.x = -0.02;
+
+        var alpha = p.wo * (0.5 + 0.5 * Math.sin(frame * p.freq * 2 + p.phase));
+        ctx.beginPath();
+        ctx.arc(p.x*canvas.width, p.y*canvas.height, p.r, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(220,210,190,' + alpha + ')';
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
 
   // Live clock
   var heroBg = document.getElementById('hero-bg');
