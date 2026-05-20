@@ -2211,11 +2211,11 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
           <div style="display:none"><span id="stat-presencas"></span><span id="stat-faltas"></span><span id="stat-freq"></span></div>
           <div style="display:flex;flex-direction:column;gap:8px">
             <div style="display:flex;gap:8px">
-              <button class="btn-confirmar" id="btn-presente">
+              <button class="btn-confirmar" id="btn-presente" onclick="registrarPresenca('presente')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 Confirmar Presença
               </button>
-              <button class="btn-confirmar" id="btn-falta" style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.12)">
+              <button class="btn-confirmar" id="btn-falta" onclick="registrarPresenca('falta')" style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.12)">
                 Registrar Falta
               </button>
             </div>
