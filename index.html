@@ -3100,13 +3100,6 @@ function renderDashboard(a, avisos) {
   var topbar = document.getElementById('topbar');
   if (topbar) topbar.classList.add('visible');
 
-  // Close dropdown on outside click
-  document.addEventListener('click', function(e){
-    if (!e.target.closest('.topbar-dropdown')) {
-      document.querySelectorAll('.topbar-drop-menu').forEach(function(m){ m.style.display='none'; });
-    }
-  });
-
   // Soot particles
   (function(){
     var canvas = document.getElementById('hero-particles');
