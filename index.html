@@ -2081,9 +2081,11 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .topbar-item{font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;background:none;border:none;cursor:pointer;padding:0 11px;height:42px;display:flex;align-items:center;transition:color 0.25s;white-space:nowrap;position:relative;flex-shrink:0}
 .topbar-item::after{content:'';position:absolute;bottom:0;left:11px;right:11px;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s cubic-bezier(0.22,1,0.36,1)}
 .topbar-item:hover{color:rgba(255,255,255,0.9)}
-.topbar-item:hover::after{transform:scaleX(1)}
+.topbar-item:hover::after{transform:scaleX(0)}
 .topbar-drop-item{display:block;font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;padding:10px 18px;transition:color 0.2s,background 0.2s;white-space:nowrap}
 .topbar-drop-item:hover{color:var(--gold);background:rgba(196,164,90,0.06)}
+.topbar-drop-menu{display:none;position:absolute;top:42px;left:0;min-width:210px;background:rgba(5,13,26,0.95);backdrop-filter:blur(16px);border:1px solid rgba(196,164,90,0.12);border-radius:8px;padding:6px 0;z-index:600}
+.topbar-dropdown:hover .topbar-drop-menu{display:block}
 </style>
 </head>
 <body>
@@ -2156,11 +2158,11 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       <button class="topbar-item" onclick="abrirModalCalendario()">Calendário</button>
       <div class="topbar-sep"></div>
       <div class="topbar-dropdown" style="position:relative;height:42px;display:flex;align-items:center">
-        <button class="topbar-item" onclick="toggleTopbarDropdown(this)" style="gap:5px">
+        <button class="topbar-item" style="gap:5px">
           Outros Cursos
           <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
-        <div class="topbar-drop-menu" style="display:none;position:absolute;top:42px;left:0;min-width:200px;background:rgba(5,13,26,0.92);backdrop-filter:blur(16px);border:1px solid rgba(196,164,90,0.12);border-radius:8px;padding:6px 0;z-index:600">
+        <div class="topbar-drop-menu">
           <a href="https://institutomdtalk.github.io/treinamento/" target="_blank" rel="noopener" class="topbar-drop-item">Treinamento Complementar</a>
           <a href="https://institutomdtalk.github.io/expansao/" target="_blank" rel="noopener" class="topbar-drop-item">Expansão</a>
         </div>
