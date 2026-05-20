@@ -2071,6 +2071,17 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   .trilha-section-label::after{content:'';flex:1;height:1px;background:var(--border)}
 
   @media(max-width:768px){.trilha-grid{grid-template-columns:1fr 1fr}}
+
+/* ── FIXED TOPBAR ── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:500;display:none;align-items:center;justify-content:space-between;padding:0 32px;height:42px;background:transparent;pointer-events:none}
+.topbar.visible{display:flex;pointer-events:all}
+.topbar-logo{font-family:var(--serif);font-size:12px;font-weight:300;color:rgba(255,255,255,0.35);letter-spacing:2px;white-space:nowrap;flex-shrink:0}
+.topbar-nav{display:flex;align-items:center;gap:0;flex:1;justify-content:center;flex-wrap:nowrap;overflow:hidden}
+.topbar-sep{width:1px;height:12px;background:rgba(255,255,255,0.1);flex-shrink:0}
+.topbar-item{font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;background:none;border:none;cursor:pointer;padding:0 11px;height:42px;display:flex;align-items:center;transition:color 0.25s;white-space:nowrap;position:relative;flex-shrink:0}
+.topbar-item::after{content:'';position:absolute;bottom:0;left:11px;right:11px;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s cubic-bezier(0.22,1,0.36,1)}
+.topbar-item:hover{color:rgba(255,255,255,0.9)}
+.topbar-item:hover::after{transform:scaleX(1)}
 </style>
 </head>
 <body>
@@ -2125,6 +2136,32 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 <!-- ═══════════ DASHBOARD ═══════════ -->
 <div id="page-dashboard">
+
+  <!-- ── FIXED TOPBAR ── -->
+  <nav class="topbar" id="topbar">
+    <span class="topbar-logo">MD Talk</span>
+    <div class="topbar-nav">
+      <a class="topbar-item" href="https://institutomdtalk.github.io/welcome/" target="_blank" rel="noopener">Welcome</a>
+      <div class="topbar-sep"></div>
+      <a class="topbar-item" href="https://calendar.app.google/9s8vRTnw3YE6p5fR9" target="_blank" rel="noopener">Remanejo</a>
+      <div class="topbar-sep"></div>
+      <button class="topbar-item" onclick="openPopupAvisos()">Avisos</button>
+      <div class="topbar-sep"></div>
+      <button class="topbar-item" id="topbar-gdocs-btn" onclick="abrirLinkAluno('link_docs')">Google Docs</button>
+      <div class="topbar-sep"></div>
+      <button class="topbar-item" id="topbar-gdrive-btn" onclick="abrirLinkAluno('link_drive')">Google Drive</button>
+      <div class="topbar-sep"></div>
+      <a class="topbar-item" href="https://institutomdtalk.github.io/homework/" target="_blank" rel="noopener">Atividades</a>
+      <div class="topbar-sep"></div>
+      <button class="topbar-item" onclick="abrirModalCalendario()">Calendário</button>
+      <div class="topbar-sep"></div>
+      <a class="topbar-item" href="https://institutomdtalk.github.io/treinamento/" target="_blank" rel="noopener">Treinamento</a>
+      <div class="topbar-sep"></div>
+      <a class="topbar-item" href="https://institutomdtalk.github.io/expansao/" target="_blank" rel="noopener">Outros Cursos</a>
+      <div class="topbar-sep"></div>
+      <a class="topbar-item" href="https://forms.office.com/r/SfVaqefC18" target="_blank" rel="noopener">Personalize</a>
+    </div>
+  </nav>
 
   <header class="header">
     <div class="header-bg-img" id="hero-bg"></div>
@@ -3050,6 +3087,9 @@ function renderDashboard(a, avisos) {
 
   var hdrNome = document.getElementById('hdr-nome');
   if (hdrNome) hdrNome.textContent = a.nome_display || a.login;
+
+  var topbar = document.getElementById('topbar');
+  if (topbar) topbar.classList.add('visible');
 
   // Soot particles
   (function(){
@@ -5723,6 +5763,8 @@ function doLogout() {
     if (currentStudent) localStorage.removeItem(getLiveKey());
     currentStudent = null;
     _liveItems = [];
+    var topbar = document.getElementById('topbar');
+    if (topbar) topbar.classList.remove('visible');
     localStorage.removeItem('mdtalk_login');
     localStorage.removeItem('mdtalk_senha');
   } catch(e) {}
