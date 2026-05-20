@@ -3014,6 +3014,7 @@ document.addEventListener('keydown', function(e) { if (e.key==='Enter' && docume
 
 // ── DASHBOARD ──
 function renderDashboard(a) {
+  currentStudent = a;
   var btnP = document.getElementById('btn-presente');
   var btnF = document.getElementById('btn-falta');
   if (btnP) {
