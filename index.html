@@ -2144,9 +2144,16 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       <div class="topbar-sep"></div>
       <a class="topbar-item" href="https://calendar.app.google/9s8vRTnw3YE6p5fR9" target="_blank" rel="noopener">Remanejo</a>
       <div class="topbar-sep"></div>
-      <button class="topbar-item" id="topbar-gdocs-btn" onclick="abrirLinkAluno('link_docs')">Google Docs</button>
-      <div class="topbar-sep"></div>
-      <button class="topbar-item" id="topbar-gdrive-btn" onclick="abrirLinkAluno('link_drive')">Google Drive</button>
+      <div class="topbar-dropdown" style="position:relative;height:42px;display:flex;align-items:center">
+        <button class="topbar-item" style="gap:5px">
+          Google Docs / Drive
+          <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="topbar-drop-menu">
+          <button class="topbar-drop-item" id="topbar-gdocs-btn" onclick="abrirLinkAluno('link_docs')">Google Docs</button>
+          <button class="topbar-drop-item" id="topbar-gdrive-btn" onclick="abrirLinkAluno('link_drive')">Google Drive</button>
+        </div>
+      </div>
       <div class="topbar-sep"></div>
       <button class="topbar-item" onclick="abrirModalCalendario()">Calendário</button>
       <div class="topbar-sep"></div>
