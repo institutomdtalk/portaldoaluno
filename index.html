@@ -2184,6 +2184,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
           <span id="hero-greeting">Bem-vindo,</span><br>
           <em id="hero-nome"></em>
         </h1>
+        <p id="hero-frase" style="font-family:Raleway,sans-serif;font-size:11.5px;font-weight:400;color:rgba(255,255,255,0.38);letter-spacing:0.3px;line-height:1.6;margin-top:14px;max-width:380px;font-style:italic"></p>
       </div>
       <div class="header-right">
         <div style="text-align:right;margin-bottom:14px">
@@ -3113,6 +3114,25 @@ function renderDashboard(a) {
   var heroN = document.getElementById('hero-nome');
   if (heroG) heroG.textContent = greetPT;
   if (heroN) heroN.textContent = a.nome_display || a.login;
+
+  var _frases = [
+    'Hoje, seu inglês médico pode avançar em poucos minutos.',
+    'Uma pequena revisão hoje pode melhorar sua comunicação clínica amanhã.',
+    'Hoje é um bom dia para transformar conhecimento em fluência clínica.',
+    'Em alguns minutos, você pode revisar, praticar e ganhar mais precisão.',
+    'Sua comunicação médica em inglês evolui um ajuste por vez.',
+    'Vamos transformar a última aula em progresso visível hoje.',
+    'Pequenos treinos diários constroem grandes resultados em inglês médico.',
+    'Hoje, você pode dar mais um passo rumo a uma comunicação mais segura.',
+    'Seu inglês médico não precisa esperar a próxima aula para evoluir.',
+    'Revise o essencial, fortaleça sua precisão e avance com clareza.',
+    'A cada acesso, uma oportunidade de falar com mais naturalidade e confiança.',
+    'Seu progresso começa com uma escolha simples: praticar um pouco hoje.',
+    'Vamos refinar seu inglês médico com foco, leveza e estratégia.',
+    'Hoje, alguns minutos podem aproximar você de uma comunicação mais precisa, natural e profissional.'
+  ];
+  var fraseEl = document.getElementById('hero-frase');
+  if (fraseEl) fraseEl.textContent = _frases[Math.floor(Math.random() * _frases.length)];
 
   // Greeting EN
   var greet = h < 12 ? 'Good morning,' : h < 18 ? 'Good afternoon,' : 'Good evening,';
