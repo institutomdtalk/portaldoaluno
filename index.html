@@ -2476,56 +2476,85 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   </div>
 
   <!-- ══ PAINEL RECURSOS ══ -->
-  <div class="nb-panel notas-page" id="panel-recursos">
-    <div style="max-width:900px;margin:0 auto;padding:8px 0 40px">
-      <h2 style="font-family:var(--serif);font-size:1.6rem;font-weight:400;color:var(--navy);margin-bottom:6px">Meus <em style="font-style:italic;color:var(--gold)">Recursos</em></h2>
-      <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);letter-spacing:0.3px;margin-bottom:32px">Links e materiais do seu programa.</p>
-      <div id="recursos-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">
+  <div class="nb-panel notas-page" id="panel-recursos" style="padding:40px">
+    <div style="width:100%;max-width:100%">
 
-        <!-- Coleção de Infográficos -->
-        <a href="https://institutomdtalk.github.io/infograficos/" target="_blank" rel="noopener" style="text-decoration:none">
-          <div class="card card-pad">
-            <span class="card-overline">Vocabulário Visual</span>
-            <p class="card-title" style="font-family:var(--serif);font-size:1.15rem;color:var(--navy);margin-bottom:8px">Coleção de <em style="font-style:italic;color:var(--gold)">Infográficos</em></p>
-            <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);line-height:1.6">Vocabulário clínico em formato visual. Estude por especialidade.</p>
-            <div style="margin-top:16px;display:flex;align-items:center;gap:6px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)">
-              Acessar <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <div style="margin-bottom:36px">
+        <p style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Instituto MD Talk</p>
+        <h2 style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--navy);margin-bottom:6px;line-height:1.1">Seus <em style="font-style:italic;color:var(--gold)">Recursos</em></h2>
+        <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);letter-spacing:0.3px">Ferramentas e materiais selecionados para o seu programa.</p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px;width:100%">
+
+        <!-- Infográficos -->
+        <a href="https://institutomdtalk.github.io/infograficos/" target="_blank" rel="noopener" style="text-decoration:none;display:block">
+          <div style="background:#fff;border:1px solid #e8e3db;border-radius:14px;padding:28px 32px;display:flex;align-items:center;gap:28px;transition:all 0.35s cubic-bezier(0.22,1,0.36,1);position:relative;overflow:hidden" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 32px rgba(196,164,90,0.12)';this.style.borderColor='rgba(196,164,90,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='#e8e3db'">
+            <div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#0B1D3A,#163158);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(196,164,90,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </div>
+            <div style="flex:1">
+              <p style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:5px">Vocabulário Visual</p>
+              <p style="font-family:var(--serif);font-size:1.2rem;font-weight:400;color:var(--navy);margin-bottom:4px">Coleção de <em style="font-style:italic">Infográficos</em></p>
+              <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);line-height:1.6">Vocabulário clínico em formato visual, organizado por especialidade médica.</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);flex-shrink:0">
+              Acessar
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </div>
         </a>
 
-        <!-- Cambridge Dictionary -->
-        <a href="https://dictionary.cambridge.org/pt/dicionario/ingles-portugues/" target="_blank" rel="noopener" style="text-decoration:none">
-          <div class="card card-pad">
-            <span class="card-overline">Dicionário</span>
-            <p class="card-title" style="font-family:var(--serif);font-size:1.15rem;color:var(--navy);margin-bottom:8px"><em style="font-style:italic;color:var(--gold)">Cambridge</em> Dictionary</p>
-            <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);line-height:1.6">Definições, pronúncia e exemplos de uso em inglês britânico e americano.</p>
-            <div style="margin-top:16px;display:flex;align-items:center;gap:6px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)">
-              Acessar <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <!-- Cambridge -->
+        <a href="https://dictionary.cambridge.org/pt/dicionario/ingles-portugues/" target="_blank" rel="noopener" style="text-decoration:none;display:block">
+          <div style="background:#fff;border:1px solid #e8e3db;border-radius:14px;padding:28px 32px;display:flex;align-items:center;gap:28px;transition:all 0.35s cubic-bezier(0.22,1,0.36,1);position:relative;overflow:hidden" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 32px rgba(196,164,90,0.12)';this.style.borderColor='rgba(196,164,90,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='#e8e3db'">
+            <div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#0B1D3A,#163158);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(196,164,90,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+            </div>
+            <div style="flex:1">
+              <p style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:5px">Dicionário</p>
+              <p style="font-family:var(--serif);font-size:1.2rem;font-weight:400;color:var(--navy);margin-bottom:4px"><em style="font-style:italic">Cambridge</em> Dictionary</p>
+              <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);line-height:1.6">Definições, pronúncia e exemplos de uso em inglês britânico e americano.</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);flex-shrink:0">
+              Acessar
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </div>
         </a>
 
         <!-- YouGlish -->
-        <a href="https://pt.youglish.com/" target="_blank" rel="noopener" style="text-decoration:none">
-          <div class="card card-pad">
-            <span class="card-overline">Pronúncia em Contexto</span>
-            <p class="card-title" style="font-family:var(--serif);font-size:1.15rem;color:var(--navy);margin-bottom:8px"><em style="font-style:italic;color:var(--gold)">YouGlish</em></p>
-            <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);line-height:1.6">Ouça como falantes nativos pronunciam qualquer palavra em vídeos reais.</p>
-            <div style="margin-top:16px;display:flex;align-items:center;gap:6px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)">
-              Acessar <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <a href="https://pt.youglish.com/" target="_blank" rel="noopener" style="text-decoration:none;display:block">
+          <div style="background:#fff;border:1px solid #e8e3db;border-radius:14px;padding:28px 32px;display:flex;align-items:center;gap:28px;transition:all 0.35s cubic-bezier(0.22,1,0.36,1);position:relative;overflow:hidden" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 32px rgba(196,164,90,0.12)';this.style.borderColor='rgba(196,164,90,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='#e8e3db'">
+            <div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#0B1D3A,#163158);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(196,164,90,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            </div>
+            <div style="flex:1">
+              <p style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:5px">Pronúncia em Contexto</p>
+              <p style="font-family:var(--serif);font-size:1.2rem;font-weight:400;color:var(--navy);margin-bottom:4px"><em style="font-style:italic">YouGlish</em></p>
+              <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);line-height:1.6">Ouça como falantes nativos pronunciam qualquer palavra em vídeos reais.</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);flex-shrink:0">
+              Acessar
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </div>
         </a>
 
         <!-- Irregular Verbs -->
-        <a href="https://institutomdtalk.github.io/irregular-verbs/" target="_blank" rel="noopener" style="text-decoration:none">
-          <div class="card card-pad">
-            <span class="card-overline">Gramática</span>
-            <p class="card-title" style="font-family:var(--serif);font-size:1.15rem;color:var(--navy);margin-bottom:8px"><em style="font-style:italic;color:var(--gold)">Irregular</em> Verbs</p>
-            <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);line-height:1.6">Tabela completa de verbos irregulares com flashcards interativos para revisão.</p>
-            <div style="margin-top:16px;display:flex;align-items:center;gap:6px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)">
-              Acessar <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <a href="https://institutomdtalk.github.io/irregular-verbs/" target="_blank" rel="noopener" style="text-decoration:none;display:block">
+          <div style="background:#fff;border:1px solid #e8e3db;border-radius:14px;padding:28px 32px;display:flex;align-items:center;gap:28px;transition:all 0.35s cubic-bezier(0.22,1,0.36,1);position:relative;overflow:hidden" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 32px rgba(196,164,90,0.12)';this.style.borderColor='rgba(196,164,90,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='#e8e3db'">
+            <div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#0B1D3A,#163158);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(196,164,90,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
+            </div>
+            <div style="flex:1">
+              <p style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:5px">Gramática</p>
+              <p style="font-family:var(--serif);font-size:1.2rem;font-weight:400;color:var(--navy);margin-bottom:4px"><em style="font-style:italic">Irregular</em> Verbs</p>
+              <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);line-height:1.6">Tabela completa de verbos irregulares com flashcards interativos para revisão.</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);flex-shrink:0">
+              Acessar
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </div>
         </a>
