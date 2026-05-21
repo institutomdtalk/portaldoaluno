@@ -2077,6 +2077,16 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .topbar-item::after{content:'';position:absolute;bottom:0;left:11px;right:11px;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s cubic-bezier(0.22,1,0.36,1)}
 .topbar-item:hover{color:rgba(255,255,255,0.9)}
 .topbar-item:hover::after{transform:scaleX(0)}
+.editor-fs-overlay{position:fixed;inset:0;background:#fff;z-index:99990;display:none;flex-direction:column}
+.editor-fs-overlay.active{display:flex}
+.editor-fs-topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid rgba(0,0,0,0.07);flex-shrink:0;background:#fff}
+.editor-fs-brand{font-family:var(--serif);font-size:1rem;color:var(--navy);letter-spacing:1px;font-weight:300}
+.editor-fs-brand em{font-style:italic;color:var(--gold)}
+.editor-fs-actions{display:flex;align-items:center;gap:10px}
+.editor-fs-titulo{width:100%;border:none;outline:none;font-family:var(--serif);font-size:2rem;font-weight:400;color:#1a1a1a;padding:28px 40px 16px;border-bottom:1px solid rgba(0,0,0,0.06);background:transparent;box-sizing:border-box;flex-shrink:0}
+.editor-fs-titulo::placeholder{color:#ddd}
+.editor-fs-toolbar{padding:10px 40px;border-bottom:1px solid rgba(0,0,0,0.06);flex-shrink:0;display:flex;align-items:center;gap:3px;flex-wrap:wrap;background:#fff;position:sticky;top:0;z-index:1}
+.editor-fs-body{flex:1;overflow-y:auto;outline:none;font-family:Raleway,sans-serif;font-size:17px;color:#333;line-height:1.8;padding:28px 40px;cursor:text;word-break:break-word;max-width:900px;width:100%}
 .topbar-drop-item{display:block;width:100%;font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;background:none;border:none;cursor:pointer;padding:10px 18px;transition:color 0.2s,background 0.2s;white-space:nowrap;text-align:left;box-sizing:border-box}
 .topbar-drop-item:hover{color:var(--gold);background:rgba(196,164,90,0.06)}
 .topbar-drop-menu{visibility:hidden;opacity:0;position:fixed;top:42px;min-width:210px;background:rgba(5,13,26,0.95);backdrop-filter:blur(16px);border:1px solid rgba(196,164,90,0.12);border-radius:8px;padding:6px 0;z-index:9000;transition:opacity 0.2s,visibility 0.2s}
@@ -2528,10 +2538,16 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       <div id="nota-corpo-input" class="notas-editor-body" contenteditable="true" data-placeholder="Escreva sua nota aqui..."></div>
       <div class="notas-editor-footer">
         <span class="notas-editor-hint">Ctrl+Enter para salvar</span>
-        <button class="notas-save-btn" onclick="salvarNota()">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Adicionar Nota
-        </button>
+        <div style="display:flex;align-items:center;gap:10px">
+          <button onclick="abrirEditorFullscreen()" title="Expandir para tela cheia" style="background:none;border:1px solid rgba(0,0,0,0.1);border-radius:6px;padding:6px 12px;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#aaa;transition:all 0.2s" onmouseover="this.style.borderColor='#0B1D3A';this.style.color='#0B1D3A'" onmouseout="this.style.borderColor='rgba(0,0,0,0.1)';this.style.color='#aaa'">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            Tela cheia
+          </button>
+          <button class="notas-save-btn" onclick="salvarNota()">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Adicionar Nota
+          </button>
+        </div>
       </div>
     </div>
     <p class="notas-section-label">Suas Notas</p>
@@ -3421,6 +3437,52 @@ function buildStatusBadge(status) {
   return '<span class="pag-status-pill ' + cls + '">' + dot + label + '</span>';
 }
 
+
+// ── EDITOR FULLSCREEN ──
+function abrirEditorFullscreen() {
+  var fs = document.getElementById('editor-fs');
+  // Sync content from main editor
+  var titulo = document.getElementById('nota-titulo-input');
+  var corpo  = document.getElementById('nota-corpo-input');
+  var fsTitulo = document.getElementById('fs-titulo-input');
+  var fsCorpo  = document.getElementById('fs-corpo-input');
+  if (fsTitulo && titulo) fsTitulo.value = titulo.value;
+  if (fsCorpo  && corpo)  fsCorpo.innerHTML = corpo.innerHTML;
+  // Clone toolbar into fs-toolbar
+  var srcToolbar = document.getElementById('nota-toolbar');
+  var dstToolbar = document.getElementById('fs-toolbar');
+  if (srcToolbar && dstToolbar) {
+    dstToolbar.innerHTML = srcToolbar.innerHTML
+      .replace(/notaFmtApply\('nota'/g, "notaFmtApply('fs'")
+      .replace(/notaInsertIcon\('nota'/g, "notaInsertIcon('fs'")
+      .replace(/toggleMoreIcons\('nota'\)/g, "toggleMoreIcons('fs')")
+      .replace(/id="nota-more-btn"/g, 'id="fs-more-btn"')
+      .replace(/id="nota-more-icons"/g, 'id="fs-more-icons"');
+  }
+  initNotaAutoBullet();
+  fs.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  if (fsCorpo) fsCorpo.focus();
+}
+
+function fecharEditorFullscreen() {
+  var fs = document.getElementById('editor-fs');
+  // Sync content back to main editor
+  var titulo = document.getElementById('nota-titulo-input');
+  var corpo  = document.getElementById('nota-corpo-input');
+  var fsTitulo = document.getElementById('fs-titulo-input');
+  var fsCorpo  = document.getElementById('fs-corpo-input');
+  if (titulo && fsTitulo) titulo.value = fsTitulo.value;
+  if (corpo  && fsCorpo)  corpo.innerHTML = fsCorpo.innerHTML;
+  fs.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function salvarNotaFS() {
+  // Sync back then save
+  fecharEditorFullscreen();
+  salvarNota();
+}
 
 // ── TOGGLE TRILHA ──
 var _trilhaOpen = false;
@@ -6032,6 +6094,24 @@ window.addEventListener('load', function(){
     </div>
     </div>
   </div>
+</div>
+<!-- ══ EDITOR FULLSCREEN ══ -->
+<div class="editor-fs-overlay" id="editor-fs">
+  <div class="editor-fs-topbar">
+    <span class="editor-fs-brand">Instituto <em>MD Talk</em></span>
+    <div class="editor-fs-actions">
+      <button onclick="salvarNotaFS()" style="background:var(--navy);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer">
+        + Adicionar Nota
+      </button>
+      <button onclick="fecharEditorFullscreen()" title="Fechar tela cheia" style="background:none;border:1px solid rgba(0,0,0,0.1);border-radius:8px;padding:9px 14px;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#aaa;transition:all 0.2s" onmouseover="this.style.borderColor='#0B1D3A';this.style.color='#0B1D3A'" onmouseout="this.style.borderColor='rgba(0,0,0,0.1)';this.style.color='#aaa'">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/></svg>
+        Fechar
+      </button>
+    </div>
+  </div>
+  <input type="text" id="fs-titulo-input" class="editor-fs-titulo" placeholder="Título da nota (opcional)">
+  <div class="editor-fs-toolbar" id="fs-toolbar"><!-- preenchido via JS --></div>
+  <div id="fs-corpo-input" class="editor-fs-body" contenteditable="true" data-placeholder="Escreva sua nota aqui..."></div>
 </div>
 
 </body>
