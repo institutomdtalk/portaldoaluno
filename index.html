@@ -3440,6 +3440,26 @@ function getDriveConcluidosKey() {
 function carregarDriveConcluidos() {
   var key = getDriveConcluidosKey();
   _driveConluidos = JSON.parse(localStorage.getItem(key) || '{}');
+  // Sync from planilha — merge server data (server wins per file)
+  if (!currentStudent) return;
+  callScript(
+    'action=get_drive_tags&login=' + encodeURIComponent(currentStudent.login),
+    function(d) {
+      if (d.success && d.tags) {
+        Object.keys(d.tags).forEach(function(fileId) {
+          var activeTags = d.tags[fileId] ? d.tags[fileId].split(',') : [];
+          // Clear existing tags for this file then set from server
+          Object.keys(TAG_CONFIG).forEach(function(tag) {
+            var k = 'drive_' + tag + '_' + fileId;
+            if (activeTags.indexOf(tag) >= 0) _driveConluidos[k] = true;
+            else delete _driveConluidos[k];
+          });
+        });
+        localStorage.setItem(key, JSON.stringify(_driveConluidos));
+      }
+    },
+    function() {}
+  );
 }
 
 function getDriveTag(fileId, tag) {
@@ -5584,7 +5604,7 @@ function _gravarRegistro(status) {
     'action=registrar&login='+encodeURIComponent(currentStudent.login)+'&nome='+encodeURIComponent(currentStudent.nome_display||currentStudent.login)+'&status='+status+'&data_aula='+encodeURIComponent(hoje)+'&registrado_em='+encodeURIComponent(agora),
     function(d) {
       if(d.success){
-        showToast(status==='presente'?'Presença confirmada!':'Falta registrada.',status==='presente'?'success':'');
+        if(status!=='presente') showToast('Falta registrada.','');
         var novoReg={status:status,data_aula:hoje,registrado_em:agora};
         var hist=[novoReg].concat(currentStudent.historico||[]);
         currentStudent.historico=hist;
