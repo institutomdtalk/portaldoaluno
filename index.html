@@ -1922,111 +1922,86 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   <!-- ══ PAINEL SALA DE AULA ══ -->
   <div class="nb-panel prog-page" id="panel-sala">
 
-    <!-- COACH MESSAGE -->
-    <div class="prog-message" id="sala-message">
-      <div class="prog-message-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      </div>
-      <div class="prog-message-text">
-        <p class="prog-message-label">Sua mentora diz</p>
-        <p class="prog-message-body" id="sala-message-body">Carregando...</p>
-      </div>
-    </div>
+    <div style="display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start">
 
-    <!-- MAIN LAYOUT: KPIs + Calendário | Ações -->
-    <div class="prog-two-col" style="align-items:stretch">
+      <!-- COLUNA ESQUERDA: KPIs + Calendário -->
+      <div style="display:flex;flex-direction:column;gap:16px">
 
-      <!-- COLUNA ESQUERDA: KPIs empilhados + Calendário -->
-      <div style="display:flex;flex-direction:column;gap:14px">
+        <!-- KPIs compactos em linha -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
 
-        <!-- KPIs em linha horizontal acima do calendário -->
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
-
-          <div class="prog-kpi" style="margin:0">
-            <div class="prog-kpi-accent" style="background:#16a34a"></div>
-            <div class="prog-kpi-icon" style="background:#16a34a">
-              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-            <span class="prog-kpi-badge" style="background:rgba(22,163,74,0.1);color:#166534">Presenças</span>
-            <div class="prog-kpi-num" id="sala-kpi-presencas">0</div>
-            <div class="prog-kpi-label">Aulas confirmadas</div>
-            <div class="prog-kpi-sub" id="sala-sub-presencas">neste programa</div>
-            <div class="prog-kpi-bar"><div class="prog-kpi-fill" style="background:#16a34a;width:0%" id="sala-bar-presencas"></div></div>
+          <div style="background:#fff;border-radius:12px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,0.05);position:relative;overflow:hidden">
+            <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#16a34a"></div>
+            <div style="font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:6px">Presenças</div>
+            <div style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--navy);line-height:1;margin-bottom:6px" id="sala-kpi-presencas">0</div>
+            <div style="font-size:10px;color:#aaa;font-family:var(--sans)" id="sala-sub-presencas">aulas confirmadas</div>
           </div>
 
-          <div class="prog-kpi" style="margin:0">
-            <div class="prog-kpi-accent" style="background:#ef4444"></div>
-            <div class="prog-kpi-icon" style="background:#ef4444">
-              <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </div>
-            <span class="prog-kpi-badge" style="background:rgba(239,68,68,0.1);color:#b91c1c">Faltas</span>
-            <div class="prog-kpi-num" id="sala-kpi-faltas">0</div>
-            <div class="prog-kpi-label">Faltas registradas</div>
-            <div class="prog-kpi-sub" id="sala-sub-faltas">neste programa</div>
-            <div class="prog-kpi-bar"><div class="prog-kpi-fill" style="background:#ef4444;width:0%" id="sala-bar-faltas"></div></div>
+          <div style="background:#fff;border-radius:12px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,0.05);position:relative;overflow:hidden">
+            <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#ef4444"></div>
+            <div style="font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:6px">Faltas</div>
+            <div style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--navy);line-height:1;margin-bottom:6px" id="sala-kpi-faltas">0</div>
+            <div style="font-size:10px;color:#aaa;font-family:var(--sans)" id="sala-sub-faltas">faltas registradas</div>
           </div>
 
-          <div class="prog-kpi" style="margin:0">
-            <div class="prog-kpi-accent" style="background:#c8a96e"></div>
-            <div class="prog-kpi-icon" style="background:#c8a96e">
-              <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            </div>
-            <span class="prog-kpi-badge" style="background:rgba(200,169,110,0.1);color:#92400E">Frequência</span>
-            <div class="prog-kpi-num" id="sala-kpi-freq">—</div>
-            <div class="prog-kpi-label">Taxa de frequência</div>
-            <div class="prog-kpi-sub" id="sala-sub-freq">presença / total</div>
-            <div class="prog-kpi-bar"><div class="prog-kpi-fill" style="background:#c8a96e;width:0%" id="sala-bar-freq"></div></div>
+          <div style="background:#fff;border-radius:12px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,0.05);position:relative;overflow:hidden">
+            <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#c8a96e"></div>
+            <div style="font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:6px">Frequência</div>
+            <div style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--navy);line-height:1;margin-bottom:6px" id="sala-kpi-freq">—</div>
+            <div style="font-size:10px;color:#aaa;font-family:var(--sans)" id="sala-sub-freq">presença / total</div>
           </div>
 
         </div>
 
-        <!-- CALENDÁRIO -->
-        <div class="prog-card" style="flex:1">
-          <p class="prog-card-title">Calendário de Frequência</p>
+        <!-- Calendário -->
+        <div style="background:#fff;border-radius:12px;padding:20px 24px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-            <button id="cal-btn-prev2" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8249;</button>
-            <span id="cal-month-label2" style="font-family:var(--serif);font-size:1.1rem;font-weight:500;color:var(--navy);min-width:140px;text-align:center"></span>
-            <button id="cal-btn-next2" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8250;</button>
+            <button id="cal-btn-prev2" style="background:none;border:1px solid var(--border);border-radius:6px;width:26px;height:26px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8249;</button>
+            <span id="cal-month-label2" style="font-family:var(--serif);font-size:1rem;font-weight:500;color:var(--navy);min-width:130px;text-align:center"></span>
+            <button id="cal-btn-next2" style="background:none;border:1px solid var(--border);border-radius:6px;width:26px;height:26px;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8250;</button>
           </div>
-          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:6px">
-            <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Su</div>
-            <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Mo</div>
-            <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Tu</div>
-            <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">We</div>
-            <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Th</div>
-            <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Fr</div>
-            <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Sa</div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px">
+            <div style="text-align:center;font-size:8px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:3px 0">Su</div>
+            <div style="text-align:center;font-size:8px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:3px 0">Mo</div>
+            <div style="text-align:center;font-size:8px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:3px 0">Tu</div>
+            <div style="text-align:center;font-size:8px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:3px 0">We</div>
+            <div style="text-align:center;font-size:8px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:3px 0">Th</div>
+            <div style="text-align:center;font-size:8px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:3px 0">Fr</div>
+            <div style="text-align:center;font-size:8px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:3px 0">Sa</div>
           </div>
           <div id="cal-grid2" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
         </div>
 
       </div>
 
-      <!-- COLUNA DIREITA: Ações -->
-      <div class="prog-card" style="display:flex;flex-direction:column;gap:10px">
-        <p class="prog-card-title">Registrar Presença</p>
+      <!-- COLUNA DIREITA: Ações compactas -->
+      <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.05);display:flex;flex-direction:column;gap:8px">
 
-        <button id="sala-btn-presente" onclick="registrarPresenca('presente')" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#22c55e;color:#fff;border:none;border-radius:10px;padding:14px 20px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;box-shadow:0 2px 8px rgba(34,197,94,0.2)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"/></svg>
+        <p style="font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Presença</p>
+
+        <button id="sala-btn-presente" onclick="registrarPresenca('presente')" style="display:flex;align-items:center;justify-content:center;gap:7px;background:#22c55e;color:#fff;border:none;border-radius:8px;padding:11px 16px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px"><polyline points="20 6 9 17 4 12"/></svg>
           Confirmar Presença
         </button>
 
-        <button id="sala-btn-falta" onclick="registrarPresenca('falta')" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#64748b;border:1px solid #e2e8f0;border-radius:10px;padding:14px 20px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s">
+        <button id="sala-btn-falta" onclick="registrarPresenca('falta')" style="display:flex;align-items:center;justify-content:center;gap:7px;background:#fff;color:#64748b;border:1px solid #e2e8f0;border-radius:8px;padding:11px 16px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s">
           Registrar Falta
         </button>
 
-        <a id="sala-btn-meet" href="#" target="_blank" rel="noopener" style="display:none;align-items:center;justify-content:center;gap:8px;background:#1a73e8;color:#fff;border-radius:10px;padding:14px 20px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:background 0.3s;box-shadow:0 2px 8px rgba(26,115,232,0.2)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        <a id="sala-btn-meet" href="#" target="_blank" rel="noopener" style="display:none;align-items:center;justify-content:center;gap:7px;background:#1a73e8;color:#fff;border-radius:8px;padding:11px 16px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:background 0.3s">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
           Entrar no Google Meet
         </a>
 
-        <div style="flex:1"></div>
+        <div style="border-top:1px solid var(--border);margin:8px 0"></div>
 
-        <p class="prog-card-title" style="margin-bottom:4px">Durante a Aula</p>
-        <button id="sala-btn-live" onclick="toggleLiveMode()" style="display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);color:rgba(34,197,94,0.9);font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 20px;border-radius:20px;cursor:pointer;transition:all 0.3s;width:100%;overflow:visible" onmouseover="this.style.background='rgba(34,197,94,0.2)';this.style.borderColor='#22c55e';this.style.color='#22c55e'" onmouseout="this.style.background='rgba(34,197,94,0.12)';this.style.borderColor='rgba(34,197,94,0.3)';this.style.color='rgba(34,197,94,0.9)'">
-          <span style="width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span class="live-pulse"></span></span>
+        <p style="font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Durante a Aula</p>
+
+        <button id="sala-btn-live" onclick="toggleLiveMode()" style="display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);color:rgba(34,197,94,0.9);font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 16px;border-radius:20px;cursor:pointer;transition:all 0.3s;width:100%;overflow:visible" onmouseover="this.style.background='rgba(34,197,94,0.2)'" onmouseout="this.style.background='rgba(34,197,94,0.12)'">
+          <span style="width:16px;height:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span class="live-pulse"></span></span>
           Registre Durante a Aula
         </button>
+
       </div>
 
     </div>
