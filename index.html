@@ -1920,111 +1920,110 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   </div>
 
   <!-- ══ PAINEL SALA DE AULA ══ -->
-  <div class="nb-panel" id="panel-sala" style="background:#F0EDE8;min-height:0;width:100%;box-sizing:border-box;padding:0">
+  <div class="nb-panel prog-page" id="panel-sala">
 
-    <!-- HEADER STRIP -->
-    <div style="background:var(--navy-deep);padding:36px 48px 32px;position:relative;overflow:hidden">
-      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 50% 80% at 80% 50%,rgba(196,164,90,0.07),transparent);pointer-events:none"></div>
-      <p style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;position:relative;z-index:1">Instituto MD Talk</p>
-      <h2 style="font-family:var(--serif);font-size:2rem;font-weight:300;color:#fff;margin-bottom:0;position:relative;z-index:1;line-height:1.1">Sala de <em style="font-style:italic;color:var(--gold)">Aula</em></h2>
+    <!-- COACH MESSAGE -->
+    <div class="prog-message" id="sala-message">
+      <div class="prog-message-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="prog-message-text">
+        <p class="prog-message-label">Sua mentora diz</p>
+        <p class="prog-message-body" id="sala-message-body">Carregando...</p>
+      </div>
     </div>
 
     <!-- KPIs -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-bottom:1px solid rgba(0,0,0,0.07)">
-
-      <div style="background:#fff;padding:28px 36px;border-right:1px solid rgba(0,0,0,0.06);position:relative;overflow:hidden">
-        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#16a34a"></div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-          <div style="width:36px;height:36px;border-radius:10px;background:#16a34a;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <span style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#aaa">Presenças</span>
+    <div class="prog-kpi-grid">
+      <div class="prog-kpi">
+        <div class="prog-kpi-accent" style="background:#16a34a"></div>
+        <div class="prog-kpi-icon" style="background:#16a34a">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-        <div style="font-family:var(--serif);font-size:3rem;font-weight:300;color:var(--navy);line-height:1;margin-bottom:12px" id="sala-kpi-presencas">0</div>
-        <div style="height:3px;background:rgba(0,0,0,0.06);border-radius:2px;overflow:hidden"><div id="sala-bar-presencas" style="height:100%;background:#16a34a;border-radius:2px;transition:width 1.2s cubic-bezier(0.22,1,0.36,1);width:0%"></div></div>
+        <span class="prog-kpi-badge" style="background:rgba(22,163,74,0.1);color:#166534" id="sala-badge-presencas">Presenças</span>
+        <div class="prog-kpi-num" id="sala-kpi-presencas">0</div>
+        <div class="prog-kpi-label">Presenças confirmadas</div>
+        <div class="prog-kpi-sub" id="sala-sub-presencas">neste programa</div>
+        <div class="prog-kpi-bar"><div class="prog-kpi-fill" style="background:#16a34a;width:0%" id="sala-bar-presencas"></div></div>
       </div>
-
-      <div style="background:#fff;padding:28px 36px;border-right:1px solid rgba(0,0,0,0.06);position:relative;overflow:hidden">
-        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#ef4444"></div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-          <div style="width:36px;height:36px;border-radius:10px;background:#ef4444;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </div>
-          <span style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#aaa">Faltas</span>
+      <div class="prog-kpi">
+        <div class="prog-kpi-accent" style="background:#ef4444"></div>
+        <div class="prog-kpi-icon" style="background:#ef4444">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </div>
-        <div style="font-family:var(--serif);font-size:3rem;font-weight:300;color:var(--navy);line-height:1;margin-bottom:12px" id="sala-kpi-faltas">0</div>
-        <div style="height:3px;background:rgba(0,0,0,0.06);border-radius:2px;overflow:hidden"><div id="sala-bar-faltas" style="height:100%;background:#ef4444;border-radius:2px;transition:width 1.2s cubic-bezier(0.22,1,0.36,1);width:0%"></div></div>
+        <span class="prog-kpi-badge" style="background:rgba(239,68,68,0.1);color:#b91c1c" id="sala-badge-faltas">Faltas</span>
+        <div class="prog-kpi-num" id="sala-kpi-faltas">0</div>
+        <div class="prog-kpi-label">Faltas registradas</div>
+        <div class="prog-kpi-sub" id="sala-sub-faltas">neste programa</div>
+        <div class="prog-kpi-bar"><div class="prog-kpi-fill" style="background:#ef4444;width:0%" id="sala-bar-faltas"></div></div>
       </div>
-
-      <div style="background:#fff;padding:28px 36px;position:relative;overflow:hidden">
-        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#c8a96e"></div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-          <div style="width:36px;height:36px;border-radius:10px;background:#c8a96e;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          </div>
-          <span style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#aaa">Frequência</span>
+      <div class="prog-kpi">
+        <div class="prog-kpi-accent" style="background:#c8a96e"></div>
+        <div class="prog-kpi-icon" style="background:#c8a96e">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
         </div>
-        <div style="font-family:var(--serif);font-size:3rem;font-weight:300;color:var(--navy);line-height:1;margin-bottom:12px" id="sala-kpi-freq">—</div>
-        <div style="height:3px;background:rgba(0,0,0,0.06);border-radius:2px;overflow:hidden"><div id="sala-bar-freq" style="height:100%;background:#c8a96e;border-radius:2px;transition:width 1.2s cubic-bezier(0.22,1,0.36,1);width:0%"></div></div>
+        <span class="prog-kpi-badge" style="background:rgba(200,169,110,0.1);color:#92400E" id="sala-badge-freq">Frequência</span>
+        <div class="prog-kpi-num" id="sala-kpi-freq">—</div>
+        <div class="prog-kpi-label">Taxa de frequência</div>
+        <div class="prog-kpi-sub" id="sala-sub-freq">presença / total de aulas</div>
+        <div class="prog-kpi-bar"><div class="prog-kpi-fill" style="background:#c8a96e;width:0%" id="sala-bar-freq"></div></div>
       </div>
-
+      <div class="prog-kpi">
+        <div class="prog-kpi-accent" style="background:#1a73e8"></div>
+        <div class="prog-kpi-icon" style="background:#1a73e8">
+          <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        </div>
+        <span class="prog-kpi-badge" style="background:rgba(26,115,232,0.1);color:#1d4ed8" id="sala-badge-meet">Google Meet</span>
+        <div class="prog-kpi-num" style="font-size:1rem;margin-top:8px">
+          <a id="sala-btn-meet" href="#" target="_blank" rel="noopener" style="display:none;align-items:center;gap:6px;background:#1a73e8;color:#fff;border-radius:8px;padding:10px 16px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            Entrar
+          </a>
+          <span id="sala-meet-empty" style="font-family:var(--sans);font-size:11px;color:#ccc">Não configurado</span>
+        </div>
+        <div class="prog-kpi-label">Link da Aula</div>
+        <div class="prog-kpi-sub">acesso rápido ao Meet</div>
+        <div class="prog-kpi-bar"><div class="prog-kpi-fill" style="background:#1a73e8;width:100%"></div></div>
+      </div>
     </div>
 
-    <!-- BODY -->
-    <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:0;min-height:420px">
-
-      <!-- CALENDÁRIO -->
-      <div style="background:#fff;padding:36px 48px;border-right:1px solid rgba(0,0,0,0.06)">
-        <p style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:20px">Calendário de Frequência</p>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-          <button id="cal-btn-prev2" style="background:none;border:1px solid var(--border);border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:18px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">&#8249;</button>
-          <span id="cal-month-label2" style="font-family:var(--serif);font-size:1.25rem;font-weight:500;color:var(--navy);min-width:160px;text-align:center"></span>
-          <button id="cal-btn-next2" style="background:none;border:1px solid var(--border);border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:18px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all 0.2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">&#8250;</button>
+    <!-- ROW 2: Calendário + Ações -->
+    <div class="prog-two-col">
+      <div class="prog-card">
+        <p class="prog-card-title">Calendário de Frequência</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <button id="cal-btn-prev2" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8249;</button>
+          <span id="cal-month-label2" style="font-family:var(--serif);font-size:1.1rem;font-weight:500;color:var(--navy);min-width:140px;text-align:center"></span>
+          <button id="cal-btn-next2" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8250;</button>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:8px">
-          <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:6px 0">Su</div>
-          <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:6px 0">Mo</div>
-          <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:6px 0">Tu</div>
-          <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:6px 0">We</div>
-          <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:6px 0">Th</div>
-          <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:6px 0">Fr</div>
-          <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:6px 0">Sa</div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:6px">
+          <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Su</div>
+          <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Mo</div>
+          <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Tu</div>
+          <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">We</div>
+          <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Th</div>
+          <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Fr</div>
+          <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Sa</div>
         </div>
-        <div id="cal-grid2" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px"></div>
+        <div id="cal-grid2" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
       </div>
 
-      <!-- AÇÕES -->
-      <div style="background:#F0EDE8;padding:36px 40px;display:flex;flex-direction:column;gap:20px">
-
-        <!-- Presença -->
-        <div style="background:#fff;border-radius:16px;padding:28px;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <p style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:18px">Presença</p>
-          <div style="display:flex;flex-direction:column;gap:10px">
-            <button id="sala-btn-presente" onclick="registrarPresenca('presente')" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#22c55e;color:#fff;border:none;border-radius:10px;padding:14px 20px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;box-shadow:0 2px 8px rgba(34,197,94,0.25)">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"/></svg>
-              Confirmar Presença
-            </button>
-            <button id="sala-btn-falta" onclick="registrarPresenca('falta')" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#64748b;border:1px solid #e2e8f0;border-radius:10px;padding:14px 20px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s">
-              Registrar Falta
-            </button>
-            <a id="sala-btn-meet" href="#" target="_blank" rel="noopener" style="display:none;align-items:center;justify-content:center;gap:8px;background:#1a73e8;color:#fff;border-radius:10px;padding:14px 20px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:background 0.3s;box-shadow:0 2px 8px rgba(26,115,232,0.25)">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-              Entrar no Google Meet
-            </a>
-          </div>
-        </div>
-
-        <!-- Live Class -->
-        <div style="background:var(--navy-deep);border-radius:16px;padding:28px;position:relative;overflow:hidden">
-          <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 100% 0%,rgba(196,164,90,0.08),transparent);pointer-events:none"></div>
-          <p style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;position:relative;z-index:1">Durante a Aula</p>
-          <p style="font-family:var(--serif);font-size:1.1rem;font-weight:300;color:rgba(255,255,255,0.7);margin-bottom:18px;position:relative;z-index:1">Registre termos e anotações em tempo real.</p>
-          <button id="sala-btn-live" onclick="toggleLiveMode()" style="position:relative;z-index:1;display:flex;align-items:center;gap:10px;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);color:#4ade80;border-radius:10px;padding:12px 20px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;width:100%;justify-content:center">
-            <span style="width:7px;height:7px;border-radius:50%;background:#22c55e;display:inline-block;animation:pulse-dot 2s infinite"></span>
-            Registre Durante a Aula
+      <div class="prog-card">
+        <p class="prog-card-title">Registrar Presença</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px">
+          <button id="sala-btn-presente" onclick="registrarPresenca('presente')" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#22c55e;color:#fff;border:none;border-radius:10px;padding:14px 20px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;box-shadow:0 2px 8px rgba(34,197,94,0.2)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"/></svg>
+            Confirmar Presença
+          </button>
+          <button id="sala-btn-falta" onclick="registrarPresenca('falta')" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#64748b;border:1px solid #e2e8f0;border-radius:10px;padding:14px 20px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s">
+            Registrar Falta
           </button>
         </div>
-
+        <p class="prog-card-title" style="margin-bottom:12px">Durante a Aula</p>
+        <button id="sala-btn-live" onclick="toggleLiveMode()" style="display:flex;align-items:center;gap:8px;background:var(--navy-deep);color:rgba(255,255,255,0.8);border:1px solid rgba(34,197,94,0.25);border-radius:10px;padding:12px 18px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;width:100%;justify-content:center">
+          <span style="width:7px;height:7px;border-radius:50%;background:#22c55e;display:inline-block"></span>
+          Registre Durante a Aula
+        </button>
       </div>
     </div>
 
@@ -3276,46 +3275,64 @@ function renderSala() {
   var total = presencas + faltas;
   var freq  = total > 0 ? Math.round((presencas/total)*100) : 0;
 
+  // KPIs
   var elP  = document.getElementById('sala-kpi-presencas');
   var elF  = document.getElementById('sala-kpi-faltas');
   var elFr = document.getElementById('sala-kpi-freq');
-  var barP = document.getElementById('sala-bar-presencas');
-  var barF = document.getElementById('sala-bar-faltas');
-  var barFr= document.getElementById('sala-bar-freq');
-
   if (elP)  elP.textContent  = presencas;
   if (elF)  elF.textContent  = faltas;
   if (elFr) elFr.textContent = total > 0 ? freq + '%' : '—';
+
+  var barP = document.getElementById('sala-bar-presencas');
+  var barF = document.getElementById('sala-bar-faltas');
+  var barFr= document.getElementById('sala-bar-freq');
   if (barP)  barP.style.width  = total > 0 ? Math.round((presencas/total)*100) + '%' : '0%';
   if (barF)  barF.style.width  = total > 0 ? Math.round((faltas/total)*100) + '%' : '0%';
   if (barFr) barFr.style.width = freq + '%';
 
-  renderCalendar2();
+  var subP = document.getElementById('sala-sub-presencas');
+  var subF = document.getElementById('sala-sub-faltas');
+  if (subP) subP.textContent = total + ' aula' + (total !== 1 ? 's' : '') + ' totais';
+  if (subF) subF.textContent = 'frequência: ' + (total > 0 ? freq + '%' : '—');
 
-  var meetBtn = document.getElementById('sala-btn-meet');
-  if (meetBtn) {
-    if (currentStudent && currentStudent.link_meet && currentStudent.link_meet.trim()) {
-      meetBtn.href = currentStudent.link_meet;
-      meetBtn.style.display = 'flex';
+  // Meet KPI
+  var meetBtn   = document.getElementById('sala-btn-meet');
+  var meetEmpty = document.getElementById('sala-meet-empty');
+  if (currentStudent && currentStudent.link_meet && currentStudent.link_meet.trim()) {
+    if (meetBtn)   { meetBtn.href = currentStudent.link_meet; meetBtn.style.display = 'flex'; }
+    if (meetEmpty) meetEmpty.style.display = 'none';
+  } else {
+    if (meetBtn)   meetBtn.style.display = 'none';
+    if (meetEmpty) meetEmpty.style.display = '';
+  }
+
+  // Coach message
+  var msgEl = document.getElementById('sala-message-body');
+  if (msgEl) {
+    if (total === 0) {
+      msgEl.innerHTML = 'Bem-vindo à sua sala de aula. Confirme sua presença e comece a registrar sua jornada.';
     } else {
-      meetBtn.style.display = 'none';
+      var msg = 'Você tem ' + presencas + ' presença' + (presencas !== 1 ? 's' : '') + ' confirmada' + (presencas !== 1 ? 's' : '') + ' — frequência de <span style="color:var(--gold)">' + freq + '%</span>. ' + (freq >= 75 ? 'Continue assim!' : 'Mantenha o ritmo das aulas para alcançar seus objetivos.');
+      msgEl.innerHTML = msg;
     }
   }
 
-  // Sync state from hero buttons
-  var btnP = document.getElementById('btn-presente');
-  var btnF = document.getElementById('btn-falta');
+  // Calendar
+  renderCalendar2();
+
+  // Sync presence buttons state from hero
+  var btnP  = document.getElementById('btn-presente');
+  var btnF  = document.getElementById('btn-falta');
   var salaP = document.getElementById('sala-btn-presente');
   var salaF = document.getElementById('sala-btn-falta');
   if (btnP && salaP) {
     salaP.disabled = btnP.disabled;
-    if (btnP.disabled) { salaP.style.opacity = '0.5'; salaP.style.cursor = 'default'; }
-    else { salaP.style.opacity = ''; salaP.style.cursor = 'pointer'; }
+    salaP.style.opacity = btnP.disabled ? '0.5' : '';
+    salaP.style.cursor  = btnP.disabled ? 'default' : 'pointer';
   }
   if (btnF && salaF) {
     salaF.disabled = btnF.disabled;
-    if (btnF.disabled) { salaF.style.opacity = '0.5'; salaF.style.cursor = 'default'; }
-    else { salaF.style.opacity = ''; salaF.style.cursor = 'pointer'; }
+    salaF.style.opacity = btnF.disabled ? '0.5' : '';
   }
 }
 
