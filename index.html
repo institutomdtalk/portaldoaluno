@@ -2410,18 +2410,15 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         <!-- Drive Tab Bar -->
         <div style="display:flex;align-items:center;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px">
           <button id="drive-tab-minha" onclick="switchDriveTab('minha')" style="font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:none;border:none;border-bottom:2px solid var(--gold);color:var(--navy);padding:10px 20px 10px 0;cursor:pointer;transition:all 0.2s;margin-bottom:-1px">Minha Pasta</button>
-          <button id="drive-tab-curadoria" onclick="switchDriveTab('curadoria')" style="font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-muted);padding:10px 20px 10px 16px;cursor:pointer;transition:all 0.2s;margin-bottom:-1px" id="drive-tab-curadoria-btn">Curadoria</button>
+          <button id="drive-tab-curadoria" onclick="switchDriveTab('curadoria')" style="font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-muted);padding:10px 20px 10px 16px;cursor:pointer;transition:all 0.2s;margin-bottom:-1px">Curadoria</button>
         </div>
 
         <!-- MINHA PASTA -->
         <div id="drive-section-minha">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-            <p class="card-overline" style="margin-bottom:0">Minha Pasta</p>
-            <span id="drive-files-count" style="font-size:10px;color:var(--text-muted);font-family:var(--sans)"></span>
-          </div>
           <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:4px">
             <h3 class="card-title" style="margin-bottom:0">Arquivos do Drive</h3>
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <span id="drive-files-count" style="font-size:10px;color:var(--text-muted);font-family:var(--sans)"></span>
               <div style="position:relative;flex-shrink:0">
                 <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--text-muted);fill:none;stroke-width:2;stroke-linecap:round;pointer-events:none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
                 <input id="drive-search" type="text" placeholder="Buscar arquivo..." oninput="filtrarDriveFiles(this.value)"
