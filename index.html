@@ -3258,6 +3258,7 @@ function renderCuradoriaFiles(files) {
     rest.forEach(function(f) { restRows.appendChild(buildDriveCard(f)); });
     if (toggleBtn) toggleBtn.style.display = 'block';
   }
+  loadThumbsBatch(files, 6, 2000);
 }
 
 function toggleCurFiles() {
@@ -3281,24 +3282,6 @@ function filtrarCuradoriaFiles(query) {
   firstRow.innerHTML = ''; restRows.innerHTML = '';
   if (toggleBtn) toggleBtn.style.display = 'none';
   filtered.forEach(function(f){ firstRow.appendChild(buildDriveCard(f)); });
-}
-
-function loadCurThumbsBatch(files, batchSize, delay) {
-  var idx = 0;
-  function next() {
-    if (idx >= files.length) return;
-    var batch = files.slice(idx, idx + batchSize);
-    idx += batchSize;
-    batch.forEach(function(f) {
-      var img = document.querySelector('[data-thumb-id="' + f.id + '"]');
-      if (img && f.thumbnailLink) {
-        img.src = f.thumbnailLink;
-        img.onerror = function(){ this.style.display='none'; };
-      }
-    });
-    if (idx < files.length) setTimeout(next, delay);
-  }
-  setTimeout(next, 500);
 }
 
 // ── PASTA DO DRIVE ──
