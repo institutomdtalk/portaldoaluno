@@ -2407,40 +2407,73 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
     <!-- PASTA DO DRIVE -->
     <div class="card reveal" style="grid-column:1/-1" id="card-drive-files">
       <div class="card-pad">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-          <p class="card-overline" style="margin-bottom:0">Minha Pasta</p>
-          <span id="drive-files-count" style="font-size:10px;color:var(--text-muted);font-family:var(--sans)"></span>
+        <!-- Drive Tab Bar -->
+        <div style="display:flex;align-items:center;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px">
+          <button id="drive-tab-minha" onclick="switchDriveTab('minha')" style="font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:none;border:none;border-bottom:2px solid var(--gold);color:var(--navy);padding:10px 20px 10px 0;cursor:pointer;transition:all 0.2s;margin-bottom:-1px">Minha Pasta</button>
+          <button id="drive-tab-curadoria" onclick="switchDriveTab('curadoria')" style="font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-muted);padding:10px 20px 10px 16px;cursor:pointer;transition:all 0.2s;margin-bottom:-1px" id="drive-tab-curadoria-btn">Curadoria</button>
         </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:4px">
-          <h3 class="card-title" style="margin-bottom:0">Arquivos do Drive</h3>
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+
+        <!-- MINHA PASTA -->
+        <div id="drive-section-minha">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+            <p class="card-overline" style="margin-bottom:0">Minha Pasta</p>
+            <span id="drive-files-count" style="font-size:10px;color:var(--text-muted);font-family:var(--sans)"></span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:4px">
+            <h3 class="card-title" style="margin-bottom:0">Arquivos do Drive</h3>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <div style="position:relative;flex-shrink:0">
+                <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--text-muted);fill:none;stroke-width:2;stroke-linecap:round;pointer-events:none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                <input id="drive-search" type="text" placeholder="Buscar arquivo..." oninput="filtrarDriveFiles(this.value)"
+                  style="padding:8px 12px 8px 32px;border:1px solid var(--border);border-radius:var(--radius);font-family:var(--sans);font-size:12px;color:var(--text-body);outline:none;width:200px;transition:border-color 0.3s;background:var(--white)"
+                  onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
+              </div>
+              <select id="drive-sort" onchange="ordenarDriveFiles(this.value)"
+                style="padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-family:var(--sans);font-size:12px;color:var(--text-muted);outline:none;background:var(--white);cursor:pointer;transition:border-color 0.3s"
+                onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
+                <option value="date-desc">Mais recente</option>
+                <option value="date-asc">Mais antigo</option>
+                <option value="name-asc">A → Z</option>
+                <option value="name-desc">Z → A</option>
+                <option value="type">Tipo</option>
+              </select>
+            </div>
+          </div>
+          <p class="card-desc" id="drive-files-status" style="margin-bottom:0">Carregando seus arquivos...</p>
+          <div class="drive-card-grid" id="drive-first-row"></div>
+          <div id="drive-more-rows" style="max-height:0;overflow:hidden;transition:max-height 0.6s cubic-bezier(0.22,1,0.36,1)">
+            <div class="drive-card-grid" id="drive-rest-rows"></div>
+          </div>
+          <button id="btn-drive-toggle" style="display:none;margin:16px auto 0;background:none;border:1px solid var(--border-gold);color:var(--gold);font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border-radius:var(--radius);cursor:pointer;transition:all 0.3s ease;width:fit-content" onclick="toggleDriveFiles()">
+            Ver mais <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-left:4px" id="drive-toggle-chevron"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+        </div>
+
+        <!-- CURADORIA -->
+        <div id="drive-section-curadoria" style="display:none">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+            <p class="card-overline" style="margin-bottom:0">Curadoria MD Talk</p>
+            <span id="drive-cur-count" style="font-size:10px;color:var(--text-muted);font-family:var(--sans)"></span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:4px">
+            <h3 class="card-title" style="margin-bottom:0">Material de Curadoria</h3>
             <div style="position:relative;flex-shrink:0">
               <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--text-muted);fill:none;stroke-width:2;stroke-linecap:round;pointer-events:none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-              <input id="drive-search" type="text" placeholder="Buscar arquivo..." oninput="filtrarDriveFiles(this.value)"
+              <input id="cur-search" type="text" placeholder="Buscar arquivo..." oninput="filtrarCuradoriaFiles(this.value)"
                 style="padding:8px 12px 8px 32px;border:1px solid var(--border);border-radius:var(--radius);font-family:var(--sans);font-size:12px;color:var(--text-body);outline:none;width:200px;transition:border-color 0.3s;background:var(--white)"
                 onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
             </div>
-            <select id="drive-sort" onchange="ordenarDriveFiles(this.value)"
-              style="padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-family:var(--sans);font-size:12px;color:var(--text-muted);outline:none;background:var(--white);cursor:pointer;transition:border-color 0.3s"
-              onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
-              <option value="date-desc">Mais recente</option>
-              <option value="date-asc">Mais antigo</option>
-              <option value="name-asc">A → Z</option>
-              <option value="name-desc">Z → A</option>
-              <option value="type">Tipo</option>
-            </select>
           </div>
+          <p class="card-desc" id="cur-files-status" style="margin-bottom:0">Carregando curadoria...</p>
+          <div class="drive-card-grid" id="cur-first-row"></div>
+          <div id="cur-more-rows" style="max-height:0;overflow:hidden;transition:max-height 0.6s cubic-bezier(0.22,1,0.36,1)">
+            <div class="drive-card-grid" id="cur-rest-rows"></div>
+          </div>
+          <button id="btn-cur-toggle" style="display:none;margin:16px auto 0;background:none;border:1px solid var(--border-gold);color:var(--gold);font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border-radius:var(--radius);cursor:pointer;transition:all 0.3s ease;width:fit-content" onclick="toggleCurFiles()">
+            Ver mais <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-left:4px" id="cur-toggle-chevron"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
         </div>
-        <p class="card-desc" id="drive-files-status" style="margin-bottom:0">Carregando seus arquivos...</p>
-        <!-- First row always visible -->
-        <div class="drive-card-grid" id="drive-first-row"></div>
-        <!-- Remaining rows collapsible -->
-        <div id="drive-more-rows" style="max-height:0;overflow:hidden;transition:max-height 0.6s cubic-bezier(0.22,1,0.36,1)">
-          <div class="drive-card-grid" id="drive-rest-rows"></div>
-        </div>
-        <button id="btn-drive-toggle" style="display:none;margin:16px auto 0;background:none;border:1px solid var(--border-gold);color:var(--gold);font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border-radius:var(--radius);cursor:pointer;transition:all 0.3s ease;width:fit-content" onclick="toggleDriveFiles()">
-          Ver mais <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-left:4px" id="drive-toggle-chevron"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
+
       </div>
     </div>
 
@@ -2861,6 +2894,11 @@ function renderDashboard(a) {
   loadLiveItems();
   // Load Drive concluded state
   carregarDriveConcluidos();
+  // Drive curadoria tab — hide if not configured
+  var tabCuradoria = document.getElementById('drive-tab-curadoria');
+  if (tabCuradoria) tabCuradoria.style.display = (a.link_curadoria && a.link_curadoria.trim()) ? '' : 'none';
+  _curFiles = [];
+
   // Load Drive files
   var driveFirstRow = document.getElementById('drive-first-row');
   var driveRestRows = document.getElementById('drive-rest-rows');
@@ -3134,6 +3172,133 @@ function togglePdfExtra(uid, btn) {
   var isOpen = el.classList.contains('open');
   el.classList.toggle('open', !isOpen);
   btn.textContent = isOpen ? '+' + (el.querySelectorAll('a').length) : '−';
+}
+
+// ── DRIVE TABS ──
+var _curFiles = [];
+var _curFilesOpen = false;
+
+function extrairFolderId(url) {
+  if (!url || !url.trim()) return null;
+  // Handle formats: /folders/ID, /drive/folders/ID, ?id=ID, id=ID
+  var m = url.match(/\/folders\/([a-zA-Z0-9_-]{10,})/);
+  if (m) return m[1];
+  m = url.match(/[?&]id=([a-zA-Z0-9_-]{10,})/);
+  if (m) return m[1];
+  // If it's just a raw folder ID
+  if (/^[a-zA-Z0-9_-]{25,}$/.test(url.trim())) return url.trim();
+  return null;
+}
+
+function switchDriveTab(tab) {
+  var minha = document.getElementById('drive-section-minha');
+  var cur   = document.getElementById('drive-section-curadoria');
+  var tabM  = document.getElementById('drive-tab-minha');
+  var tabC  = document.getElementById('drive-tab-curadoria');
+  if (tab === 'minha') {
+    minha.style.display = ''; cur.style.display = 'none';
+    tabM.style.borderBottomColor = 'var(--gold)'; tabM.style.color = 'var(--navy)';
+    tabC.style.borderBottomColor = 'transparent'; tabC.style.color = 'var(--text-muted)';
+  } else {
+    minha.style.display = 'none'; cur.style.display = '';
+    tabC.style.borderBottomColor = 'var(--gold)'; tabC.style.color = 'var(--navy)';
+    tabM.style.borderBottomColor = 'transparent'; tabM.style.color = 'var(--text-muted)';
+    // Load curadoria if not loaded yet
+    if (_curFiles.length === 0) carregarCuradoria();
+  }
+}
+
+function carregarCuradoria() {
+  if (!currentStudent || !currentStudent.link_curadoria) {
+    var st = document.getElementById('cur-files-status');
+    if (st) st.textContent = 'Nenhum material de curadoria disponível.';
+    return;
+  }
+  var folderId = extrairFolderId(currentStudent.link_curadoria);
+  if (!folderId) {
+    var st = document.getElementById('cur-files-status');
+    if (st) st.textContent = 'Link de curadoria inválido.';
+    return;
+  }
+  callScript(
+    'action=list_drive&folderId=' + encodeURIComponent(folderId) + '&login=' + encodeURIComponent(currentStudent.login),
+    function(d) {
+      var st = document.getElementById('cur-files-status');
+      if (!d.success || !d.files || !d.files.length) {
+        if (st) st.textContent = 'Nenhum arquivo na pasta de curadoria.';
+        return;
+      }
+      if (st) st.style.display = 'none';
+      _curFiles = d.files;
+      renderCuradoriaFiles(_curFiles);
+      var ct = document.getElementById('drive-cur-count');
+      if (ct) ct.textContent = d.files.length + ' arquivo' + (d.files.length !== 1 ? 's' : '');
+      loadCurThumbsBatch(d.files, 6, 2000);
+    },
+    function() {
+      var st = document.getElementById('cur-files-status');
+      if (st) st.textContent = 'Erro ao carregar curadoria.';
+    }
+  );
+}
+
+function renderCuradoriaFiles(files) {
+  var firstRow = document.getElementById('cur-first-row');
+  var restRows = document.getElementById('cur-rest-rows');
+  var toggleBtn = document.getElementById('btn-cur-toggle');
+  if (!firstRow) return;
+  firstRow.innerHTML = ''; restRows.innerHTML = '';
+  _curFilesOpen = false;
+  if (toggleBtn) toggleBtn.style.display = 'none';
+  var cols = 6;
+  var first = files.slice(0, cols);
+  var rest  = files.slice(cols);
+  first.forEach(function(f) { firstRow.appendChild(buildDriveCard(f)); });
+  if (rest.length) {
+    rest.forEach(function(f) { restRows.appendChild(buildDriveCard(f)); });
+    if (toggleBtn) toggleBtn.style.display = 'block';
+  }
+}
+
+function toggleCurFiles() {
+  var moreRows  = document.getElementById('cur-more-rows');
+  var toggleBtn = document.getElementById('btn-cur-toggle');
+  var chevron   = document.getElementById('cur-toggle-chevron');
+  _curFilesOpen = !_curFilesOpen;
+  if (moreRows) moreRows.style.maxHeight = _curFilesOpen ? moreRows.scrollHeight + 'px' : '0';
+  if (toggleBtn) toggleBtn.innerHTML = (_curFilesOpen ? 'Ver menos' : 'Ver mais') +
+    '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-left:4px"><path d="' + (_curFilesOpen ? 'M18 15l-6-6-6 6' : 'M6 9l6 6 6-6') + '"/></svg>';
+}
+
+function filtrarCuradoriaFiles(query) {
+  var firstRow = document.getElementById('cur-first-row');
+  var restRows = document.getElementById('cur-rest-rows');
+  var toggleBtn = document.getElementById('btn-cur-toggle');
+  if (!firstRow) return;
+  var filtered = !query.trim() ? _curFiles : _curFiles.filter(function(f){
+    return f.name && f.name.toLowerCase().indexOf(query.toLowerCase()) >= 0;
+  });
+  firstRow.innerHTML = ''; restRows.innerHTML = '';
+  if (toggleBtn) toggleBtn.style.display = 'none';
+  filtered.forEach(function(f){ firstRow.appendChild(buildDriveCard(f)); });
+}
+
+function loadCurThumbsBatch(files, batchSize, delay) {
+  var idx = 0;
+  function next() {
+    if (idx >= files.length) return;
+    var batch = files.slice(idx, idx + batchSize);
+    idx += batchSize;
+    batch.forEach(function(f) {
+      var img = document.querySelector('[data-thumb-id="' + f.id + '"]');
+      if (img && f.thumbnailLink) {
+        img.src = f.thumbnailLink;
+        img.onerror = function(){ this.style.display='none'; };
+      }
+    });
+    if (idx < files.length) setTimeout(next, delay);
+  }
+  setTimeout(next, 500);
 }
 
 // ── PASTA DO DRIVE ──
