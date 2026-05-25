@@ -1889,6 +1889,10 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
   <!-- ══ NOTEBOOK TAB BAR ══ -->
   <div class="nb-tabs-bar" id="nb-tabs-bar">
+    <button class="nb-tab" id="tab-sala" onclick="switchTab('sala')">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Sala de Aula
+    </button>
     <button class="nb-tab" id="tab-dashboard" onclick="switchTab('dashboard')">
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
       Conteúdo
@@ -1913,6 +1917,103 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
       Recursos
     </button>
+  </div>
+
+  <!-- ══ PAINEL SALA DE AULA ══ -->
+  <div class="nb-panel prog-page" id="panel-sala">
+    <div style="max-width:900px;margin:0 auto">
+
+      <!-- Título -->
+      <p style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Instituto MD Talk</p>
+      <h2 style="font-family:var(--serif);font-size:1.6rem;font-weight:300;color:var(--navy);margin-bottom:32px">Sala de <em style="font-style:italic;color:var(--gold)">Aula</em></h2>
+
+      <!-- KPIs frequência -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px">
+        <div class="prog-kpi">
+          <div class="prog-kpi-accent" style="background:#16a34a"></div>
+          <div class="prog-kpi-icon" style="background:#16a34a">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="prog-kpi-num" id="sala-kpi-presencas">0</div>
+          <div class="prog-kpi-label">Presenças</div>
+          <div class="prog-kpi-bar"><div class="prog-kpi-fill" style="background:#16a34a;width:0%" id="sala-bar-presencas"></div></div>
+        </div>
+        <div class="prog-kpi">
+          <div class="prog-kpi-accent" style="background:#ef4444"></div>
+          <div class="prog-kpi-icon" style="background:#ef4444">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+          <div class="prog-kpi-num" id="sala-kpi-faltas">0</div>
+          <div class="prog-kpi-label">Faltas</div>
+          <div class="prog-kpi-bar"><div class="prog-kpi-fill" style="background:#ef4444;width:0%" id="sala-bar-faltas"></div></div>
+        </div>
+        <div class="prog-kpi">
+          <div class="prog-kpi-accent" style="background:#c8a96e"></div>
+          <div class="prog-kpi-icon" style="background:#c8a96e">
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="prog-kpi-num" id="sala-kpi-freq">—</div>
+          <div class="prog-kpi-label">Frequência</div>
+          <div class="prog-kpi-bar"><div class="prog-kpi-fill" style="background:#c8a96e;width:0%" id="sala-bar-freq"></div></div>
+        </div>
+      </div>
+
+      <!-- Calendário + Ações -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start">
+
+        <!-- Calendário -->
+        <div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
+          <p style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Calendário de Frequência</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <button id="cal-btn-prev2" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8249;</button>
+            <span id="cal-month-label2" style="font-family:var(--serif);font-size:1.15rem;font-weight:500;color:var(--navy);min-width:140px;text-align:center"></span>
+            <button id="cal-btn-next2" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8250;</button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:8px">
+            <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Su</div>
+            <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Mo</div>
+            <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Tu</div>
+            <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">We</div>
+            <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Th</div>
+            <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Fr</div>
+            <div style="text-align:center;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-muted);padding:4px 0">Sa</div>
+          </div>
+          <div id="cal-grid2" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
+        </div>
+
+        <!-- Ações -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+
+          <!-- Botões de presença -->
+          <div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
+            <p style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Registrar Presença</p>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <button id="sala-btn-presente" onclick="registrarPresenca('presente')" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#22c55e;color:#fff;border:none;border-radius:10px;padding:13px 20px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"/></svg>
+                Confirmar Presença
+              </button>
+              <button id="sala-btn-falta" onclick="registrarPresenca('falta')" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#64748b;border:1px solid #e2e8f0;border-radius:10px;padding:13px 20px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s">
+                Registrar Falta
+              </button>
+              <a id="sala-btn-meet" href="#" target="_blank" rel="noopener" style="display:none;align-items:center;justify-content:center;gap:8px;background:#1a73e8;color:#fff;border-radius:10px;padding:13px 20px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:background 0.3s">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                Entrar no Google Meet
+              </a>
+            </div>
+          </div>
+
+          <!-- Live Class Mode -->
+          <div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
+            <p style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Registre Durante a Aula</p>
+            <button id="sala-btn-live" onclick="toggleLiveMode()" style="display:flex;align-items:center;gap:8px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#16a34a;border-radius:10px;padding:12px 18px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;width:100%;justify-content:center">
+              <span style="width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block"></span>
+              Registre Durante a Aula
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ══ PAINEL PROGRESSO ══ -->
@@ -2409,7 +2510,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       <div class="card-pad">
         <!-- Drive Tab Bar -->
         <div style="display:flex;align-items:center;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px">
-          <button id="drive-tab-minha" onclick="switchDriveTab('minha')" style="font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:none;border:none;border-bottom:2px solid var(--gold);color:var(--navy);padding:10px 20px 10px 0;cursor:pointer;transition:all 0.2s;margin-bottom:-1px">Minha Pasta</button>
+          <button id="drive-tab-minha" onclick="switchDriveTab('minha')" style="font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:none;border:none;border-bottom:2px solid var(--gold);color:var(--navy);padding:10px 20px 10px 0;cursor:pointer;transition:all 0.2s;margin-bottom:-1px">Sala de Aula</button>
           <button id="drive-tab-curadoria" onclick="switchDriveTab('curadoria')" style="font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-muted);padding:10px 20px 10px 16px;cursor:pointer;transition:all 0.2s;margin-bottom:-1px">Curadoria</button>
         </div>
 
@@ -2923,7 +3024,8 @@ function renderDashboard(a) {
   showPage('dashboard');
   // Activate portal tab
   document.querySelectorAll('.nb-tab').forEach(function(b){ b.classList.remove('active'); });
-  var t = document.getElementById('tab-dashboard'); if(t) t.classList.add('active');
+  var t = document.getElementById('tab-sala'); if(t) t.classList.add('active');
+  switchTab('sala');
   setTimeout(function(){ initReveal(); animateCards(); }, 80);
 }
 
@@ -3150,6 +3252,57 @@ function salvarNotaFS() {
   // Sync back then save
   fecharEditorFullscreen();
   salvarNota();
+}
+
+// ── SALA DE AULA ──
+function renderSala() {
+  var hist = currentStudent && currentStudent.historico || [];
+  var presencas = hist.filter(function(h){ return h.status === 'presente'; }).length;
+  var faltas    = hist.filter(function(h){ return h.status === 'falta'; }).length;
+  var total = presencas + faltas;
+  var freq  = total > 0 ? Math.round((presencas/total)*100) : 0;
+
+  var elP  = document.getElementById('sala-kpi-presencas');
+  var elF  = document.getElementById('sala-kpi-faltas');
+  var elFr = document.getElementById('sala-kpi-freq');
+  var barP = document.getElementById('sala-bar-presencas');
+  var barF = document.getElementById('sala-bar-faltas');
+  var barFr= document.getElementById('sala-bar-freq');
+
+  if (elP)  elP.textContent  = presencas;
+  if (elF)  elF.textContent  = faltas;
+  if (elFr) elFr.textContent = total > 0 ? freq + '%' : '—';
+  if (barP)  barP.style.width  = total > 0 ? Math.round((presencas/total)*100) + '%' : '0%';
+  if (barF)  barF.style.width  = total > 0 ? Math.round((faltas/total)*100) + '%' : '0%';
+  if (barFr) barFr.style.width = freq + '%';
+
+  renderCalendar2();
+
+  var meetBtn = document.getElementById('sala-btn-meet');
+  if (meetBtn) {
+    if (currentStudent && currentStudent.link_meet && currentStudent.link_meet.trim()) {
+      meetBtn.href = currentStudent.link_meet;
+      meetBtn.style.display = 'flex';
+    } else {
+      meetBtn.style.display = 'none';
+    }
+  }
+
+  // Sync state from hero buttons
+  var btnP = document.getElementById('btn-presente');
+  var btnF = document.getElementById('btn-falta');
+  var salaP = document.getElementById('sala-btn-presente');
+  var salaF = document.getElementById('sala-btn-falta');
+  if (btnP && salaP) {
+    salaP.disabled = btnP.disabled;
+    if (btnP.disabled) { salaP.style.opacity = '0.5'; salaP.style.cursor = 'default'; }
+    else { salaP.style.opacity = ''; salaP.style.cursor = 'pointer'; }
+  }
+  if (btnF && salaF) {
+    salaF.disabled = btnF.disabled;
+    if (btnF.disabled) { salaF.style.opacity = '0.5'; salaF.style.cursor = 'default'; }
+    else { salaF.style.opacity = ''; salaF.style.cursor = 'pointer'; }
+  }
 }
 
 // ── TOGGLE TRILHA ──
@@ -3860,7 +4013,7 @@ var _sc2Filtro   = 'todos';
 // ── TAB SWITCHING ──
 function switchTab(tab) {
   // Hide all panels and dashboard
-  ['progresso','termos','smartcards','notas','recursos'].forEach(function(t){
+  ['sala','progresso','termos','smartcards','notas','recursos'].forEach(function(t){
     var p = document.getElementById('panel-' + t);
     if (p) p.classList.remove('active');
   });
@@ -3877,6 +4030,7 @@ function switchTab(tab) {
     if (dash) dash.style.display = 'none';
     var panel = document.getElementById('panel-' + tab);
     if (panel) panel.classList.add('active');
+    if (tab === 'sala')      renderSala();
     if (tab === 'progresso') renderNbProgresso();
     if (tab === 'termos')    renderNtGrid();
     if (tab === 'smartcards') sc2Init();
