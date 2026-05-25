@@ -2891,9 +2891,9 @@ function renderDashboard(a) {
   loadLiveItems();
   // Load Drive concluded state
   carregarDriveConcluidos();
-  // Drive curadoria tab — hide if not configured
+  // Drive curadoria tab — show always, hide content if not configured
   var tabCuradoria = document.getElementById('drive-tab-curadoria');
-  if (tabCuradoria) tabCuradoria.style.display = (a.link_curadoria && a.link_curadoria.trim()) ? '' : 'none';
+  if (tabCuradoria) tabCuradoria.style.display = '';
   _curFiles = [];
 
   // Load Drive files
