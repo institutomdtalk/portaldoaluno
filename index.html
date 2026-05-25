@@ -1995,7 +1995,20 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
         <div style="border-top:1px solid var(--border);margin:8px 0"></div>
 
-        <p style="font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Durante a Aula</p>
+        <p style="font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Recursos para as Aulas</p>
+
+        <!-- Dicionário -->
+        <div style="background:#F8F7F5;border-radius:10px;padding:12px;margin-bottom:8px">
+          <div style="display:flex;gap:6px;margin-bottom:8px">
+            <button onclick="setDicDir('pt-en')" id="dic-btn-pt" style="flex:1;font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--navy);color:#fff;border:none;border-radius:6px;padding:6px;cursor:pointer;transition:all 0.2s">PT → EN</button>
+            <button onclick="setDicDir('en-pt')" id="dic-btn-en" style="flex:1;font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:#fff;color:var(--text-muted);border:1px solid var(--border);border-radius:6px;padding:6px;cursor:pointer;transition:all 0.2s">EN → PT</button>
+          </div>
+          <div style="position:relative">
+            <input id="dic-input" type="text" placeholder="Digite uma palavra..." oninput="buscarDicionario()" style="width:100%;box-sizing:border-box;padding:8px 32px 8px 10px;border:1px solid var(--border);border-radius:7px;font-family:var(--sans);font-size:12px;color:var(--navy);outline:none;background:#fff;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
+            <svg style="position:absolute;right:9px;top:50%;transform:translateY(-50%);width:12px;height:12px;stroke:var(--text-muted);fill:none;stroke-width:2;stroke-linecap:round;pointer-events:none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          </div>
+          <div id="dic-result" style="margin-top:8px;font-family:var(--sans);font-size:12px;color:var(--navy);min-height:20px;line-height:1.5"></div>
+        </div>
 
         <button id="sala-btn-live" onclick="toggleLiveMode()" style="display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);color:rgba(34,197,94,0.9);font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 16px;border-radius:20px;cursor:pointer;transition:all 0.3s;width:100%;overflow:visible" onmouseover="this.style.background='rgba(34,197,94,0.2)'" onmouseout="this.style.background='rgba(34,197,94,0.12)'">
           <span style="width:16px;height:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span class="live-pulse"></span></span>
@@ -3313,6 +3326,66 @@ function renderSala() {
     salaF.disabled = btnF.disabled;
     salaF.style.opacity = btnF.disabled ? '0.5' : '';
   }
+}
+
+// ── DICIONÁRIO SALA DE AULA ──
+var _dicDir = 'pt-en';
+var _dicTimer = null;
+
+function setDicDir(dir) {
+  _dicDir = dir;
+  var btnPt = document.getElementById('dic-btn-pt');
+  var btnEn = document.getElementById('dic-btn-en');
+  if (btnPt && btnEn) {
+    if (dir === 'pt-en') {
+      btnPt.style.background = 'var(--navy)'; btnPt.style.color = '#fff'; btnPt.style.border = 'none';
+      btnEn.style.background = '#fff'; btnEn.style.color = 'var(--text-muted)'; btnEn.style.border = '1px solid var(--border)';
+    } else {
+      btnEn.style.background = 'var(--navy)'; btnEn.style.color = '#fff'; btnEn.style.border = 'none';
+      btnPt.style.background = '#fff'; btnPt.style.color = 'var(--text-muted)'; btnPt.style.border = '1px solid var(--border)';
+    }
+  }
+  buscarDicionario();
+}
+
+function buscarDicionario() {
+  clearTimeout(_dicTimer);
+  var input = document.getElementById('dic-input');
+  var result = document.getElementById('dic-result');
+  if (!input || !result) return;
+  var word = input.value.trim();
+  if (!word) { result.innerHTML = ''; return; }
+  result.innerHTML = '<span style="color:#bbb;font-style:italic">Buscando...</span>';
+  _dicTimer = setTimeout(function() {
+    var langPair = _dicDir === 'pt-en' ? 'pt|en' : 'en|pt';
+    var url = 'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(word) + '&langpair=' + encodeURIComponent(langPair);
+    var cbName = 'dic_cb_' + Date.now();
+    window[cbName] = function(data) {
+      delete window[cbName];
+      if (document.body.contains(sc)) document.body.removeChild(sc);
+      if (data && data.responseStatus === 200) {
+        var trans = data.responseData.translatedText;
+        var matches = data.matches ? data.matches.slice(0, 3).filter(function(m){ return m.quality > 0; }) : [];
+        var html = '<strong style="color:var(--navy)">' + trans + '</strong>';
+        if (matches.length > 1) {
+          html += '<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px">';
+          matches.forEach(function(m) {
+            if (m.translation !== trans) {
+              html += '<span style="background:#F0EDE8;border-radius:4px;padding:2px 7px;font-size:11px;color:#666">' + m.translation + '</span>';
+            }
+          });
+          html += '</div>';
+        }
+        result.innerHTML = html;
+      } else {
+        result.innerHTML = '<span style="color:#bbb;font-style:italic">Nenhum resultado.</span>';
+      }
+    };
+    var sc = document.createElement('script');
+    sc.src = url + '&de=mdtalk.office@gmail.com&callback=' + cbName;
+    sc.onerror = function() { result.innerHTML = '<span style="color:#bbb;font-style:italic">Erro de conexão.</span>'; };
+    document.body.appendChild(sc);
+  }, 500);
 }
 
 // ── TOGGLE TRILHA ──
