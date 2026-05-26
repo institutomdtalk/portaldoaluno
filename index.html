@@ -1715,7 +1715,24 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
   @media(max-width:768px){.trilha-grid{grid-template-columns:1fr 1fr}}
 
-/* ── FIXED TOPBAR ── */
+/* ── TUTORIAL ── */
+.tut-overlay{position:fixed;inset:0;background:rgba(5,13,26,0.75);z-index:99990;display:none}
+.tut-overlay.active{display:block}
+.tut-box{position:fixed;z-index:99991;background:#fff;border-radius:16px;padding:28px;max-width:340px;box-shadow:0 20px 60px rgba(0,0,0,0.3);transition:all 0.35s cubic-bezier(0.22,1,0.36,1)}
+.tut-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:16px 16px 0 0}
+.tut-step{font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.tut-title{font-family:var(--serif);font-size:1.2rem;font-weight:400;color:var(--navy);margin-bottom:8px;line-height:1.2}
+.tut-body{font-family:var(--sans);font-size:12px;color:#64748b;line-height:1.7;margin-bottom:20px}
+.tut-actions{display:flex;align-items:center;justify-content:space-between}
+.tut-dots{display:flex;gap:5px}
+.tut-dot{width:6px;height:6px;border-radius:50%;background:#e2e8f0;transition:background 0.2s}
+.tut-dot.active{background:var(--gold)}
+.tut-btns{display:flex;gap:8px}
+.tut-btn-prev{background:none;border:1px solid #e2e8f0;color:#94a3b8;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 14px;border-radius:8px;cursor:pointer;transition:all 0.2s}
+.tut-btn-next{background:var(--navy);border:none;color:#fff;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 16px;border-radius:8px;cursor:pointer;transition:all 0.2s}
+.tut-btn-next:hover{background:var(--navy-mid)}
+.tut-highlight{position:fixed;z-index:99989;border-radius:12px;box-shadow:0 0 0 4px var(--gold),0 0 0 9999px rgba(5,13,26,0.75);transition:all 0.35s cubic-bezier(0.22,1,0.36,1);pointer-events:none}
+.tut-arrow{position:absolute;width:0;height:0}
 .topbar{position:fixed;top:0;left:0;right:0;z-index:500;display:none;align-items:center;justify-content:space-between;padding:0 32px;height:42px;background:transparent;pointer-events:none}
 .topbar.visible{display:flex;pointer-events:all}
 
@@ -1851,12 +1868,14 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
           <div id="hero-date" style="font-family:Raleway,sans-serif;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.32);margin-top:6px">— —</div>
         </div>
         <div style="display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-top:10px">
+          <button onclick="abrirTutorial()" style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.55);font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:7px 14px;border-radius:20px;cursor:pointer;transition:all 0.3s" onmouseover="this.style.background='rgba(255,255,255,0.14)';this.style.color='rgba(255,255,255,0.9)'" onmouseout="this.style.background='rgba(255,255,255,0.08)';this.style.color='rgba(255,255,255,0.55)'">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Tutorial
+          </button>
           <button id="btn-live" onclick="toggleLiveMode()">
             <span class="live-pulse"></span>
             Registre durante a Aula
           </button>
-
-
         </div>
       </div>
     </div>
@@ -3287,45 +3306,178 @@ function renderSala() {
   if (subP) subP.textContent = total + ' aula' + (total !== 1 ? 's' : '') + ' totais';
   if (subF) subF.textContent = 'frequência: ' + (total > 0 ? freq + '%' : '—');
 
-  // Meet KPI
-  var meetBtn   = document.getElementById('sala-btn-meet');
-  var meetEmpty = document.getElementById('sala-meet-empty');
-  if (currentStudent && currentStudent.link_meet && currentStudent.link_meet.trim()) {
-    if (meetBtn)   { meetBtn.href = currentStudent.link_meet; meetBtn.style.display = 'flex'; }
-    if (meetEmpty) meetEmpty.style.display = 'none';
-  } else {
-    if (meetBtn)   meetBtn.style.display = 'none';
-    if (meetEmpty) meetEmpty.style.display = '';
-  }
-
-  // Coach message
-  var msgEl = document.getElementById('sala-message-body');
-  if (msgEl) {
-    if (total === 0) {
-      msgEl.innerHTML = 'Bem-vindo à sua sala de aula. Confirme sua presença e comece a registrar sua jornada.';
-    } else {
-      var msg = 'Você tem ' + presencas + ' presença' + (presencas !== 1 ? 's' : '') + ' confirmada' + (presencas !== 1 ? 's' : '') + ' — frequência de <span style="color:var(--gold)">' + freq + '%</span>. ' + (freq >= 75 ? 'Continue assim!' : 'Mantenha o ritmo das aulas para alcançar seus objetivos.');
-      msgEl.innerHTML = msg;
-    }
-  }
-
   // Calendar
   renderCalendar2();
+}
 
-  // Sync presence buttons state from hero
-  var btnP  = document.getElementById('btn-presente');
-  var btnF  = document.getElementById('btn-falta');
-  var salaP = document.getElementById('sala-btn-presente');
-  var salaF = document.getElementById('sala-btn-falta');
-  if (btnP && salaP) {
-    salaP.disabled = btnP.disabled;
-    salaP.style.opacity = btnP.disabled ? '0.5' : '';
-    salaP.style.cursor  = btnP.disabled ? 'default' : 'pointer';
+// ── TUTORIAL ──
+var _tutStep = 0;
+var _tutSteps = [
+  {
+    title: 'Bem-vindo ao seu Portal',
+    body: 'Este é o seu portal de Medical English do Instituto MD Talk. Vamos fazer um tour rápido para você conhecer tudo o que está disponível aqui.',
+    target: null,
+    pos: 'center'
+  },
+  {
+    title: 'Sala de Aula',
+    body: 'A primeira aba é a sua Sala de Aula. Aqui você confirma presenças, visualiza o calendário de frequência e registra termos durante a aula.',
+    target: 'tab-sala',
+    pos: 'bottom'
+  },
+  {
+    title: 'Confirmar Presença',
+    body: 'Use os botões no hero para confirmar sua presença ou registrar uma falta. O registro é salvo automaticamente na planilha.',
+    target: 'btn-presente',
+    pos: 'bottom'
+  },
+  {
+    title: 'Registre Durante a Aula',
+    body: 'O botão verde pulsante abre o painel de registro ao vivo. Durante a aula, anote vocabulário, frases e termos clínicos em tempo real.',
+    target: 'btn-live',
+    pos: 'bottom'
+  },
+  {
+    title: 'Conteúdo',
+    body: 'A aba Conteúdo exibe seus arquivos do Google Drive organizados por pasta. Você pode marcar arquivos como concluídos, favoritos e muito mais.',
+    target: 'tab-dashboard',
+    pos: 'bottom'
+  },
+  {
+    title: 'Meu Progresso',
+    body: 'Acompanhe sua evolução — termos dominados, aulas realizadas, arquivos concluídos e uma mensagem personalizada da sua mentora.',
+    target: 'tab-progresso',
+    pos: 'bottom'
+  },
+  {
+    title: 'Banco de Termos',
+    body: 'Todos os termos registrados durante as aulas ficam salvos aqui. Você pode editar, filtrar por seção e exportar seu vocabulário clínico.',
+    target: 'tab-termos',
+    pos: 'bottom'
+  },
+  {
+    title: 'Flashcards',
+    body: 'Seus termos viram flashcards automáticos para revisão. Pratique com o sistema de confiança — de 0 a 5 — e fortaleça sua memória.',
+    target: 'tab-smartcards',
+    pos: 'bottom'
+  },
+  {
+    title: 'Notas',
+    body: 'Escreva notas formatadas com cores, negrito, grifo e ícones. Use o modo tela cheia para escrever durante a aula compartilhando a tela.',
+    target: 'tab-notas',
+    pos: 'bottom'
+  },
+  {
+    title: 'Recursos',
+    body: 'Acesse rapidamente o Cambridge Dictionary, YouGlish, sua coleção de infográficos e a tabela de verbos irregulares.',
+    target: 'tab-recursos',
+    pos: 'bottom'
+  },
+  {
+    title: 'Navbar Superior',
+    body: 'A barra no topo dá acesso rápido a: Remanejo de aulas, Google Docs, Google Drive, Calendário, Outros Cursos, Personalize e Feedback.',
+    target: 'topbar',
+    pos: 'bottom'
+  },
+  {
+    title: 'Tudo pronto!',
+    body: 'Você já conhece o seu portal. Qualquer dúvida, use o botão <strong>Feedback</strong> na barra superior ou fale com sua mentora pelo WhatsApp.',
+    target: null,
+    pos: 'center'
   }
-  if (btnF && salaF) {
-    salaF.disabled = btnF.disabled;
-    salaF.style.opacity = btnF.disabled ? '0.5' : '';
+];
+
+function abrirTutorial() {
+  _tutStep = 0;
+  var overlay = document.getElementById('tut-overlay');
+  if (!overlay) _criarTutorial();
+  document.getElementById('tut-overlay').classList.add('active');
+  _renderTutStep();
+}
+
+function _criarTutorial() {
+  var overlay = document.createElement('div');
+  overlay.className = 'tut-overlay';
+  overlay.id = 'tut-overlay';
+  overlay.onclick = function(e){ if(e.target===overlay) fecharTutorial(); };
+  document.body.appendChild(overlay);
+
+  var highlight = document.createElement('div');
+  highlight.className = 'tut-highlight';
+  highlight.id = 'tut-highlight';
+  highlight.style.display = 'none';
+  document.body.appendChild(highlight);
+
+  var box = document.createElement('div');
+  box.className = 'tut-box';
+  box.id = 'tut-box';
+  document.body.appendChild(box);
+}
+
+function _renderTutStep() {
+  var step = _tutSteps[_tutStep];
+  var box  = document.getElementById('tut-box');
+  var hl   = document.getElementById('tut-highlight');
+  if (!box) return;
+
+  // Dots
+  var dotsHtml = _tutSteps.map(function(_,i){
+    return '<div class="tut-dot' + (i===_tutStep?' active':'') + '"></div>';
+  }).join('');
+
+  var isLast  = _tutStep === _tutSteps.length - 1;
+  var isFirst = _tutStep === 0;
+
+  box.innerHTML =
+    '<div class="tut-step">Passo ' + (_tutStep+1) + ' de ' + _tutSteps.length + '</div>' +
+    '<div class="tut-title">' + step.title + '</div>' +
+    '<div class="tut-body">' + step.body + '</div>' +
+    '<div class="tut-actions">' +
+      '<div class="tut-dots">' + dotsHtml + '</div>' +
+      '<div class="tut-btns">' +
+        (!isFirst ? '<button class="tut-btn-prev" onclick="_tutNav(-1)">← Anterior</button>' : '') +
+        '<button class="tut-btn-next" onclick="' + (isLast ? 'fecharTutorial()' : '_tutNav(1)') + '">' +
+          (isLast ? 'Concluir ✓' : 'Próximo →') +
+        '</button>' +
+      '</div>' +
+    '</div>';
+
+  // Position
+  if (step.target) {
+    var el = document.getElementById(step.target);
+    if (el) {
+      var r = el.getBoundingClientRect();
+      hl.style.cssText = 'position:fixed;z-index:99989;border-radius:10px;box-shadow:0 0 0 4px var(--gold),0 0 0 9999px rgba(5,13,26,0.75);pointer-events:none;transition:all 0.35s cubic-bezier(0.22,1,0.36,1);' +
+        'left:' + (r.left-6) + 'px;top:' + (r.top-6) + 'px;width:' + (r.width+12) + 'px;height:' + (r.height+12) + 'px;display:block';
+      // Position box relative to element
+      var bw = 340, bh = 240;
+      var left = r.left + r.width/2 - bw/2;
+      var top  = r.bottom + 16;
+      if (left < 12) left = 12;
+      if (left + bw > window.innerWidth - 12) left = window.innerWidth - bw - 12;
+      if (top + bh > window.innerHeight - 12) top = r.top - bh - 16;
+      box.style.left = left + 'px';
+      box.style.top  = top + 'px';
+      box.style.transform = 'none';
+    }
+  } else {
+    hl.style.display = 'none';
+    box.style.left = '50%';
+    box.style.top  = '50%';
+    box.style.transform = 'translate(-50%,-50%)';
   }
+}
+
+function _tutNav(dir) {
+  _tutStep = Math.max(0, Math.min(_tutSteps.length-1, _tutStep + dir));
+  _renderTutStep();
+}
+
+function fecharTutorial() {
+  var overlay = document.getElementById('tut-overlay');
+  var hl = document.getElementById('tut-highlight');
+  if (overlay) overlay.classList.remove('active');
+  if (hl) hl.style.display = 'none';
 }
 
 // ── DICIONÁRIO SALA DE AULA ──
