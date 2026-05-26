@@ -3338,10 +3338,10 @@ function renderPerfil() {
     function(d) {
       if (d.success && d.perfil) {
         var p = d.perfil;
-        setPerfilField('pf-nome', p.nome_completo);
-        setPerfilField('pf-profissao', p.profissao);
-        setPerfilField('pf-especialidade', p.especialidade);
-        setPerfilField('pf-cidade', p.cidade_uf);
+        setPerfilField('perfil-nome', p.nome_completo);
+        setPerfilField('perfil-profissao', p.profissao);
+        setPerfilField('perfil-especialidade', p.especialidade);
+        setPerfilField('perfil-cidade', p.cidade_uf);
         _perfilOriginal = { nome: p.nome_completo, profissao: p.profissao, especialidade: p.especialidade, cidade: p.cidade_uf };
       }
     },
@@ -3358,7 +3358,7 @@ function setPerfilField(id, val) {
 
 function togglePerfilEdit() {
   _perfilEditando = !_perfilEditando;
-  var inputs = ['pf-nome','pf-profissao','pf-especialidade','pf-cidade'];
+  var inputs = ['perfil-nome','perfil-profissao','perfil-especialidade','perfil-cidade'];
   var saveRow = document.getElementById('perfil-save-row');
   var editBtn = document.getElementById('perfil-edit-btn');
   inputs.forEach(function(id) {
@@ -3372,19 +3372,24 @@ function togglePerfilEdit() {
 }
 
 function cancelarPerfilEdit() {
-  setPerfilField('pf-nome', _perfilOriginal.nome);
-  setPerfilField('pf-profissao', _perfilOriginal.profissao);
-  setPerfilField('pf-especialidade', _perfilOriginal.especialidade);
-  setPerfilField('pf-cidade', _perfilOriginal.cidade);
+  setPerfilField('perfil-nome', _perfilOriginal.nome);
+  setPerfilField('perfil-profissao', _perfilOriginal.profissao);
+  setPerfilField('perfil-especialidade', _perfilOriginal.especialidade);
+  setPerfilField('perfil-cidade', _perfilOriginal.cidade);
   if (_perfilEditando) togglePerfilEdit();
 }
 
 function salvarPerfil() {
   if (!currentStudent) return;
-  var nome   = (document.getElementById('pf-nome')?.value||'').trim();
-  var prof   = (document.getElementById('pf-profissao')?.value||'').trim();
-  var espec  = (document.getElementById('pf-especialidade')?.value||'').trim();
-  var cidade = (document.getElementById('pf-cidade')?.value||'').trim();
+  var nome   = (document.getElementById('perfil-nome')        ? document.getElementById('perfil-nome').value        : '').trim();
+  var prof   = (document.getElementById('perfil-profissao')   ? document.getElementById('perfil-profissao').value   : '').trim();
+  var espec  = (document.getElementById('perfil-especialidade')? document.getElementById('perfil-especialidade').value: '').trim();
+  var cidade = (document.getElementById('perfil-cidade')      ? document.getElementById('perfil-cidade').value      : '').trim();
+  
+  // Save to localStorage immediately
+  var dados = { nome_completo: nome, profissao: prof, especialidade: espec, cidade_uf: cidade };
+  localStorage.setItem('mdtalk_perfil_' + currentStudent.login, JSON.stringify(dados));
+
   callScript(
     'action=salvar_perfil&login=' + encodeURIComponent(currentStudent.login) +
     '&nome_completo=' + encodeURIComponent(nome) +
@@ -3392,10 +3397,15 @@ function salvarPerfil() {
     '&especialidade=' + encodeURIComponent(espec) +
     '&cidade_uf=' + encodeURIComponent(cidade),
     function(d) {
-      showToast(d.success ? 'Perfil salvo!' : 'Erro ao salvar.', d.success ? 'success' : 'error');
-      if (d.success) { _perfilOriginal = { nome:nome, profissao:prof, especialidade:espec, cidade:cidade }; if (_perfilEditando) togglePerfilEdit(); }
+      var msg = document.getElementById('perfil-save-msg');
+      if (msg) { msg.style.display='block'; setTimeout(function(){ msg.style.display='none'; }, 3000); }
+      showToast(d.success ? 'Perfil salvo!' : 'Salvo localmente.', 'success');
     },
-    function() { showToast('Erro de conexão.', 'error'); }
+    function() {
+      var msg = document.getElementById('perfil-save-msg');
+      if (msg) { msg.style.display='block'; setTimeout(function(){ msg.style.display='none'; }, 3000); }
+      showToast('Salvo localmente.', 'warning');
+    }
   );
 }
 
