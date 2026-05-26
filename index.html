@@ -3321,12 +3321,12 @@ var _perfilOriginal = {};
 function renderPerfil() {
   if (!currentStudent) return;
   var a = currentStudent;
-  var elInicio  = document.getElementById('pf-data-inicio');
-  var elFreq    = document.getElementById('pf-frequencia');
-  var elCur     = document.getElementById('pf-curadoria');
-  var elVenc    = document.getElementById('pf-vencimento');
-  var elValor   = document.getElementById('pf-valor');
-  var elContrat = document.getElementById('pf-contrato-link');
+  var elInicio  = document.getElementById('perfil-data-inicio');
+  var elFreq    = document.getElementById('perfil-frequencia');
+  var elCur     = document.getElementById('perfil-curadoria');
+  var elVenc    = document.getElementById('perfil-vencimento');
+  var elValor   = document.getElementById('perfil-valor');
+  var elContrat = document.getElementById('perfil-link-contrato');
   if (elInicio) elInicio.textContent = a.data_inicio || '—';
   if (elFreq)   elFreq.textContent   = a.frequencia_combinada || '—';
   if (elCur)    elCur.textContent    = a.curadoria || '—';
@@ -3411,7 +3411,7 @@ function salvarPerfil() {
 
 function copiarPix() {
   var key = '38315226851';
-  var btn = document.getElementById('pix-btn');
+  var btn = document.getElementById('btn-copiar-pix');
   var done = function() {
     if (btn) { btn.textContent = 'Copiado ✓'; btn.style.background = '#22c55e'; btn.style.color = '#fff'; }
     setTimeout(function() { if (btn) { btn.textContent = 'Copiar'; btn.style.background = 'var(--gold)'; btn.style.color = 'var(--navy-deep)'; }}, 2500);
