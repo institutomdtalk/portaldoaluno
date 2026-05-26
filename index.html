@@ -1941,66 +1941,86 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   <!-- ══ PAINEL PERFIL ══ -->
   <div class="nb-panel prog-page" id="panel-sala">
 
-    <!-- LEMBRETE PAGAMENTO POP-UP (injetado via JS) -->
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
 
       <!-- COLUNA ESQUERDA -->
       <div style="display:flex;flex-direction:column;gap:20px">
 
         <!-- DADOS PESSOAIS -->
-        <div style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
-          <p style="font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Meus Dados</p>
+        <div style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,0.06);border:1px solid #f0ede8;transition:box-shadow 0.3s" onmouseover="this.style.boxShadow='0 4px 16px rgba(196,164,90,0.12)'" onmouseout="this.style.boxShadow='0 1px 4px rgba(0,0,0,0.06)'">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+            <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#0B1D3A,#163158);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(196,164,90,0.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <p style="font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold)">Meus Dados</p>
+          </div>
           <div style="display:flex;flex-direction:column;gap:12px">
             <div>
-              <label style="font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#aaa;display:block;margin-bottom:4px">Nome Completo</label>
-              <input id="perfil-nome" type="text" placeholder="Seu nome completo" style="width:100%;box-sizing:border-box;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:14px;color:var(--navy);outline:none;transition:border-color 0.2s;background:#fff" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
+              <label style="font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#bbb;display:block;margin-bottom:4px">Nome Completo</label>
+              <input id="perfil-nome" type="text" placeholder="Seu nome completo" style="width:100%;box-sizing:border-box;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:12px;color:var(--navy);outline:none;transition:border-color 0.2s;background:#fafafa" onfocus="this.style.borderColor='var(--gold)';this.style.background='#fff'" onblur="this.style.borderColor='var(--border)';this.style.background='#fafafa'">
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
               <div>
-                <label style="font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#aaa;display:block;margin-bottom:4px">Profissão</label>
-                <input id="perfil-profissao" type="text" placeholder="Ex: Médica" style="width:100%;box-sizing:border-box;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:14px;color:var(--navy);outline:none;transition:border-color 0.2s;background:#fff" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
+                <label style="font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#bbb;display:block;margin-bottom:4px">Profissão</label>
+                <input id="perfil-profissao" type="text" placeholder="Ex: Médica" style="width:100%;box-sizing:border-box;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:12px;color:var(--navy);outline:none;transition:border-color 0.2s;background:#fafafa" onfocus="this.style.borderColor='var(--gold)';this.style.background='#fff'" onblur="this.style.borderColor='var(--border)';this.style.background='#fafafa'">
               </div>
               <div>
-                <label style="font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#aaa;display:block;margin-bottom:4px">Especialidade</label>
-                <input id="perfil-especialidade" type="text" placeholder="Ex: Cardiologia" style="width:100%;box-sizing:border-box;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:14px;color:var(--navy);outline:none;transition:border-color 0.2s;background:#fff" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
+                <label style="font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#bbb;display:block;margin-bottom:4px">Especialidade</label>
+                <input id="perfil-especialidade" type="text" placeholder="Ex: Cardiologia" style="width:100%;box-sizing:border-box;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:12px;color:var(--navy);outline:none;transition:border-color 0.2s;background:#fafafa" onfocus="this.style.borderColor='var(--gold)';this.style.background='#fff'" onblur="this.style.borderColor='var(--border)';this.style.background='#fafafa'">
               </div>
             </div>
             <div>
-              <label style="font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#aaa;display:block;margin-bottom:4px">Cidade / UF</label>
-              <input id="perfil-cidade" type="text" placeholder="Ex: São Paulo / SP" style="width:100%;box-sizing:border-box;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:14px;color:var(--navy);outline:none;transition:border-color 0.2s;background:#fff" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
+              <label style="font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#bbb;display:block;margin-bottom:4px">Cidade / UF</label>
+              <input id="perfil-cidade" type="text" placeholder="Ex: São Paulo / SP" style="width:100%;box-sizing:border-box;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:12px;color:var(--navy);outline:none;transition:border-color 0.2s;background:#fafafa" onfocus="this.style.borderColor='var(--gold)';this.style.background='#fff'" onblur="this.style.borderColor='var(--border)';this.style.background='#fafafa'">
             </div>
-            <button onclick="salvarPerfil()" style="display:flex;align-items:center;justify-content:center;gap:6px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:11px 16px;font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:background 0.2s;width:100%" onmouseover="this.style.background='var(--navy-mid)'" onmouseout="this.style.background='var(--navy)'">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            <button onclick="salvarPerfil()" style="display:flex;align-items:center;justify-content:center;gap:6px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:11px 16px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:background 0.2s;width:100%" onmouseover="this.style.background='var(--navy-mid)'" onmouseout="this.style.background='var(--navy)'">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
               Salvar dados
             </button>
-            <p id="perfil-save-msg" style="font-family:var(--sans);font-size:13px;color:#16a34a;text-align:center;display:none">✓ Dados salvos com sucesso.</p>
+            <p id="perfil-save-msg" style="font-family:var(--sans);font-size:11px;color:#16a34a;text-align:center;display:none">✓ Dados salvos com sucesso.</p>
           </div>
         </div>
 
-        <!-- DADOS DO PROGRAMA -->
-        <div style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
-          <p style="font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Meu Programa</p>
-          <div style="display:flex;flex-direction:column;gap:10px">
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #f1f1f1">
-              <span style="font-family:var(--sans);font-size:14px;color:#aaa">Início das aulas</span>
-              <span style="font-family:var(--serif);font-size:14px;color:var(--navy);font-weight:500" id="perfil-data-inicio">—</span>
+        <!-- MEU PROGRAMA -->
+        <div style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,0.06);border:1px solid #f0ede8;transition:box-shadow 0.3s" onmouseover="this.style.boxShadow='0 4px 16px rgba(196,164,90,0.12)'" onmouseout="this.style.boxShadow='0 1px 4px rgba(0,0,0,0.06)'">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+            <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#0B1D3A,#163158);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(196,164,90,0.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #f1f1f1">
-              <span style="font-family:var(--sans);font-size:14px;color:#aaa">Frequência combinada</span>
-              <span style="font-family:var(--serif);font-size:14px;color:var(--navy);font-weight:500" id="perfil-frequencia">—</span>
+            <p style="font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold)">Meu Programa</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:0">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid #f5f5f5">
+              <div style="display:flex;align-items:center;gap:8px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span style="font-family:var(--sans);font-size:12px;color:#aaa">Início das aulas</span>
+              </div>
+              <span style="font-family:var(--sans);font-size:12px;color:var(--navy);font-weight:600" id="perfil-data-inicio">—</span>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #f1f1f1">
-              <span style="font-family:var(--sans);font-size:14px;color:#aaa">Curadoria</span>
-              <span id="perfil-curadoria" style="font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:1px;padding:3px 10px;border-radius:20px;background:rgba(196,164,90,0.1);color:var(--gold)">—</span>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid #f5f5f5">
+              <div style="display:flex;align-items:center;gap:8px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span style="font-family:var(--sans);font-size:12px;color:#aaa">Frequência combinada</span>
+              </div>
+              <span style="font-family:var(--sans);font-size:12px;color:var(--navy);font-weight:600" id="perfil-frequencia">—</span>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0">
-              <span style="font-family:var(--sans);font-size:14px;color:#aaa">Contrato</span>
-              <a id="perfil-link-contrato" href="#" target="_blank" rel="noopener" style="display:none;font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--navy);text-decoration:none;border:1px solid var(--border);border-radius:6px;padding:5px 12px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--navy)'">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                Ver contrato
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid #f5f5f5">
+              <div style="display:flex;align-items:center;gap:8px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span style="font-family:var(--sans);font-size:12px;color:#aaa">Curadoria</span>
+              </div>
+              <span id="perfil-curadoria" style="font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1px;padding:3px 10px;border-radius:20px;background:rgba(196,164,90,0.1);color:var(--gold)">—</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0">
+              <div style="display:flex;align-items:center;gap:8px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span style="font-family:var(--sans);font-size:12px;color:#aaa">Contrato</span>
+              </div>
+              <a id="perfil-link-contrato" href="#" target="_blank" rel="noopener" style="display:none;align-items:center;gap:5px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--navy);text-decoration:none;border:1px solid var(--border);border-radius:6px;padding:5px 12px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--navy)'">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Abrir
               </a>
-              <span id="perfil-contrato-vazio" style="font-family:var(--sans);font-size:14px;color:#ccc">Não disponível</span>
+              <span id="perfil-contrato-vazio" style="font-family:var(--sans);font-size:12px;color:#ccc">Não disponível</span>
             </div>
           </div>
         </div>
@@ -2011,30 +2031,41 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
       <div style="display:flex;flex-direction:column;gap:20px">
 
         <!-- PAGAMENTO -->
-        <div style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
-          <p style="font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Pagamento</p>
-          <div style="display:flex;flex-direction:column;gap:10px">
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #f1f1f1">
-              <span style="font-family:var(--sans);font-size:14px;color:#aaa">Valor da mensalidade</span>
-              <span style="font-family:var(--serif);font-size:1.15rem;font-weight:500;color:var(--navy)" id="perfil-valor">—</span>
+        <div style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,0.06);border:1px solid #f0ede8;transition:box-shadow 0.3s" onmouseover="this.style.boxShadow='0 4px 16px rgba(196,164,90,0.12)'" onmouseout="this.style.boxShadow='0 1px 4px rgba(0,0,0,0.06)'">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+            <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#0B1D3A,#163158);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(196,164,90,0.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #f1f1f1">
-              <span style="font-family:var(--sans);font-size:14px;color:#aaa">Vencimento</span>
-              <span style="font-family:var(--serif);font-size:14px;color:var(--navy);font-weight:500" id="perfil-vencimento">—</span>
+            <p style="font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold)">Pagamento</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:0">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid #f5f5f5">
+              <div style="display:flex;align-items:center;gap:8px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                <span style="font-family:var(--sans);font-size:12px;color:#aaa">Mensalidade</span>
+              </div>
+              <span style="font-family:var(--serif);font-size:1.1rem;font-weight:500;color:var(--navy)" id="perfil-valor">—</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid #f5f5f5">
+              <div style="display:flex;align-items:center;gap:8px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span style="font-family:var(--sans);font-size:12px;color:#aaa">Vencimento</span>
+              </div>
+              <span style="font-family:var(--sans);font-size:12px;color:var(--navy);font-weight:600" id="perfil-vencimento">—</span>
             </div>
             <!-- PIX -->
-            <div style="background:#F8F7F5;border-radius:10px;padding:14px;margin-top:4px">
-              <p style="font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:8px">Chave PIX</p>
-              <div style="display:flex;align-items:center;gap:8px">
-                <code id="pix-key" style="font-family:monospace;font-size:14px;color:var(--navy);background:#fff;border:1px solid var(--border);border-radius:6px;padding:8px 12px;flex:1;letter-spacing:1px">38315226851</code>
-                <button onclick="copiarPix()" id="btn-copiar-pix" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:9px 14px;font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:all 0.2s;flex-shrink:0">
-                  Copiar
-                </button>
+            <div style="background:#F8F7F5;border-radius:10px;padding:14px;margin-top:12px">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+                <span style="font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#aaa">Chave PIX</span>
               </div>
-              <p style="font-family:var(--sans);font-size:13px;color:#aaa;margin-top:8px">CPF · Thaiana Andressa S. Martignoni Faria</p>
+              <div style="display:flex;align-items:center;gap:8px">
+                <code id="pix-key" style="font-family:monospace;font-size:13px;color:var(--navy);background:#fff;border:1px solid var(--border);border-radius:6px;padding:8px 12px;flex:1;letter-spacing:1px">38315226851</code>
+                <button onclick="copiarPix()" id="btn-copiar-pix" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:9px 14px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:all 0.2s;flex-shrink:0" onmouseover="this.style.background='var(--navy-mid)'" onmouseout="this.style.background='var(--navy)'">Copiar</button>
+              </div>
+              <p style="font-family:var(--sans);font-size:10px;color:#aaa;margin-top:8px">CPF · Thaiana Andressa S. Martignoni Faria</p>
             </div>
-            <!-- Lembrete -->
-            <button onclick="toggleLembrete()" id="btn-lembrete" style="display:flex;align-items:center;justify-content:center;gap:7px;background:#fff;color:var(--navy);border:1px solid var(--border);border-radius:8px;padding:11px 16px;font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;width:100%;margin-top:4px">
+            <button onclick="toggleLembrete()" id="btn-lembrete" style="display:flex;align-items:center;justify-content:center;gap:7px;background:#fff;color:var(--navy);border:1px solid var(--border);border-radius:8px;padding:11px 16px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;width:100%;margin-top:12px" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor=document.getElementById('btn-lembrete').style.borderColor||'var(--border)'">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
               <span id="btn-lembrete-txt">Ativar lembrete de pagamento</span>
             </button>
@@ -2042,32 +2073,39 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
         </div>
 
         <!-- POLÍTICAS -->
-        <div style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
-          <p style="font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Políticas do Programa</p>
-
-          <!-- Remanejamento -->
-          <details style="margin-bottom:12px">
-            <summary style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--navy);cursor:pointer;padding:8px 0;list-style:none;display:flex;align-items:center;justify-content:space-between">
-              Política de Remanejamento
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <div style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,0.06);border:1px solid #f0ede8;transition:box-shadow 0.3s" onmouseover="this.style.boxShadow='0 4px 16px rgba(196,164,90,0.12)'" onmouseout="this.style.boxShadow='0 1px 4px rgba(0,0,0,0.06)'">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+            <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#0B1D3A,#163158);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(196,164,90,0.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <p style="font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold)">Políticas do Programa</p>
+          </div>
+          <details style="margin-bottom:8px">
+            <summary style="font-family:var(--sans);font-size:12px;font-weight:700;color:var(--navy);cursor:pointer;padding:10px 0;list-style:none;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f5f5f5">
+              <div style="display:flex;align-items:center;gap:8px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
+                Política de Remanejamento
+              </div>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </summary>
-            <div style="font-family:var(--sans);font-size:14px;color:#64748b;line-height:1.7;padding:10px 0 4px;border-top:1px solid #f1f1f1;margin-top:4px">
-              O remanejamento deve ser solicitado com <strong>no mínimo 2 horas de antecedência</strong> em relação ao horário agendado. Fica condicionado à disponibilidade na agenda da professora.<br><br>
-              A falta de comunicação dentro do prazo implicará no envio do material correspondente e, quando necessário, áudio explicativo.<br><br>
-              A ausência nas aulas <strong>não isenta do pagamento da mensalidade</strong>.
+            <div style="font-family:var(--sans);font-size:12px;color:#64748b;line-height:1.8;padding:12px 0 4px">
+              Solicite o remanejamento com <strong>no mínimo 2 horas de antecedência</strong>. Sujeito à disponibilidade da professora.<br><br>
+              Sem comunicação no prazo, a aula é realizada via material + áudio explicativo.<br><br>
+              A ausência nas aulas <strong>não isenta do pagamento</strong>.
             </div>
           </details>
-
-          <!-- Cancelamento -->
           <details>
-            <summary style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--navy);cursor:pointer;padding:8px 0;list-style:none;display:flex;align-items:center;justify-content:space-between">
-              Política de Cancelamento
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            <summary style="font-family:var(--sans);font-size:12px;font-weight:700;color:var(--navy);cursor:pointer;padding:10px 0;list-style:none;display:flex;align-items:center;justify-content:space-between">
+              <div style="display:flex;align-items:center;gap:8px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                Política de Cancelamento
+              </div>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </summary>
-            <div style="font-family:var(--sans);font-size:14px;color:#64748b;line-height:1.7;padding:10px 0 4px;border-top:1px solid #f1f1f1;margin-top:4px">
-              A desistência deve ser comunicada por escrito com <strong>antecedência mínima de 21 dias</strong> em relação ao vencimento da próxima mensalidade.<br><br>
-              O descumprimento implica multa equivalente ao valor de <strong>uma mensalidade</strong>, além das mensalidades já vencidas.<br><br>
-              O valor da primeira mensalidade <strong>não é reembolsável</strong> em nenhuma hipótese — corresponde à garantia da vaga e custos administrativos.
+            <div style="font-family:var(--sans);font-size:12px;color:#64748b;line-height:1.8;padding:12px 0 4px">
+              Comunique por escrito com <strong>mínimo 21 dias de antecedência</strong> do próximo vencimento.<br><br>
+              Descumprimento implica multa de <strong>uma mensalidade</strong> + mensalidades vencidas.<br><br>
+              A primeira mensalidade é <strong>irrestituível</strong> em qualquer hipótese.
             </div>
           </details>
         </div>
