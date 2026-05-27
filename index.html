@@ -2015,13 +2015,19 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
                 <input id="perfil-profissao" type="text" placeholder="Ex: Médica" class="perfil-input">
               </div>
               <div>
-                <label class="perfil-label">Especialidade</label>
+                <label class="perfil-label">Especialidade / Empresa</label>
                 <input id="perfil-especialidade" type="text" placeholder="Ex: Cardiologia" class="perfil-input">
               </div>
             </div>
-            <div>
-              <label class="perfil-label">Cidade / UF</label>
-              <input id="perfil-cidade" type="text" placeholder="Ex: São Paulo / SP" class="perfil-input">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div>
+                <label class="perfil-label">Cidade natal / UF</label>
+                <input id="perfil-cidade" type="text" placeholder="Ex: Recife / PE" class="perfil-input">
+              </div>
+              <div>
+                <label class="perfil-label">Atualmente morando em</label>
+                <input id="perfil-cidade-atual" type="text" placeholder="Ex: São Paulo / SP" class="perfil-input">
+              </div>
             </div>
             <div>
               <label class="perfil-label">Data de Aniversário</label>
@@ -2094,7 +2100,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(196,164,90,0.6)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
                 Mensalidade
               </div>
-              <span id="perfil-valor" class="perfil-value" style="font-size:1.05rem;font-weight:700;color:var(--navy)">—</span>
+              <span id="perfil-valor" class="perfil-value">—</span>
             </div>
             <div class="perfil-row" style="border-bottom:none">
               <div class="perfil-row-label">
@@ -3433,8 +3439,9 @@ function renderPerfil() {
         var p = d.perfil;
         setPerfilField('perfil-nome', p.nome_completo);
         setPerfilField('perfil-profissao', p.profissao);
-        setPerfilField('perfil-especialidade', p.especialidade);
-        setPerfilField('perfil-cidade', p.cidade_uf);
+        setPerfilField('perfil-especialidade', p.especialidade_empresa || p.especialidade);
+        setPerfilField('perfil-cidade', p.cidade_natal || p.cidade_uf);
+        setPerfilField('perfil-cidade-atual', p.cidade_atual);
         setPerfilField('perfil-aniversario', p.aniversario);
         _perfilOriginal = { nome: p.nome_completo, profissao: p.profissao, especialidade: p.especialidade, cidade: p.cidade_uf };
       }
@@ -3494,22 +3501,24 @@ function cancelarPerfilEdit() {
 
 function salvarPerfil() {
   if (!currentStudent) return;
-  var nome   = (document.getElementById('perfil-nome')         ? document.getElementById('perfil-nome').value         : '').trim();
-  var prof   = (document.getElementById('perfil-profissao')    ? document.getElementById('perfil-profissao').value    : '').trim();
-  var espec  = (document.getElementById('perfil-especialidade')? document.getElementById('perfil-especialidade').value: '').trim();
-  var cidade = (document.getElementById('perfil-cidade')       ? document.getElementById('perfil-cidade').value       : '').trim();
-  var aniv   = (document.getElementById('perfil-aniversario')  ? document.getElementById('perfil-aniversario').value  : '').trim();
+  var nome        = (document.getElementById('perfil-nome')         ? document.getElementById('perfil-nome').value         : '').trim();
+  var prof        = (document.getElementById('perfil-profissao')    ? document.getElementById('perfil-profissao').value    : '').trim();
+  var espec       = (document.getElementById('perfil-especialidade')? document.getElementById('perfil-especialidade').value: '').trim();
+  var cidadeNatal = (document.getElementById('perfil-cidade')       ? document.getElementById('perfil-cidade').value       : '').trim();
+  var cidadeAtual = (document.getElementById('perfil-cidade-atual') ? document.getElementById('perfil-cidade-atual').value : '').trim();
+  var aniv        = (document.getElementById('perfil-aniversario')  ? document.getElementById('perfil-aniversario').value  : '').trim();
 
-  var dados = { nome_completo: nome, profissao: prof, especialidade: espec, cidade_uf: cidade, aniversario: aniv };
+  var dados = { nome_completo: nome, profissao: prof, especialidade_empresa: espec, cidade_natal: cidadeNatal, cidade_atual: cidadeAtual, aniversario: aniv };
   localStorage.setItem('mdtalk_perfil_' + currentStudent.login, JSON.stringify(dados));
 
   callScript(
     'action=salvar_perfil&login=' + encodeURIComponent(currentStudent.login) +
-    '&nome_completo=' + encodeURIComponent(nome) +
-    '&profissao=' + encodeURIComponent(prof) +
-    '&especialidade=' + encodeURIComponent(espec) +
-    '&cidade_uf=' + encodeURIComponent(cidade) +
-    '&aniversario=' + encodeURIComponent(aniv),
+    '&nome_completo='       + encodeURIComponent(nome) +
+    '&profissao='           + encodeURIComponent(prof) +
+    '&especialidade='       + encodeURIComponent(espec) +
+    '&cidade_uf='           + encodeURIComponent(cidadeNatal) +
+    '&cidade_atual='        + encodeURIComponent(cidadeAtual) +
+    '&aniversario='         + encodeURIComponent(aniv),
     function(d) {
       var msg = document.getElementById('perfil-save-msg');
       if (msg) { msg.style.display='block'; setTimeout(function(){ msg.style.display='none'; }, 3000); }
