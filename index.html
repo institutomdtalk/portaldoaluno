@@ -3094,7 +3094,7 @@ function renderDashboard(a) {
   // Programa do aluno
   var heroCurso = document.getElementById('hero-curso');
   if (heroCurso && a.curso && a.curso.trim()) {
-    heroCurso.textContent = 'Bem-vindo ao seu ' + a.curso.trim();
+    heroCurso.innerHTML = 'Bem-vindo ao seu<br><span style="font-style:italic;color:var(--gold)">' + a.curso.trim() + '</span>';
     heroCurso.style.display = '';
   }
 
