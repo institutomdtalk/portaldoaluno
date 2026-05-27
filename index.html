@@ -1719,7 +1719,41 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .perfil-icon-spin{width:36px;height:36px;position:relative;flex-shrink:0}
 .perfil-spin-ring{position:absolute;inset:0;width:36px;height:36px;animation:perfil-orbit 3s linear infinite}
 @keyframes perfil-orbit{to{transform:rotate(360deg)}}
-.perfil-icon-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}border-radius:14px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,0.06);border:1px solid #f0ede8;transition:box-shadow 0.3s;font-family:Raleway,sans-serif}
+.perfil-icon-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+
+/* Cinematic perfil cards */
+@keyframes perfil-reveal{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes perfil-shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+.perfil-card{
+  background:#fff;border-radius:16px;padding:26px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.06);
+  border:1px solid #f0ede8;
+  font-family:Raleway,sans-serif;
+  position:relative;overflow:hidden;
+  animation:perfil-reveal 0.55s cubic-bezier(0.22,1,0.36,1) both;
+  transform-style:preserve-3d;
+  transition:transform 0.4s cubic-bezier(0.22,1,0.36,1),box-shadow 0.4s cubic-bezier(0.22,1,0.36,1),border-color 0.4s;
+}
+.perfil-card:nth-child(1){animation-delay:0.05s}
+.perfil-card:nth-child(2){animation-delay:0.15s}
+.perfil-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(196,164,90,0.06) 0%,transparent 60%);
+  opacity:0;transition:opacity 0.4s;pointer-events:none;border-radius:16px;
+}
+.perfil-card::after{
+  content:'';position:absolute;top:-60%;left:-60%;width:220%;height:220%;
+  background:radial-gradient(circle at 50% 50%,rgba(196,164,90,0.08) 0%,transparent 55%);
+  opacity:0;transition:opacity 0.6s,transform 0.6s;pointer-events:none;
+  transform:scale(0.8);
+}
+.perfil-card:hover{
+  transform:translateY(-4px) scale(1.012);
+  box-shadow:0 12px 40px rgba(196,164,90,0.14),0 2px 8px rgba(0,0,0,0.06);
+  border-color:rgba(196,164,90,0.28);
+}
+.perfil-card:hover::before{opacity:1}
+.perfil-card:hover::after{opacity:1;transform:scale(1)}
 .perfil-card:hover{box-shadow:0 4px 20px rgba(196,164,90,0.13)}
 .perfil-card-header{display:flex;align-items:center;gap:10px;margin-bottom:18px}
 .perfil-card-title{font-family:Raleway,sans-serif;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
@@ -3401,6 +3435,25 @@ function renderPerfil() {
   );
   atualizarStatusLembrete();
   verificarLembretePagamento();
+
+  // Cinematic 3D tilt on perfil cards
+  setTimeout(function() {
+    document.querySelectorAll('#panel-sala .perfil-card').forEach(function(card) {
+      card.addEventListener('mousemove', function(e) {
+        var r = card.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width  - 0.5;
+        var y = (e.clientY - r.top)  / r.height - 0.5;
+        card.style.transform = 'translateY(-4px) scale(1.012) rotateX(' + (-y*5) + 'deg) rotateY(' + (x*5) + 'deg)';
+      });
+      card.addEventListener('mouseleave', function() {
+        card.style.transform = '';
+        card.style.transition = 'transform 0.6s cubic-bezier(0.22,1,0.36,1),box-shadow 0.4s,border-color 0.4s';
+      });
+      card.addEventListener('mouseenter', function() {
+        card.style.transition = 'transform 0.15s ease,box-shadow 0.4s,border-color 0.4s';
+      });
+    });
+  }, 400);
 }
 
 function setPerfilField(id, val) {
