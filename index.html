@@ -1716,7 +1716,10 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   @media(max-width:768px){.trilha-grid{grid-template-columns:1fr 1fr}}
 
 /* ── PERFIL ── */
-.perfil-card{background:#fff;border-radius:14px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,0.06);border:1px solid #f0ede8;transition:box-shadow 0.3s;font-family:Raleway,sans-serif}
+.perfil-icon-spin{width:36px;height:36px;position:relative;flex-shrink:0}
+.perfil-spin-ring{position:absolute;inset:0;width:36px;height:36px;animation:perfil-orbit 3s linear infinite}
+@keyframes perfil-orbit{to{transform:rotate(360deg)}}
+.perfil-icon-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}border-radius:14px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,0.06);border:1px solid #f0ede8;transition:box-shadow 0.3s;font-family:Raleway,sans-serif}
 .perfil-card:hover{box-shadow:0 4px 20px rgba(196,164,90,0.13)}
 .perfil-card-header{display:flex;align-items:center;gap:10px;margin-bottom:18px}
 .perfil-card-title{font-family:Raleway,sans-serif;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
@@ -1984,6 +1987,10 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
             <div>
               <label class="perfil-label">Cidade / UF</label>
               <input id="perfil-cidade" type="text" placeholder="Ex: São Paulo / SP" class="perfil-input">
+            </div>
+            <div>
+              <label class="perfil-label">Data de Aniversário</label>
+              <input id="perfil-aniversario" type="text" placeholder="DD/MM" class="perfil-input">
             </div>
             <button onclick="salvarPerfil()" class="perfil-btn-save">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
@@ -3386,6 +3393,7 @@ function renderPerfil() {
         setPerfilField('perfil-profissao', p.profissao);
         setPerfilField('perfil-especialidade', p.especialidade);
         setPerfilField('perfil-cidade', p.cidade_uf);
+        setPerfilField('perfil-aniversario', p.aniversario);
         _perfilOriginal = { nome: p.nome_completo, profissao: p.profissao, especialidade: p.especialidade, cidade: p.cidade_uf };
       }
     },
@@ -3425,13 +3433,13 @@ function cancelarPerfilEdit() {
 
 function salvarPerfil() {
   if (!currentStudent) return;
-  var nome   = (document.getElementById('perfil-nome')        ? document.getElementById('perfil-nome').value        : '').trim();
-  var prof   = (document.getElementById('perfil-profissao')   ? document.getElementById('perfil-profissao').value   : '').trim();
+  var nome   = (document.getElementById('perfil-nome')         ? document.getElementById('perfil-nome').value         : '').trim();
+  var prof   = (document.getElementById('perfil-profissao')    ? document.getElementById('perfil-profissao').value    : '').trim();
   var espec  = (document.getElementById('perfil-especialidade')? document.getElementById('perfil-especialidade').value: '').trim();
-  var cidade = (document.getElementById('perfil-cidade')      ? document.getElementById('perfil-cidade').value      : '').trim();
-  
-  // Save to localStorage immediately
-  var dados = { nome_completo: nome, profissao: prof, especialidade: espec, cidade_uf: cidade };
+  var cidade = (document.getElementById('perfil-cidade')       ? document.getElementById('perfil-cidade').value       : '').trim();
+  var aniv   = (document.getElementById('perfil-aniversario')  ? document.getElementById('perfil-aniversario').value  : '').trim();
+
+  var dados = { nome_completo: nome, profissao: prof, especialidade: espec, cidade_uf: cidade, aniversario: aniv };
   localStorage.setItem('mdtalk_perfil_' + currentStudent.login, JSON.stringify(dados));
 
   callScript(
@@ -3439,7 +3447,8 @@ function salvarPerfil() {
     '&nome_completo=' + encodeURIComponent(nome) +
     '&profissao=' + encodeURIComponent(prof) +
     '&especialidade=' + encodeURIComponent(espec) +
-    '&cidade_uf=' + encodeURIComponent(cidade),
+    '&cidade_uf=' + encodeURIComponent(cidade) +
+    '&aniversario=' + encodeURIComponent(aniv),
     function(d) {
       var msg = document.getElementById('perfil-save-msg');
       if (msg) { msg.style.display='block'; setTimeout(function(){ msg.style.display='none'; }, 3000); }
@@ -3466,11 +3475,48 @@ function copiarPix() {
 
 function getLembreteKey() { return 'mdtalk_lembrete_' + (currentStudent ? currentStudent.login : 'guest'); }
 
+function toggleLembrete() { toggleLembretePagamento(); }
+
 function toggleLembretePagamento() {
+  if (!currentStudent) return;
   var ativo = localStorage.getItem(getLembreteKey()) === '1';
-  localStorage.setItem(getLembreteKey(), ativo ? '0' : '1');
+  if (!ativo) {
+    // Activating — show popup
+    var ov = document.createElement('div');
+    ov.style.cssText = 'position:fixed;inset:0;background:rgba(5,13,26,0.6);z-index:99980;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)';
+    ov.innerHTML =
+      '<div style="background:#fff;border-radius:16px;padding:36px;max-width:360px;width:100%;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.2)">' +
+      '<div style="width:52px;height:52px;border-radius:50%;background:rgba(196,164,90,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 16px">' +
+        '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>' +
+      '</div>' +
+      '<p style="font-family:Raleway,sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#C4A45A;margin-bottom:10px">Lembrete ativado</p>' +
+      '<p style="font-family:\'Cormorant Garamond\',serif;font-size:1.3rem;color:#0B1D3A;margin-bottom:10px;line-height:1.3">Combinado!</p>' +
+      '<p style="font-family:Raleway,sans-serif;font-size:13px;color:#64748b;line-height:1.7;margin-bottom:24px">Te lembrarei quando for a hora. Obrigada por confiar no processo!</p>' +
+      '<button data-close="1" style="background:#0B1D3A;color:#fff;border:none;border-radius:10px;padding:11px 28px;font-family:Raleway,sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer">Ótimo!</button>' +
+      '</div>';
+    ov.addEventListener('click', function(e){
+      if (e.target === ov || e.target.dataset.close) document.body.removeChild(ov);
+    });
+    document.body.appendChild(ov);
+    localStorage.setItem(getLembreteKey(), '1');
+  } else {
+    localStorage.setItem(getLembreteKey(), '0');
+  }
+  atualizarBtnLembrete();
+}
+
+function atualizarBtnLembrete() {
+  var ativo = localStorage.getItem(getLembreteKey()) === '1';
+  var txt = document.getElementById('btn-lembrete-txt');
+  var btn = document.getElementById('btn-lembrete');
+  if (txt) txt.textContent = ativo ? 'Desativar lembrete' : 'Ativar lembrete de pagamento';
+  if (btn) {
+    btn.style.borderColor = ativo ? '#C4A45A' : 'var(--border)';
+    btn.style.color       = ativo ? '#C4A45A' : 'var(--navy)';
+    btn.style.background  = ativo ? 'rgba(196,164,90,0.06)' : '#fff';
+  }
+  // also update old status elements if present
   atualizarStatusLembrete();
-  showToast(ativo ? 'Lembrete desativado.' : 'Lembrete ativado!', 'success');
 }
 
 function atualizarStatusLembrete() {
