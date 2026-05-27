@@ -384,7 +384,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 .brand-title em{
   font-style:italic;
-  font-weight:400;
+  font-weight:700;
+  font-size:clamp(2rem,4.5vw,3.2rem);
   background:linear-gradient(135deg,var(--gold),var(--gold-light));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
@@ -1912,6 +1913,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
           <em id="hero-nome"></em>
         </h1>
         <p id="hero-frase" style="font-family:Raleway,sans-serif;font-size:11.5px;font-weight:400;color:rgba(255,255,255,0.38);letter-spacing:0.3px;line-height:1.6;margin-top:14px;max-width:380px;font-style:italic"></p>
+        <p id="hero-curso" style="display:none;font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(196,164,90,0.65);margin-top:10px"></p>
       </div>
       <div class="header-right">
         <div style="text-align:right;margin-bottom:14px">
@@ -3083,6 +3085,13 @@ function renderDashboard(a) {
   var heroN = document.getElementById('hero-nome');
   if (heroG) heroG.textContent = greetPT;
   if (heroN) heroN.textContent = a.nome_display || a.login;
+
+  // Programa do aluno
+  var heroCurso = document.getElementById('hero-curso');
+  if (heroCurso && a.curso && a.curso.trim()) {
+    heroCurso.textContent = a.curso.trim();
+    heroCurso.style.display = '';
+  }
 
   var _frases = [
     'Hoje, seu inglês médico pode avançar em poucos minutos.',
