@@ -1716,8 +1716,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   @media(max-width:768px){.trilha-grid{grid-template-columns:1fr 1fr}}
 
 /* ── PERFIL ── */
-.perfil-icon-spin{width:44px;height:44px;position:relative;flex-shrink:0}
-.perfil-spin-ring{position:absolute;inset:0;width:44px;height:44px;animation:perfil-orbit 3s linear infinite}
+.perfil-icon-spin{width:52px;height:52px;position:relative;flex-shrink:0}
+.perfil-spin-ring{position:absolute;inset:0;width:52px;height:52px;animation:perfil-orbit 4s linear infinite}
 @keyframes perfil-orbit{to{transform:rotate(360deg)}}
 .perfil-icon-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
 
@@ -2008,9 +2008,18 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
         <!-- Meus Dados -->
         <div>
           <div class="perfil-card-header">
-            <div class="perfil-icon-spin">
-              <svg class="perfil-spin-ring" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="19" stroke="rgba(196,164,90,0.15)" stroke-width="1.2"/><circle cx="22" cy="22" r="19" stroke="rgba(196,164,90,0.55)" stroke-width="1.2" stroke-dasharray="34 86" stroke-linecap="round"/></svg>
-              <div class="perfil-icon-inner"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(11,29,58,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div style="width:52px;height:52px;position:relative;flex-shrink:0">
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" style="position:absolute;inset:0;animation:perfil-orbit 4s linear infinite">
+                <circle cx="26" cy="26" r="23" stroke="rgba(196,164,90,0.1)" stroke-width="1"/>
+                <circle cx="26" cy="26" r="23" stroke="rgba(196,164,90,0.6)" stroke-width="1.2" stroke-dasharray="18 108" stroke-linecap="round"/>
+                <circle cx="26" cy="26" r="18" stroke="rgba(196,164,90,0.07)" stroke-width="0.8" stroke-dasharray="8 60"/>
+              </svg>
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" style="position:absolute;inset:0;animation:perfil-orbit 7s linear infinite reverse">
+                <circle cx="26" cy="26" r="20" stroke="rgba(196,164,90,0.12)" stroke-width="0.8" stroke-dasharray="5 40" stroke-linecap="round"/>
+              </svg>
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(11,29,58,0.5)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
             </div>
             <p class="perfil-card-title">Meus Dados</p>
           </div>
@@ -2078,10 +2087,19 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
         <!-- Meu Programa -->
         <div class="perfil-card-header">
-          <div class="perfil-icon-spin">
-            <svg class="perfil-spin-ring" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="19" stroke="rgba(196,164,90,0.15)" stroke-width="1.2"/><circle cx="22" cy="22" r="19" stroke="rgba(196,164,90,0.55)" stroke-width="1.2" stroke-dasharray="34 86" stroke-linecap="round"/></svg>
-            <div class="perfil-icon-inner"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(11,29,58,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
-          </div>
+          <div style="width:52px;height:52px;position:relative;flex-shrink:0">
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" style="position:absolute;inset:0;animation:perfil-orbit 4s linear infinite">
+                <circle cx="26" cy="26" r="23" stroke="rgba(196,164,90,0.1)" stroke-width="1"/>
+                <circle cx="26" cy="26" r="23" stroke="rgba(196,164,90,0.6)" stroke-width="1.2" stroke-dasharray="18 108" stroke-linecap="round"/>
+                <circle cx="26" cy="26" r="18" stroke="rgba(196,164,90,0.07)" stroke-width="0.8" stroke-dasharray="8 60"/>
+              </svg>
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" style="position:absolute;inset:0;animation:perfil-orbit 7s linear infinite reverse">
+                <circle cx="26" cy="26" r="20" stroke="rgba(196,164,90,0.12)" stroke-width="0.8" stroke-dasharray="5 40" stroke-linecap="round"/>
+              </svg>
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(11,29,58,0.5)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+              </div>
+            </div>
           <p class="perfil-card-title">Meu Programa</p>
         </div>
         <div class="perfil-rows" style="margin-bottom:20px">
@@ -2101,10 +2119,19 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
         <!-- Pagamento -->
         <div class="perfil-card-header" style="margin-bottom:12px">
-          <div class="perfil-icon-spin">
-            <svg class="perfil-spin-ring" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="19" stroke="rgba(196,164,90,0.15)" stroke-width="1.2"/><circle cx="22" cy="22" r="19" stroke="rgba(196,164,90,0.55)" stroke-width="1.2" stroke-dasharray="34 86" stroke-linecap="round"/></svg>
-            <div class="perfil-icon-inner"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(11,29,58,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
-          </div>
+          <div style="width:52px;height:52px;position:relative;flex-shrink:0">
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" style="position:absolute;inset:0;animation:perfil-orbit 4s linear infinite">
+                <circle cx="26" cy="26" r="23" stroke="rgba(196,164,90,0.1)" stroke-width="1"/>
+                <circle cx="26" cy="26" r="23" stroke="rgba(196,164,90,0.6)" stroke-width="1.2" stroke-dasharray="18 108" stroke-linecap="round"/>
+                <circle cx="26" cy="26" r="18" stroke="rgba(196,164,90,0.07)" stroke-width="0.8" stroke-dasharray="8 60"/>
+              </svg>
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" style="position:absolute;inset:0;animation:perfil-orbit 7s linear infinite reverse">
+                <circle cx="26" cy="26" r="20" stroke="rgba(196,164,90,0.12)" stroke-width="0.8" stroke-dasharray="5 40" stroke-linecap="round"/>
+              </svg>
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(11,29,58,0.5)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              </div>
+            </div>
           <p class="perfil-card-title">Pagamento</p>
         </div>
         <div class="perfil-rows" style="margin-bottom:16px">
@@ -2130,10 +2157,19 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
     <!-- CARD HORIZONTAL: POLÍTICAS -->
     <div class="perfil-card">
       <div class="perfil-card-header">
-        <div class="perfil-icon-spin">
-          <svg class="perfil-spin-ring" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="19" stroke="rgba(196,164,90,0.15)" stroke-width="1.2"/><circle cx="22" cy="22" r="19" stroke="rgba(196,164,90,0.55)" stroke-width="1.2" stroke-dasharray="34 86" stroke-linecap="round"/></svg>
-          <div class="perfil-icon-inner"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(11,29,58,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        </div>
+        <div style="width:52px;height:52px;position:relative;flex-shrink:0">
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" style="position:absolute;inset:0;animation:perfil-orbit 4s linear infinite">
+                <circle cx="26" cy="26" r="23" stroke="rgba(196,164,90,0.1)" stroke-width="1"/>
+                <circle cx="26" cy="26" r="23" stroke="rgba(196,164,90,0.6)" stroke-width="1.2" stroke-dasharray="18 108" stroke-linecap="round"/>
+                <circle cx="26" cy="26" r="18" stroke="rgba(196,164,90,0.07)" stroke-width="0.8" stroke-dasharray="8 60"/>
+              </svg>
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" style="position:absolute;inset:0;animation:perfil-orbit 7s linear infinite reverse">
+                <circle cx="26" cy="26" r="20" stroke="rgba(196,164,90,0.12)" stroke-width="0.8" stroke-dasharray="5 40" stroke-linecap="round"/>
+              </svg>
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(11,29,58,0.5)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+            </div>
         <p class="perfil-card-title">Políticas do Programa</p>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
