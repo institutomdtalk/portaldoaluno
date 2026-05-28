@@ -1775,6 +1775,14 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .perfil-details-body{font-family:Raleway,sans-serif;font-size:12px;font-weight:400;color:#64748b;line-height:1.8;padding:12px 0 4px}
 .perfil-chevron{transition:transform 0.2s}
 details[open] .perfil-chevron{transform:rotate(180deg)}
+.tut-overlay{position:fixed;inset:0;background:rgba(5,13,26,0.75);z-index:99990;display:none;pointer-events:auto}
+.tut-overlay.active{display:block}
+.tut-box{position:fixed;z-index:99991;background:#fff;border-radius:16px;padding:28px;max-width:340px;box-shadow:0 20px 60px rgba(0,0,0,0.3),0 0 0 1px rgba(196,164,90,0.15);transition:left 0.35s cubic-bezier(0.22,1,0.36,1),top 0.35s cubic-bezier(0.22,1,0.36,1);overflow:hidden;pointer-events:auto}
+.tut-box::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(196,164,90,0.08) 0%,transparent 70%);pointer-events:none;border-radius:16px}
+.tut-step{font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.tut-title{font-family:var(--serif);font-size:1.2rem;font-weight:400;color:var(--navy);margin-bottom:8px;line-height:1.2}
+.tut-body{font-family:var(--sans);font-size:12px;color:#64748b;line-height:1.7;margin-bottom:20px}
+.tut-actions{display:flex;align-items:center;justify-content:space-between}
 .tut-dots{display:flex;gap:5px}
 .tut-dot{width:6px;height:6px;border-radius:50%;background:#e2e8f0;transition:background 0.2s}
 .tut-dot.active{background:var(--gold)}
@@ -1996,7 +2004,6 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
       <!-- COLUNA ESQUERDA -->
       <div style="display:grid;grid-template-rows:1fr 1fr;gap:20px">
-
         <!-- DADOS PESSOAIS -->
         <div class="perfil-card">
           <div class="perfil-card-header">
@@ -2085,7 +2092,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       </div>
 
       <!-- COLUNA DIREITA -->
-      <div style="display:grid;grid-template-rows:1fr 1fr;gap:20px">
+      <div style="display:grid;grid-template-rows:1fr 1fr 1fr;gap:20px">
 
         <!-- PAGAMENTO -->
         <div class="perfil-card">
@@ -2161,6 +2168,35 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
               A primeira mensalidade é <strong>irrestituível</strong> em qualquer hipótese.
             </div>
           </details>
+        </div>
+
+
+        <!-- PERSONALIZE SEU CURSO -->
+        <div class="perfil-card">
+          <div class="perfil-card-header">
+            <div class="perfil-icon-spin">
+              <svg class="perfil-spin-ring" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="15" stroke="rgba(196,164,90,0.15)" stroke-width="1.2"/><circle cx="18" cy="18" r="15" stroke="rgba(196,164,90,0.55)" stroke-width="1.2" stroke-dasharray="28 66" stroke-linecap="round"/></svg>
+              <div class="perfil-icon-inner">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="rgba(11,29,58,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+              </div>
+            </div>
+            <p class="perfil-card-title">Personalize seu Curso</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <p style="font-family:Raleway,sans-serif;font-size:12px;color:#aaa;line-height:1.6">Ajuste as configurações visuais e de experiência do seu portal.</p>
+            <button onclick="switchTab('dashboard');setTimeout(function(){var b=document.querySelector('[data-topbar=personalize]');if(b)b.click();},200)" class="perfil-btn-outline" style="justify-content:flex-start;gap:10px">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14"/></svg>
+              Aparência do Portal
+            </button>
+            <button onclick="abrirTutorial()" class="perfil-btn-outline" style="justify-content:flex-start;gap:10px">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Iniciar Tutorial
+            </button>
+            <button onclick="switchTab('dashboard')" class="perfil-btn-outline" style="justify-content:flex-start;gap:10px">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              Ir para Conteúdo
+            </button>
+          </div>
         </div>
 
       </div>
