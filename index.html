@@ -2025,7 +2025,40 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
             </div>
             <p class="perfil-card-title">Meus Dados</p>
           </div>
-          <div style="display:flex;flex-direction:column;gap:12px">
+          <!-- VIEW MODE -->
+          <div id="perfil-view" style="display:none;flex-direction:column;gap:0">
+            <div class="perfil-row">
+              <span class="perfil-row-label">Nome</span>
+              <span id="pv-nome" class="perfil-value">—</span>
+            </div>
+            <div class="perfil-row">
+              <span class="perfil-row-label">Profissão</span>
+              <span id="pv-profissao" class="perfil-value">—</span>
+            </div>
+            <div class="perfil-row">
+              <span class="perfil-row-label">Especialidade / Empresa</span>
+              <span id="pv-especialidade" class="perfil-value">—</span>
+            </div>
+            <div class="perfil-row">
+              <span class="perfil-row-label">Cidade natal</span>
+              <span id="pv-cidade" class="perfil-value">—</span>
+            </div>
+            <div class="perfil-row">
+              <span class="perfil-row-label">Morando em</span>
+              <span id="pv-cidade-atual" class="perfil-value">—</span>
+            </div>
+            <div class="perfil-row" style="border-bottom:none">
+              <span class="perfil-row-label">Aniversário</span>
+              <span id="pv-aniversario" class="perfil-value">—</span>
+            </div>
+            <button onclick="perfilEditar()" class="perfil-btn-outline" style="margin-top:14px;gap:7px">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4z"/></svg>
+              Editar dados
+            </button>
+          </div>
+
+          <!-- EDIT MODE -->
+          <div id="perfil-edit" style="display:flex;flex-direction:column;gap:12px">
             <div>
               <label class="perfil-label">Nome Completo</label>
               <input id="perfil-nome" type="text" placeholder="Seu nome completo" class="perfil-input">
@@ -2054,10 +2087,13 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
               <label class="perfil-label">Data de Aniversário</label>
               <input id="perfil-aniversario" type="text" placeholder="DD/MM" class="perfil-input">
             </div>
-            <button onclick="salvarPerfil()" class="perfil-btn-save">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
-              Salvar dados
-            </button>
+            <div style="display:flex;gap:8px">
+              <button onclick="perfilCancelar()" class="perfil-btn-outline" style="flex:1">Cancelar</button>
+              <button onclick="salvarPerfil()" class="perfil-btn-save" style="flex:2">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+                Salvar dados
+              </button>
+            </div>
             <p id="perfil-save-msg" style="font-size:11px;color:#16a34a;text-align:center;display:none">✓ Dados salvos com sucesso.</p>
           </div>
         </div>
@@ -3537,6 +3573,7 @@ function renderPerfil() {
           }
         }
         atualizarBtnLembrete();
+        perfilAtualizarView();
       }
     },
     function(){}
@@ -3616,11 +3653,13 @@ function salvarPerfil() {
       var msg = document.getElementById('perfil-save-msg');
       if (msg) { msg.style.display='block'; setTimeout(function(){ msg.style.display='none'; }, 3000); }
       showToast(d.success ? 'Perfil salvo!' : 'Salvo localmente.', 'success');
+      perfilAtualizarView();
     },
     function() {
       var msg = document.getElementById('perfil-save-msg');
       if (msg) { msg.style.display='block'; setTimeout(function(){ msg.style.display='none'; }, 3000); }
       showToast('Salvo localmente.', 'warning');
+      perfilAtualizarView();
     }
   );
 }
@@ -4048,6 +4087,40 @@ function ppSalvar() {
   );
   // Update local cache
   currentStudent.proximos_passos = valor;
+}
+
+// ── PERFIL VIEW/EDIT ──
+function perfilEditar() {
+  document.getElementById('perfil-view').style.display = 'none';
+  document.getElementById('perfil-edit').style.display = 'flex';
+}
+
+function perfilCancelar() {
+  document.getElementById('perfil-edit').style.display = 'none';
+  document.getElementById('perfil-view').style.display = 'flex';
+}
+
+function perfilAtualizarView() {
+  var campos = [
+    ['perfil-nome',         'pv-nome'],
+    ['perfil-profissao',    'pv-profissao'],
+    ['perfil-especialidade','pv-especialidade'],
+    ['perfil-cidade',       'pv-cidade'],
+    ['perfil-cidade-atual', 'pv-cidade-atual'],
+    ['perfil-aniversario',  'pv-aniversario'],
+  ];
+  var temDados = false;
+  campos.forEach(function(par) {
+    var inp = document.getElementById(par[0]);
+    var span = document.getElementById(par[1]);
+    var val = inp ? inp.value.trim() : '';
+    if (span) span.textContent = val || '—';
+    if (val) temDados = true;
+  });
+  if (temDados) {
+    document.getElementById('perfil-edit').style.display = 'none';
+    document.getElementById('perfil-view').style.display = 'flex';
+  }
 }
 
 // ── TOGGLE TRILHA ──
