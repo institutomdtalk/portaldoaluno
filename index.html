@@ -972,7 +972,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nt-btn-new:hover{background:#2d2d4e}
 .nt-btn-new svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round}
 .nt-sort-dropdown{position:relative}
-.nt-sort-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:14px}
+.nt-sort-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:14px;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,0.1)}
 .nt-sort-menu.open{display:block}
 
 .nt-sort-item{padding:10px 16px;font-size:13px;font-family:var(--sans);color:#1a1a1a;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.15s;border:none;background:none;width:100%;text-align:left}
@@ -1004,8 +1004,10 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nt-card-date{font-size:11px;color:#bbb;font-family:var(--sans)}
 .nt-card-del,.nt-card-edit{position:absolute;top:14px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:all 0.25s;border:1px solid var(--border);background:var(--white);color:var(--text-muted)}
 .nt-card-del{right:14px}
+.nt-card-archive{right:46px}
 .nt-card-edit{right:46px}
-.nt-card:hover .nt-card-del,.nt-card:hover .nt-card-edit{opacity:1}
+.nt-card:hover .nt-card-del,.nt-card:hover .nt-card-edit,.nt-card:hover .nt-card-archive{opacity:1}
+.nt-card-archive:hover{color:#c8a96e;border-color:#c8a96e;background:#fffbf0}
 .nt-card-del:hover{color:#e53e3e;border-color:#e53e3e;background:#FEF2F2}
 .nt-card-edit:hover{color:var(--gold);border-color:var(--gold);background:rgba(196,164,90,0.06)}
 .nt-card-del:hover{color:#e53e3e;background:#fff0f0}
@@ -2394,6 +2396,10 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
           <span style="position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(196,164,90,0.25) 50%,transparent 60%);animation:btn-shine 2.5s ease-in-out infinite;pointer-events:none"></span>
           <svg viewBox="0 0 24 24" fill="none" stroke="rgba(196,164,90,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
           Transformar em Flashcards e Revisar
+        </button>
+        <button class="nt-btn-new" onclick="abrirArquivados()" style="background:#fff;color:var(--text-muted);border:1px solid var(--border);display:flex;align-items:center;gap:6px" onmouseover="this.style.borderColor='var(--navy)';this.style.color='var(--navy)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+          Arquivados
         </button>
         <button class="nt-btn-new" onclick="abrirModalNovaTermo()">
           <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -4063,6 +4069,62 @@ function buscarDicionario() {
   }, 500);
 }
 
+// ── ARQUIVAR TERMOS ──
+function getArquivadosKey() { return 'mdtalk_rev_arquivados_' + (currentStudent ? currentStudent.login : ''); }
+
+function ntArquivarCard(id, e) {
+  if (e) e.stopPropagation();
+  var arq = JSON.parse(localStorage.getItem(getArquivadosKey()) || '[]');
+  if (arq.indexOf(id) < 0) arq.push(id);
+  localStorage.setItem(getArquivadosKey(), JSON.stringify(arq));
+  // Remove from grid visually
+  var cards = document.querySelectorAll('#nt-grid .nt-card');
+  var t = _ntTermos.find(function(x){ return x.id === id; });
+  if (t) t._arquivado = true;
+  renderNtGrid();
+  showToast('Arquivado!', 'success');
+}
+
+function abrirArquivados() {
+  var ov = document.getElementById('arquivados-overlay');
+  if (ov) { ov.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+  renderArquivadosGrid();
+}
+
+function fecharArquivados() {
+  var ov = document.getElementById('arquivados-overlay');
+  if (ov) { ov.style.display = 'none'; document.body.style.overflow = ''; }
+}
+
+function renderArquivadosGrid() {
+  var grid = document.getElementById('arquivados-grid');
+  if (!grid) return;
+  var arq = JSON.parse(localStorage.getItem(getArquivadosKey()) || '[]');
+  var items = _ntTermos.filter(function(t){ return arq.indexOf(t.id) >= 0; });
+  if (!items.length) {
+    grid.innerHTML = '<p style="grid-column:1/-1;font-family:Raleway,sans-serif;font-size:13px;color:#aaa;font-style:italic;padding:20px 0">Nenhum termo arquivado.</p>';
+    return;
+  }
+  var tagLabels = {vocabulario:'Vocabulário',frases:'Frases',termos:'Termo Clínico',anotacoes:'Anotação'};
+  grid.innerHTML = items.map(function(t) {
+    return '<div style="background:#F8F7F5;border-radius:12px;padding:16px;position:relative">' +
+      '<span style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#aaa;display:block;margin-bottom:6px">' + (tagLabels[t.secao]||t.secao||'') + '</span>' +
+      '<p style="font-family:\'Cormorant Garamond\',serif;font-size:1rem;color:var(--navy);margin-bottom:4px">' + (t.termo||'') + '</p>' +
+      (t.traducao ? '<p style="font-size:12px;color:#c8a96e">— ' + t.traducao + '</p>' : '') +
+      '<button onclick="ntDesarquivar(&quot;' + t.id + '&quot;)" style="margin-top:10px;background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);cursor:pointer" onmouseover="this.style.borderColor=\'var(--navy)\';this.style.color=\'var(--navy)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.color=\'var(--text-muted)\'">Restaurar</button>' +
+    '</div>';
+  }).join('');
+}
+
+function ntDesarquivar(id) {
+  var arq = JSON.parse(localStorage.getItem(getArquivadosKey()) || '[]');
+  arq = arq.filter(function(x){ return x !== id; });
+  localStorage.setItem(getArquivadosKey(), JSON.stringify(arq));
+  renderArquivadosGrid();
+  renderNtGrid();
+  showToast('Termo restaurado!', 'success');
+}
+
 // ── MODO REVISAR ──
 var _revTermos  = [];
 var _revIdx     = 0;
@@ -5314,10 +5376,12 @@ function renderNtGrid() {
   var grid  = document.getElementById('nt-grid');
   var count = document.getElementById('nt-count');
   if (!grid) return;
+  var arqIds = JSON.parse(localStorage.getItem(getArquivadosKey ? getArquivadosKey() : '') || '[]');
   var items = _ntTermos.filter(function(t){
     var matchTag = _ntFiltro === 'todos' || t.secao === _ntFiltro;
     var matchQ   = !_ntBusca || (t.termo||'').toLowerCase().indexOf(_ntBusca) >= 0 || (t.traducao||'').toLowerCase().indexOf(_ntBusca) >= 0 || (t.exemplo||'').toLowerCase().indexOf(_ntBusca) >= 0;
-    return matchTag && matchQ;
+    var notArq   = arqIds.indexOf(t.id) < 0;
+    return matchTag && matchQ && notArq;
   });
   // Apply ordering
   if (_ntOrdem === 'az') items.sort(function(a,b){ return (a.termo||'').localeCompare(b.termo||''); });
@@ -5345,6 +5409,7 @@ function renderNtGrid() {
       '</div>' +
       '<button class="nt-card-del" onclick="ntDeletar(&quot;' + (t.id||'') + '&quot;,event)" title="Remover"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>' +
       '<button class="nt-card-edit" onclick="ntEditar(&quot;' + (t.id||'') + '&quot;,event)" title="Editar"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>' +
+      '<button class="nt-card-archive" onclick="ntArquivarCard(&quot;' + (t.id||'') + '&quot;,event)" title="Arquivar"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></button>' +
     '</div>';
   }).join('');
 }
@@ -7051,6 +7116,20 @@ window.addEventListener('load', function(){
   <div class="editor-fs-toolbar" id="fs-toolbar"><!-- preenchido via JS --></div>
   <div id="fs-corpo-input" class="editor-fs-body" contenteditable="true" data-placeholder="Escreva sua nota aqui..."></div>
 </div>
+<!-- ══ MODAL ARQUIVADOS ══ -->
+<div id="arquivados-overlay" style="display:none;position:fixed;inset:0;background:rgba(5,13,26,0.7);z-index:99800;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)">
+  <div style="background:#fff;border-radius:20px;padding:28px;max-width:700px;width:100%;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,0.25)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div>
+        <p style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Banco de Termos</p>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--navy)">Termos Arquivados</h3>
+      </div>
+      <button onclick="fecharArquivados()" style="background:none;border:1px solid var(--border);border-radius:8px;padding:7px 12px;cursor:pointer;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted)">Fechar</button>
+    </div>
+    <div id="arquivados-grid" style="overflow-y:auto;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;flex:1"></div>
+  </div>
+</div>
+
 <!-- ══ MODO REVISAR ══ -->
 <div id="revisar-overlay" style="display:none;position:fixed;inset:0;background:#F0EDE8;z-index:99900;flex-direction:column">
 
