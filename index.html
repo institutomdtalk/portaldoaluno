@@ -5374,23 +5374,26 @@ function ntAutoTranslate() {
   clearTimeout(_ntTransTimer);
   var termo = (document.getElementById('nt-termo')||{}).value||'';
   var tradEl = document.getElementById('nt-traducao');
-  if (!termo.trim() || !tradEl || tradEl.value.trim()) return;
+  if (!termo.trim() || !tradEl) return;
+  if (tradEl.dataset.manual === '1') return;
   _ntTransTimer = setTimeout(function() {
-    // Detect language: if mostly ASCII/latin assume EN→PT, else PT→EN
-    var isEN = /^[a-zA-Z\s\-'\.]+$/.test(termo.trim());
+    var isEN = /^[a-zA-Z\s\-\'\.0-9,;:]+$/.test(termo.trim());
     var langPair = isEN ? 'en|pt' : 'pt|en';
     var cbName = 'ntTrans_' + Date.now();
+    var sc = document.createElement('script');
     window[cbName] = function(data) {
       delete window[cbName];
-      if (document.body.contains(sc)) document.body.removeChild(sc);
+      try { if (document.body.contains(sc)) document.body.removeChild(sc); } catch(e){}
       if (data && data.responseStatus === 200 && tradEl) {
         tradEl.value = data.responseData.translatedText;
-        tradEl.style.borderColor = 'var(--gold)';
-        setTimeout(function(){ tradEl.style.borderColor = ''; }, 1500);
+        tradEl.dataset.manual = '0';
+        tradEl.style.background = 'rgba(196,164,90,0.06)';
+        setTimeout(function(){ if(tradEl) tradEl.style.background = ''; }, 1500);
       }
     };
-    var sc = document.createElement('script');
-    sc.src = 'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(termo) + '&langpair=' + encodeURIComponent(langPair) + '&callback=' + cbName;
+    sc.src = 'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(termo) +
+             '&langpair=' + encodeURIComponent(langPair) + '&callback=' + cbName;
+    sc.onerror = function(){ try { document.body.removeChild(sc); } catch(e){} };
     document.body.appendChild(sc);
   }, 700);
 }
@@ -5398,6 +5401,8 @@ function ntAutoTranslate() {
 function abrirModalNovaTermo() {
   var m = document.getElementById('nt-modal');
   if (m) { m.classList.add('active'); document.body.style.overflow = 'hidden'; }
+  var trad = document.getElementById('nt-traducao');
+  if (trad) trad.dataset.manual = '0';
   setTimeout(function(){ var i = document.getElementById('nt-termo'); if(i) i.focus(); }, 100);
 }
 
@@ -6891,7 +6896,7 @@ window.addEventListener('load', function(){
     <div class="nt-form-row-2">
       <div class="nt-form-row" style="margin-bottom:0">
         <label class="nt-form-label">Tradução (PT)</label>
-        <input type="text" id="nt-traducao" class="nt-form-input" placeholder="Ex: Dispneia">
+        <input type="text" id="nt-traducao" class="nt-form-input" placeholder="Ex: Dispneia" oninput="this.dataset.manual='1'">
       </div>
       <div class="nt-form-row" style="margin-bottom:0">
         <label class="nt-form-label">Fonte</label>
