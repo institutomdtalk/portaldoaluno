@@ -1794,6 +1794,10 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .tut-btn-next:hover{background:var(--navy-mid)}
 .tut-highlight{position:fixed;z-index:99989;border-radius:12px;box-shadow:0 0 0 4px var(--gold),0 0 0 9999px rgba(5,13,26,0.75);transition:all 0.35s cubic-bezier(0.22,1,0.36,1);pointer-events:none}
 .tut-arrow{position:absolute;width:0;height:0}
+.rev-fil{font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;background:#fff;border:1px solid var(--border);border-radius:20px;padding:5px 12px;cursor:pointer;color:var(--text-muted);transition:all 0.2s}
+.rev-fil.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.rev-star{cursor:pointer;font-size:18px;color:rgba(255,255,255,0.15);transition:color 0.2s;user-select:none;line-height:1}
+.rev-star.lit{color:#C4A45A}
 .topbar{position:absolute;top:0;left:0;right:0;z-index:500;display:none;align-items:center;justify-content:space-between;padding:0 32px;height:42px;background:transparent;pointer-events:none}
 .topbar.visible{display:flex;pointer-events:all}
 
@@ -2381,6 +2385,10 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
         </div>
         <button class="nt-icon-btn" onclick="ntDownloadCSV()" title="Exportar CSV">
           <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </button>
+        <button class="nt-btn-new" style="background:linear-gradient(135deg,var(--navy),var(--navy-mid));gap:6px" onclick="abrirModoRevisar()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+          Revisar
         </button>
         <button class="nt-btn-new" onclick="abrirModalNovaTermo()">
           <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -4048,6 +4056,149 @@ function buscarDicionario() {
     sc.onerror = function() { result.innerHTML = '<span style="color:#bbb;font-style:italic">Erro de conexão.</span>'; };
     document.body.appendChild(sc);
   }, 500);
+}
+
+// ── MODO REVISAR ──
+var _revTermos  = [];
+var _revIdx     = 0;
+var _revVirado  = false;
+var _revFiltro  = 'todos';
+var _revArquivados = [];
+
+function abrirModoRevisar() {
+  _revFiltro = 'todos';
+  _revArquivados = JSON.parse(localStorage.getItem('mdtalk_rev_arquivados_' + (currentStudent ? currentStudent.login : '')) || '[]');
+  revAplicarFiltro();
+  if (!_revTermos.length) { showToast('Nenhum termo para revisar.', 'warning'); return; }
+  _revIdx = 0;
+  _revVirado = false;
+  var ov = document.getElementById('revisar-overlay');
+  if (ov) { ov.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+  revRenderCard();
+}
+
+function fecharModoRevisar() {
+  var ov = document.getElementById('revisar-overlay');
+  if (ov) { ov.style.display = 'none'; document.body.style.overflow = ''; }
+}
+
+function revAplicarFiltro() {
+  var todos = _ntTermos.filter(function(t) {
+    return _revArquivados.indexOf(t.id) < 0;
+  });
+  if (_revFiltro === 'todos') {
+    _revTermos = todos.slice();
+  } else {
+    _revTermos = todos.filter(function(t){ return t.secao === _revFiltro; });
+  }
+}
+
+function revFiltrar(fil, btn) {
+  _revFiltro = fil;
+  document.querySelectorAll('.rev-fil').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  revAplicarFiltro();
+  _revIdx = 0;
+  _revVirado = false;
+  revRenderCard();
+}
+
+function revRenderCard() {
+  var wrap = document.getElementById('rev-card-wrap');
+  if (wrap) { wrap.style.transform = 'rotateY(0deg)'; _revVirado = false; }
+
+  if (!_revTermos.length) {
+    document.getElementById('rev-termo').textContent = 'Nenhum termo.';
+    document.getElementById('rev-secao').textContent = '';
+    document.getElementById('rev-traducao').textContent = '';
+    document.getElementById('rev-exemplo').textContent = '';
+    document.getElementById('rev-stars').innerHTML = '';
+    document.getElementById('rev-prog-txt').textContent = '0 / 0';
+    document.getElementById('rev-prog-bar').style.width = '0%';
+    return;
+  }
+
+  var t = _revTermos[_revIdx];
+  var secaoLabels = {vocabulario:'Vocabulário',frases:'Frase',termos:'Termo Clínico',anotacoes:'Anotação'};
+
+  document.getElementById('rev-secao').textContent = secaoLabels[t.secao] || t.secao || '';
+  document.getElementById('rev-termo').textContent = t.termo || '';
+  document.getElementById('rev-traducao').textContent = t.traducao || '—';
+  document.getElementById('rev-exemplo').textContent = t.exemplo || '';
+
+  // Stars
+  var conf = parseInt(t.confianca || 0);
+  var starsEl = document.getElementById('rev-stars');
+  starsEl.innerHTML = '';
+  for (var i = 1; i <= 5; i++) {
+    var star = document.createElement('span');
+    star.className = 'rev-star' + (i <= conf ? ' lit' : '');
+    star.textContent = '★';
+    star.dataset.val = i;
+    star.dataset.id  = t.id;
+    star.onclick = (function(val, tid) {
+      return function(e) {
+        e.stopPropagation();
+        revSetConfianca(tid, val);
+      };
+    })(i, t.id);
+    starsEl.appendChild(star);
+  }
+
+  // Progress
+  var prog = Math.round(((_revIdx + 1) / _revTermos.length) * 100);
+  document.getElementById('rev-prog-txt').textContent = (_revIdx + 1) + ' / ' + _revTermos.length;
+  document.getElementById('rev-prog-bar').style.width = prog + '%';
+}
+
+function revVirar() {
+  var wrap = document.getElementById('rev-card-wrap');
+  if (!wrap) return;
+  _revVirado = !_revVirado;
+  wrap.style.transform = _revVirado ? 'rotateY(180deg)' : 'rotateY(0deg)';
+}
+
+function revProximo() {
+  if (!_revTermos.length) return;
+  _revIdx = (_revIdx + 1) % _revTermos.length;
+  _revVirado = false;
+  revRenderCard();
+}
+
+function revAnterior() {
+  if (!_revTermos.length) return;
+  _revIdx = (_revIdx - 1 + _revTermos.length) % _revTermos.length;
+  _revVirado = false;
+  revRenderCard();
+}
+
+function revSetConfianca(id, val) {
+  var t = _ntTermos.find(function(x){ return x.id === id; });
+  if (!t) return;
+  t.confianca = val;
+  // Update stars UI
+  document.querySelectorAll('#rev-stars .rev-star').forEach(function(s) {
+    s.classList.toggle('lit', parseInt(s.dataset.val) <= val);
+  });
+  callScript(
+    'action=atualizar_confianca&login=' + encodeURIComponent(currentStudent.login) +
+    '&id=' + encodeURIComponent(id) + '&confianca=' + val,
+    function(){}, function(){}
+  );
+}
+
+function revArquivar() {
+  if (!_revTermos.length) return;
+  var t = _revTermos[_revIdx];
+  _revArquivados.push(t.id);
+  localStorage.setItem('mdtalk_rev_arquivados_' + currentStudent.login, JSON.stringify(_revArquivados));
+  // Remove from deck
+  _revTermos.splice(_revIdx, 1);
+  if (!_revTermos.length) { showToast('Todos arquivados!', 'success'); fecharModoRevisar(); return; }
+  if (_revIdx >= _revTermos.length) _revIdx = 0;
+  _revVirado = false;
+  revRenderCard();
+  showToast('Card arquivado.', 'success');
 }
 
 // ── PRÓXIMOS PASSOS ──
@@ -6836,6 +6987,72 @@ window.addEventListener('load', function(){
   <input type="text" id="fs-titulo-input" class="editor-fs-titulo" placeholder="Título da nota (opcional)">
   <div class="editor-fs-toolbar" id="fs-toolbar"><!-- preenchido via JS --></div>
   <div id="fs-corpo-input" class="editor-fs-body" contenteditable="true" data-placeholder="Escreva sua nota aqui..."></div>
+</div>
+<!-- ══ MODO REVISAR ══ -->
+<div id="revisar-overlay" style="display:none;position:fixed;inset:0;background:#F0EDE8;z-index:99900;flex-direction:column">
+
+  <!-- Header -->
+  <div style="background:#fff;border-bottom:1px solid rgba(0,0,0,0.07);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+    <div style="display:flex;align-items:center;gap:16px">
+      <button onclick="fecharModoRevisar()" style="background:none;border:1px solid var(--border);border-radius:8px;padding:7px 12px;cursor:pointer;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);display:flex;align-items:center;gap:6px" onmouseover="this.style.borderColor='var(--navy)';this.style.color='var(--navy)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        Fechar
+      </button>
+      <span style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold)">Modo Revisar</span>
+    </div>
+    <!-- Filtros -->
+    <div style="display:flex;gap:6px;flex-wrap:wrap" id="revisar-filtros">
+      <button class="rev-fil active" data-fil="todos" onclick="revFiltrar('todos',this)">Todos</button>
+      <button class="rev-fil" data-fil="vocabulario" onclick="revFiltrar('vocabulario',this)">Vocabulário</button>
+      <button class="rev-fil" data-fil="termos" onclick="revFiltrar('termos',this)">Termos</button>
+      <button class="rev-fil" data-fil="frases" onclick="revFiltrar('frases',this)">Frases</button>
+      <button class="rev-fil" data-fil="anotacoes" onclick="revFiltrar('anotacoes',this)">Anotações</button>
+    </div>
+    <!-- Progresso -->
+    <div style="display:flex;align-items:center;gap:10px">
+      <span id="rev-prog-txt" style="font-family:Raleway,sans-serif;font-size:12px;color:var(--text-muted)"></span>
+      <div style="width:120px;height:4px;background:rgba(0,0,0,0.08);border-radius:2px;overflow:hidden">
+        <div id="rev-prog-bar" style="height:100%;background:var(--gold);border-radius:2px;transition:width 0.4s;width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card Stage -->
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:32px;perspective:1200px" id="rev-stage">
+    <div id="rev-card-wrap" style="width:100%;max-width:560px;height:340px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform 0.6s cubic-bezier(0.22,1,0.36,1)" onclick="revVirar()">
+      <!-- Frente -->
+      <div style="position:absolute;inset:0;backface-visibility:hidden;background:#fff;border-radius:24px;padding:40px;box-shadow:0 8px 40px rgba(0,0,0,0.1);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+        <p id="rev-secao" style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px"></p>
+        <p id="rev-termo" style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:400;color:var(--navy);line-height:1.2;margin-bottom:16px"></p>
+        <p style="font-family:Raleway,sans-serif;font-size:11px;color:#bbb;margin-top:auto">Clique para revelar</p>
+      </div>
+      <!-- Verso -->
+      <div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);background:var(--navy-deep);border-radius:24px;padding:40px;box-shadow:0 8px 40px rgba(0,0,0,0.18);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+        <p id="rev-traducao" style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--gold);margin-bottom:12px;line-height:1.3"></p>
+        <p id="rev-exemplo" style="font-family:Raleway,sans-serif;font-size:12px;color:rgba(255,255,255,0.55);font-style:italic;line-height:1.6;max-width:380px"></p>
+        <!-- Estrelas confiança -->
+        <div id="rev-stars" style="display:flex;gap:6px;margin-top:20px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer actions -->
+  <div style="background:#fff;border-top:1px solid rgba(0,0,0,0.07);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+    <button onclick="revAnterior()" style="background:none;border:1px solid var(--border);border-radius:10px;padding:10px 20px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--navy)';this.style.color='var(--navy)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Anterior
+    </button>
+    <div style="display:flex;gap:10px">
+      <button onclick="revArquivar()" style="background:none;border:1px solid rgba(239,68,68,0.25);color:rgba(239,68,68,0.7);border-radius:10px;padding:10px 20px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s" onmouseover="this.style.borderColor='#ef4444';this.style.color='#ef4444'" onmouseout="this.style.borderColor='rgba(239,68,68,0.25)';this.style.color='rgba(239,68,68,0.7)'">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+        Arquivar
+      </button>
+    </div>
+    <button onclick="revProximo()" style="background:var(--navy);color:#fff;border:none;border-radius:10px;padding:10px 24px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background 0.2s" onmouseover="this.style.background='var(--navy-mid)'" onmouseout="this.style.background='var(--navy)'">
+      Próximo
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
 </div>
 
 </body>
