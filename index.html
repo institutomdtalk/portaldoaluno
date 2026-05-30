@@ -1797,6 +1797,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .tut-btn-next:hover{background:var(--navy-mid)}
 .tut-highlight{position:fixed;z-index:99989;border-radius:12px;box-shadow:0 0 0 4px var(--gold),0 0 0 9999px rgba(5,13,26,0.75);transition:all 0.35s cubic-bezier(0.22,1,0.36,1);pointer-events:none}
 .tut-arrow{position:absolute;width:0;height:0}
+@keyframes btn-shine{0%{transform:translateX(-100%) skewX(-15deg)}60%,100%{transform:translateX(200%) skewX(-15deg)}}
 .rev-fil{font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;background:#fff;border:1px solid var(--border);border-radius:20px;padding:5px 12px;cursor:pointer;color:var(--text-muted);transition:all 0.2s}
 .rev-fil.active{background:var(--navy);color:#fff;border-color:var(--navy)}
 .rev-star{cursor:pointer;font-size:18px;color:rgba(255,255,255,0.15);transition:color 0.2s;user-select:none;line-height:1}
@@ -2389,8 +2390,9 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
         <button class="nt-icon-btn" onclick="ntDownloadCSV()" title="Exportar CSV">
           <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         </button>
-        <button class="nt-btn-new" style="background:linear-gradient(135deg,var(--navy),var(--navy-mid));gap:6px" onclick="abrirModoRevisar()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        <button class="nt-btn-new" style="background:linear-gradient(135deg,#0B1D3A,#163158);gap:6px;position:relative;overflow:hidden;border:1px solid rgba(196,164,90,0.4);box-shadow:0 0 12px rgba(196,164,90,0.15)" onclick="abrirModoRevisar()">
+          <span style="position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(196,164,90,0.25) 50%,transparent 60%);animation:btn-shine 2.5s ease-in-out infinite;pointer-events:none"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(196,164,90,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
           Transformar em Flashcards e Revisar
         </button>
         <button class="nt-btn-new" onclick="abrirModalNovaTermo()">
