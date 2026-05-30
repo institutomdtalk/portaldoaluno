@@ -4127,38 +4127,46 @@ function ntDesarquivar(id) {
 }
 
 // ── MODO REVISAR ──
-var _revTermos  = [];
-var _revIdx     = 0;
-var _revVirado  = false;
-var _revFiltro  = 'todos';
+var _revTermos    = [];
+var _revIdx       = 0;
+var _revVirado    = false;
+var _revFiltro    = 'todos';
 var _revArquivados = [];
+var _revRodada    = [];   // 10 cards da rodada atual
+var _revRodadaIdx = 0;
+var _revAcertos   = 0;
+var _revTouchStartX = 0;
 
 function abrirModoRevisar() {
   _revFiltro = 'todos';
-  _revArquivados = JSON.parse(localStorage.getItem('mdtalk_rev_arquivados_' + (currentStudent ? currentStudent.login : '')) || '[]');
+  _revArquivados = JSON.parse(localStorage.getItem(getArquivadosKey()) || '[]');
   revAplicarFiltro();
   if (!_revTermos.length) { showToast('Nenhum termo para revisar.', 'warning'); return; }
-  _revIdx = 0;
-  _revVirado = false;
   var ov = document.getElementById('revisar-overlay');
   if (ov) { ov.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-  revRenderCard();
+  revIniciarRodada();
+  revAddEventos();
 }
 
 function fecharModoRevisar() {
   var ov = document.getElementById('revisar-overlay');
   if (ov) { ov.style.display = 'none'; document.body.style.overflow = ''; }
+  revRemoverEventos();
+}
+
+function revIniciarRodada() {
+  // Shuffle and pick up to 10
+  var deck = _revTermos.slice().sort(function(){ return Math.random()-0.5; });
+  _revRodada    = deck.slice(0, Math.min(10, deck.length));
+  _revRodadaIdx = 0;
+  _revAcertos   = 0;
+  _revVirado    = false;
+  revRenderCard();
 }
 
 function revAplicarFiltro() {
-  var todos = _ntTermos.filter(function(t) {
-    return _revArquivados.indexOf(t.id) < 0;
-  });
-  if (_revFiltro === 'todos') {
-    _revTermos = todos.slice();
-  } else {
-    _revTermos = todos.filter(function(t){ return t.secao === _revFiltro; });
-  }
+  var todos = _ntTermos.filter(function(t){ return _revArquivados.indexOf(t.id) < 0; });
+  _revTermos = _revFiltro === 'todos' ? todos.slice() : todos.filter(function(t){ return t.secao === _revFiltro; });
 }
 
 function revFiltrar(fil, btn) {
@@ -4166,56 +4174,57 @@ function revFiltrar(fil, btn) {
   document.querySelectorAll('.rev-fil').forEach(function(b){ b.classList.remove('active'); });
   if (btn) btn.classList.add('active');
   revAplicarFiltro();
-  _revIdx = 0;
-  _revVirado = false;
-  revRenderCard();
+  revIniciarRodada();
 }
 
 function revRenderCard() {
   var wrap = document.getElementById('rev-card-wrap');
-  if (wrap) { wrap.style.transform = 'rotateY(0deg)'; _revVirado = false; }
+  if (wrap) { wrap.style.transform = 'rotateY(0deg)'; }
+  _revVirado = false;
 
-  if (!_revTermos.length) {
-    document.getElementById('rev-termo').textContent = 'Nenhum termo.';
-    document.getElementById('rev-secao').textContent = '';
+  // Show pre-flip, hide post-flip
+  var pre  = document.getElementById('rev-pre-flip');
+  var post = document.getElementById('rev-post-flip');
+  if (pre)  pre.style.display  = 'flex';
+  if (post) post.style.display = 'none';
+
+  if (!_revRodada.length) {
+    document.getElementById('rev-termo').textContent    = 'Nenhum termo.';
+    document.getElementById('rev-secao').textContent    = '';
     document.getElementById('rev-traducao').textContent = '';
-    document.getElementById('rev-exemplo').textContent = '';
-    document.getElementById('rev-stars').innerHTML = '';
+    document.getElementById('rev-exemplo').textContent  = '';
+    document.getElementById('rev-stars').innerHTML      = '';
     document.getElementById('rev-prog-txt').textContent = '0 / 0';
     document.getElementById('rev-prog-bar').style.width = '0%';
     return;
   }
 
-  var t = _revTermos[_revIdx];
+  var t = _revRodada[_revRodadaIdx];
   var secaoLabels = {vocabulario:'Vocabulário',frases:'Frase',termos:'Termo Clínico',anotacoes:'Anotação'};
 
-  document.getElementById('rev-secao').textContent = secaoLabels[t.secao] || t.secao || '';
-  document.getElementById('rev-termo').textContent = t.termo || '';
+  document.getElementById('rev-secao').textContent    = secaoLabels[t.secao] || t.secao || '';
+  document.getElementById('rev-termo').textContent    = t.termo    || '';
   document.getElementById('rev-traducao').textContent = t.traducao || '—';
-  document.getElementById('rev-exemplo').textContent = t.exemplo || '';
+  document.getElementById('rev-exemplo').textContent  = t.exemplo  || '';
 
   // Stars
-  var conf = parseInt(t.confianca || 0);
+  var conf    = parseInt(t.confianca || 0);
   var starsEl = document.getElementById('rev-stars');
   starsEl.innerHTML = '';
   for (var i = 1; i <= 5; i++) {
     var star = document.createElement('span');
-    star.className = 'rev-star' + (i <= conf ? ' lit' : '');
-    star.textContent = '★';
-    star.dataset.val = i;
-    star.dataset.id  = t.id;
-    star.onclick = (function(val, tid) {
-      return function(e) {
-        e.stopPropagation();
-        revSetConfianca(tid, val);
-      };
-    })(i, t.id);
+    star.className    = 'rev-star' + (i <= conf ? ' lit' : '');
+    star.textContent  = '★';
+    star.dataset.val  = i;
+    star.dataset.id   = t.id;
+    star.onclick = (function(val, tid){ return function(e){ e.stopPropagation(); revSetConfianca(tid, val); }; })(i, t.id);
     starsEl.appendChild(star);
   }
 
   // Progress
-  var prog = Math.round(((_revIdx + 1) / _revTermos.length) * 100);
-  document.getElementById('rev-prog-txt').textContent = (_revIdx + 1) + ' / ' + _revTermos.length;
+  var total = _revRodada.length;
+  var prog  = Math.round(((_revRodadaIdx + 1) / total) * 100);
+  document.getElementById('rev-prog-txt').textContent = (_revRodadaIdx + 1) + ' / ' + total;
   document.getElementById('rev-prog-bar').style.width = prog + '%';
 }
 
@@ -4224,30 +4233,146 @@ function revVirar() {
   if (!wrap) return;
   _revVirado = !_revVirado;
   wrap.style.transform = _revVirado ? 'rotateY(180deg)' : 'rotateY(0deg)';
+  var pre  = document.getElementById('rev-pre-flip');
+  var post = document.getElementById('rev-post-flip');
+  if (_revVirado) {
+    if (pre)  pre.style.display  = 'none';
+    if (post) post.style.display = 'flex';
+  } else {
+    if (pre)  pre.style.display  = 'flex';
+    if (post) post.style.display = 'none';
+  }
+}
+
+function revResponder(sabia) {
+  if (!_revRodada.length) return;
+  var t = _revRodada[_revRodadaIdx];
+  // Always increment vezes revisado + update ultima revisao
+  var novaConf = parseInt(t.confianca || 0);
+  if (sabia) {
+    _revAcertos++;
+    novaConf = Math.min(5, novaConf + 1);
+  } else {
+    novaConf = Math.max(0, novaConf - 1);
+  }
+  t.confianca = novaConf;
+  var orig = _ntTermos.find(function(x){ return x.id === t.id; });
+  if (orig) orig.confianca = novaConf;
+  // Save to planilha (atualiza confiança + vezes_revisado + ultima_revisao)
+  if (currentStudent) {
+    callScript(
+      'action=atualizar_confianca&login=' + encodeURIComponent(currentStudent.login) +
+      '&id=' + encodeURIComponent(t.id) + '&confianca=' + novaConf,
+      function(){}, function(){}
+    );
+  }
+  // Update stars UI in card grid
+  var starsEl = document.getElementById('ntst-' + t.id);
+  if (starsEl) {
+    starsEl.querySelectorAll('.nt-star').forEach(function(s){
+      s.classList.toggle('nt-star-lit', parseInt(s.dataset.val) <= novaConf);
+    });
+  }
+  // Update stars in revisar overlay
+  document.querySelectorAll('#rev-stars .rev-star').forEach(function(s){
+    s.classList.toggle('lit', parseInt(s.dataset.val) <= novaConf);
+  });
+  // If 5 stars: popup
+  if (sabia && novaConf >= 5) {
+    setTimeout(function(){ revPopupDominou(t); }, 400);
+    return;
+  }
+  revAvancar();
+}
+
+function revAvancar() {
+  _revRodadaIdx++;
+  if (_revRodadaIdx >= _revRodada.length) {
+    revScoreFinal();
+  } else {
+    _revVirado = false;
+    revRenderCard();
+  }
+}
+
+function revScoreFinal() {
+  var total   = _revRodada.length;
+  var acertos = _revAcertos;
+  var pct     = Math.round((acertos / total) * 100);
+  var msgs    = [
+    { min:90, txt:'Incrível! Você está dominando o vocabulário.' },
+    { min:70, txt:'Ótimo desempenho! Continue assim.' },
+    { min:50, txt:'Bom progresso! Repita os que errou.' },
+    { min:0,  txt:'Pratique mais — você vai melhorar muito!' }
+  ];
+  var msg = msgs.find(function(m){ return pct >= m.min; }).txt;
+
+  // Score final — dados salvos via atualizar_confianca em cada resposta
+  var ov = document.createElement('div');
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(5,13,26,0.8);z-index:99995;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(8px)';
+  ov.innerHTML =
+    '<div style="background:#fff;border-radius:20px;padding:40px;max-width:400px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.3)">' +
+    '<p style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Rodada concluída</p>' +
+    '<p style="font-family:\'Cormorant Garamond\',serif;font-size:3rem;font-weight:300;color:var(--navy);line-height:1;margin-bottom:6px">' + acertos + '<span style="font-size:1.5rem;color:#aaa"> / ' + total + '</span></p>' +
+    '<p style="font-family:Raleway,sans-serif;font-size:13px;color:#64748b;margin-bottom:24px;line-height:1.6">' + msg + '</p>' +
+    '<div style="display:flex;gap:10px;justify-content:center">' +
+      '<button data-action="close-score" style="background:none;border:1px solid var(--border);color:var(--text-muted);border-radius:10px;padding:10px 20px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer">Fechar</button>' +
+      '<button data-action="nova-rodada" style="background:var(--navy);color:#fff;border:none;border-radius:10px;padding:10px 24px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer">Nova rodada →</button>' +
+    '</div></div>';
+  ov.addEventListener('click', function(e){
+    var btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    document.body.removeChild(ov);
+    if (btn.dataset.action === 'nova-rodada') revIniciarRodada();
+    else fecharModoRevisar();
+  });
+  document.body.appendChild(ov);
+}
+
+function revPopupDominou(t) {
+  var ov = document.createElement('div');
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(5,13,26,0.75);z-index:99996;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(8px)';
+  ov.innerHTML =
+    '<div style="background:#fff;border-radius:20px;padding:40px;max-width:380px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.25)">' +
+    '<p style="font-size:2rem;margin-bottom:12px">⭐⭐⭐⭐⭐</p>' +
+    '<p style="font-family:\'Cormorant Garamond\',serif;font-size:1.4rem;color:var(--navy);margin-bottom:12px">Excelente!</p>' +
+    '<p style="font-family:Raleway,sans-serif;font-size:13px;color:#64748b;line-height:1.7;margin-bottom:24px">Você parece ter dominado este termo! Deseja arquivar este card?</p>' +
+    '<div style="display:flex;gap:10px;justify-content:center">' +
+      '<button data-action="nao-arq" style="background:#fff;border:1px solid var(--border);color:var(--text-muted);border-radius:10px;padding:10px 20px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer">Não, manter</button>' +
+      '<button data-action="sim-arq" style="background:var(--navy);color:#fff;border:none;border-radius:10px;padding:10px 24px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer">Sim, arquivar</button>' +
+    '</div></div>';
+  ov.addEventListener('click', function(e){
+    var btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    document.body.removeChild(ov);
+    if (btn.dataset.action === 'sim-arq') {
+      _revArquivados.push(t.id);
+      localStorage.setItem(getArquivadosKey(), JSON.stringify(_revArquivados));
+      showToast('Card arquivado!', 'success');
+    }
+    revAvancar();
+  });
+  document.body.appendChild(ov);
 }
 
 function revProximo() {
-  if (!_revTermos.length) return;
-  _revIdx = (_revIdx + 1) % _revTermos.length;
   _revVirado = false;
   revRenderCard();
 }
 
 function revAnterior() {
-  if (!_revTermos.length) return;
-  _revIdx = (_revIdx - 1 + _revTermos.length) % _revTermos.length;
+  if (_revRodadaIdx > 0) _revRodadaIdx--;
   _revVirado = false;
   revRenderCard();
 }
 
 function revSetConfianca(id, val) {
   var t = _ntTermos.find(function(x){ return x.id === id; });
-  if (!t) return;
-  t.confianca = val;
-  // Update stars UI
-  document.querySelectorAll('#rev-stars .rev-star').forEach(function(s) {
+  if (t) t.confianca = val;
+  document.querySelectorAll('#rev-stars .rev-star').forEach(function(s){
     s.classList.toggle('lit', parseInt(s.dataset.val) <= val);
   });
+  if (!currentStudent) return;
   callScript(
     'action=atualizar_confianca&login=' + encodeURIComponent(currentStudent.login) +
     '&id=' + encodeURIComponent(id) + '&confianca=' + val,
@@ -4256,19 +4381,43 @@ function revSetConfianca(id, val) {
 }
 
 function revArquivar() {
-  if (!_revTermos.length) return;
-  var t = _revTermos[_revIdx];
+  if (!_revRodada.length) return;
+  var t = _revRodada[_revRodadaIdx];
   _revArquivados.push(t.id);
-  localStorage.setItem('mdtalk_rev_arquivados_' + currentStudent.login, JSON.stringify(_revArquivados));
-  // Remove from deck
-  _revTermos.splice(_revIdx, 1);
-  if (!_revTermos.length) { showToast('Todos arquivados!', 'success'); fecharModoRevisar(); return; }
-  if (_revIdx >= _revTermos.length) _revIdx = 0;
+  localStorage.setItem(getArquivadosKey(), JSON.stringify(_revArquivados));
+  _revRodada.splice(_revRodadaIdx, 1);
+  if (!_revRodada.length) { fecharModoRevisar(); return; }
+  if (_revRodadaIdx >= _revRodada.length) _revRodadaIdx = 0;
   _revVirado = false;
   revRenderCard();
   showToast('Card arquivado.', 'success');
 }
 
+// ── Keyboard & Touch ──
+function _revKeyHandler(e) {
+  if (e.key === 'ArrowRight') { if (_revVirado) revResponder(true);  else revVirar(); }
+  if (e.key === 'ArrowLeft')  { if (_revVirado) revResponder(false); else revAnterior(); }
+  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); revVirar(); }
+  if (e.key === 'Escape') fecharModoRevisar();
+}
+
+function revAddEventos() {
+  document.addEventListener('keydown', _revKeyHandler);
+  var stage = document.getElementById('rev-stage');
+  if (stage) {
+    stage.addEventListener('touchstart', function(e){ _revTouchStartX = e.touches[0].clientX; }, {passive:true});
+    stage.addEventListener('touchend', function(e){
+      var dx = e.changedTouches[0].clientX - _revTouchStartX;
+      if (Math.abs(dx) < 40) { revVirar(); return; }
+      if (dx > 0) revAnterior();
+      else { if (_revVirado) revResponder(true); else revVirar(); }
+    });
+  }
+}
+
+function revRemoverEventos() {
+  document.removeEventListener('keydown', _revKeyHandler);
+}
 // ── PRÓXIMOS PASSOS ──
 function ppEditar() {
   var txt = document.getElementById('proximos-passos-texto');
@@ -7125,7 +7274,7 @@ window.addEventListener('load', function(){
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
       <div>
         <p style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Banco de Termos</p>
-        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--navy)">Termos Arquivados</h3>
+        <h3 style="font-family:\'Cormorant Garamond\',serif;font-size:1.4rem;font-weight:400;color:var(--navy)">Termos Arquivados</h3>
       </div>
       <button onclick="fecharArquivados()" style="background:none;border:1px solid var(--border);border-radius:8px;padding:7px 12px;cursor:pointer;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted)">Fechar</button>
     </div>
@@ -7183,17 +7332,33 @@ window.addEventListener('load', function(){
 
   <!-- Footer actions -->
   <div style="background:#fff;border-top:1px solid rgba(0,0,0,0.07);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
-    <button onclick="revAnterior()" style="background:none;border:1px solid var(--border);border-radius:10px;padding:10px 20px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--navy)';this.style.color='var(--navy)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">
+    <button onclick="revAnterior()" style="background:none;border:1px solid var(--border);border-radius:10px;padding:10px 16px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--navy)';this.style.color='var(--navy)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       Anterior
     </button>
-    <div style="display:flex;gap:10px">
-      <button onclick="revArquivar()" style="background:none;border:1px solid rgba(239,68,68,0.25);color:rgba(239,68,68,0.7);border-radius:10px;padding:10px 20px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s" onmouseover="this.style.borderColor='#ef4444';this.style.color='#ef4444'" onmouseout="this.style.borderColor='rgba(239,68,68,0.25)';this.style.color='rgba(239,68,68,0.7)'">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
-        Arquivar
-      </button>
+    <div id="rev-footer-actions" style="display:flex;gap:10px">
+      <!-- Before flip: just archive -->
+      <div id="rev-pre-flip" style="display:flex;gap:8px">
+        <button onclick="revArquivar()" title="Arquivar" style="background:none;border:1px solid rgba(0,0,0,0.1);color:#aaa;border-radius:10px;padding:10px 14px;font-family:Raleway,sans-serif;font-size:10px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all 0.2s" onmouseover="this.style.borderColor='#ef4444';this.style.color='#ef4444'" onmouseout="this.style.borderColor='rgba(0,0,0,0.1)';this.style.color='#aaa'">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        </button>
+        <button onclick="revVirar()" style="background:var(--navy);color:#fff;border:none;border-radius:10px;padding:10px 28px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:background 0.2s" onmouseover="this.style.background='var(--navy-mid)'" onmouseout="this.style.background='var(--navy)'">
+          Revelar →
+        </button>
+      </div>
+      <!-- After flip: sabia / nao sabia -->
+      <div id="rev-post-flip" style="display:none;gap:10px">
+        <button onclick="revResponder(false)" style="background:#fff;color:#ef4444;border:2px solid #ef4444;border-radius:10px;padding:10px 24px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px" onmouseover="this.style.background='#FEF2F2'" onmouseout="this.style.background='#fff'">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Não sabia
+        </button>
+        <button onclick="revResponder(true)" style="background:#22c55e;color:#fff;border:none;border-radius:10px;padding:10px 24px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px" onmouseover="this.style.background='#16a34a'" onmouseout="this.style.background='#22c55e'">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Sabia!
+        </button>
+      </div>
     </div>
-    <button onclick="revProximo()" style="background:var(--navy);color:#fff;border:none;border-radius:10px;padding:10px 24px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background 0.2s" onmouseover="this.style.background='var(--navy-mid)'" onmouseout="this.style.background='var(--navy)'">
+    <button onclick="revProximo()" style="background:none;border:1px solid var(--border);border-radius:10px;padding:10px 16px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--navy)';this.style.color='var(--navy)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">
       Próximo
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
     </button>
