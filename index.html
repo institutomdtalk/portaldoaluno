@@ -1792,7 +1792,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .tut-btn-next:hover{background:var(--navy-mid)}
 .tut-highlight{position:fixed;z-index:99989;border-radius:12px;box-shadow:0 0 0 4px var(--gold),0 0 0 9999px rgba(5,13,26,0.75);transition:all 0.35s cubic-bezier(0.22,1,0.36,1);pointer-events:none}
 .tut-arrow{position:absolute;width:0;height:0}
-.topbar{position:fixed;top:0;left:0;right:0;z-index:500;display:none;align-items:center;justify-content:space-between;padding:0 32px;height:42px;background:transparent;pointer-events:none}
+.topbar{position:absolute;top:0;left:0;right:0;z-index:500;display:none;align-items:center;justify-content:space-between;padding:0 32px;height:42px;background:transparent;pointer-events:none}
 .topbar.visible{display:flex;pointer-events:all}
 
 .topbar-nav{display:flex;align-items:center;gap:0;flex:1;justify-content:center;flex-wrap:nowrap;overflow:hidden}
@@ -1990,6 +1990,10 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
     <button class="nb-tab" id="tab-recursos" onclick="switchTab('recursos')">
       <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
       Recursos
+    </button>
+    <button class="nb-tab" id="tab-biblioteca" onclick="switchTab('biblioteca')">
+      <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+      Biblioteca
     </button>
   </div>
 
@@ -2569,6 +2573,17 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
           </div>
         </a>
 
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PAINEL BIBLIOTECA ══ -->
+  <div class="nb-panel prog-page" id="panel-biblioteca">
+    <p style="font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Instituto MD Talk</p>
+    <h2 style="font-family:var(--serif);font-size:1.6rem;font-weight:300;color:var(--navy);margin-bottom:32px">Minha <em style="font-style:italic;color:var(--gold)">Biblioteca</em></h2>
+    <div id="biblioteca-lista" style="display:flex;flex-direction:column;gap:16px">
+      <div style="background:#fff;border-radius:12px;padding:32px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.05)">
+        <p style="font-family:var(--serif);font-size:1.1rem;font-weight:300;color:#aaa">Em breve, textos selecionados para você.</p>
       </div>
     </div>
   </div>
@@ -4607,7 +4622,7 @@ var _sc2Filtro   = 'todos';
 // ── TAB SWITCHING ──
 function switchTab(tab) {
   // Hide all panels and dashboard
-  ['sala','progresso','termos','smartcards','notas','recursos'].forEach(function(t){
+  ['sala','progresso','termos','smartcards','notas','recursos','biblioteca'].forEach(function(t){
     var p = document.getElementById('panel-' + t);
     if (p) p.classList.remove('active');
   });
