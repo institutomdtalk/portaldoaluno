@@ -2701,6 +2701,21 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
   <main class="dashboard">
 
+    <!-- PRÓXIMOS PASSOS -->
+    <div id="card-proximos-passos" style="display:none;grid-column:1/-1;background:linear-gradient(135deg,#1a3a5c 0%,#0B1D3A 100%);border-radius:14px;padding:18px 24px;margin-bottom:0;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;border:1px solid rgba(196,164,90,0.1);pointer-events:none"></div>
+      <div style="position:absolute;top:-15px;right:-15px;width:80px;height:80px;border-radius:50%;border:1px solid rgba(196,164,90,0.07);pointer-events:none"></div>
+      <div style="display:flex;align-items:flex-start;gap:16px">
+        <div style="width:32px;height:32px;border-radius:50%;background:rgba(196,164,90,0.12);border:1px solid rgba(196,164,90,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        </div>
+        <div>
+          <p style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(196,164,90,0.7);margin-bottom:5px">Próximos Passos</p>
+          <p id="proximos-passos-texto" style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;color:rgba(255,255,255,0.88);line-height:1.6"></p>
+        </div>
+      </div>
+    </div>
+
     <!-- PASTA DO DRIVE -->
     <div class="card reveal" style="grid-column:1/-1" id="card-drive-files">
       <div class="card-pad">
@@ -3207,6 +3222,16 @@ function renderDashboard(a) {
   if (tabCuradoria) tabCuradoria.style.display = '';
   _curFiles = [];
 
+  // Próximos Passos
+  var ppCard = document.getElementById('card-proximos-passos');
+  var ppTexto = document.getElementById('proximos-passos-texto');
+  if (ppCard && ppTexto && a.proximos_passos && a.proximos_passos.trim()) {
+    ppTexto.textContent = a.proximos_passos.trim();
+    ppCard.style.display = '';
+  } else if (ppCard) {
+    ppCard.style.display = 'none';
+  }
+
   // Load Drive files
   var driveFirstRow = document.getElementById('drive-first-row');
   var driveRestRows = document.getElementById('drive-rest-rows');
@@ -3708,19 +3733,24 @@ function verificarLembretePagamento() {
 function mostrarPopupLembrete(venc) {
   var a = currentStudent;
   var ov = document.createElement('div');
-  ov.style.cssText = 'position:fixed;inset:0;background:rgba(5,13,26,0.7);z-index:99980;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)';
+  ov.style.cssText = 'position:fixed;inset:0;background:rgba(5,13,26,0.82);z-index:99980;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(10px)';
   ov.innerHTML =
-    '<div style="background:#fff;border-radius:20px;padding:40px 36px;max-width:420px;width:100%;text-align:center;position:relative;box-shadow:0 24px 60px rgba(0,0,0,0.25)">' +
-    '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#C4A45A,#D4BA7A);border-radius:20px 20px 0 0"></div>' +
-    '<div style="width:56px;height:56px;border-radius:50%;background:rgba(196,164,90,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 20px">' +
-      '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>' +
+    '<div style="background:#fff;border-radius:24px;padding:48px 40px;max-width:440px;width:100%;text-align:center;position:relative;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.35)">' +
+    // Decorative rings
+    '<div style="position:absolute;top:-60px;right:-60px;width:180px;height:180px;border-radius:50%;border:1px solid rgba(196,164,90,0.12);pointer-events:none"></div>' +
+    '<div style="position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;border:1px solid rgba(196,164,90,0.08);pointer-events:none"></div>' +
+    '<div style="position:absolute;bottom:-50px;left:-50px;width:160px;height:160px;border-radius:50%;border:1px solid rgba(196,164,90,0.08);pointer-events:none"></div>' +
+    '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#C4A45A,#D4BA7A,transparent)"></div>' +
+    // Icon
+    '<div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,rgba(196,164,90,0.12),rgba(196,164,90,0.06));border:1px solid rgba(196,164,90,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 24px">' +
+      '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>' +
     '</div>' +
-    '<p style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#C4A45A;margin-bottom:12px">Instituto MD Talk</p>' +
-    '<h3 style="font-family:\'Cormorant Garamond\',serif;font-size:1.5rem;font-weight:400;color:#0B1D3A;margin-bottom:14px;line-height:1.2">Lembrete de Mensalidade</h3>' +
-    '<p style="font-family:Raleway,sans-serif;font-size:13px;color:#64748b;line-height:1.7;margin-bottom:8px">Conforme combinado, este é um lembrete gentil sobre o vencimento da sua mensalidade.</p>' +
-    (a.valor_mensalidade ? '<p style="font-family:\'Cormorant Garamond\',serif;font-size:1.6rem;font-weight:400;color:#0B1D3A;margin-bottom:4px">' + a.valor_mensalidade + '</p>' : '') +
-    '<p style="font-family:Raleway,sans-serif;font-size:12px;color:#aaa;margin-bottom:24px">Vencimento: todo dia ' + venc + ' · PIX: <strong style="color:#0B1D3A">38315226851</strong></p>' +
-    '<button data-close="1" style="background:#0B1D3A;color:#fff;border:none;border-radius:10px;padding:12px 32px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer">Entendido — obrigada!</button>' +
+    '<p style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#C4A45A;margin-bottom:14px">Instituto MD Talk</p>' +
+    '<h3 style="font-family:\'Cormorant Garamond\',serif;font-size:1.7rem;font-weight:400;color:#0B1D3A;margin-bottom:16px;line-height:1.2">Lembrete de Mensalidade</h3>' +
+    '<p style="font-family:Raleway,sans-serif;font-size:13px;color:#64748b;line-height:1.8;margin-bottom:12px">Conforme combinado, este é um lembrete sobre o vencimento da sua mensalidade.</p>' +
+    (a.valor_mensalidade ? '<p style="font-family:\'Cormorant Garamond\',serif;font-size:2rem;font-weight:300;color:#0B1D3A;margin-bottom:6px;letter-spacing:1px">' + a.valor_mensalidade + '</p>' : '') +
+    '<p style="font-family:Raleway,sans-serif;font-size:12px;color:#aaa;margin-bottom:32px">Todo dia ' + venc + ' · PIX <span style="color:#0B1D3A;font-weight:600">38315226851</span></p>' +
+    '<button data-close="1" style="background:linear-gradient(135deg,#0B1D3A,#163158);color:#fff;border:none;border-radius:12px;padding:14px 40px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 16px rgba(11,29,58,0.25)">Entendido — obrigada!</button>' +
     '</div>';
   ov.addEventListener('click', function(e){
     if (e.target === ov || e.target.dataset.close) document.body.removeChild(ov);
