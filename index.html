@@ -1963,13 +1963,13 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
   <!-- ══ NOTEBOOK TAB BAR ══ -->
   <div class="nb-tabs-bar" id="nb-tabs-bar">
+    <button class="nb-tab" id="tab-dashboard" onclick="switchTab('dashboard')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Principal
+    </button>
     <button class="nb-tab" id="tab-sala" onclick="switchTab('sala')">
       <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       Perfil
-    </button>
-    <button class="nb-tab" id="tab-dashboard" onclick="switchTab('dashboard')">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      Conteúdo
     </button>
     <button class="nb-tab" id="tab-progresso" onclick="switchTab('progresso')">
       <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -3231,8 +3231,8 @@ function renderDashboard(a) {
   showPage('dashboard');
   // Activate portal tab
   document.querySelectorAll('.nb-tab').forEach(function(b){ b.classList.remove('active'); });
-  var t = document.getElementById('tab-sala'); if(t) t.classList.add('active');
-  switchTab('sala');
+  var t = document.getElementById('tab-dashboard'); if(t) t.classList.add('active');
+  switchTab('dashboard');
   setTimeout(function(){ initReveal(); animateCards(); }, 80);
 }
 
