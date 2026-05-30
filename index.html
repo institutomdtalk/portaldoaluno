@@ -998,6 +998,9 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nt-card-termo{font-family:var(--serif);font-size:1.05rem;font-weight:400;color:#1a1a1a;line-height:1.3;margin-bottom:6px}
 .nt-card-traducao{font-size:13px;color:#c8a96e;margin-bottom:10px;font-style:normal;font-weight:500}
 .nt-card-exemplo{font-size:12.5px;color:#888;line-height:1.55;margin-bottom:14px;font-style:italic}
+.nt-card-stars{display:flex;gap:2px}
+.nt-star{font-size:13px;color:rgba(0,0,0,0.12);cursor:pointer;transition:color 0.15s;line-height:1;user-select:none}
+.nt-star:hover,.nt-star-lit{color:#C4A45A}
 .nt-card-date{font-size:11px;color:#bbb;font-family:var(--sans)}
 .nt-card-del,.nt-card-edit{position:absolute;top:14px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:all 0.25s;border:1px solid var(--border);background:var(--white);color:var(--text-muted)}
 .nt-card-del{right:14px}
@@ -2388,7 +2391,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
         </button>
         <button class="nt-btn-new" style="background:linear-gradient(135deg,var(--navy),var(--navy-mid));gap:6px" onclick="abrirModoRevisar()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-          Revisar
+          Transformar em Flashcards e Revisar
         </button>
         <button class="nt-btn-new" onclick="abrirModalNovaTermo()">
           <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -5324,17 +5327,70 @@ function renderNtGrid() {
   }
   grid.innerHTML = items.map(function(t) {
     var tagLabels = {vocabulario:'Vocabulário',frases:'Frases',termos:'Termo Clínico',anotacoes:'Anotação'};
-    var tagIcons  = {vocabulario:'📖',frases:'💬',termos:'🔬',anotacoes:'✏️'};
+    var conf = parseInt(t.confianca || 0);
+    var stars = '';
+    for (var i = 1; i <= 5; i++) {
+      stars += '<span class="nt-star' + (i <= conf ? ' nt-star-lit' : '') + '" onclick="ntSetConfianca(&quot;' + (t.id||'') + '&quot;,' + i + ',event)" data-val="' + i + '">★</span>';
+    }
     return '<div class="nt-card">' +
       '<span class="nt-card-tag ' + (t.secao||'vocabulario') + '">' + (tagLabels[t.secao]||t.secao).toUpperCase() + '</span>' +
       '<p class="nt-card-termo">' + (t.termo||'') + '</p>' +
       (t.traducao ? '<p class="nt-card-traducao">— ' + t.traducao + '</p>' : '') +
       (t.exemplo  ? '<p class="nt-card-exemplo">' + t.exemplo + '</p>' : '') +
-      '<p class="nt-card-date">' + (t.data_entrada||'') + '</p>' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px">' +
+        '<p class="nt-card-date">' + (t.data_entrada||'') + '</p>' +
+        '<div class="nt-card-stars" id="ntst-' + (t.id||'') + '">' + stars + '</div>' +
+      '</div>' +
       '<button class="nt-card-del" onclick="ntDeletar(&quot;' + (t.id||'') + '&quot;,event)" title="Remover"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>' +
       '<button class="nt-card-edit" onclick="ntEditar(&quot;' + (t.id||'') + '&quot;,event)" title="Editar"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>' +
     '</div>';
   }).join('');
+}
+
+function ntSetConfianca(id, val, e) {
+  if (e) e.stopPropagation();
+  var t = _ntTermos.find(function(x){ return x.id === id; });
+  if (!t) return;
+  t.confianca = val;
+  // Update stars UI in card
+  var starsEl = document.getElementById('ntst-' + id);
+  if (starsEl) {
+    starsEl.querySelectorAll('.nt-star').forEach(function(s){
+      s.classList.toggle('nt-star-lit', parseInt(s.dataset.val) <= val);
+    });
+  }
+  callScript(
+    'action=atualizar_confianca&login=' + encodeURIComponent(currentStudent.login) +
+    '&id=' + encodeURIComponent(id) + '&confianca=' + val,
+    function(){}, function(){}
+  );
+}
+
+// Auto-translate in new term modal
+var _ntTransTimer = null;
+function ntAutoTranslate() {
+  clearTimeout(_ntTransTimer);
+  var termo = (document.getElementById('nt-termo')||{}).value||'';
+  var tradEl = document.getElementById('nt-traducao');
+  if (!termo.trim() || !tradEl || tradEl.value.trim()) return;
+  _ntTransTimer = setTimeout(function() {
+    // Detect language: if mostly ASCII/latin assume EN→PT, else PT→EN
+    var isEN = /^[a-zA-Z\s\-'\.]+$/.test(termo.trim());
+    var langPair = isEN ? 'en|pt' : 'pt|en';
+    var cbName = 'ntTrans_' + Date.now();
+    window[cbName] = function(data) {
+      delete window[cbName];
+      if (document.body.contains(sc)) document.body.removeChild(sc);
+      if (data && data.responseStatus === 200 && tradEl) {
+        tradEl.value = data.responseData.translatedText;
+        tradEl.style.borderColor = 'var(--gold)';
+        setTimeout(function(){ tradEl.style.borderColor = ''; }, 1500);
+      }
+    };
+    var sc = document.createElement('script');
+    sc.src = 'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(termo) + '&langpair=' + encodeURIComponent(langPair) + '&callback=' + cbName;
+    document.body.appendChild(sc);
+  }, 700);
 }
 
 function abrirModalNovaTermo() {
@@ -6828,7 +6884,7 @@ window.addEventListener('load', function(){
     </div>
     <div class="nt-form-row">
       <label class="nt-form-label">Termo / Título</label>
-      <input type="text" id="nt-termo" class="nt-form-input" placeholder="Ex: Dyspnea, Heart failure...">
+      <input type="text" id="nt-termo" class="nt-form-input" placeholder="Ex: Dyspnea, Heart failure..." oninput="ntAutoTranslate()">
     </div>
     <div class="nt-form-row-2">
       <div class="nt-form-row" style="margin-bottom:0">
