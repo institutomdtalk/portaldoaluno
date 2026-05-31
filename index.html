@@ -2648,28 +2648,17 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
         </div>
 
         <!-- MATERIAL DE APOIO -->
+        <!-- MATERIAL DE APOIO — TRILHA DE APRENDIZADO -->
         <div id="drive-section-apoio" style="display:none">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-            <p class="card-overline" style="margin-bottom:0">Material complementar</p>
-            <span id="drive-apoio-count" style="font-size:10px;color:var(--text-muted);font-family:var(--sans)"></span>
+          <p class="card-overline">Programa de Proficiência em Inglês Técnico</p>
+          <h3 class="card-title">Minha Trilha de Aprendizado</h3>
+          <p class="card-desc" style="margin-bottom:20px">Acompanhe sua jornada e marque os módulos concluídos.</p>
+          <div id="trilha-lista"></div>
+          <div id="trilha-mais-wrap" style="display:none;margin-top:16px;text-align:center">
+            <button id="btn-trilha-mais" onclick="toggleTrilhaMais()" style="background:none;border:1px solid var(--border-gold);color:var(--gold);font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border-radius:var(--radius);cursor:pointer;transition:all 0.3s ease">
+              Ver mais <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-left:4px" id="trilha-mais-chevron"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
           </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:4px">
-            <h3 class="card-title" style="margin-bottom:0">Material de Apoio</h3>
-            <div style="position:relative;flex-shrink:0">
-              <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--text-muted);fill:none;stroke-width:2;stroke-linecap:round;pointer-events:none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-              <input id="apoio-search" type="text" placeholder="Buscar arquivo..." oninput="filtrarApoioFiles(this.value)"
-                style="padding:8px 12px 8px 32px;border:1px solid var(--border);border-radius:var(--radius);font-family:var(--sans);font-size:12px;color:var(--text-body);outline:none;width:200px;transition:border-color 0.3s;background:var(--white)"
-                onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
-            </div>
-          </div>
-          <p class="card-desc" id="apoio-files-status" style="margin-bottom:0">Carregando material de apoio...</p>
-          <div class="drive-card-grid" id="apoio-first-row"></div>
-          <div id="apoio-more-rows" style="max-height:0;overflow:hidden;transition:max-height 0.6s cubic-bezier(0.22,1,0.36,1)">
-            <div class="drive-card-grid" id="apoio-rest-rows"></div>
-          </div>
-          <button id="btn-apoio-toggle" style="display:none;margin:16px auto 0;background:none;border:1px solid var(--border-gold);color:var(--gold);font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border-radius:var(--radius);cursor:pointer;transition:all 0.3s ease;width:fit-content" onclick="toggleApoioFiles()">
-            Ver mais <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-left:4px"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
         </div>
 
         <!-- ARQUIVADOS / FINALIZADOS -->
@@ -2704,20 +2693,6 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
 
 
-<!-- TRILHA DE APRENDIZADO -->
-    <div class="card reveal" style="grid-column:1/-1" id="card-trilha">
-      <div class="card-pad">
-        <p class="card-overline">Programa de Proficiência em Inglês Técnico</p>
-        <h3 class="card-title">Minha Trilha de Aprendizado</h3>
-        <p class="card-desc" style="margin-bottom:20px">Acompanhe sua jornada e marque os módulos concluídos.</p>
-        <div id="trilha-lista"></div>
-        <div id="trilha-mais-wrap" style="display:none;margin-top:16px;text-align:center">
-          <button id="btn-trilha-mais" onclick="toggleTrilhaMais()" style="background:none;border:1px solid var(--border-gold);color:var(--gold);font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border-radius:var(--radius);cursor:pointer;transition:all 0.3s ease">
-            Ver mais <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-left:4px" id="trilha-mais-chevron"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-        </div>
-      </div>
-    </div>
 
   </main><!-- end .dashboard -->
 
@@ -3132,7 +3107,7 @@ function renderDashboard(a) {
   var tabCuradoria = document.getElementById('drive-tab-curadoria');
   if (tabCuradoria) tabCuradoria.style.display = '';
   _curFiles = [];
-  _apoioFiles = []; _arqFiles = [];
+  _arqFiles = [];
 
   // Próximos Passos
   var ppCard  = document.getElementById('card-proximos-passos');
@@ -4354,7 +4329,6 @@ function togglePdfExtra(uid, btn) {
 // ── DRIVE TABS ──
 var _curFiles = [];
 var _curFilesOpen = false;
-var _apoioFiles = [], _apoioFilesOpen = false;
 var _arqFiles = [], _arqFilesOpen = false;
 
 function extrairFolderId(url) {
@@ -4381,7 +4355,6 @@ function switchDriveTab(tab) {
     }
   });
   if (tab === 'curadoria'  && _curFiles.length   === 0) carregarCuradoria();
-  if (tab === 'apoio'      && _apoioFiles.length === 0) carregarApoio();
   if (tab === 'arquivados' && _arqFiles.length   === 0) carregarArquivados();
 }
 
@@ -4440,9 +4413,6 @@ function _drivePastaToggle(prefix, open) {
   if (toggleBtn) toggleBtn.innerHTML = (open ? 'Ver menos' : 'Ver mais') +
     '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-left:4px"><path d="' + (open ? 'M18 15l-6-6-6 6' : 'M6 9l6 6 6-6') + '"/></svg>';
 }
-function carregarApoio()        { _drivePastaCarregar('apoio', 'link_apoio', function(f){ _apoioFiles = f; }); }
-function filtrarApoioFiles(q)   { _drivePastaFiltrar('apoio', _apoioFiles, q); }
-function toggleApoioFiles()     { _apoioFilesOpen = !_apoioFilesOpen; _drivePastaToggle('apoio', _apoioFilesOpen); }
 function carregarArquivados()   { _drivePastaCarregar('arq', 'link_arquivados', function(f){ _arqFiles = f; }); }
 function filtrarArquivadosFiles(q){ _drivePastaFiltrar('arq', _arqFiles, q); }
 function toggleArqFiles()       { _arqFilesOpen = !_arqFilesOpen; _drivePastaToggle('arq', _arqFilesOpen); }
