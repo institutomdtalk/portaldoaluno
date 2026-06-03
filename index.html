@@ -6237,8 +6237,6 @@ function saveLiveItems() {
 // ── GEMINI AI ──
 var _geminiOpen = false;
 var _geminiHistory = [];
-var GEMINI_KEY = 'AQ.Ab8RN6La8PYo4J92Ejje5bZbZfsJ0jypmkaRj9jEbCH_qWsMNA'; // aistudio.google.com → Get API Key
-var GEMINI_SYSTEM = 'You are a Medical English assistant for Brazilian physicians. Help with vocabulary, pronunciation, grammar, and clinical communication in English. When the user writes in Portuguese, respond in both languages when helpful.';
 
 function toggleGeminiPanel() {
   _geminiOpen = !_geminiOpen;
@@ -6256,7 +6254,6 @@ function enviarGemini() {
   if (!input || !feed) return;
   var text = input.value.trim();
   if (!text) return;
-  if (GEMINI_KEY === 'SUA_CHAVE_AQUI') { showToast('Configure a chave da API Gemini.','error'); return; }
   var empty = feed.querySelector('.gp-empty');
   if (empty) feed.removeChild(empty);
   var uDiv = document.createElement('div');
@@ -6271,43 +6268,30 @@ function enviarGemini() {
   feed.appendChild(tDiv);
   feed.scrollTop = feed.scrollHeight;
   _geminiHistory.push({ role:'user', parts:[{ text:text }] });
-  var isOAuth = GEMINI_KEY.indexOf('AQ.') === 0 || GEMINI_KEY.indexOf('ya29.') === 0;
-  var fetchUrl = isOAuth
-    ? 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
-    : 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_KEY;
-  var fetchHeaders = isOAuth
-    ? {'Content-Type':'application/json','Authorization':'Bearer ' + GEMINI_KEY}
-    : {'Content-Type':'application/json'};
-  fetch(fetchUrl, {
-    method:'POST',
-    headers:fetchHeaders,
-    body:JSON.stringify({
-      systemInstruction:{ parts:[{ text:GEMINI_SYSTEM }] },
-      contents:_geminiHistory
-    })
-  })
-  .then(function(r){ return r.json(); })
-  .then(function(data) {
-    if (feed.contains(tDiv)) feed.removeChild(tDiv);
-    var reply = '';
-    if (data.error) { reply = 'Erro API: ' + (data.error.message || JSON.stringify(data.error)); }
-    else { try { reply = data.candidates[0].content.parts[0].text; } catch(e) { reply = 'Resposta inesperada: ' + JSON.stringify(data).substring(0,120); } }
-    _geminiHistory.push({ role:'model', parts:[{ text:reply }] });
-    var aDiv = document.createElement('div');
-    aDiv.className = 'gp-msg gp-msg-ai';
-    aDiv.textContent = reply;
-    feed.appendChild(aDiv);
-    feed.scrollTop = feed.scrollHeight;
-    if (sendBtn) sendBtn.disabled = false;
-  })
-  .catch(function() {
-    if (feed.contains(tDiv)) feed.removeChild(tDiv);
-    var eDiv = document.createElement('div');
-    eDiv.className = 'gp-msg gp-msg-ai gp-error';
-    eDiv.textContent = 'Erro de conexão. Tente novamente.';
-    feed.appendChild(eDiv);
-    if (sendBtn) sendBtn.disabled = false;
-  });
+  var msgTrunc = text.length > 800 ? text.substring(0,800) : text;
+  callScript(
+    'action=gemini_proxy&message=' + encodeURIComponent(msgTrunc),
+    function(d) {
+      if (feed.contains(tDiv)) feed.removeChild(tDiv);
+      var reply = d.reply || 'Sem resposta.';
+      if (!d.success) reply = '⚠ ' + reply;
+      else _geminiHistory.push({ role:'model', parts:[{ text:reply }] });
+      var aDiv = document.createElement('div');
+      aDiv.className = 'gp-msg gp-msg-ai' + (d.success ? '' : ' gp-error');
+      aDiv.textContent = reply;
+      feed.appendChild(aDiv);
+      feed.scrollTop = feed.scrollHeight;
+      if (sendBtn) sendBtn.disabled = false;
+    },
+    function() {
+      if (feed.contains(tDiv)) feed.removeChild(tDiv);
+      var eDiv = document.createElement('div');
+      eDiv.className = 'gp-msg gp-msg-ai gp-error';
+      eDiv.textContent = 'Erro de conexão. Tente novamente.';
+      feed.appendChild(eDiv);
+      if (sendBtn) sendBtn.disabled = false;
+    }
+  );
 }
 function toggleLiveMode() {
   _liveOpen = !_liveOpen;
