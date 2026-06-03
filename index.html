@@ -2340,8 +2340,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   <!-- ══ PAINEL NOTAS ══ -->
   <div class="nb-panel notas-page" id="panel-notas">
     <div class="notas-title-block">
-      <h2 style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--navy);margin-bottom:6px;line-height:1.1">Minhas <em style="font-style:italic;color:var(--gold)">Notas</em></h2>
-      <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);letter-spacing:0.3px">Minhas anotações e registros de estudo.</p>
+      <h2 style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--navy);margin:0 0 4px;line-height:1.1">Minhas <em style="font-style:italic;color:var(--gold)">Notas</em></h2>
       <p id="notas-count">0 notas</p>
     </div>
     <div class="notas-editor">
@@ -5143,7 +5142,7 @@ function switchTab(tab) {
     if (tab === 'sala')    renderPerfil();
     if (tab === 'progresso') renderNbProgresso();
     if (tab === 'termos')    renderNtGrid();
-    if (tab === 'notas') { loadNotas(); initNotaAutoBullet(); }
+    if (tab === 'notas') { loadNotas(); }
   }
 }
 
@@ -5778,11 +5777,6 @@ function initNotaAutoBullet() {
     var el = document.getElementById(id);
     if (!el || el._bulletWired) return;
     el._bulletWired = true;
-    el.addEventListener('keydown', function(e) {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-        e.preventDefault(); salvarNota();
-      }
-    });
     el.addEventListener('keyup', function(e) {
       if (e.key !== ' ') return;
       var sel = window.getSelection();
