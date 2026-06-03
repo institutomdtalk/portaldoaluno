@@ -1729,23 +1729,17 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .topbar-dropdown:hover .topbar-drop-menu{visibility:visible;opacity:1}
 
   /* ── PIN da Mentora ── */
-  .mentora-pin-overlay{position:fixed;inset:0;background:rgba(5,13,26,.9);display:flex;align-items:center;justify-content:center;z-index:300;backdrop-filter:blur(5px);opacity:0;pointer-events:none;transition:opacity .3s}
+  .mentora-pin-overlay{position:fixed;inset:0;background:rgba(5,13,26,.45);display:flex;align-items:center;justify-content:center;z-index:300;backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s}
   .mentora-pin-overlay.visivel{opacity:1;pointer-events:all}
-  .mentora-pin-card{background:var(--navy-mid);border:1px solid rgba(196,164,90,.22);border-radius:22px;padding:42px 32px 34px;width:290px;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.55)}
-  .mentora-pin-titulo{font-family:var(--serif);font-size:1.5rem;font-weight:300;color:#fff;margin-bottom:4px}
-  .mentora-pin-sub{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:28px}
-  .mentora-pin-dots{display:flex;justify-content:center;gap:14px;margin-bottom:32px}
-  .mentora-pin-dots .dot{width:12px;height:12px;border-radius:50%;border:2px solid rgba(196,164,90,.3);background:transparent;transition:all .2s}
-  .mentora-pin-dots .dot.filled{background:var(--gold);border-color:var(--gold);box-shadow:0 0 6px rgba(196,164,90,.5)}
-  .mentora-pin-dots.shake{animation:mpShake .45s ease}
-  @keyframes mpShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(4px)}}
-  .mentora-pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px}
-  .mentora-pin-key{width:58px;height:58px;border-radius:50%;border:1.5px solid rgba(196,164,90,.2);background:transparent;color:#fff;font-family:var(--sans);font-size:1.15rem;font-weight:600;cursor:pointer;margin:0 auto;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s,transform .12s;-webkit-tap-highlight-color:transparent}
-  .mentora-pin-key:hover{background:rgba(196,164,90,.1);border-color:rgba(196,164,90,.4)}
-  .mentora-pin-key:active{transform:scale(.9)}
-  .mentora-pin-del{color:var(--muted)}
-  .mentora-pin-cancel-btn{background:none;border:none;color:var(--muted);font-family:var(--sans);font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:8px 16px;transition:color .2s}
-  .mentora-pin-cancel-btn:hover{color:#fff}
+  .mentora-pin-card{background:#fff;border-radius:18px;padding:38px 32px 28px;width:260px;text-align:center;box-shadow:0 16px 48px rgba(0,0,0,.16)}
+  .mentora-pin-titulo{font-family:var(--serif);font-size:1.4rem;font-weight:300;color:var(--navy);margin-bottom:4px}
+  .mentora-pin-sub{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#bbb;margin-bottom:22px}
+  .mentora-pin-input{width:100%;text-align:center;font-size:1.8rem;letter-spacing:12px;border:1.5px solid #e4e4e4;border-radius:10px;padding:12px 16px;outline:none;color:var(--navy);font-family:var(--sans);transition:border-color .2s,box-shadow .2s;background:#fafafa;box-sizing:border-box}
+  .mentora-pin-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(196,164,90,.12)}
+  .mentora-pin-input.erro{border-color:#E5484D;box-shadow:0 0 0 3px rgba(229,72,77,.1);animation:mpShake .4s ease}
+  @keyframes mpShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+  .mentora-pin-cancel-btn{background:none;border:none;color:#bbb;font-family:var(--sans);font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:10px 16px;transition:color .2s;margin-top:6px;display:block;width:100%}
+  .mentora-pin-cancel-btn:hover{color:var(--navy)}
   </style>
 </head>
 <body>
@@ -2571,7 +2565,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
     <!-- PRÓXIMOS PASSOS -->
     <div id="card-proximos-passos" class="prog-message" style="grid-column:1/-1;margin-bottom:0">
-      <div class="prog-message-icon">
+      <div class="prog-message-icon" style="display:none">
         <svg viewBox="0 0 24 24">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="rgba(200,169,110,0.15)" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -4242,51 +4236,44 @@ function revRemoverEventos() {
   document.removeEventListener('keydown', _revKeyHandler);
 }
 // ── PRÓXIMOS PASSOS ──
-var _mpPin="";
 var MPIN="0202";
 
 function pedirPinMentora(){
-  _mpPin="";
   var ov=document.getElementById("mentora-pin-overlay");
   if(!ov){
     ov=document.createElement("div");
     ov.id="mentora-pin-overlay"; ov.className="mentora-pin-overlay";
-    ov.innerHTML='<div class="mentora-pin-card">'
-      +'<p class="mentora-pin-titulo">Acesso da <em style="font-style:italic;color:var(--gold)">Mentora</em></p>'
-      +'<p class="mentora-pin-sub">insira seu pin</p>'
-      +'<div class="mentora-pin-dots" id="mp-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>'
-      +'<div class="mentora-pin-pad">'
-      +[1,2,3,4,5,6,7,8,9].map(n=>'<button class="mentora-pin-key" onclick="mpDigit('+n+')">'+n+'</button>').join("")
-      +'<div></div><button class="mentora-pin-key" onclick="mpDigit(0)">0</button>'
-      +'<button class="mentora-pin-key mentora-pin-del" onclick="mpApagar()">&#9003;</button></div>'
-      +'<button class="mentora-pin-cancel-btn" onclick="mpFechar()">Cancelar</button></div>';
-    document.body.appendChild(ov);
+    var c=document.createElement("div"); c.className="mentora-pin-card";
+    c.innerHTML='<p class="mentora-pin-titulo">Acesso da <em style="font-style:italic;color:var(--gold)">Mentora</em></p>'
+      +'<p class="mentora-pin-sub">insira o pin</p>'
+      +'<input id="mp-input" class="mentora-pin-input" type="password" maxlength="4" autocomplete="off" oninput="mpInputChange()">'
+      +'<button class="mentora-pin-cancel-btn" onclick="mpFechar()">Cancelar</button>';
+    ov.appendChild(c); document.body.appendChild(ov);
   }
-  _mpPin=""; mpAtualizarDots();
-  requestAnimationFrame(()=>ov.classList.add("visivel"));
+  var inp=document.getElementById("mp-input");
+  if(inp){inp.value=""; inp.classList.remove("erro");}
+  requestAnimationFrame(function(){
+    ov.classList.add("visivel");
+    setTimeout(function(){ var i=document.getElementById("mp-input"); if(i) i.focus(); },300);
+  });
 }
-function mpDigit(d){
-  if(_mpPin.length>=4) return;
-  _mpPin+=String(d); mpAtualizarDots();
-  if(_mpPin.length===4) setTimeout(mpVerificar,150);
-}
-function mpApagar(){ _mpPin=_mpPin.slice(0,-1); mpAtualizarDots(); }
-function mpAtualizarDots(){
-  var dots=document.querySelectorAll("#mp-dots .dot");
-  dots.forEach((d,i)=>d.classList.toggle("filled",i<_mpPin.length));
+function mpInputChange(){
+  var inp=document.getElementById("mp-input");
+  if(inp && inp.value.length===4) setTimeout(mpVerificar,120);
 }
 function mpVerificar(){
-  if(_mpPin===MPIN){ mpFechar(); ppEditar(); }
+  var inp=document.getElementById("mp-input"); if(!inp) return;
+  if(inp.value===MPIN){ mpFechar(); ppEditar(); }
   else{
-    var el=document.getElementById("mp-dots");
-    if(el){ el.classList.add("shake"); setTimeout(()=>el.classList.remove("shake"),500); }
-    _mpPin=""; setTimeout(mpAtualizarDots,100);
+    inp.classList.add("erro");
+    setTimeout(function(){ inp.classList.remove("erro"); inp.value=""; inp.focus(); },650);
   }
 }
 function mpFechar(){
   var ov=document.getElementById("mentora-pin-overlay");
   if(ov) ov.classList.remove("visivel");
-  _mpPin="";
+  var inp=document.getElementById("mp-input");
+  if(inp){ inp.value=""; inp.classList.remove("erro"); }
 }
 
 function ppEditar() {
