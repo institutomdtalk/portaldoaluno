@@ -4578,25 +4578,46 @@ function getDriveConcluidosKey() {
   return 'mdtalk_drive_tags_' + (currentStudent ? currentStudent.login : 'guest');
 }
 
+function _refreshDriveTagClasses() {
+  var allTagKeys = Object.keys(TAG_CONFIG).concat(['arquivado']);
+  var classMap = {
+    a_concluir:'active-a-concluir', concluido:'active', revisar:'active-revisar',
+    revisado:'active-revisado', homework:'active-homework',
+    homework_feito:'active-homework-feito', curadoria:'active-curadoria'
+  };
+  document.querySelectorAll('.drive-card-item[data-fileid]').forEach(function(card) {
+    var fid = card.getAttribute('data-fileid');
+    allTagKeys.forEach(function(tag) {
+      card.classList.toggle('tag-' + tag.replace(/_/g,'-'), !!_driveConluidos['drive_'+tag+'_'+fid]);
+    });
+    Object.keys(TAG_CONFIG).forEach(function(tag) {
+      var opt = document.getElementById('dto_' + tag + '_' + fid);
+      if (opt) opt.className = 'drive-tag-option ' + (getDriveTag(fid,tag) ? (classMap[tag]||'') : '');
+    });
+    var isArq = !!_driveConluidos['drive_arquivado_' + fid];
+    var ab = document.getElementById('arq-btn-' + fid);
+    if (ab) { ab.classList.toggle('arquivado', isArq); ab.title = isArq ? 'Desarquivar' : 'Arquivar'; }
+  });
+  renderArquivadosTagged();
+}
+
 function carregarDriveConcluidos() {
-  var key = getDriveConcluidosKey();
-  _driveConluidos = JSON.parse(localStorage.getItem(key) || '{}');
-  // Sync from planilha — merge server data (server wins per file)
+  _driveConluidos = {};
   if (!currentStudent) return;
   callScript(
     'action=get_drive_tags&login=' + encodeURIComponent(currentStudent.login),
     function(d) {
       if (d.success && d.tags) {
+        _driveConluidos = {};
+        var allTagKeys = Object.keys(TAG_CONFIG).concat(['arquivado']);
         Object.keys(d.tags).forEach(function(fileId) {
           var activeTags = d.tags[fileId] ? d.tags[fileId].split(',') : [];
-          // Clear existing tags for this file then set from server
-          Object.keys(TAG_CONFIG).forEach(function(tag) {
-            var k = 'drive_' + tag + '_' + fileId;
-            if (activeTags.indexOf(tag) >= 0) _driveConluidos[k] = true;
-            else delete _driveConluidos[k];
+          allTagKeys.forEach(function(tag) {
+            if (activeTags.indexOf(tag) >= 0)
+              _driveConluidos['drive_' + tag + '_' + fileId] = true;
           });
         });
-        localStorage.setItem(key, JSON.stringify(_driveConluidos));
+        _refreshDriveTagClasses();
       }
     },
     function() {}
@@ -4672,7 +4693,6 @@ function toggleDriveTag(e, fileId, tag) {
   var stateKey = 'drive_' + tag + '_' + fileId;
   var isDone = !(_driveConluidos[stateKey] || false);
   _driveConluidos[stateKey] = isDone;
-  localStorage.setItem(getDriveConcluidosKey(), JSON.stringify(_driveConluidos));
   // Update option button
   var opt = document.getElementById('dto_' + tag + '_' + fileId);
   var classMap = {a_concluir:'active-a-concluir',concluido:'active',revisar:'active-revisar',revisado:'active-revisado',homework:'active-homework',homework_feito:'active-homework-feito',curadoria:'active-curadoria'};
@@ -4686,7 +4706,7 @@ function toggleDriveTag(e, fileId, tag) {
 
 function saveDriveTagsToSheet(fileId, cardItem) {
   if (!currentStudent) return;
-  var allTags = Object.keys(TAG_CONFIG);
+  var allTags = Object.keys(TAG_CONFIG).concat(['arquivado']);
   var activeTags = allTags.filter(function(t){
     return _driveConluidos['drive_' + t + '_' + fileId];
   }).join(',');
@@ -4724,7 +4744,6 @@ function arquivarFile(btn, fileId) {
   var isDone = !isArquivado;
   if (isDone) _driveConluidos['drive_arquivado_' + fileId] = true;
   else delete _driveConluidos['drive_arquivado_' + fileId];
-  localStorage.setItem(getDriveConcluidosKey(), JSON.stringify(_driveConluidos));
   var arqBtn = document.getElementById('arq-btn-' + fileId);
   if (arqBtn) { arqBtn.classList.toggle('arquivado', isDone); arqBtn.title = isDone ? 'Desarquivar' : 'Arquivar'; }
   document.querySelectorAll('[data-fileid="' + fileId + '"]').forEach(function(el) {
