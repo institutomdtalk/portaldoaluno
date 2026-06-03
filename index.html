@@ -677,6 +677,18 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .drive-tag-option.active-revisar .tag-check{background:#0d9488;border-color:#0d9488}
 .drive-tag-option.active-homework-feito .tag-check{background:#92400e;border-color:#92400e}
 .drive-tag-option.active-curadoria .tag-check{background:#C4A45A;border-color:#C4A45A}
+/* ── Arquivar / Desarquivar ── */
+#drive-first-row .drive-card-item.tag-arquivado,
+#drive-rest-rows .drive-card-item.tag-arquivado,
+#cur-first-row .drive-card-item.tag-arquivado,
+#cur-rest-rows .drive-card-item.tag-arquivado{display:none}
+.drive-archive-btn{background:none;border:1px solid rgba(0,0,0,0.12);border-radius:50%;width:26px;height:26px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;color:#bbb;padding:0;margin-left:auto}
+.drive-archive-btn:hover{border-color:var(--navy);color:var(--navy)}
+.drive-archive-btn.arquivado{background:var(--navy);border-color:var(--navy);color:#fff}
+.drive-archive-btn svg{width:13px;height:13px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.drive-desarq-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-family:Raleway,sans-serif;font-size:11px;font-weight:600;padding:5px 12px;border:1px solid rgba(0,0,0,0.15);border-radius:20px;cursor:pointer;background:#fff;color:#555;width:100%;transition:all 0.2s}
+.drive-desarq-btn:hover{border-color:var(--navy);color:var(--navy)}
+.drive-desarq-btn svg{width:11px;height:11px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .drive-tag-option.active-a-concluir .tag-check{background:#f97316;border-color:#f97316}
 .drive-tag-option.active-revisar .tag-check{background:#0d9488;border-color:#0d9488}
 .drive-tag-option.active-homework-feito .tag-check{background:#92400e;border-color:#92400e}
@@ -2340,7 +2352,8 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   <!-- ══ PAINEL NOTAS ══ -->
   <div class="nb-panel notas-page" id="panel-notas">
     <div class="notas-title-block">
-      <h2 style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--navy);margin:0 0 4px;line-height:1.1">Minhas <em style="font-style:italic;color:var(--gold)">Notas</em></h2>
+      <h2 style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--navy);margin-bottom:6px;line-height:1.1">Minhas <em style="font-style:italic;color:var(--gold)">Notas</em></h2>
+      <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);letter-spacing:0.3px">Minhas anotações e registros de estudo.</p>
       <p id="notas-count">0 notas</p>
     </div>
     <div class="notas-editor">
@@ -2691,6 +2704,11 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
                 style="padding:8px 12px 8px 32px;border:1px solid var(--border);border-radius:var(--radius);font-family:var(--sans);font-size:12px;color:var(--text-body);outline:none;width:200px;transition:border-color 0.3s;background:var(--white)"
                 onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
             </div>
+          </div>
+          <div id="arq-tagged-header" style="display:none;margin-bottom:24px">
+            <p style="font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin:0 0 12px">Arquivados por você</p>
+            <div class="drive-card-grid" id="arq-tagged-rows"></div>
+            <div style="height:1px;background:rgba(0,0,0,0.08);margin:20px 0 16px"></div>
           </div>
           <p class="card-desc" id="arq-files-status" style="margin-bottom:0">Carregando arquivos...</p>
           <div class="drive-card-grid" id="arq-first-row"></div>
@@ -4413,6 +4431,7 @@ function switchDriveTab(tab) {
   });
   if (tab === 'curadoria'  && _curFiles.length   === 0) carregarCuradoria();
   if (tab === 'arquivados' && _arqFiles.length   === 0) carregarArquivados();
+  if (tab === 'arquivados') renderArquivadosTagged();
 }
 
 // ── Pastas auxiliares (Apoio / Arquivados) — mesma mecânica da Curadoria ──
@@ -4700,6 +4719,63 @@ function getMimeIcon(mimeType) {
   return ['#718096', 'FILE', '<path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/>'];
 }
 
+function arquivarFile(btn, fileId) {
+  var isArquivado = !!_driveConluidos['drive_arquivado_' + fileId];
+  var isDone = !isArquivado;
+  if (isDone) _driveConluidos['drive_arquivado_' + fileId] = true;
+  else delete _driveConluidos['drive_arquivado_' + fileId];
+  localStorage.setItem(getDriveConcluidosKey(), JSON.stringify(_driveConluidos));
+  var arqBtn = document.getElementById('arq-btn-' + fileId);
+  if (arqBtn) { arqBtn.classList.toggle('arquivado', isDone); arqBtn.title = isDone ? 'Desarquivar' : 'Arquivar'; }
+  document.querySelectorAll('[data-fileid="' + fileId + '"]').forEach(function(el) {
+    el.classList.toggle('tag-arquivado', isDone);
+  });
+  var allF = (_allDriveFiles||[]).concat(_curFiles||[]);
+  var fo = allF.filter(function(f){ return f.id===fileId; })[0];
+  var fk = fo ? { querySelector: function(){ return { textContent: fo.name }; } } : null;
+  saveDriveTagsToSheet(fileId, fk);
+  renderArquivadosTagged();
+  showToast(isDone ? 'Arquivado.' : 'Desarquivado.', isDone ? 'success' : 'warning');
+}
+
+function renderArquivadosTagged() {
+  var container = document.getElementById('arq-tagged-rows');
+  var header    = document.getElementById('arq-tagged-header');
+  if (!container) return;
+  var archived=[]; var seen={};
+  (_allDriveFiles||[]).forEach(function(f){
+    if (_driveConluidos['drive_arquivado_'+f.id]&&!seen[f.id]){ archived.push(f); seen[f.id]=1; }
+  });
+  (_curFiles||[]).forEach(function(f){
+    if (_driveConluidos['drive_arquivado_'+f.id]&&!seen[f.id]){ archived.push(f); seen[f.id]=1; }
+  });
+  container.innerHTML='';
+  if (!archived.length){ if(header) header.style.display='none'; return; }
+  if (header) header.style.display='';
+  archived.forEach(function(f){
+    var info=getMimeIcon(f.mimeType); var col=info[0],lbl=info[1],sp=info[2];
+    var d=document.createElement('div');
+    d.className='drive-card-item'; d.setAttribute('data-fileid-arq',f.id);
+    d.innerHTML=
+      '<div style="position:relative">'+
+        '<div class="drive-card-thumb-placeholder" id="ph_arq_'+f.id+'">'+
+          '<svg viewBox="0 0 24 24" fill="none" stroke="'+col+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">'+sp+'</svg>'+
+          '<span>'+lbl+'</span>'+
+        '</div>'+
+      '</div>'+
+      '<div class="drive-card-body">'+
+        '<div class="drive-card-name" title="'+f.name.replace(/"/g,'&quot;')+'">' +f.name+'</div>'+
+      '</div>'+
+      '<div class="drive-card-footer">'+
+        '<button class="drive-desarq-btn" onclick="event.stopPropagation();arquivarFile(this,\''+f.id+'\')"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg> Desarquivar</button>'+
+      '</div>';
+    var b=d.querySelector('.drive-card-body');
+    if(b) b.addEventListener('click',function(e){ e.stopPropagation(); openDriveViewer(f); });
+    container.appendChild(d);
+  });
+  loadThumbsBatch(archived,6,0);
+}
+
 function buildDriveCard(f) {
   var div = document.createElement('div');
   div.className = 'drive-card-item';
@@ -4713,12 +4789,13 @@ function buildDriveCard(f) {
     '</svg><span>' + label + '</span></div>';
   var fileKey = 'drive_' + f.id;
   var isDone = _driveConluidos[fileKey] || false;
-  var tagClasses = ['a_concluir','concluido','revisar','revisado','homework','homework_feito','curadoria']
+  var tagClasses = ['a_concluir','concluido','revisar','revisado','homework','homework_feito','curadoria','arquivado']
     .filter(function(t){ return _driveConluidos['drive_' + t + '_' + f.id]; })
     .map(function(t){ return 'tag-' + t.replace(/_/g,'-'); })
     .join(' ');
   var cardClasses = 'drive-card-item' + (tagClasses ? ' ' + tagClasses : '');
   div.className = cardClasses;
+  div.setAttribute('data-fileid', f.id);
   div.title = f.name;
   // Tipo badge
   var tipoLabel = 'Arquivo', tipoClass = 'vocabulario';
@@ -4727,6 +4804,7 @@ function buildDriveCard(f) {
   else if (f.mimeType === 'application/vnd.google-apps.document') { tipoLabel = 'Documento'; tipoClass = 'vocabulario'; }
   else if (f.mimeType === 'application/vnd.google-apps.presentation') { tipoLabel = 'Slides'; tipoClass = 'vocabulario'; }
 
+  var isArq = !!_driveConluidos['drive_arquivado_' + f.id];
   div.innerHTML = '<div style="position:relative;">' + thumbHtml +
     '<div class="drive-thumb-badges">' +
       '<span class="drive-thumb-badge a-concluir">A Concluir</span>' +
@@ -4742,8 +4820,13 @@ function buildDriveCard(f) {
     '<span class="drive-card-tipo ' + tipoClass + '">' + tipoLabel + '</span>' +
     '<div class="drive-card-name" title="' + f.name.replace(/"/g,'&quot;') + '">' + f.name + '</div>' +
   '</div>' +
-  '<div class="drive-card-footer">' +
+  '<div class="drive-card-footer" style="display:flex;align-items:center;gap:6px">' +
     buildDriveTagMenu(f.id) +
+    '<button class="drive-archive-btn' + (isArq?' arquivado':'') + '"' +
+    ' id="arq-btn-' + f.id + '"' +
+    ' onclick="event.stopPropagation();arquivarFile(this,\'' + f.id + '\')"' +
+    ' title="' + (isArq?'Desarquivar':'Arquivar') + '">' +
+    '<svg viewBox="0 0 24 24"><rect x="1" y="3" width="22" height="5"/><polyline points="2 8 2 21 22 21 22 8"/><line x1="10" y1="14" x2="14" y2="14"/></svg></button>' +
   '</div>';
   var thumbEl = div.querySelector('.drive-card-thumb, .drive-card-thumb-placeholder');
   var nameEl  = div.querySelector('.drive-card-name');
