@@ -5143,7 +5143,7 @@ function switchTab(tab) {
     if (tab === 'sala')    renderPerfil();
     if (tab === 'progresso') renderNbProgresso();
     if (tab === 'termos')    renderNtGrid();
-    if (tab === 'notas') { loadNotas(); }
+    if (tab === 'notas') { loadNotas(); initNotaAutoBullet(); }
   }
 }
 
@@ -5778,6 +5778,11 @@ function initNotaAutoBullet() {
     var el = document.getElementById(id);
     if (!el || el._bulletWired) return;
     el._bulletWired = true;
+    el.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault(); salvarNota();
+      }
+    });
     el.addEventListener('keyup', function(e) {
       if (e.key !== ' ') return;
       var sel = window.getSelection();
