@@ -688,6 +688,34 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .drive-archive-btn svg{width:13px;height:13px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .drive-desarq-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-family:Raleway,sans-serif;font-size:11px;font-weight:600;padding:5px 12px;border:1px solid rgba(0,0,0,0.15);border-radius:20px;cursor:pointer;background:#fff;color:#555;width:100%;transition:all 0.2s}
 .drive-desarq-btn:hover{border-color:var(--navy);color:var(--navy)}
+/* ── Gemini AI Panel ── */
+#btn-gemini{display:flex;align-items:center;gap:6px;background:rgba(59,130,246,0.22);border:1px solid rgba(59,130,246,0.5);color:rgba(147,197,253,1);font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:7px 14px;border-radius:20px;cursor:pointer;transition:all 0.3s ease;flex-shrink:0}
+#btn-gemini.active{background:rgba(59,130,246,0.4);border-color:rgba(99,171,255,0.8)}
+#btn-gemini svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#gemini-panel{position:fixed;bottom:24px;right:24px;width:340px;display:none;z-index:1000;background:var(--navy-deep);border:1px solid rgba(59,130,246,0.3);border-radius:var(--radius)}
+#gemini-panel.open{display:flex;flex-direction:column;max-height:520px;overflow:hidden}
+.gp-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;border-bottom:1px solid rgba(59,130,246,0.2);flex-shrink:0}
+.gp-title{font-family:var(--serif);font-size:13px;color:rgba(147,197,253,1);font-weight:300;letter-spacing:0.5px;display:flex;align-items:center;gap:6px}
+.gp-title svg{width:13px;height:13px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;color:rgba(147,197,253,0.8)}
+.gp-close{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.35);padding:2px;line-height:1;transition:color 0.2s}
+.gp-close:hover{color:#fff}
+.gp-feed{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:8px;min-height:60px}
+.gp-msg{font-family:var(--sans);font-size:13px;line-height:1.55;border-radius:10px;padding:8px 12px;max-width:92%;word-break:break-word;white-space:pre-wrap}
+.gp-msg-user{background:rgba(59,130,246,0.28);color:rgba(210,228,255,0.95);align-self:flex-end;border-radius:10px 10px 2px 10px}
+.gp-msg-ai{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.85);align-self:flex-start;border-radius:10px 10px 10px 2px}
+.gp-thinking{animation:gp-blink 1s ease-in-out infinite}
+@keyframes gp-blink{0%,100%{opacity:.35}50%{opacity:1}}
+.gp-error{color:rgba(252,165,165,0.9)!important}
+.gp-empty{font-family:var(--sans);font-size:12px;color:rgba(255,255,255,0.28);text-align:center;padding:24px 0;margin:0}
+.gp-footer{padding:10px 14px 14px;border-top:1px solid rgba(59,130,246,0.15);display:flex;flex-direction:column;gap:8px;flex-shrink:0}
+.gp-textarea{background:rgba(255,255,255,0.06);border:1px solid rgba(59,130,246,0.3);border-radius:10px;color:rgba(255,255,255,0.9);font-family:var(--sans);font-size:13px;padding:8px 12px;resize:none;outline:none;width:100%;box-sizing:border-box;line-height:1.5;transition:border-color 0.2s}
+.gp-textarea:focus{border-color:rgba(99,171,255,0.6)}
+.gp-textarea::placeholder{color:rgba(255,255,255,0.25)}
+.gp-send-btn{background:rgba(59,130,246,0.35);border:1px solid rgba(59,130,246,0.5);color:rgba(147,197,253,1);font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 18px;border-radius:20px;cursor:pointer;transition:all 0.2s;align-self:flex-end}
+.gp-send-btn:hover{background:rgba(59,130,246,0.55)}
+.gp-send-btn:disabled{opacity:0.35;cursor:not-allowed}
+.gp-hint{font-family:var(--sans);font-size:10px;color:rgba(255,255,255,0.25);align-self:flex-start}
+
 .drive-desarq-btn svg{width:11px;height:11px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .drive-tag-option.active-a-concluir .tag-check{background:#f97316;border-color:#f97316}
 .drive-tag-option.active-revisar .tag-check{background:#0d9488;border-color:#0d9488}
@@ -1859,7 +1887,8 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
           <div id="hero-clock" style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:rgba(255,255,255,0.82);letter-spacing:2px;line-height:1">00:00:00</div>
           <div id="hero-date" style="font-family:Raleway,sans-serif;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.32);margin-top:6px">— —</div>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-top:10px">
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;margin-top:10px">
+          <div style="display:flex;align-items:center;gap:10px">
           <button onclick="abrirTutorial()" style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.13);border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.75);font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:7px 14px;border-radius:20px;cursor:pointer;transition:all 0.3s" onmouseover="this.style.background='rgba(255,255,255,0.22)';this.style.color='rgba(255,255,255,0.95)'" onmouseout="this.style.background='rgba(255,255,255,0.13)';this.style.color='rgba(255,255,255,0.75)'">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             Tutorial
@@ -1867,6 +1896,11 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
           <button id="btn-live" onclick="toggleLiveMode()">
             <span class="live-pulse"></span>
             Registre durante a Aula
+          </button>
+          </div>
+          <button id="btn-gemini" onclick="toggleGeminiPanel()">
+            <svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+            Assistente IA
           </button>
         </div>
       </div>
@@ -6199,6 +6233,74 @@ function saveLiveItems() {
   localStorage.setItem(getLiveKey(), JSON.stringify(_liveItems));
 }
 
+
+// ── GEMINI AI ──
+var _geminiOpen = false;
+var _geminiHistory = [];
+var GEMINI_KEY = 'SUA_CHAVE_AQUI'; // aistudio.google.com → Get API Key
+var GEMINI_SYSTEM = 'You are a Medical English assistant for Brazilian physicians. Help with vocabulary, pronunciation, grammar, and clinical communication in English. When the user writes in Portuguese, respond in both languages when helpful.';
+
+function toggleGeminiPanel() {
+  _geminiOpen = !_geminiOpen;
+  var panel = document.getElementById('gemini-panel');
+  var btn   = document.getElementById('btn-gemini');
+  if (panel) panel.classList.toggle('open', _geminiOpen);
+  if (btn)   btn.classList.toggle('active', _geminiOpen);
+  if (_geminiOpen) setTimeout(function(){ var el=document.getElementById('gp-input'); if(el) el.focus(); }, 120);
+}
+
+function enviarGemini() {
+  var input   = document.getElementById('gp-input');
+  var feed    = document.getElementById('gp-feed');
+  var sendBtn = document.getElementById('gp-send');
+  if (!input || !feed) return;
+  var text = input.value.trim();
+  if (!text) return;
+  if (GEMINI_KEY === 'SUA_CHAVE_AQUI') { showToast('Configure a chave da API Gemini.','error'); return; }
+  var empty = feed.querySelector('.gp-empty');
+  if (empty) feed.removeChild(empty);
+  var uDiv = document.createElement('div');
+  uDiv.className = 'gp-msg gp-msg-user';
+  uDiv.textContent = text;
+  feed.appendChild(uDiv);
+  input.value = '';
+  if (sendBtn) sendBtn.disabled = true;
+  var tDiv = document.createElement('div');
+  tDiv.className = 'gp-msg gp-msg-ai gp-thinking';
+  tDiv.textContent = '...';
+  feed.appendChild(tDiv);
+  feed.scrollTop = feed.scrollHeight;
+  _geminiHistory.push({ role:'user', parts:[{ text:text }] });
+  fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_KEY, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      systemInstruction:{ parts:[{ text:GEMINI_SYSTEM }] },
+      contents:_geminiHistory
+    })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data) {
+    if (feed.contains(tDiv)) feed.removeChild(tDiv);
+    var reply = '';
+    try { reply = data.candidates[0].content.parts[0].text; } catch(e) { reply = 'Sem resposta. Tente novamente.'; }
+    _geminiHistory.push({ role:'model', parts:[{ text:reply }] });
+    var aDiv = document.createElement('div');
+    aDiv.className = 'gp-msg gp-msg-ai';
+    aDiv.textContent = reply;
+    feed.appendChild(aDiv);
+    feed.scrollTop = feed.scrollHeight;
+    if (sendBtn) sendBtn.disabled = false;
+  })
+  .catch(function() {
+    if (feed.contains(tDiv)) feed.removeChild(tDiv);
+    var eDiv = document.createElement('div');
+    eDiv.className = 'gp-msg gp-msg-ai gp-error';
+    eDiv.textContent = 'Erro de conexão. Tente novamente.';
+    feed.appendChild(eDiv);
+    if (sendBtn) sendBtn.disabled = false;
+  });
+}
 function toggleLiveMode() {
   _liveOpen = !_liveOpen;
   var panel = document.getElementById('live-panel');
@@ -7020,6 +7122,26 @@ window.addEventListener('load', function(){
   </div>
   <div id="lp-feed" class="lp-feed">
     <p class="lp-empty">Nenhuma anotação ainda. Comece a digitar!</p>
+  </div>
+</div>
+
+<!-- ══ GEMINI AI PANEL ══ -->
+<div id="gemini-panel">
+  <div class="gp-head">
+    <span class="gp-title"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg> Assistente IA</span>
+    <button class="gp-close" onclick="toggleGeminiPanel()"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  </div>
+  <div class="gp-feed" id="gp-feed">
+    <p class="gp-empty">Olá! Como posso ajudar com o seu inglês médico?</p>
+  </div>
+  <div class="gp-footer">
+    <textarea id="gp-input" class="gp-textarea" rows="2"
+      placeholder="Digite sua dúvida... (Enter para enviar)"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();enviarGemini();}"></textarea>
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <span class="gp-hint">Shift+Enter para quebrar linha</span>
+      <button id="gp-send" class="gp-send-btn" onclick="enviarGemini()">Enviar</button>
+    </div>
   </div>
 </div>
 <!-- ══ MODAL EDITAR NOTA ══ -->
