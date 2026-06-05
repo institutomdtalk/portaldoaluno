@@ -684,6 +684,9 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 #cur-rest-rows .drive-card-item.tag-arquivado{display:none}
 .drive-archive-btn{background:none;border:1px solid rgba(0,0,0,0.12);border-radius:50%;width:26px;height:26px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;color:#bbb;padding:0;margin-left:auto}
 .drive-archive-btn:hover{border-color:var(--navy);color:var(--navy)}
+#bib-iframe-wrap.bib-fullscreen{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;background:#fff;padding:0}
+#bib-iframe-wrap.bib-fullscreen #bib-iframe{height:100vh!important;border-radius:0!important;min-height:unset!important}
+#btn-bib-fs:hover{border-color:var(--navy);color:var(--navy)}
 .drive-archive-btn.arquivado{background:var(--navy);border-color:var(--navy);color:#fff}
 .drive-archive-btn svg{width:13px;height:13px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .drive-desarq-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-family:Raleway,sans-serif;font-size:11px;font-weight:600;padding:5px 12px;border:1px solid rgba(0,0,0,0.15);border-radius:20px;cursor:pointer;background:#fff;color:#555;width:100%;transition:all 0.2s}
@@ -2615,13 +2618,23 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);letter-spacing:0.3px">Conteúdos e materiais de referência para o meu aprendizado.</p>
     </div>
     <div id="biblioteca-lista">
-      <iframe
-        src="https://institutomdtalk.github.io/mdlibrary595684894514849845158489/"
-        width="100%"
-        style="height:calc(100vh - 220px);min-height:500px;border:none;border-radius:12px;display:block"
-        loading="lazy"
-        title="MD Library">
-      </iframe>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:10px">
+        <button id="btn-bib-fs" onclick="toggleBibliotecaFS()"
+          style="display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:none;border:1px solid rgba(0,0,0,0.15);border-radius:20px;padding:6px 14px;cursor:pointer;color:#888;transition:all 0.2s">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          Tela cheia
+        </button>
+      </div>
+      <div id="bib-iframe-wrap">
+        <iframe id="bib-iframe"
+          src="https://institutomdtalk.github.io/mdlibrary595684894514849845158489/"
+          width="100%"
+          style="height:calc(100vh - 260px);min-height:500px;border:none;border-radius:12px;display:block"
+          loading="lazy"
+          allowfullscreen
+          title="MD Library">
+        </iframe>
+      </div>
     </div>
   </div>
 
@@ -6248,6 +6261,20 @@ var OPENAI_SYS  = 'You are a Medical English assistant for Brazilian physicians.
   + 'Help with vocabulary, pronunciation, grammar, and clinical communication in English. '
   + 'When the user writes in Portuguese, respond in both languages when helpful. '
   + 'Be concise and practical.';
+
+
+function toggleBibliotecaFS() {
+  var wrap = document.getElementById('bib-iframe-wrap');
+  var btn  = document.getElementById('btn-bib-fs');
+  var isFS = wrap.classList.toggle('bib-fullscreen');
+  if (isFS) {
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/></svg> Sair da tela cheia';
+    document.body.style.overflow = 'hidden';
+  } else {
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg> Tela cheia';
+    document.body.style.overflow = '';
+  }
+}
 
 function toggleGeminiPanel() {
   _geminiOpen = !_geminiOpen;
