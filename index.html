@@ -6286,10 +6286,10 @@ window.addEventListener('message', function(e) {
       + '&tema='   + encodeURIComponent(e.data.tema   || '');
     callScript(params,
       function(d) {
-        if (d && d.success) showToast(e.data.acao==='marcar' ? 'Leitura registrada ✓' : 'Leitura removida.', e.data.acao==='marcar' ? 'success' : 'warning');
-        else showToast('Erro ao registrar leitura.', 'error');
+        var msg = d ? JSON.stringify(d).substring(0,80) : 'sem resposta';
+        showToast(msg, d&&d.success ? 'success' : 'error');
       },
-      function() { showToast('Erro de conexão.', 'error'); }
+      function() { showToast('JSONP falhou', 'error'); }
     );
   }
 
