@@ -6278,7 +6278,8 @@ window.addEventListener('message', function(e) {
   }
 
   if (e.data.type === 'mdlibrary_toggle_leitura') {
-    if (!currentStudent) return;
+    if (!currentStudent) { showToast('IA: sem aluno logado.', 'error'); return; }
+    showToast('Registrando leitura…', 'success');
     var params = 'action=' + (e.data.acao === 'marcar' ? 'salvar_leitura' : 'deletar_leitura')
       + '&login='  + encodeURIComponent(currentStudent.login)
       + '&titulo=' + encodeURIComponent(e.data.titulo || '')
