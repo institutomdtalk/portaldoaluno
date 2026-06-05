@@ -5299,6 +5299,7 @@ function switchTab(tab) {
     if (tab === 'progresso') renderNbProgresso();
     if (tab === 'termos')    renderNtGrid();
     if (tab === 'notas') { loadNotas(); }
+    if (tab === 'biblioteca') { setTimeout(enviarLidosParaBiblioteca, 800); }
   }
 }
 
