@@ -6254,6 +6254,49 @@ function saveLiveItems() {
 }
 
 
+
+// ── MD LIBRARY INTEGRATION ──
+window.addEventListener('message', function(e) {
+  if (!e.data || typeof e.data.type !== 'string') return;
+  if (!e.data.type.startsWith('mdlibrary_')) return;
+
+  if (e.data.type === 'mdlibrary_read') {
+    if (!currentStudent) return;
+    callScript(
+      'action=salvar_leitura'
+      + '&login='  + encodeURIComponent(currentStudent.login)
+      + '&titulo=' + encodeURIComponent(e.data.titulo || '')
+      + '&tema='   + encodeURIComponent(e.data.tema   || ''),
+      function(){}, function(){}
+    );
+  }
+
+  if (e.data.type === 'mdlibrary_save_term') {
+    if (!currentStudent) return;
+    var id  = 'nt_' + Date.now();
+    var src = e.data.contexto || 'MD Library';
+    callScript(
+      'action=salvar_nt_termo'
+      + '&login='   + encodeURIComponent(currentStudent.login)
+      + '&id='      + encodeURIComponent(id)
+      + '&termo='   + encodeURIComponent(e.data.termo    || '')
+      + '&traducao='+ encodeURIComponent(e.data.traducao || '')
+      + '&secao='   + encodeURIComponent('vocabulario')
+      + '&fonte='   + encodeURIComponent(src),
+      function(d) {
+        var iframe = document.getElementById('bib-iframe');
+        if (iframe && iframe.contentWindow)
+          iframe.contentWindow.postMessage({type:'mdlibrary_term_saved',success:!!(d&&d.success)},'*');
+        if (d && d.success) showToast('Termo salvo em Meus Termos!','success');
+      },
+      function() {
+        var iframe = document.getElementById('bib-iframe');
+        if (iframe && iframe.contentWindow)
+          iframe.contentWindow.postMessage({type:'mdlibrary_term_saved',success:false},'*');
+      }
+    );
+  }
+});
 // ── GEMINI AI ──
 var _geminiOpen = false;
 var _aiHistory  = []; // { role:'user'|'assistant', content:'...' }
