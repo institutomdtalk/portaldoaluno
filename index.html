@@ -6271,10 +6271,12 @@ window.addEventListener('message', function(e) {
       'action=get_leituras&login=' + encodeURIComponent(currentStudent.login),
       function(d) {
         var iframe = document.getElementById('bib-iframe');
-        if (iframe && iframe.contentWindow && d && d.lidos)
-          iframe.contentWindow.postMessage({type:'mdlibrary_leituras', lidos:d.lidos}, '*');
+        var lidos = (d && d.lidos) ? d.lidos : [];
+        showToast('Lidos: ' + lidos.length, lidos.length > 0 ? 'success' : 'error');
+        var iframe = document.getElementById('bib-iframe');
+        if (iframe && iframe.contentWindow) iframe.contentWindow.postMessage({type:'mdlibrary_leituras', lidos:lidos}, '*');
       },
-      function(){}
+      function(){ showToast('get_leituras: erro', 'error'); }
     );
   }
 
@@ -6329,6 +6331,17 @@ var OPENAI_SYS  = 'You are a Medical English assistant for Brazilian physicians.
   + 'When the user writes in Portuguese, respond in both languages when helpful. '
   + 'Be concise and practical.';
 
+
+function enviarLidosParaBiblioteca() {
+  if (!currentStudent) return;
+  callScript('action=get_leituras&login=' + encodeURIComponent(currentStudent.login),
+    function(d) {
+      var lidos = (d && d.lidos) ? d.lidos : [];
+      var fr = document.getElementById('bib-iframe');
+      if (fr && fr.contentWindow) fr.contentWindow.postMessage({type:'mdlibrary_leituras', lidos:lidos}, '*');
+    }, function(){}
+  );
+}
 
 function toggleBibliotecaFS() {
   var wrap = document.getElementById('bib-iframe-wrap');
