@@ -6262,7 +6262,14 @@ window.addEventListener('message', function(e) {
   if (!e.data.type.startsWith('mdlibrary_')) return;
 
   if (e.data.type === 'mdlibrary_back') {
-    switchTab('dashboard');
+    var wrap2 = document.getElementById('bib-iframe-wrap');
+    if (wrap2 && wrap2.classList.contains('bib-fullscreen')) toggleBibliotecaFS();
+    else switchTab('dashboard');
+  }
+
+  if (e.data.type === 'mdlibrary_exit_fullscreen') {
+    var wrap3 = document.getElementById('bib-iframe-wrap');
+    if (wrap3 && wrap3.classList.contains('bib-fullscreen')) toggleBibliotecaFS();
   }
 
   if (e.data.type === 'mdlibrary_ready') {
@@ -6347,6 +6354,7 @@ function toggleBibliotecaFS() {
   var wrap = document.getElementById('bib-iframe-wrap');
   var btn  = document.getElementById('btn-bib-fs');
   var isFS = wrap.classList.toggle('bib-fullscreen');
+  var iframe = document.getElementById('bib-iframe');
   if (isFS) {
     btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/></svg> Sair da tela cheia';
     document.body.style.overflow = 'hidden';
@@ -6354,6 +6362,8 @@ function toggleBibliotecaFS() {
     btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg> Tela cheia';
     document.body.style.overflow = '';
   }
+  if (iframe && iframe.contentWindow)
+    iframe.contentWindow.postMessage({type:'mdlibrary_fullscreen_changed', isFS:isFS}, '*');
 }
 
 function toggleGeminiPanel() {
