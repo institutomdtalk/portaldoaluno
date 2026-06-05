@@ -6260,16 +6260,32 @@ window.addEventListener('message', function(e) {
   if (!e.data || typeof e.data.type !== 'string') return;
   if (!e.data.type.startsWith('mdlibrary_')) return;
 
-  if (e.data.type === 'mdlibrary_read') {
+  if (e.data.type === 'mdlibrary_back') {
+    switchTab('dashboard');
+  }
+
+  if (e.data.type === 'mdlibrary_ready') {
     if (!currentStudent) return;
     callScript(
-      'action=salvar_leitura'
-      + '&login='  + encodeURIComponent(currentStudent.login)
-      + '&titulo=' + encodeURIComponent(e.data.titulo || '')
-      + '&tema='   + encodeURIComponent(e.data.tema   || ''),
-      function(){}, function(){}
+      'action=get_leituras&login=' + encodeURIComponent(currentStudent.login),
+      function(d) {
+        var iframe = document.getElementById('bib-iframe');
+        if (iframe && iframe.contentWindow && d && d.lidos)
+          iframe.contentWindow.postMessage({type:'mdlibrary_leituras', lidos:d.lidos}, '*');
+      },
+      function(){}
     );
   }
+
+  if (e.data.type === 'mdlibrary_toggle_leitura') {
+    if (!currentStudent) return;
+    var params = 'action=' + (e.data.acao === 'marcar' ? 'salvar_leitura' : 'deletar_leitura')
+      + '&login='  + encodeURIComponent(currentStudent.login)
+      + '&titulo=' + encodeURIComponent(e.data.titulo || '')
+      + '&tema='   + encodeURIComponent(e.data.tema   || '');
+    callScript(params, function(){}, function(){});
+  }
+
 
   if (e.data.type === 'mdlibrary_save_term') {
     if (!currentStudent) return;
