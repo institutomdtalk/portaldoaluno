@@ -6283,7 +6283,13 @@ window.addEventListener('message', function(e) {
       + '&login='  + encodeURIComponent(currentStudent.login)
       + '&titulo=' + encodeURIComponent(e.data.titulo || '')
       + '&tema='   + encodeURIComponent(e.data.tema   || '');
-    callScript(params, function(){}, function(){});
+    callScript(params,
+      function(d) {
+        if (d && d.success) showToast(e.data.acao==='marcar' ? 'Leitura registrada ✓' : 'Leitura removida.', e.data.acao==='marcar' ? 'success' : 'warning');
+        else showToast('Erro ao registrar leitura.', 'error');
+      },
+      function() { showToast('Erro de conexão.', 'error'); }
+    );
   }
 
 
