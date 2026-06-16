@@ -1969,6 +1969,10 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
       Biblioteca
     </button>
+    <button class="nb-tab" id="tab-quiz" onclick="switchTab('quiz')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Avalie-se
+    </button>
   </div>
 
   <!-- ══ PAINEL PERFIL ══ -->
@@ -5300,6 +5304,7 @@ function switchTab(tab) {
     if (tab === 'termos')    renderNtGrid();
     if (tab === 'notas') { loadNotas(); }
     if (tab === 'biblioteca') { setTimeout(enviarLidosParaBiblioteca, 800); }
+    if (tab === 'quiz') { initQuizTab(); }
   }
 }
 
@@ -6080,7 +6085,9 @@ function salvarNota() {
   var corpoEl  = document.getElementById('nota-corpo-input');
   var titulo = tituloEl ? tituloEl.value.trim() : '';
   var corpo  = corpoEl  ? corpoEl.innerHTML.trim() : '';
-  if (corpo === '<br>' || corpo === '') corpo = '';
+  // limpar variantes vazias do contenteditable
+  corpo = corpo.replace(/^(<div>)?<br\s*\/?>(<\/div>)?$/i,'').replace(/^<div>\s*<\/div>$/i,'').trim();
+  if (!currentStudent) { showToast('Sessão expirada. Recarregue a página.','error'); return; }
   if (!corpo && !titulo) { showToast('Escreva algo antes de salvar.','error'); return; }
   // If editing existing nota
   if (_notaEditandoId) {
@@ -7476,5 +7483,269 @@ window.addEventListener('load', function(){
   </div>
 </div>
 
+
+<!-- ══ PAINEL AVALIE-SE ══ -->
+<div class="nb-panel prog-page" id="panel-quiz">
+<style>
+#panel-quiz{font-family:'Raleway',sans-serif}
+.qz-header{margin-bottom:36px}
+.qz-header h2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--navy);margin-bottom:4px}
+.qz-header p{font-size:12px;color:var(--text-muted);letter-spacing:.3px}
+/* Setup */
+.qz-section-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px}
+.qz-levels{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap}
+.qz-lvl{padding:9px 24px;border-radius:20px;border:1.5px solid var(--border);background:none;cursor:pointer;font-family:'Raleway',sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--text-muted);transition:all .2s}
+.qz-lvl:hover{border-color:var(--primary);color:var(--primary)}
+.qz-lvl.active-easy{background:rgba(74,222,128,.12);border-color:#4ade80;color:#16a34a}
+.qz-lvl.active-moderate{background:rgba(196,164,90,.12);border-color:var(--primary);color:#b45309}
+.qz-lvl.active-hard{background:rgba(248,113,113,.12);border-color:#f87171;color:#dc2626}
+.qz-select{width:100%;max-width:360px;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Raleway',sans-serif;font-size:13px;color:var(--navy);background:#fff;margin-bottom:28px;cursor:pointer}
+.qz-start{padding:12px 36px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-family:'Raleway',sans-serif;font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:opacity .2s;opacity:.4}
+.qz-start.ready{opacity:1}
+/* Loading */
+#qz-loading{display:none;flex-direction:column;align-items:center;justify-content:center;padding:80px 0;gap:18px}
+.qz-spinner{width:36px;height:36px;border:2.5px solid rgba(196,164,90,.2);border-top-color:var(--primary);border-radius:50%;animation:qzspin 1s linear infinite}
+@keyframes qzspin{to{transform:rotate(360deg)}}
+#qz-loading p{font-size:12px;color:var(--text-muted);letter-spacing:.18em;text-transform:uppercase}
+/* Game */
+#qz-game{display:none}
+.qz-progress-bar{height:4px;background:var(--border);border-radius:2px;margin-bottom:24px;overflow:hidden}
+.qz-progress-fill{height:100%;background:var(--primary);border-radius:2px;transition:width .4s ease}
+.qz-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.qz-qnum{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)}
+.qz-score{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--navy)}
+.qz-question{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:400;color:var(--navy);line-height:1.55;margin-bottom:28px;min-height:60px}
+.qz-opts{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.qz-opt{display:flex;align-items:center;gap:12px;padding:13px 16px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all .2s;background:#fff}
+.qz-opt:hover:not(.qz-opt-locked){border-color:var(--primary);background:rgba(196,164,90,.06)}
+.qz-opt.selected{border-color:var(--primary);background:rgba(196,164,90,.1)}
+.qz-opt.correct{border-color:#16a34a;background:rgba(74,222,128,.1)!important}
+.qz-opt.wrong{border-color:#dc2626;background:rgba(248,113,113,.1)!important}
+.qz-opt-locked{cursor:default}
+.qz-opt-letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text-muted);flex-shrink:0;transition:all .2s}
+.qz-opt.selected .qz-opt-letter{background:var(--primary);color:#fff}
+.qz-opt.correct .qz-opt-letter{background:#16a34a;color:#fff}
+.qz-opt.wrong .qz-opt-letter{background:#dc2626;color:#fff}
+.qz-opt-text{font-size:13px;color:var(--navy);flex:1}
+.qz-opt-icon{font-size:16px;margin-left:auto;opacity:0;transition:opacity .2s}
+.qz-opt.correct .qz-opt-icon,.qz-opt.wrong .qz-opt-icon{opacity:1}
+.qz-actions{display:flex;gap:12px}
+.qz-btn{padding:11px 28px;border-radius:8px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .2s;border:1.5px solid transparent}
+.qz-btn-confirm{background:var(--primary);color:#fff;border-color:var(--primary);opacity:.4}
+.qz-btn-confirm.ready{opacity:1}
+.qz-btn-next{background:none;border-color:var(--border);color:var(--navy);display:none}
+.qz-btn-next:hover{border-color:var(--primary);color:var(--primary)}
+/* Results */
+#qz-results{display:none;text-align:center;padding:40px 0}
+.qz-score-ring{width:120px;height:120px;border-radius:50%;border:3px solid var(--primary);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 24px}
+.qz-score-big{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:500;color:var(--navy);line-height:1}
+.qz-score-denom{font-size:11px;color:var(--text-muted);letter-spacing:.1em}
+.qz-result-msg{font-size:15px;color:var(--navy);margin-bottom:8px;font-weight:600}
+.qz-result-sub{font-size:12px;color:var(--text-muted);margin-bottom:32px}
+.qz-btn-retry{padding:12px 36px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-family:'Raleway',sans-serif;font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:pointer}
+</style>
+<div class="qz-header">
+  <h2>Avalie-<em style="font-style:italic;color:var(--primary)">se</em></h2>
+  <p>Teste sua gramática em contexto médico — 10 questões por rodada</p>
+</div>
+<!-- Setup -->
+<div id="qz-setup">
+  <div class="qz-section-label">Nível de dificuldade</div>
+  <div class="qz-levels">
+    <button class="qz-lvl" data-level="easy" onclick="qzSetLevel('easy',this)">Easy</button>
+    <button class="qz-lvl" data-level="moderate" onclick="qzSetLevel('moderate',this)">Moderate</button>
+    <button class="qz-lvl" data-level="hard" onclick="qzSetLevel('hard',this)">Hard</button>
+  </div>
+  <div class="qz-section-label">Área médica</div>
+  <select class="qz-select" id="qz-specialty">
+    <option value="general medical English">Geral</option>
+    <option value="cardiology">Cardiologia</option>
+    <option value="oncology">Oncologia</option>
+    <option value="neurology">Neurologia</option>
+    <option value="orthopedics">Ortopedia</option>
+    <option value="pediatrics">Pediatria</option>
+    <option value="gynecology and obstetrics">Ginecologia e Obstetrícia</option>
+    <option value="surgery">Cirurgia</option>
+    <option value="emergency medicine">Emergência</option>
+    <option value="intensive care (ICU)">UTI / Intensivismo</option>
+    <option value="medical congresses and presentations">Congressos e Apresentações</option>
+  </select>
+  <button class="qz-start" id="qz-start-btn" onclick="qzStart()">Iniciar Quiz</button>
+</div>
+<!-- Loading -->
+<div id="qz-loading">
+  <div class="qz-spinner"></div>
+  <p>Gerando quiz...</p>
+</div>
+<!-- Game -->
+<div id="qz-game">
+  <div class="qz-progress-bar"><div class="qz-progress-fill" id="qz-prog"></div></div>
+  <div class="qz-meta">
+    <span class="qz-qnum" id="qz-qnum">Questão 1 de 10</span>
+    <span class="qz-score" id="qz-scoreboard">✓ 0</span>
+  </div>
+  <div class="qz-question" id="qz-question"></div>
+  <div class="qz-opts" id="qz-opts"></div>
+  <div class="qz-actions">
+    <button class="qz-btn qz-btn-confirm" id="qz-confirm" onclick="qzConfirm()">Confirmar</button>
+    <button class="qz-btn qz-btn-next" id="qz-next" onclick="qzNext()">Próxima →</button>
+  </div>
+</div>
+<!-- Results -->
+<div id="qz-results">
+  <div class="qz-score-ring">
+    <div class="qz-score-big" id="qz-final-score">0</div>
+    <div class="qz-score-denom">de 10</div>
+  </div>
+  <div class="qz-result-msg" id="qz-result-msg"></div>
+  <div class="qz-result-sub" id="qz-result-sub"></div>
+  <button class="qz-btn-retry" onclick="qzRetry()">Nova Rodada</button>
+</div>
+</div>
+
+<script>
+
+// ── QUIZ ──────────────────────────────────────────────────────────────────
+var _qz = { qs:[], cur:0, score:0, level:'', answered:false, initialized:false };
+
+function initQuizTab() { /* noop — setup já visível */ }
+
+function qzSetLevel(level, btn) {
+  _qz.level = level;
+  document.querySelectorAll('.qz-lvl').forEach(function(b){ b.className='qz-lvl'; });
+  btn.className = 'qz-lvl active-' + level;
+  var sb = document.getElementById('qz-start-btn');
+  if (sb) sb.classList.add('ready');
+}
+
+function qzShow(screen) {
+  ['qz-setup','qz-loading','qz-game','qz-results'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.style.display = id===screen ? (screen==='qz-loading'||screen==='qz-game'||screen==='qz-results'?'flex':'block') : 'none';
+  });
+  if(screen==='qz-game') document.getElementById('qz-game').style.display='block';
+  if(screen==='qz-results') document.getElementById('qz-results').style.display='block';
+}
+
+function qzStart() {
+  if (!_qz.level) { showToast('Selecione o nível primeiro.', 'error'); return; }
+  var specialty = document.getElementById('qz-specialty').value;
+  _qz.specialty = specialty;
+  _qz.qs = []; _qz.cur = 0; _qz.score = 0; _qz.answered = false;
+  qzShow('qz-loading');
+
+  var prompt = 'Return ONLY a valid JSON array, no markdown, no other text.\n'
+    + 'Generate exactly 10 multiple-choice grammar questions for medical English.\n'
+    + 'Level: ' + _qz.level + '\n'
+    + 'Medical context: ' + specialty + '\n'
+    + 'Format: [{"q":"The patient ___ admitted yesterday.","opts":["was","were","has been","is"],"ans":0}]\n'
+    + 'Rules: each item has q (question with blank "___"), opts (array of 4 strings), ans (correct index 0-3).\n'
+    + 'Easy: simple tenses and basic verbs. Moderate: modal verbs, perfect tenses, passive voice. Hard: conditionals, reported speech, complex structures.\n'
+    + 'Use clinical vocabulary. Return ONLY the JSON array.';
+
+  callScript(
+    'action=openai_proxy&message=' + encodeURIComponent(prompt),
+    function(d) {
+      try {
+        var text = (d && d.reply) ? d.reply : '';
+        var m = text.match(/\[[\s\S]*\]/);
+        if (!m) throw new Error('no json');
+        _qz.qs = JSON.parse(m[0]);
+        if (!_qz.qs.length) throw new Error('empty');
+        qzShow('qz-game');
+        qzRender();
+      } catch(e) {
+        qzShow('qz-setup');
+        showToast('Erro ao gerar quiz. Tente novamente.', 'error');
+      }
+    },
+    function() { qzShow('qz-setup'); showToast('Erro de conexão.', 'error'); }
+  );
+}
+
+function qzRender() {
+  var q = _qz.qs[_qz.cur];
+  if (!q) return;
+  _qz.answered = false;
+  var letters = ['A','B','C','D'];
+  document.getElementById('qz-qnum').textContent = 'Questão ' + (_qz.cur+1) + ' de ' + _qz.qs.length;
+  document.getElementById('qz-scoreboard').textContent = '✓ ' + _qz.score;
+  document.getElementById('qz-prog').style.width = ((_qz.cur / _qz.qs.length)*100) + '%';
+  document.getElementById('qz-question').textContent = q.q;
+  var optsEl = document.getElementById('qz-opts');
+  optsEl.innerHTML = '';
+  (q.opts||[]).forEach(function(opt, i) {
+    var div = document.createElement('div');
+    div.className = 'qz-opt';
+    div.dataset.idx = i;
+    div.innerHTML = '<div class="qz-opt-letter">'+letters[i]+'</div>'
+      + '<div class="qz-opt-text">'+opt+'</div>'
+      + '<div class="qz-opt-icon"></div>';
+    div.addEventListener('click', function(){ if(!_qz.answered) qzSelect(i); });
+    optsEl.appendChild(div);
+  });
+  var conf = document.getElementById('qz-confirm');
+  var nxt  = document.getElementById('qz-next');
+  conf.classList.remove('ready'); conf.style.display='';
+  nxt.style.display='none';
+  conf.textContent = 'Confirmar';
+}
+
+function qzSelect(idx) {
+  document.querySelectorAll('.qz-opt').forEach(function(el){ el.classList.remove('selected'); });
+  var chosen = document.querySelector('.qz-opt[data-idx="'+idx+'"]');
+  if (chosen) chosen.classList.add('selected');
+  _qz.selection = idx;
+  document.getElementById('qz-confirm').classList.add('ready');
+}
+
+function qzConfirm() {
+  if (_qz.answered || _qz.selection === undefined) return;
+  _qz.answered = true;
+  var q = _qz.qs[_qz.cur];
+  var correct = q.ans;
+  var chosen  = _qz.selection;
+  document.querySelectorAll('.qz-opt').forEach(function(el){
+    el.classList.add('qz-opt-locked');
+    var i = +el.dataset.idx;
+    if (i === correct) { el.classList.add('correct'); el.querySelector('.qz-opt-icon').textContent='✓'; }
+    if (i === chosen && chosen !== correct) { el.classList.add('wrong'); el.querySelector('.qz-opt-icon').textContent='✗'; }
+  });
+  if (chosen === correct) _qz.score++;
+  document.getElementById('qz-scoreboard').textContent = '✓ ' + _qz.score;
+  document.getElementById('qz-confirm').style.display='none';
+  var nxt = document.getElementById('qz-next');
+  nxt.style.display='';
+  nxt.textContent = (_qz.cur < _qz.qs.length-1) ? 'Próxima →' : 'Ver Resultado →';
+  _qz.selection = undefined;
+}
+
+function qzNext() {
+  _qz.cur++;
+  if (_qz.cur >= _qz.qs.length) { qzFinish(); return; }
+  qzRender();
+}
+
+function qzFinish() {
+  qzShow('qz-results');
+  document.getElementById('qz-prog').style.width='100%';
+  var s=_qz.score, msgs=[
+    [9,'Excelente!','Seu inglês médico está impecável.'],
+    [7,'Muito bom!','Pequenos ajustes e você chega lá.'],
+    [5,'Bom progresso.','Continue praticando — você está evoluindo.'],
+    [0,'Continue praticando.','Cada erro é uma oportunidade de aprender.']
+  ];
+  var msg=msgs.find(function(m){return s>=m[0];})||msgs[3];
+  document.getElementById('qz-final-score').textContent=s;
+  document.getElementById('qz-result-msg').textContent=msg[1];
+  document.getElementById('qz-result-sub').textContent=msg[2];
+}
+
+function qzRetry() {
+  _qz.qs=[]; _qz.cur=0; _qz.score=0; _qz.selection=undefined; _qz.answered=false;
+  qzShow('qz-setup');
+}
+
+</script>
 </body>
 </html>
