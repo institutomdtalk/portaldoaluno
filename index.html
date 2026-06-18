@@ -6183,10 +6183,11 @@ function salvarNota() {
   if (tituloEl) tituloEl.value = '';
   if (corpoEl)  corpoEl.innerHTML = '';
   renderNotasGrid();
+  showToast('Nota adicionada ✓', 'success');  // feedback imediato
   callScriptPOST(
     { action: 'salvar_nota', login: currentStudent.login, id: id, titulo: titulo, corpo: corpo },
-    function(d){ showToast(d.success ? 'Nota salva!' : 'Erro ao salvar.', d.success ? 'success' : 'error'); },
-    function(){ showToast('Salvo localmente.','warning'); }
+    function(d){ if(!d.success) showToast('Aviso: erro ao sincronizar.', 'warning'); },
+    function(){ /* salvo localmente, ok */ }
   );
 }
 
