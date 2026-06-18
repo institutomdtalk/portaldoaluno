@@ -6154,11 +6154,11 @@ function salvarNota() {
   var tituloEl = document.getElementById('nota-titulo-input');
   var corpoEl  = document.getElementById('nota-corpo-input');
   var titulo = tituloEl ? tituloEl.value.trim() : '';
-  var corpo  = corpoEl  ? corpoEl.innerHTML.trim() : '';
-  // limpar variantes vazias do contenteditable
-  corpo = corpo.replace(/^(<div>)?<br\s*\/?>(<\/div>)?$/i,'').replace(/^<div>\s*<\/div>$/i,'').trim();
+  var corpo  = corpoEl  ? corpoEl.innerHTML : '';
+  // remover só HTML verdadeiramente vazio
+  var corpoTexto = corpo.replace(/<[^>]+>/g,'').trim();
   if (!currentStudent) { showToast('Sessão expirada. Recarregue a página.','error'); return; }
-  if (!corpo && !titulo) { showToast('Escreva algo antes de salvar.','error'); return; }
+  if (!corpoTexto && !titulo) { showToast('Escreva algo antes de salvar.','error'); return; }
   // If editing existing nota
   if (_notaEditandoId) {
     var n = _notas.find(function(x){ return x.id === _notaEditandoId; });
