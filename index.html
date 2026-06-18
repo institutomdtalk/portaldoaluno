@@ -1133,6 +1133,11 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nota-card-date{font-size:11px;color:#bbb;font-family:var(--sans)}
 .nota-card-actions{display:flex;gap:6px;opacity:0;transition:opacity 0.2s}
 .nota-card:hover .nota-card-actions{opacity:1}
+.nota-action-btn.arq{color:#ccc}
+.nota-action-btn.arq:hover{color:#f59e0b;background:rgba(245,158,11,.08)}
+.nota-card.arquivada{opacity:.55}
+.nota-card.arquivada:hover{opacity:.8}
+.nota-arq-empty{font-size:13px;color:#bbb;padding:8px 0;font-family:Raleway,sans-serif}
 .nota-action-btn{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,0.1);background:#fff;cursor:pointer;transition:all 0.2s;color:#aaa}
 .nota-action-btn svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 .nota-action-btn.edit:hover{color:var(--gold);border-color:var(--gold);background:rgba(196,164,90,0.06)}
@@ -2525,6 +2530,15 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
     <p class="notas-section-label">Suas Notas</p>
     <div class="notas-grid" id="notas-grid">
       <p class="notas-empty">Nenhuma nota ainda. Escreva sua primeira nota acima.</p>
+    </div>
+    <!-- Arquivadas -->
+    <div style="margin-top:40px;padding:0 40px 40px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;cursor:pointer;user-select:none" onclick="toggleNotasArq()">
+        <span style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#aaa;font-family:Raleway,sans-serif">Arquivadas</span>
+        <span id="notas-arq-count" style="font-size:10px;color:#bbb;font-family:Raleway,sans-serif"></span>
+        <svg id="notas-arq-chevron" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="margin-left:auto;transition:transform .3s"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div id="notas-arq-grid" style="display:none" class="notas-grid"></div>
     </div>
   </div>
 
@@ -6052,12 +6066,14 @@ function renderNotasGrid() {
   var grid  = document.getElementById('notas-grid');
   var count = document.getElementById('notas-count');
   if (!grid) return;
-  if (count) count.textContent = _notas.length + ' nota' + (_notas.length !== 1 ? 's' : '');
-  if (!_notas.length) {
+  var arqIds = JSON.parse(localStorage.getItem(getNotasArqKey()) || '[]');
+  var visiveis = _notas.filter(function(n){ return arqIds.indexOf(n.id) < 0; });
+  if (count) count.textContent = visiveis.length + ' nota' + (visiveis.length !== 1 ? 's' : '');
+  if (!visiveis.length) {
     grid.innerHTML = '<p class="notas-empty">Nenhuma nota ainda. Escreva sua primeira nota acima.</p>';
-    return;
+    renderNotasArquivadas(); return;
   }
-  grid.innerHTML = _notas.map(function(n) {
+  grid.innerHTML = visiveis.map(function(n) {
     var titulo = n.titulo ? '<p class="nota-card-titulo">' + n.titulo + '</p>' : '';
     return '<div class="nota-card" onclick="verNota(&quot;' + n.id + '&quot;)">' +
       titulo +
@@ -6068,6 +6084,9 @@ function renderNotasGrid() {
           '<button class="nota-action-btn" onclick="event.stopPropagation();downloadNotaPDF(&quot;' + n.id + '&quot;)" title="Download PDF">' +
             '<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
           '</button>' +
+          '<button class="nota-action-btn arq" onclick="event.stopPropagation();arquivarNota(&quot;' + n.id + '&quot;)" title="Arquivar">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>' +
+          '</button>' +
           '<button class="nota-action-btn edit" onclick="event.stopPropagation();editarNota(&quot;' + n.id + '&quot;)" title="Editar">' +
             '<svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
           '</button>' +
@@ -6076,6 +6095,57 @@ function renderNotasGrid() {
           '</button>' +
         '</div>' +
       '</div>' +
+    '</div>';
+  }).join('');
+  renderNotasArquivadas();
+}
+
+function getNotasArqKey(){
+  return 'notas_arq_'+(currentStudent?currentStudent.login:'guest');
+}
+function arquivarNota(id){
+  var k=getNotasArqKey();
+  var arq=JSON.parse(localStorage.getItem(k)||'[]');
+  if(arq.indexOf(id)<0) arq.push(id);
+  localStorage.setItem(k,JSON.stringify(arq));
+  renderNotasGrid();
+  showToast('Nota arquivada.','warning');
+}
+function restaurarNota(id){
+  var k=getNotasArqKey();
+  var arq=JSON.parse(localStorage.getItem(k)||'[]').filter(function(x){return x!==id;});
+  localStorage.setItem(k,JSON.stringify(arq));
+  renderNotasGrid();
+  showToast('Nota restaurada!','success');
+}
+var _notasArqOpen=false;
+function toggleNotasArq(){
+  _notasArqOpen=!_notasArqOpen;
+  var g=document.getElementById('notas-arq-grid');
+  var c=document.getElementById('notas-arq-chevron');
+  if(g) g.style.display=_notasArqOpen?'grid':'none';
+  if(c) c.style.transform=_notasArqOpen?'rotate(180deg)':'';
+}
+function renderNotasArquivadas(){
+  var grid=document.getElementById('notas-arq-grid');
+  var cEl=document.getElementById('notas-arq-count');
+  if(!grid) return;
+  var arqIds=JSON.parse(localStorage.getItem(getNotasArqKey())||'[]');
+  var arqs=_notas.filter(function(n){return arqIds.indexOf(n.id)>=0;});
+  if(cEl) cEl.textContent=arqs.length?'('+arqs.length+')':'';
+  if(!arqs.length){grid.innerHTML='<p class="nota-arq-empty">Nenhuma nota arquivada.</p>';return;}
+  grid.innerHTML=arqs.map(function(n){
+    var titulo=n.titulo?'<p class="nota-card-titulo" style="opacity:.7">'+n.titulo+'</p>':'';
+    return '<div class="nota-card arquivada">'+titulo+
+      '<div class="nota-card-corpo">'+(n.corpo||'')+'</div>'+
+      '<div class="nota-card-footer">'+
+        '<span class="nota-card-date">'+(n.data||'')+'</span>'+
+        '<div class="nota-card-actions">'+
+          '<button class="nota-action-btn" onclick="restaurarNota(&quot;'+n.id+'&quot;)" title="Restaurar">'+
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>'+
+          '</button>'+
+        '</div>'+
+      '</div>'+
     '</div>';
   }).join('');
 }
