@@ -905,40 +905,38 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 }
 .nb-toggle-pill{
   display:inline-flex;align-items:center;gap:8px;
-  padding:6px 14px 6px 8px;
-  border-radius:20px;
-  background:var(--navy);
-  border:none;
-  transition:all .25s;
-  box-shadow:0 2px 8px rgba(11,29,58,.18);
+  padding:11px 22px 12px;
+  border-radius:8px 8px 0 0;
+  background:none;
+  border:1px solid transparent;border-bottom:none;
+  transition:all .2s;
 }
 .nb-row-toggle:hover .nb-toggle-pill{
-  background:#0F2645;
-  box-shadow:0 3px 12px rgba(11,29,58,.28),0 0 0 2px rgba(196,164,90,.25);
+  color:var(--navy);background:rgba(255,255,255,.6);
 }
 .nb-toggle-pill .tp-icon{
-  width:22px;height:22px;border-radius:50%;
-  background:rgba(196,164,90,.18);
+  width:13px;height:13px;
   display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
+  flex-shrink:0;opacity:.45;
 }
 .nb-toggle-pill .tp-icon svg{
-  width:11px;height:11px;stroke:var(--gold-light);stroke-width:2;
+  width:13px;height:13px;stroke:currentColor;stroke-width:1.8;
   fill:none;stroke-linecap:round;stroke-linejoin:round;
 }
 .nb-toggle-pill .tp-label{
-  font-family:Raleway,sans-serif;font-size:12px;font-weight:600;
-  letter-spacing:.3px;color:rgba(255,255,255,.9);white-space:nowrap;
+  font-family:Raleway,sans-serif;font-size:12px;font-weight:500;
+  letter-spacing:.3px;color:var(--text-muted);white-space:nowrap;
 }
 .nb-toggle-pill .tp-chevron{
-  width:11px;height:11px;stroke:rgba(196,164,90,.8);stroke-width:2.5;
+  width:12px;height:12px;stroke:var(--text-muted);stroke-width:2;
   fill:none;stroke-linecap:round;stroke-linejoin:round;
-  transition:transform .3s;margin-left:1px;
+  transition:transform .3s;opacity:.6;
 }
 .nb-row-toggle.expanded .tp-chevron{transform:rotate(180deg)}
 .nb-row-toggle.expanded .nb-toggle-pill{
-  background:#0F2645;
-  box-shadow:0 2px 10px rgba(11,29,58,.25),0 0 0 2px rgba(196,164,90,.35);
+  color:var(--navy);background:var(--white);
+  border-color:var(--border);border-bottom-color:var(--white);
+  box-shadow:-2px -2px 6px rgba(0,0,0,.06),2px -2px 6px rgba(0,0,0,.06);
 }
 .nb-row-bottom{
   background:var(--off-white);
