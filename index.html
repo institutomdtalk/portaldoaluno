@@ -875,12 +875,26 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 ═══════════════════════════════════════ */
 .nb-tabs-bar{
   background:var(--off-white);
-  border-bottom:1px solid var(--border);
   box-shadow:0 2px 8px rgba(0,0,0,0.06);
-  display:flex;align-items:center;gap:4px;
-  padding:6px 36px 0;overflow-x:auto;
+  display:flex;flex-direction:column;
   position:sticky;top:0;z-index:200;
+}
+.nb-tabs-row{
+  display:flex;align-items:center;gap:2px;
+  padding:4px 28px 0;overflow-x:auto;
   scrollbar-width:none;
+}
+.nb-tabs-row::-webkit-scrollbar{display:none}
+.nb-row-top{
+  background:rgba(11,29,58,.03);
+  border-bottom:1px solid var(--border);
+}
+.nb-row-bottom{
+  background:var(--off-white);
+  border-bottom:1px solid var(--border);
+}
+.nb-row-top .nb-tab{
+  padding:8px 16px 9px;font-size:11px;
 }
 .nb-tabs-bar::-webkit-scrollbar{display:none}
 .nb-tab{
@@ -1946,38 +1960,60 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
   <!-- ══ NOTEBOOK TAB BAR ══ -->
   <div class="nb-tabs-bar" id="nb-tabs-bar">
-    <button class="nb-tab" id="tab-dashboard" onclick="switchTab('dashboard')">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      Principal
-    </button>
-    <button class="nb-tab" id="tab-sala" onclick="switchTab('sala')">
-      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      Perfil
-    </button>
-    <button class="nb-tab" id="tab-progresso" onclick="switchTab('progresso')">
-      <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-      Meu Progresso
-    </button>
-    <button class="nb-tab" id="tab-termos" onclick="switchTab('termos')">
-      <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-      Meus Termos / Flashcards
-    </button>
-    <button class="nb-tab" id="tab-notas" onclick="switchTab('notas')">
-      <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-      Notas
-    </button>
-    <button class="nb-tab" id="tab-recursos" onclick="switchTab('recursos')">
-      <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-      Recursos
-    </button>
-    <button class="nb-tab" id="tab-biblioteca" onclick="switchTab('biblioteca')">
-      <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-      Biblioteca
-    </button>
-    <button class="nb-tab" id="tab-quiz" onclick="switchTab('quiz')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-      Avalie-se
-    </button>
+    <!-- Linha 1: Pessoal / Progresso -->
+    <div class="nb-tabs-row nb-row-top">
+      <button class="nb-tab" id="tab-sala" onclick="switchTab('sala')">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Perfil
+      </button>
+      <button class="nb-tab" id="tab-progresso" onclick="switchTab('progresso')">
+        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Meu Progresso
+      </button>
+      <button class="nb-tab" id="tab-cronograma" onclick="switchTab('cronograma')">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Cronograma de Estudos
+      </button>
+      <button class="nb-tab" id="tab-games" onclick="switchTab('games')">
+        <svg viewBox="0 0 24 24"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15" cy="11" r="1"/><circle cx="17" cy="13" r="1"/><rect x="2" y="6" width="20" height="12" rx="2"/></svg>
+        Sala de Espera / Games
+      </button>
+    </div>
+    <!-- Linha 2: Conteúdo / Ferramentas -->
+    <div class="nb-tabs-row nb-row-bottom">
+      <button class="nb-tab active" id="tab-dashboard" onclick="switchTab('dashboard')">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Principal
+      </button>
+      <button class="nb-tab" id="tab-termos" onclick="switchTab('termos')">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        Meus Termos / Flashcards
+      </button>
+      <button class="nb-tab" id="tab-notas" onclick="switchTab('notas')">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Notas
+      </button>
+      <button class="nb-tab" id="tab-recursos" onclick="switchTab('recursos')">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        Recursos
+      </button>
+      <button class="nb-tab" id="tab-biblioteca" onclick="switchTab('biblioteca')">
+        <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        Biblioteca
+      </button>
+      <button class="nb-tab" id="tab-patient" onclick="switchTab('patient')">
+        <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        Patient Simulator
+      </button>
+      <button class="nb-tab" id="tab-listening" onclick="switchTab('listening')">
+        <svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>
+        Listening Hub
+      </button>
+      <button class="nb-tab" id="tab-quiz" onclick="switchTab('quiz')">
+        <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        Grammar Quiz
+      </button>
+    </div>
   </div>
 
   <!-- ══ PAINEL PERFIL ══ -->
@@ -5291,7 +5327,7 @@ var _ntBusca     = '';
 // ── TAB SWITCHING ──
 function switchTab(tab) {
   // Hide all panels and dashboard
-  ['sala','progresso','termos','notas','recursos','biblioteca'].forEach(function(t){
+  ['sala','progresso','termos','notas','recursos','biblioteca','cronograma','games','patient','listening','quiz'].forEach(function(t){
     var p = document.getElementById('panel-' + t);
     if (p) p.classList.remove('active');
   });
@@ -5314,6 +5350,14 @@ function switchTab(tab) {
     if (tab === 'notas') { loadNotas(); }
     if (tab === 'biblioteca') { setTimeout(enviarLidosParaBiblioteca, 800); }
     if (tab === 'quiz') { initQuizTab(); }
+    if (tab === 'patient') {
+      var pf=document.getElementById('patient-iframe');
+      if(pf && pf.src==='about:blank') pf.src='https://institutomdtalk.github.io/virtual-patient-simulator/';
+    }
+    if (tab === 'listening') {
+      var lf=document.getElementById('listening-iframe');
+      if(lf && lf.src==='about:blank') lf.src='https://institutomdtalk.github.io/listeninghub/';
+    }
   }
 }
 
