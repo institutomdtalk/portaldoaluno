@@ -685,6 +685,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .drive-archive-btn{background:none;border:1px solid rgba(0,0,0,0.12);border-radius:50%;width:26px;height:26px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;color:#bbb;padding:0;margin-left:auto}
 .drive-archive-btn:hover{border-color:var(--navy);color:var(--navy)}
 #bib-iframe-wrap.bib-fullscreen{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;background:#fff;padding:0}
+#patient-iframe-wrap.patient-fullscreen{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;background:#fff;padding:0}
+#patient-iframe-wrap.patient-fullscreen #patient-iframe{height:100vh!important;}
 #bib-iframe-wrap.bib-fullscreen #bib-iframe{height:100vh!important;border-radius:0!important;min-height:unset!important}
 #btn-bib-fs:hover{border-color:var(--navy);color:var(--navy)}
 .drive-archive-btn.arquivado{background:var(--navy);border-color:var(--navy);color:#fff}
@@ -2753,8 +2755,17 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
 
   <!-- ══ PAINEL PATIENT SIMULATOR ══ -->
-  <div class="nb-panel" id="panel-patient" style="padding:0;height:calc(100vh - 120px)">
-    <iframe id="patient-iframe" src="about:blank" style="width:100%;height:100%;border:none;" loading="lazy" allow="microphone"></iframe>
+  <div class="nb-panel" id="panel-patient" style="padding:0;height:calc(100vh - 120px);display:flex;flex-direction:column">
+    <div style="display:flex;justify-content:flex-end;align-items:center;padding:6px 12px;background:var(--off-white);border-bottom:1px solid var(--border);flex-shrink:0">
+      <button id="btn-patient-fs" onclick="togglePatientFS()"
+        style="display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border:1px solid var(--border);border-radius:6px;background:none;cursor:pointer;font-family:Raleway,sans-serif;font-size:11px;font-weight:600;color:var(--navy);letter-spacing:.5px">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+        Tela cheia
+      </button>
+    </div>
+    <div id="patient-iframe-wrap" style="flex:1;overflow:hidden">
+      <iframe id="patient-iframe" src="about:blank" style="width:100%;height:100%;border:none;" loading="lazy" allow="microphone *"></iframe>
+    </div>
   </div>
 
   <!-- ══ PAINEL LISTENING HUB ══ -->
@@ -7806,6 +7817,16 @@ window.addEventListener('load', function(){
 var _qz = { qs:[], cur:0, score:0, level:'', answered:false, initialized:false };
 
 function initQuizTab() { /* noop — setup já visível */ }
+
+function togglePatientFS() {
+  var wrap = document.getElementById('patient-iframe-wrap');
+  var btn  = document.getElementById('btn-patient-fs');
+  var isFS = wrap.classList.toggle('patient-fullscreen');
+  document.body.style.overflow = isFS ? 'hidden' : '';
+  btn.innerHTML = isFS
+    ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/></svg> Sair da tela cheia'
+    : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg> Tela cheia';
+}
 
 function toggleTopRow() {
   var row = document.getElementById('nb-row-top');
