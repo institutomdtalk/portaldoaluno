@@ -888,7 +888,29 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .nb-row-top{
   background:rgba(11,29,58,.03);
   border-bottom:1px solid var(--border);
+  max-height:0;overflow:hidden;
+  transition:max-height .3s ease, opacity .3s ease;
+  opacity:0;padding-top:0;padding-bottom:0;
 }
+.nb-row-top.expanded{
+  max-height:60px;opacity:1;
+  padding-top:4px;
+}
+.nb-row-toggle{
+  display:flex;align-items:center;justify-content:center;
+  gap:5px;padding:3px 12px;
+  background:rgba(11,29,58,.03);
+  border-bottom:1px solid var(--border);
+  cursor:pointer;transition:background .2s;
+}
+.nb-row-toggle:hover{background:rgba(11,29,58,.06)}
+.nb-row-toggle span{
+  font-family:Raleway,sans-serif;font-size:9px;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);
+}
+.nb-row-toggle svg{width:10px;height:10px;stroke:var(--text-muted);stroke-width:2;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;transition:transform .3s;}
+.nb-row-toggle.expanded svg{transform:rotate(180deg)}
 .nb-row-bottom{
   background:var(--off-white);
   border-bottom:1px solid var(--border);
@@ -1960,8 +1982,13 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
   <!-- ══ NOTEBOOK TAB BAR ══ -->
   <div class="nb-tabs-bar" id="nb-tabs-bar">
+    <!-- Toggle linha pessoal -->
+    <div class="nb-row-toggle" id="nb-row-toggle" onclick="toggleTopRow()">
+      <span id="nb-toggle-label">Perfil &amp; Progresso</span>
+      <svg viewBox="0 0 24 24" id="nb-toggle-chevron"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
     <!-- Linha 1: Pessoal / Progresso -->
-    <div class="nb-tabs-row nb-row-top">
+    <div class="nb-tabs-row nb-row-top" id="nb-row-top">
       <button class="nb-tab" id="tab-sala" onclick="switchTab('sala')">
         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         Perfil
@@ -7719,6 +7746,14 @@ window.addEventListener('load', function(){
 var _qz = { qs:[], cur:0, score:0, level:'', answered:false, initialized:false };
 
 function initQuizTab() { /* noop — setup já visível */ }
+
+function toggleTopRow() {
+  var row = document.getElementById('nb-row-top');
+  var btn = document.getElementById('nb-row-toggle');
+  if (!row) return;
+  var open = row.classList.toggle('expanded');
+  if (btn) btn.classList.toggle('expanded', open);
+}
 
 function qzSetLevel(level, btn) {
   _qz.level = level;
