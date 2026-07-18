@@ -354,19 +354,12 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 
 /* ── AVATAR ORBITAL ── */
-.hero-avatar-wrap{position:relative;width:90px;height:90px;margin-right:22px;flex-shrink:0}
-.hero-avatar-img{width:80px;height:80px;border-radius:50%;object-fit:cover;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:2px solid rgba(196,164,90,.35);box-shadow:0 0 20px rgba(196,164,90,.15)}
-.hero-avatar-icon{width:80px;height:80px;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:2px solid rgba(196,164,90,.3);background:rgba(11,29,58,.7);display:flex;align-items:center;justify-content:center}
-.hero-avatar-icon svg{width:36px;height:36px;stroke:rgba(196,164,90,.6);stroke-width:1.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.hero-orbit{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(196,164,90,.12)}
-.hero-orbit-dot{position:absolute;inset:-1px;border-radius:50%;animation:orbit-spin linear infinite}
-.hero-orbit-dot::before{content:'';position:absolute;width:5px;height:5px;border-radius:50%;background:rgba(196,164,90,.8);box-shadow:0 0 6px rgba(196,164,90,.6);top:0;left:50%;transform:translateX(-50%)}
-.hero-orbit-dot:nth-child(2){animation-duration:4s}
-.hero-orbit-dot:nth-child(3){animation-duration:6s;animation-delay:-2s}
-.hero-orbit-dot:nth-child(3)::before{width:3px;height:3px;opacity:.5}
-.hero-orbit-dot:nth-child(4){animation-duration:9s;animation-delay:-4s}
-.hero-orbit-dot:nth-child(4)::before{width:4px;height:4px;opacity:.35}
-@keyframes orbit-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.dash-avatar-wrap{position:relative;width:80px;height:80px;flex-shrink:0;margin-right:22px}
+.dash-avatar-img{position:absolute;top:0;left:0;z-index:3;width:80px;height:80px;border-radius:50%;object-fit:cover;object-position:center 12%;border:2px solid rgba(255,255,255,.2);display:none;box-shadow:0 0 0 3px rgba(200,210,220,.12),0 4px 24px rgba(0,0,0,.4)}
+.dash-avatar-glow{position:absolute;inset:-16px;z-index:0;border-radius:50%;background:radial-gradient(circle,rgba(196,164,90,.18) 0%,transparent 70%);animation:avatarGlow 4s ease-in-out infinite}
+.dash-avatar-ring{position:relative;z-index:2;width:80px;height:80px;border-radius:50%;border:1.5px solid rgba(196,164,90,.25);box-shadow:0 0 0 3px rgba(196,164,90,.06),0 4px 24px rgba(0,0,0,.4);background:rgba(11,29,58,.45);display:flex;align-items:center;justify-content:center}
+.dash-avatar-ring svg{width:30px;height:30px;stroke:rgba(196,164,90,.4);fill:none;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+@keyframes avatarGlow{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
 .header-inner{
   position:relative;
   z-index:1;
@@ -1954,6 +1947,9 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       <div style="display:flex;align-items:center">
       <div class="dash-avatar-wrap" id="dashAvatarWrap" style="margin-right:22px">
         <div class="dash-avatar-glow"></div>
+        <div class="dash-avatar-ring" id="dashAvatarRing">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
         <img class="dash-avatar-img" id="dashAvatarImg" src="" alt="Foto do aluno">
       </div>
       <div class="header-brand">
@@ -3270,7 +3266,7 @@ function renderDashboard(a) {
   if (heroN) heroN.textContent = a.nome_display || a.login;
   var fotoUrl = a.foto ? (typeof driveImgUrl==='function' ? driveImgUrl(a.foto) : a.foto) : '';
   var dashImg = document.getElementById('dashAvatarImg');
-  if (fotoUrl && dashImg) { dashImg.onload=function(){this.style.display='block';}; dashImg.onerror=function(){this.style.display='none';this.src='';}; dashImg.src=fotoUrl; }
+  if (fotoUrl && dashImg) { dashImg.onload=function(){this.style.display='block';var r=document.getElementById('dashAvatarRing');if(r)r.style.display='none';}; dashImg.onerror=function(){this.style.display='none';this.src='';}; dashImg.src=fotoUrl; }
 
   // Programa do aluno
   var heroCurso = document.getElementById('hero-curso');
