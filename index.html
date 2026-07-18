@@ -7879,6 +7879,30 @@ function buildAvatarOrbit(){
 }
 document.addEventListener("DOMContentLoaded",buildAvatarOrbit);
 // ───────────────────────────────────────────────────────────
+
+// ── SIDEBAR LATERAL ──────────────────────────────────────────
+function toggleSideNav(){
+  var nav=document.getElementById("sideNav");
+  var tog=document.getElementById("sideToggle");
+  var collapsed=nav.classList.toggle("collapsed");
+  tog.classList.toggle("collapsed",collapsed);
+  tog.style.left=collapsed?"0":"220px";
+}
+var _sideMap={"dashboard":"dashboard","material":"dashboard","biblioteca":"biblioteca",
+  "listening":"listening","quiz":"quiz","patient":"patient",
+  "progresso":"progresso","curadoria":"dashboard","cronograma":"cronograma",
+  "games":"games","recursos":"recursos","notas":"notas"};
+function sideNav_go(id){
+  var tab=_sideMap[id]||id;
+  switchTab(tab);
+  if(id==="material"){setTimeout(function(){switchDriveTab("minha");},50);}
+  if(id==="curadoria"){setTimeout(function(){switchDriveTab("curadoria");},50);}
+  document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
+  var el=document.getElementById("si-"+id);
+  if(el) el.classList.add("active");
+}
+// ─────────────────────────────────────────────────────────────────
+
 // ── QUIZ ──────────────────────────────────────────────────────────────────
 var _qz = { qs:[], cur:0, score:0, level:'', answered:false, initialized:false };
 
