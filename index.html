@@ -3270,7 +3270,7 @@ function renderDashboard(a) {
   if (heroN) heroN.textContent = a.nome_display || a.login;
   var fotoUrl = a.foto ? (typeof driveImgUrl==='function' ? driveImgUrl(a.foto) : a.foto) : '';
   var dashImg = document.getElementById('dashAvatarImg');
-  if (fotoUrl && dashImg) { dashImg.src = fotoUrl; dashImg.onerror = function(){ this.src=''; }; }
+  if (fotoUrl && dashImg) { dashImg.onload=function(){this.style.display='block';}; dashImg.onerror=function(){this.style.display='none';this.src='';}; dashImg.src=fotoUrl; }
 
   // Programa do aluno
   var heroCurso = document.getElementById('hero-curso');
