@@ -2051,6 +2051,10 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
         </div>
         <img class="dash-avatar-img" id="dashAvatarImg" src="" alt="Foto do aluno">
       </div>
+        <div class="dash-avatar-upload" onclick="document.getElementById('avatarFileInput').click()" title="Alterar foto">
+          <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </div>
+        <input type="file" id="avatarFileInput" accept="image/*" style="display:none" onchange="uploadAvatarFoto(this)">
       <div class="header-brand">
         <p class="brand-label">Instituto MD Talk</p>
         <h1 class="brand-title">
@@ -7982,6 +7986,39 @@ document.addEventListener("DOMContentLoaded",buildAvatarOrbit);
 // ───────────────────────────────────────────────────────────
 
 // ── SIDEBAR LATERAL ──────────────────────────────────────────
+function uploadAvatarFoto(input){
+  if(!input.files||!input.files[0]) return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      var canvas=document.createElement("canvas");
+      var size=400; canvas.width=size; canvas.height=size;
+      var ctx=canvas.getContext("2d");
+      var s=Math.min(img.width,img.height);
+      var ox=(img.width-s)/2, oy=(img.height-s)/2;
+      ctx.drawImage(img,ox,oy,s,s,0,0,size,size);
+      var base64=canvas.toDataURL("image/jpeg",0.75);
+      var dashImg=document.getElementById("dashAvatarImg");
+      var ring=document.getElementById("dashAvatarRing");
+      if(dashImg){dashImg.src=base64;dashImg.style.display="block";}
+      if(ring) ring.style.display="none";
+      showToast("Enviando foto...","success");
+      if(!currentStudent) return;
+      var body=new URLSearchParams();
+      body.append("action","upload_foto");
+      body.append("login",currentStudent.login);
+      body.append("foto_base64",base64);
+      fetch(SCRIPT_URL,{method:"POST",body:body})
+        .then(function(r){return r.text();})
+        .then(function(t){try{var m=t.match(/\{[\s\S]*\}/);if(m){var d=JSON.parse(m[0]);if(d.success){showToast("Foto salva!","success");currentStudent.foto=d.url;}else showToast("Erro: "+(d.msg||"?"),"error");}}catch(e){showToast("Erro.","error")}})
+        .catch(function(){showToast("Erro de conexão.","error");});
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(input.files[0]);
+  input.value="";
+}
 function toggleSideNav(){
   var nav=document.getElementById("sideNav");
   var tog=document.getElementById("sideToggle");
