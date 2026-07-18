@@ -1944,7 +1944,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
     <div class="hgeo hgeo--line"></div>
     <div class="hgeo hgeo--diamond"></div>
     <div class="header-inner">
-      <div style="display:flex;align-items:center;padding-left:16px">
+      <div style="display:flex;align-items:center;padding-left:32px">
       <div class="dash-avatar-wrap" id="dashAvatarWrap" style="margin-right:22px">
         <div class="dash-avatar-glow"></div>
         <div class="dash-avatar-ring" id="dashAvatarRing">
@@ -3265,7 +3265,6 @@ function renderDashboard(a) {
   if (heroG) heroG.textContent = greetPT;
   if (heroN) heroN.textContent = a.nome_display || a.login;
   var fotoUrl = a.foto ? (typeof driveImgUrl==='function' ? driveImgUrl(a.foto) : a.foto) : '';
-  if(a.foto) showToast('Foto: '+fotoUrl.substring(0,60), fotoUrl?'success':'error');
   var dashImg = document.getElementById('dashAvatarImg');
   if (fotoUrl && dashImg) { dashImg.onload=function(){this.style.display='block';var r=document.getElementById('dashAvatarRing');if(r)r.style.display='none';}; dashImg.onerror=function(){this.style.display='none';this.src='';}; dashImg.src=fotoUrl; }
 
