@@ -7827,6 +7827,67 @@ window.addEventListener('load', function(){
 
 <script>
 
+
+// ── AVATAR ORBITAL ────────────────────────────────────────
+function buildAvatarOrbit(){
+  var wrap=document.getElementById("dashAvatarWrap");
+  if(!wrap) return;
+  var size=120,cx=size/2,cy=size/2;
+  var orbits=[
+    {rx:52,ry:22,tilt:-20,dur:"7s", dir:"cw", dots:3,r:2.8,color:"rgba(232,217,176,.9)"},
+    {rx:46,ry:18,tilt:35, dur:"11s",dir:"ccw",dots:2,r:2.2,color:"rgba(212,186,122,.75)"},
+    {rx:54,ry:14,tilt:70, dur:"9s", dir:"cw", dots:4,r:1.8,color:"rgba(255,255,255,.55)"}
+  ];
+  var ns="http://www.w3.org/2000/svg";
+  var svg=document.createElementNS(ns,"svg");
+  svg.setAttribute("viewBox","0 0 "+size+" "+size);
+  svg.style.cssText="position:absolute;inset:-20px;width:"+size+"px;height:"+size+"px;z-index:1;pointer-events:none";
+  orbits.forEach(function(o){
+    var g=document.createElementNS(ns,"g");
+    for(var i=0;i<o.dots;i++){
+      var angle=(360/o.dots)*i;
+      var dotG=document.createElementNS(ns,"g");
+      dotG.setAttribute("transform","rotate("+o.tilt+" "+cx+" "+cy+")");
+      var ag=document.createElementNS(ns,"g");
+      var anim=document.createElementNS(ns,"animateTransform");
+      anim.setAttribute("attributeName","transform");
+      anim.setAttribute("type","rotate");
+      anim.setAttribute("from",angle+" "+cx+" "+cy);
+      anim.setAttribute("to",(angle+(o.dir==="ccw"?-360:360))+" "+cx+" "+cy);
+      anim.setAttribute("dur",o.dur);
+      anim.setAttribute("repeatCount","indefinite");
+      ag.appendChild(anim);
+      var rad=angle*Math.PI/180;
+      var px=cx+o.rx*Math.cos(rad),py=cy+o.ry*Math.sin(rad);
+      var dot=document.createElementNS(ns,"ellipse");
+      dot.setAttribute("cx",px);dot.setAttribute("cy",py);
+      dot.setAttribute("rx",o.r);dot.setAttribute("ry",o.r);
+      dot.setAttribute("fill",o.color);
+      dot.style.filter="drop-shadow(0 0 3px rgba(232,217,176,.7))";
+      ["rx","ry"].forEach(function(attr){
+        var pa=document.createElementNS(ns,"animate");
+        pa.setAttribute("attributeName",attr);
+        pa.setAttribute("values",o.r+";"+(o.r*1.6)+";"+o.r);
+        pa.setAttribute("dur",(2+i*0.4)+"s");
+        pa.setAttribute("repeatCount","indefinite");
+        dot.appendChild(pa);
+      });
+      var pa3=document.createElementNS(ns,"animate");
+      pa3.setAttribute("attributeName","opacity");
+      pa3.setAttribute("values","0.4;1;0.4");
+      pa3.setAttribute("dur",(2+i*0.4)+"s");
+      pa3.setAttribute("repeatCount","indefinite");
+      dot.appendChild(pa3);
+      ag.appendChild(dot);
+      dotG.appendChild(ag);
+      g.appendChild(dotG);
+    }
+    svg.appendChild(g);
+  });
+  wrap.insertBefore(svg,wrap.querySelector(".dash-avatar-img")||wrap.querySelector(".hero-avatar-icon"));
+}
+document.addEventListener("DOMContentLoaded",buildAvatarOrbit);
+// ───────────────────────────────────────────────────────────
 // ── QUIZ ──────────────────────────────────────────────────────────────────
 var _qz = { qs:[], cur:0, score:0, level:'', answered:false, initialized:false };
 
