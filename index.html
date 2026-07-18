@@ -1389,23 +1389,15 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   transform:rotate(45deg);
   flex-shrink:0;
 }
-.footer-overline{
-  font-family:var(--sans);
-  font-size:9px;font-weight:700;
-  letter-spacing:5px;
-  text-transform:uppercase;
-  color:var(--gold);
-  opacity:0.6;
-  margin-bottom:14px;
-}
+.footer-overline{display:none}
 .footer-brand{
   font-family:var(--serif);
-  font-size:1.65rem;
+  font-size:1.1rem;
   font-weight:300;
-  color:var(--white);
-  letter-spacing:1px;
-  margin-bottom:10px;
-  line-height:1.1;
+  color:rgba(255,255,255,.55);
+  letter-spacing:.5px;
+  margin-bottom:0;
+  line-height:1;
 }
 .footer-brand em{
   font-style:italic;
@@ -1415,31 +1407,21 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   -webkit-text-fill-color:transparent;
   background-clip:text;
 }
-.footer-tagline{
-  font-family:var(--serif);
-  font-style:italic;
-  font-size:13.5px;
-  color:rgba(255,255,255,0.28);
-  margin-bottom:36px;
-  letter-spacing:0.3px;
-}
-.footer-divider{
-  width:32px;height:1px;
-  background:rgba(196,164,90,0.3);
-  margin:0 auto 36px;
-}
+.footer-tagline{display:none}
+.footer-divider{display:none}
 .footer-links{
   display:flex;justify-content:center;
   align-items:center;gap:0;
-  margin-bottom:40px;
+  margin-bottom:0;
   flex-wrap:wrap;
 }
 .footer-link{
-  display:flex;align-items:center;gap:9px;
+  display:flex;align-items:center;gap:7px;
   text-decoration:none;
-  padding:10px 24px;
-  border:1px solid rgba(196,164,90,0.1);
-  transition:all 0.35s ease;
+  padding:7px 18px;
+  border:none;
+  border-left:1px solid rgba(196,164,90,.1);
+  transition:all .25s ease;
   position:relative;
 }
 .footer-link:first-child{border-radius:3px 0 0 3px}
@@ -2936,14 +2918,10 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
   </main><!-- end .dashboard -->
 
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-geo-line"><div class="footer-geo-diamond"></div></div>
-      <p class="footer-overline">Instituto MD Talk</p>
+  <footer class="footer" style="padding:14px 0">
+    <div class="footer-inner" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:0 40px;max-width:none">
       <p class="footer-brand">Programa de Proficiência em <em>Inglês Médico</em></p>
-      <p class="footer-tagline">Falar bem é uma forma de ser.</p>
-      <div class="footer-divider"></div>
-      <div class="footer-links">
+      <div class="footer-links" style="margin-bottom:0">
         <a href="https://instagram.com/inglesmedico.thaifaria" target="_blank" rel="noopener" class="footer-link">
           <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><path d="M17.5 6.5h.01"/></svg>
           <span>@inglesmedico.thaifaria</span>
@@ -2957,8 +2935,8 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
           <span>WhatsApp</span>
         </a>
       </div>
-      <p class="footer-copy">&copy; 2026 Instituto MD Talk &mdash; Todos os direitos reservados.</p>
-      <a href="#" onclick="doLogout();return false;" class="footer-logout">Sair da conta</a>
+      <p class="footer-copy" style="font-size:9px;color:rgba(255,255,255,.2);letter-spacing:.15em;text-transform:uppercase;margin:0">&copy; 2026 MD Talk</p>
+      <a href="#" onclick="doLogout();return false;" class="footer-logout" style="font-size:9px;opacity:.35;letter-spacing:.12em;text-transform:uppercase">Sair da conta</a>
     </div>
   </footer>
 
