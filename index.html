@@ -1952,14 +1952,9 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
     <div class="hgeo hgeo--diamond"></div>
     <div class="header-inner">
       <div style="display:flex;align-items:center">
-      <div class="hero-avatar-wrap" id="hero-avatar-wrap">
-        <div class="hero-orbit"></div>
-        <div class="hero-orbit-dot"></div>
-        <div class="hero-orbit-dot"></div>
-        <div class="hero-orbit-dot"></div>
-        <div class="hero-avatar-icon" id="hero-avatar-icon">
-          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        </div>
+      <div class="dash-avatar-wrap" id="dashAvatarWrap" style="margin-right:22px">
+        <div class="dash-avatar-glow"></div>
+        <img class="dash-avatar-img" id="dashAvatarImg" src="" alt="Foto do aluno">
       </div>
       <div class="header-brand">
         <p class="brand-label">Instituto MD Talk</p>
@@ -3274,15 +3269,8 @@ function renderDashboard(a) {
   if (heroG) heroG.textContent = greetPT;
   if (heroN) heroN.textContent = a.nome_display || a.login;
   var fotoUrl = a.foto ? (typeof driveImgUrl==='function' ? driveImgUrl(a.foto) : a.foto) : '';
-  var avatarIcon = document.getElementById('hero-avatar-icon');
-  if (fotoUrl && avatarIcon) {
-    var img = document.createElement('img');
-    img.className = 'hero-avatar-img';
-    img.src = fotoUrl;
-    img.onerror = function(){ this.style.display='none'; avatarIcon.style.display='flex'; };
-    avatarIcon.parentNode.appendChild(img);
-    avatarIcon.style.display = 'none';
-  }
+  var dashImg = document.getElementById('dashAvatarImg');
+  if (fotoUrl && dashImg) { dashImg.src = fotoUrl; dashImg.onerror = function(){ this.src=''; }; }
 
   // Programa do aluno
   var heroCurso = document.getElementById('hero-curso');
