@@ -984,15 +984,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .side-toggle.collapsed svg{transform:rotate(180deg)}
 /* ─────────────────────────────────────────────────────────────────── */
 
-/* ── FULLSCREEN TAKEOVER ──────────────────────────────── */
-.fs-takeover{position:fixed;inset:0;z-index:600;background:#F0EDE8;display:flex;flex-direction:column;transform:translateY(100vh);opacity:0;transition:transform .48s cubic-bezier(.16,1,.3,1),opacity .3s ease;pointer-events:none;overflow:hidden;}
-.fs-takeover.active{transform:translateY(0);opacity:1;pointer-events:all;}
-.fs-bar{display:flex;align-items:center;padding:10px 28px;background:#F0EDE8;border-bottom:1px solid rgba(0,0,0,.06);flex-shrink:0;}
-.fs-back{display:inline-flex;align-items:center;width:32px;height:32px;border-radius:50%;border:none;background:rgba(11,29,58,.07);cursor:pointer;justify-content:center;transition:background .2s;}
-.fs-back:hover{background:rgba(11,29,58,.14)}
-.fs-back svg{width:14px;height:14px;stroke:#0B1D3A;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.fs-body{flex:1;overflow-y:auto;}
-/* ────────────────────────────────────────────────────── */
 .nb-tabs-bar{
   background:var(--off-white);
   box-shadow:0 2px 8px rgba(0,0,0,0.06);
@@ -2029,10 +2020,10 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       <div class="side-item active" id="si-dashboard" onclick="sideNav_go('dashboard')">
         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Welcome
       </div>
-      <div class="side-item" id="si-sala" onclick="showTakeover('sala','Perfil');document.querySelectorAll('.side-item').forEach(function(el){el.classList.remove('active');});this.classList.add('active')">
+      <div class="side-item" id="si-sala" onclick="sideNav_go('sala')">
         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Perfil
       </div>
-      <div class="side-item" id="si-progresso" onclick="showTakeover('progresso','Meu Progresso');document.querySelectorAll('.side-item').forEach(function(el){el.classList.remove('active');});this.classList.add('active')">
+      <div class="side-item" id="si-progresso" onclick="sideNav_go('progresso')">
         <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Meu Progresso
       </div>
       <div class="side-item" id="si-reagendamento" onclick="sideNav_go('cronograma')">
@@ -2060,19 +2051,6 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
 <!-- Coluna principal -->
 <div id="app-main-col">
-
-<!-- Fullscreen Takeover -->
-<div class="fs-takeover" id="fsTakeover">
-  <div class="fs-bar">
-    <button class="fs-back" onclick="closeTakeover()">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
-  </div>
-  <div class="fs-body" id="fsTakeoverBody"></div>
-</div>
-
-  <div class="fs-body" id="fsTakeoverBody"></div>
-</div>
 
 
   <!-- ── FIXED TOPBAR ── -->
@@ -8090,30 +8068,6 @@ function uploadAvatarFoto(input){
   reader.readAsDataURL(input.files[0]);
   input.value="";
 }
-function showTakeover(tabId, title) {
-  var panel = document.getElementById("panel-" + tabId);
-  if (!panel) return;
-  var body = document.getElementById("fsTakeoverBody");
-  if (body) body.innerHTML = panel.innerHTML;
-  if (tabId === "progresso") setTimeout(renderNbProgresso, 80);
-  var ov = document.getElementById("fsTakeover");
-  if (!ov) return;
-  requestAnimationFrame(function(){
-    ov.classList.add("active");
-    document.body.style.overflow = "hidden";
-  });
-}
-function closeTakeover() {
-  var ov = document.getElementById("fsTakeover");
-  if (!ov) return;
-  ov.classList.remove("active");
-  document.body.style.overflow = "";
-  setTimeout(function(){ var b=document.getElementById("fsTakeoverBody"); if(b) b.innerHTML=""; }, 430);
-}
-document.addEventListener("keydown", function(e){
-  if(e.key==="Escape") closeTakeover();
-});
-
 function toggleSideNav(){
   var nav=document.getElementById("sideNav");
   var tog=document.getElementById("sideToggle");
