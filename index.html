@@ -3265,6 +3265,7 @@ function renderDashboard(a) {
   if (heroG) heroG.textContent = greetPT;
   if (heroN) heroN.textContent = a.nome_display || a.login;
   var fotoUrl = a.foto ? (typeof driveImgUrl==='function' ? driveImgUrl(a.foto) : a.foto) : '';
+  if(a.foto) showToast('Foto: '+fotoUrl.substring(0,60), fotoUrl?'success':'error');
   var dashImg = document.getElementById('dashAvatarImg');
   if (fotoUrl && dashImg) { dashImg.onload=function(){this.style.display='block';var r=document.getElementById('dashAvatarRing');if(r)r.style.display='none';}; dashImg.onerror=function(){this.style.display='none';this.src='';}; dashImg.src=fotoUrl; }
 
@@ -7814,8 +7815,8 @@ window.addEventListener('load', function(){
 
 function driveImgUrl(url){
   if(!url) return "";
-  var m=url.match(/[\/d\/]([a-zA-Z0-9_-]{20,})/);
-  if(m) return "https://drive.google.com/uc?export=view&id="+m[1];
+  var m=url.match(/\/d\/([a-zA-Z0-9_-]{25,})/);
+  if(m) return "https://lh3.googleusercontent.com/d/"+m[1];
   return url;
 }
 
