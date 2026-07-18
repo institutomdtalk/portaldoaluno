@@ -352,6 +352,21 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .hgeo--line{width:1px;height:100px;background:linear-gradient(180deg,transparent,rgba(196,164,90,0.12),transparent);top:15%;left:8%;animation:geoFloat 18s ease-in-out infinite}
 .hgeo--diamond{width:10px;height:10px;border:1px solid rgba(196,164,90,0.15);transform:rotate(45deg);top:40%;right:12%;animation:geoPulse 7s ease-in-out infinite}
 
+
+/* ── AVATAR ORBITAL ── */
+.hero-avatar-wrap{position:relative;width:90px;height:90px;margin-right:22px;flex-shrink:0}
+.hero-avatar-img{width:80px;height:80px;border-radius:50%;object-fit:cover;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:2px solid rgba(196,164,90,.35);box-shadow:0 0 20px rgba(196,164,90,.15)}
+.hero-avatar-icon{width:80px;height:80px;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:2px solid rgba(196,164,90,.3);background:rgba(11,29,58,.7);display:flex;align-items:center;justify-content:center}
+.hero-avatar-icon svg{width:36px;height:36px;stroke:rgba(196,164,90,.6);stroke-width:1.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.hero-orbit{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(196,164,90,.12)}
+.hero-orbit-dot{position:absolute;inset:-1px;border-radius:50%;animation:orbit-spin linear infinite}
+.hero-orbit-dot::before{content:'';position:absolute;width:5px;height:5px;border-radius:50%;background:rgba(196,164,90,.8);box-shadow:0 0 6px rgba(196,164,90,.6);top:0;left:50%;transform:translateX(-50%)}
+.hero-orbit-dot:nth-child(2){animation-duration:4s}
+.hero-orbit-dot:nth-child(3){animation-duration:6s;animation-delay:-2s}
+.hero-orbit-dot:nth-child(3)::before{width:3px;height:3px;opacity:.5}
+.hero-orbit-dot:nth-child(4){animation-duration:9s;animation-delay:-4s}
+.hero-orbit-dot:nth-child(4)::before{width:4px;height:4px;opacity:.35}
+@keyframes orbit-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 .header-inner{
   position:relative;
   z-index:1;
@@ -1936,6 +1951,16 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
     <div class="hgeo hgeo--line"></div>
     <div class="hgeo hgeo--diamond"></div>
     <div class="header-inner">
+      <div style="display:flex;align-items:center">
+      <div class="hero-avatar-wrap" id="hero-avatar-wrap">
+        <div class="hero-orbit"></div>
+        <div class="hero-orbit-dot"></div>
+        <div class="hero-orbit-dot"></div>
+        <div class="hero-orbit-dot"></div>
+        <div class="hero-avatar-icon" id="hero-avatar-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+      </div>
       <div class="header-brand">
         <p class="brand-label">Instituto MD Talk</p>
         <h1 class="brand-title">
@@ -1943,6 +1968,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
           <em id="hero-nome"></em>
         </h1>
         <p id="hero-frase" style="font-family:Raleway,sans-serif;font-size:11.5px;font-weight:400;color:rgba(255,255,255,0.75);letter-spacing:0.3px;line-height:1.6;margin-top:14px;max-width:380px;font-style:italic"></p>
+      </div>
       </div>
       <div class="header-right">
         <div style="text-align:right;margin-bottom:14px">
@@ -3247,6 +3273,16 @@ function renderDashboard(a) {
   var heroN = document.getElementById('hero-nome');
   if (heroG) heroG.textContent = greetPT;
   if (heroN) heroN.textContent = a.nome_display || a.login;
+  var fotoUrl = a.foto ? (typeof driveImgUrl==='function' ? driveImgUrl(a.foto) : a.foto) : '';
+  var avatarIcon = document.getElementById('hero-avatar-icon');
+  if (fotoUrl && avatarIcon) {
+    var img = document.createElement('img');
+    img.className = 'hero-avatar-img';
+    img.src = fotoUrl;
+    img.onerror = function(){ this.style.display='none'; avatarIcon.style.display='flex'; };
+    avatarIcon.parentNode.appendChild(img);
+    avatarIcon.style.display = 'none';
+  }
 
   // Programa do aluno
   var heroCurso = document.getElementById('hero-curso');
