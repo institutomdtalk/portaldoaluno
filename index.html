@@ -8120,10 +8120,7 @@ function openHeroSlideImg(tabId) {
   if (!panel || !body || !slide) return;
   // escolher imagem aleatória do hero
   var img = HERO_IMGS[Math.floor(Math.random() * HERO_IMGS.length)];
-  slide.style.backgroundImage = "url(" + img + ")";
-  slide.style.backgroundSize = "cover";
-  slide.style.backgroundPosition = "center";
-  slide.style.background = "";
+  slide.style.cssText = "background-image:url(" + img + ");background-size:cover;background-position:center;transform:translateX(100%);transition:transform .52s cubic-bezier(.16,1,.3,1);";
   slide.classList.add("img-bg");
   body.innerHTML = panel.innerHTML;
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
@@ -8149,9 +8146,7 @@ function openHeroSlide(tabId) {
 function closeHeroSlide(){
   var slide=document.getElementById("heroSlide"); if(!slide) return;
   slide.classList.remove("open","img-bg");
-  slide.style.backgroundImage="";
-  slide.style.backgroundSize="";
-  slide.style.backgroundPosition="";
+  slide.style.cssText = "";
   setTimeout(function(){var b=document.getElementById("heroSlideBody");if(b)b.innerHTML="";},560);
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var mainArea=document.getElementById("panel-dashboard"); if(mainArea) mainArea.style.visibility="";
