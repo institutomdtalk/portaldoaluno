@@ -8094,63 +8094,70 @@ function uploadAvatarFoto(input){
   input.value="";
 }
 
-// ── HERO SLIDE ──────────────────────────────────────────────────────
-function toggleSideSubMenu(){
-  var sub=document.getElementById("sideSubOutros");
-  var item=document.getElementById("si-outros");
-  if(!sub) return;
-  var open=sub.classList.toggle("open");
-  if(item) item.classList.toggle("sub-open",open);
-}
-function openHeroSlideIframe(url, title) {
-  var body  = document.getElementById("heroSlideBody");
-  var slide = document.getElementById("heroSlide");
-  if (!body || !slide) return;
-  body.innerHTML = '<div style="width:100%;height:100%;min-height:500px;padding:0;background:#fff"><iframe src="' + url + '" style="width:100%;height:100%;min-height:600px;border:none;display:block;background:#fff" frameborder="0" allowfullscreen></iframe></div>';
-  document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
-  var si = document.getElementById("si-reagendamento"); if(si) si.classList.add("active");
-  slide.style.background="#fff";
-  switchTab("dashboard");
-  requestAnimationFrame(function(){slide.classList.add("open");body.scrollTop=0;});
-}
-function openHeroSlideImg(tabId) {
+// ── HERO SLIDE ────────────────────────────────────────────────────
+function _heroSlideOpen(tabId, bgImg) {
   var panel = document.getElementById("panel-" + tabId);
   var body  = document.getElementById("heroSlideBody");
   var slide = document.getElementById("heroSlide");
-  if (!panel || !body || !slide) return;
-  // escolher imagem aleatória do hero
+  if (!slide) return;
+  if (!panel) { switchTab(tabId); return; }
+  // reset visual
+  slide.removeAttribute("style");
+  slide.classList.remove("img-bg");
+  if (bgImg) {
+    slide.style.backgroundImage = "url(" + bgImg + ")";
+    slide.style.backgroundSize = "cover";
+    slide.style.backgroundPosition = "center";
+    slide.classList.add("img-bg");
+  } else {
+    slide.style.backgroundColor = "#F0EDE8";
+  }
+  if (body) { body.innerHTML = panel.innerHTML; }
+  if (tabId === "progresso") setTimeout(renderNbProgresso, 60);
+  // esconder dashboard se necessário
+  var mainArea = document.getElementById("panel-dashboard");
+  if (mainArea) mainArea.style.visibility = (tabId === "dashboard") ? "hidden" : "";
+  // marcar ativo
+  document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
+  var si = document.getElementById("si-" + tabId); if (si) si.classList.add("active");
+  // garantir que dashboard está ativo nas tabs
+  switchTab("dashboard");
+  // abrir com animação
+  requestAnimationFrame(function(){
+    slide.classList.add("open");
+    if (body) body.scrollTop = 0;
+  });
+}
+function openHeroSlide(tabId) { _heroSlideOpen(tabId, null); }
+function openHeroSlideImg(tabId) {
   var img = HERO_IMGS[Math.floor(Math.random() * HERO_IMGS.length)];
-  slide.style.cssText = "background-image:url(" + img + ");background-size:cover;background-position:center;transform:translateX(100%);transition:transform .52s cubic-bezier(.16,1,.3,1);";
-  slide.classList.add("img-bg");
-  body.innerHTML = panel.innerHTML;
-  document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
-  var si = document.getElementById("si-" + tabId); if(si) si.classList.add("active");
-  switchTab("dashboard");
-  requestAnimationFrame(function(){slide.classList.add("open"); body.scrollTop=0;});
+  _heroSlideOpen(tabId, img);
 }
-function openHeroSlide(tabId) {
-  var panel=document.getElementById("panel-"+tabId);
-  var body=document.getElementById("heroSlideBody");
-  var slide=document.getElementById("heroSlide");
-  if(!panel||!body||!slide){switchTab(tabId);return;}
-  body.innerHTML=panel.innerHTML;
-  if(tabId==="progresso") setTimeout(renderNbProgresso,60);
+function openHeroSlideIframe(url) {
+  var body  = document.getElementById("heroSlideBody");
+  var slide = document.getElementById("heroSlide");
+  if (!slide) return;
+  slide.removeAttribute("style");
+  slide.classList.remove("img-bg");
+  slide.style.backgroundColor = "#fff";
+  if (body) body.innerHTML = '<iframe src="' + url + '" style="width:100%;height:100%;min-height:600px;border:none;display:block" frameborder="0" allowfullscreen></iframe>';
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
-  var si=document.getElementById("si-"+tabId); if(si) si.classList.add("active");
-  slide.style.background="#F0EDE8";
-  var mainArea=document.getElementById("panel-dashboard");
-  if(mainArea && tabId==="dashboard") mainArea.style.visibility="hidden";
+  var si = document.getElementById("si-reagendamento"); if(si) si.classList.add("active");
   switchTab("dashboard");
-  requestAnimationFrame(function(){slide.classList.add("open");body.scrollTop=0;});
+  requestAnimationFrame(function(){ slide.classList.add("open"); if(body) body.scrollTop=0; });
 }
-function closeHeroSlide(){
-  var slide=document.getElementById("heroSlide"); if(!slide) return;
-  slide.classList.remove("open","img-bg");
-  slide.style.cssText = "";
-  setTimeout(function(){var b=document.getElementById("heroSlideBody");if(b)b.innerHTML="";},560);
+function closeHeroSlide() {
+  var slide = document.getElementById("heroSlide");
+  if (!slide) return;
+  slide.classList.remove("open", "img-bg");
+  var mainArea = document.getElementById("panel-dashboard");
+  if (mainArea) mainArea.style.visibility = "";
+  setTimeout(function(){
+    slide.removeAttribute("style");
+    var b = document.getElementById("heroSlideBody"); if(b) b.innerHTML = "";
+  }, 560);
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
-  var mainArea=document.getElementById("panel-dashboard"); if(mainArea) mainArea.style.visibility="";
-  var si=document.getElementById("si-conteudo"); if(si) si.classList.add("active");
+  var si = document.getElementById("si-conteudo"); if(si) si.classList.add("active");
 }
 document.addEventListener("keydown",function(e){if(e.key==="Escape") closeHeroSlide();});
 // ────────────────────────────────────────────────────────────────────
