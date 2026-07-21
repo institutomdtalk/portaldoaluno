@@ -8112,6 +8112,8 @@ function openHeroSlide(tabId) {
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-"+tabId); if(si) si.classList.add("active");
   slide.style.background="#F0EDE8";
+  var mainArea=document.getElementById("panel-dashboard");
+  if(mainArea && tabId==="dashboard") mainArea.style.visibility="hidden";
   switchTab("dashboard");
   requestAnimationFrame(function(){slide.classList.add("open");body.scrollTop=0;});
 }
@@ -8120,7 +8122,8 @@ function closeHeroSlide(){
   slide.classList.remove("open");
   setTimeout(function(){var b=document.getElementById("heroSlideBody");if(b)b.innerHTML="";},560);
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
-  var si=document.getElementById("si-dashboard"); if(si) si.classList.add("active");
+  var mainArea=document.getElementById("panel-dashboard"); if(mainArea) mainArea.style.visibility="";
+  var si=document.getElementById("si-conteudo"); if(si) si.classList.add("active");
 }
 document.addEventListener("keydown",function(e){if(e.key==="Escape") closeHeroSlide();});
 // ────────────────────────────────────────────────────────────────────
