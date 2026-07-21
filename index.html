@@ -364,7 +364,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 /* ── HERO SLIDE PANEL ─────────────────────────────────────────── */
 .hero-slide{
   position:absolute;inset:0;z-index:20;
-  background:linear-gradient(135deg,#050D1A 0%,#0B1D3A 55%,#050D1A 100%);
+  background:#F0EDE8;
   display:flex;flex-direction:column;
   transform:translateX(100%);
   transition:transform .52s cubic-bezier(.16,1,.3,1);
@@ -374,12 +374,12 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .hero-slide-close{
   position:absolute;top:16px;right:20px;z-index:30;
   width:32px;height:32px;border-radius:50%;
-  background:rgba(255,255,255,.08);border:none;cursor:pointer;
+  background:rgba(11,29,58,.08);border:none;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
   transition:background .2s;
 }
-.hero-slide-close:hover{background:rgba(255,255,255,.16)}
-.hero-slide-close svg{width:14px;height:14px;stroke:rgba(255,255,255,.75);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.hero-slide-close:hover{background:rgba(11,29,58,.15)}
+.hero-slide-close svg{width:14px;height:14px;stroke:rgba(11,29,58,.6);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 .hero-slide-body{
   flex:1;overflow-y:auto;
   padding:32px 48px;
