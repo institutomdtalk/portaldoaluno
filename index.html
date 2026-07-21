@@ -971,6 +971,34 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   stroke-linecap:round;stroke-linejoin:round;
   flex-shrink:0;opacity:.85;
 }
+
+/* ── SIDE SUBMENU ───────────────────────────────────────── */
+.side-sub{
+  max-height:0;overflow:hidden;
+  transition:max-height .3s cubic-bezier(.16,1,.3,1);
+  background:rgba(0,0,0,.18);
+}
+.side-sub.open{max-height:200px;}
+.side-subitem{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 22px 9px 36px;
+  cursor:pointer;
+  font-family:Raleway,sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);
+  transition:color .18s;
+  border-left:2px solid transparent;
+}
+.side-subitem:hover{color:rgba(255,255,255,.8);background:rgba(196,164,90,.05)}
+.side-subitem.active{color:var(--gold,#C4A45A);border-left-color:var(--gold,#C4A45A)}
+.side-item-chevron{
+  margin-left:auto;width:12px;height:12px;
+  stroke:currentColor;fill:none;stroke-width:2.5;
+  stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .3s;
+}
+.side-item.sub-open .side-item-chevron{transform:rotate(180deg)}
+/* ─────────────────────────────────────────────────────────── */
 .side-footer{
   padding:12px 22px 22px;
   border-top:1px solid rgba(255,255,255,.06);
@@ -2058,8 +2086,17 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       <div class="side-item" id="si-reagendamento" onclick="openHeroSlideIframe('https://calendar.google.com/calendar/appointments/schedules/AcZssZ3MN8RUbKmxCM4F247bcDvL4Tw_Se20-owX-4IGmc11egu4DYyALyoBkx9xXP01gHvDjtiudJBt?gv=true','Reagendamentos')">
         <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>Reagendamentos
       </div>
-      <div class="side-item" id="si-outros" onclick="sideNav_go('recursos')">
+      <div class="side-item" id="si-outros" onclick="toggleSideSubMenu()">
         <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Outros Cursos
+        <svg class="side-item-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="side-sub" id="sideSubOutros">
+        <div class="side-subitem" onclick="openHeroSlideIframe('https://institutomdtalk.github.io/treinamento/','Treinamento Complementar')">
+          Treinamento Complementar
+        </div>
+        <div class="side-subitem" onclick="openHeroSlideIframe('https://institutomdtalk.github.io/expansao/','Expansão')">
+          Expansão
+        </div>
       </div>
       <div class="side-item" id="si-feedback" onclick="sideNav_go('feedback')">
         <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Feedback
@@ -8098,6 +8135,13 @@ function uploadAvatarFoto(input){
 }
 
 // ── HERO SLIDE ──────────────────────────────────────────────────────
+function toggleSideSubMenu(){
+  var sub=document.getElementById("sideSubOutros");
+  var item=document.getElementById("si-outros");
+  if(!sub) return;
+  var open=sub.classList.toggle("open");
+  if(item) item.classList.toggle("sub-open",open);
+}
 function openHeroSlideIframe(url, title) {
   var body  = document.getElementById("heroSlideBody");
   var slide = document.getElementById("heroSlide");
