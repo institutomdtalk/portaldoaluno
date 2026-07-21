@@ -379,6 +379,15 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .hero-slide.img-bg .hero-slide-body{position:relative;z-index:1;}
 .hero-slide.img-bg .hero-slide-close{z-index:2;background:rgba(255,255,255,.1);}
 .hero-slide.img-bg .hero-slide-close:hover{background:rgba(255,255,255,.2)}
+/* Sobrescrever CSS vars dentro do slide com imagem */
+.hero-slide.img-bg .hero-slide-body{
+  --navy:#fff;
+  --text-muted:rgba(255,255,255,.65);
+}
+.hero-slide.img-bg .hero-slide-body h2 em{
+  color:var(--gold,#C4A45A) !important;
+  -webkit-text-fill-color:var(--gold,#C4A45A) !important;
+}
 .hero-slide-close{
   position:absolute;top:16px;right:20px;z-index:30;
   width:32px;height:32px;border-radius:50%;
