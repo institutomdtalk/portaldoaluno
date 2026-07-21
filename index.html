@@ -363,7 +363,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 /* ── HERO SLIDE PANEL ─────────────────────────────────────────── */
 .hero-slide{
-  position:absolute;inset:0;z-index:20;
+  position:absolute;inset:0;z-index:50;
   background:#F0EDE8;
   display:flex;flex-direction:column;
   transform:translateX(100%);
@@ -8122,6 +8122,9 @@ function _heroSlideOpen(tabId, bgImg) {
   var si = document.getElementById("si-" + tabId); if (si) si.classList.add("active");
   // garantir que dashboard está ativo nas tabs
   switchTab("dashboard");
+  // esconder conteúdo do hero (relógio/botões) exceto o próprio slide
+  var hi = document.getElementById("header-inner");
+  if (hi) hi.style.visibility = "hidden";
   // abrir com animação
   requestAnimationFrame(function(){
     slide.classList.add("open");
@@ -8155,6 +8158,7 @@ function closeHeroSlide() {
   setTimeout(function(){
     slide.removeAttribute("style");
     var b = document.getElementById("heroSlideBody"); if(b) b.innerHTML = "";
+    var hi = document.getElementById("header-inner"); if(hi) hi.style.visibility = "";
   }, 560);
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si = document.getElementById("si-conteudo"); if(si) si.classList.add("active");
