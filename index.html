@@ -2077,7 +2077,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       <div class="side-item active" id="si-dashboard" onclick="sideNav_go('dashboard')">
         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Sala de Aula
       </div>
-      <div class="side-item" id="si-conteudo" onclick="sideNav_go('dashboard')">
+      <div class="side-item" id="si-conteudo" onclick="openHeroSlide('dashboard')">
         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Conteúdo
       </div>
       <div class="side-item" id="si-sala" onclick="openHeroSlide('sala')">
@@ -2956,6 +2956,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
     </div>
   </div>
 
+  <div class="nb-panel" id="panel-dashboard" style="display:block">
   <main class="dashboard">
 
     <!-- INTRO / BOAS-VINDAS -->
@@ -3100,6 +3101,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
 
   </main><!-- end .dashboard -->
+  </div><!-- /panel-dashboard -->
 
   <footer class="footer" style="padding:42px 0;border-top:1px solid rgba(196,164,90,.1)">
     <div style="display:flex;flex-direction:column;align-items:center;gap:20px;padding:0 40px">
