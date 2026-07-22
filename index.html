@@ -4340,6 +4340,16 @@ function _drivePastaRender(prefix, files) {
     if (toggleBtn) toggleBtn.style.display = 'block';
   }
   loadThumbsBatch(files, 6, 2000);
+  // Auto-sync para o heroSlideBody se Conteúdo estiver aberto
+  setTimeout(function(){
+    var hb=document.getElementById("heroSlideBody");
+    if(!hb) return;
+    ["drive-first-row","drive-rest-rows","drive-files-count","drive-files-status"].forEach(function(id){
+      var orig=document.getElementById(id);
+      var clone=hb.querySelector("#"+id);
+      if(orig&&clone) clone.innerHTML=orig.innerHTML;
+    });
+  },100);
 }
 function _drivePastaCarregar(prefix, linkField, setFiles) {
   var st = document.getElementById(prefix + '-files-status');
@@ -7552,38 +7562,27 @@ function openMaterial(){
   if(!s||!b||!dash) return;
   b.innerHTML=""; b.style.cssText="overflow-y:auto";
   s.removeAttribute("style"); s.classList.remove("img-bg"); s.style.background="#F0EDE8";
-  // Envolver clone com classe .dashboard para herdar grid CSS
-  var wrapper=document.createElement("div");
-  wrapper.className="dashboard";
-  wrapper.style.display="grid";
-  wrapper.innerHTML=dash.innerHTML;
-  b.appendChild(wrapper);
-  // Sincronizar conteúdo do drive (render acontece no original, copia para o wrapper)
-  function syncDrive(){
-    ["drive-first-row","drive-rest-rows","drive-files-count","drive-files-status","proximos-passos-texto"].forEach(function(id){
-      var orig=dash.querySelector("#"+id);
-      var clone=wrapper.querySelector("#"+id);
-      if(orig&&clone) clone.innerHTML=orig.innerHTML;
-    });
-    ["minha","apoio","curadoria","arquivados"].forEach(function(k){
-      var sec=wrapper.querySelector("#drive-section-"+k);
-      var btn=wrapper.querySelector("#drive-tab-"+k);
-      if(sec) sec.style.display=(k==="minha")?"":"none";
-      if(btn) btn.style.borderBottomColor=(k==="minha")?"var(--gold)":"transparent";
-    });
-  }
+  // Clonar dentro de wrapper com grid
+  var w=document.createElement("div");
+  w.className="dashboard"; w.style.cssText="display:grid;width:100%";
+  w.innerHTML=dash.innerHTML;
+  b.appendChild(w);
+  // Tabs
+  ["minha","apoio","curadoria","arquivados"].forEach(function(k){
+    var sec=w.querySelector("#drive-section-"+k);
+    var btn=w.querySelector("#drive-tab-"+k);
+    if(sec) sec.style.display=(k==="minha")?"":"none";
+    if(btn) btn.style.borderBottomColor=(k==="minha")?"var(--gold)":"transparent";
+  });
+  // Disparar render para que o auto-sync copie para o clone
   var files=window._allDriveFiles||window._cachedDriveFiles;
   if(files&&files.length){
-    var fr=dash.querySelector("#drive-first-row");
-    if(fr&&fr.children.length===0) renderDriveFilesCard(files);
-    syncDrive();
+    renderDriveFilesCard(files);
   } else if(window.currentStudent){
     callScript("action=get_drive_files&login="+encodeURIComponent(currentStudent.login),
-      function(d){if(d.success){window._cachedDriveFiles=d.files||[];renderDriveFilesCard(d.files||[]);syncDrive();}},
+      function(d){if(d.success){window._cachedDriveFiles=d.files||[];renderDriveFilesCard(d.files||[]);}},
       function(){}
     );
-  } else {
-    syncDrive();
   }
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-conteudo");if(si)si.classList.add("active");
