@@ -7500,19 +7500,19 @@ function openHome(){
   var primeiroNome=nome.split(" ")[0];
   // Frases de boas-vindas variadas
   var saudacoes=[
-    primeiroNome+", como você deseja praticar o seu inglês hoje?",
-    primeiroNome+", o que vamos explorar no inglês médico hoje?",
-    primeiroNome+", pronto(a) para mais um mergulho no inglês clínico?",
-    primeiroNome+", por onde quer começar a prática hoje?",
-    primeiroNome+", que área do inglês médico vamos trabalhar agora?"
+    primeiroNome+", como deseja praticar o seu inglês médico hoje?",
+    primeiroNome+", vamos treinar o seu inglês clínico agora?",
+    primeiroNome+", que tal uma sessão de inglês médico hoje?",
+    primeiroNome+", por onde quer começar a sua prática hoje?",
+    primeiroNome+", pronto(a) para mais um avanço no inglês médico?"
   ];
-  // Sugestões variadas
+  // Sugestões variadas — cada uma alinhada com a saudação de mesmo índice
   var sugestoes=[
-    "Que tal um pouco de <strong>listening</strong> hoje? Acesse o <em>Listening Hub</em> nos cards abaixo.",
-    "Que tal treinar a sua <strong>leitura clínica</strong>? A <em>Biblioteca</em> tem textos selecionados para você.",
-    "Que tal praticar com um <strong>paciente virtual</strong>? Experimente o <em>Patient Simulator</em> abaixo.",
-    "Que tal revisar os seus <strong>termos médicos</strong> dominados? Acesse <em>Termos</em> nos cards.",
-    "Que tal explorar o <strong>material</strong> da sua última aula? Está em <em>Conteúdo</em> no menu lateral."
+    "Que tal começar pelo <strong>Listening Hub</strong>? Treine a sua compreensão oral com áudios médicos selecionados.",
+    "Que tal ler um texto clínico na <strong>Biblioteca</strong>? Leitura é uma das melhores formas de fixar vocabulário médico.",
+    "Que tal explorar o seu <strong>material de aula</strong>? Acesse <em>Conteúdo</em> no menu lateral e revise o que foi trabalhado.",
+    "Que tal simular uma consulta em inglês no <strong>Patient Simulator</strong>? Pratique diálogos clínicos reais com pacientes virtuais.",
+    "Que tal revisar o vocabulário que já domina? Acesse <strong>Termos</strong> em Recursos e veja o quanto já evoluiu."
   ];
   var idx=Math.floor(Math.random()*saudacoes.length);
   // Clonar header-inner
