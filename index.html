@@ -1937,7 +1937,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .apostila-counter{font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:24px;flex-shrink:0;}
 .apostila-stage{position:relative;width:100%;height:500px;perspective:1400px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .apostila-item{position:absolute;width:230px;cursor:pointer;transition:all .5s cubic-bezier(.16,1,.3,1);transform-origin:center center;border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);}
-.apostila-item.pos-center{transform:translateX(0) scale(1) rotateY(0deg);z-index:10;box-shadow:0 32px 80px rgba(0,0,0,.7);}
+.apostila-item.pos-center{transform:translateX(0) scale(1) rotateY(0deg);z-index:10;box-shadow:0 32px 80px rgba(0,0,0,.7),0 0 0 1px rgba(196,164,90,.3);}
 .apostila-item.pos-left1{transform:translateX(-270px) scale(0.78) rotateY(30deg);z-index:6;opacity:.55;filter:brightness(.65);}
 .apostila-item.pos-left2{transform:translateX(-430px) scale(0.6) rotateY(40deg);z-index:4;opacity:.22;filter:brightness(.4);}
 .apostila-item.pos-right1{transform:translateX(270px) scale(0.78) rotateY(-30deg);z-index:6;opacity:.55;filter:brightness(.65);}
@@ -1945,7 +1945,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .apostila-item.pos-hide-l{transform:translateX(-640px) scale(0.4) rotateY(50deg);z-index:1;opacity:0;pointer-events:none;}
 .apostila-item.pos-hide-r{transform:translateX(640px) scale(0.4) rotateY(-50deg);z-index:1;opacity:0;pointer-events:none;}
 .apostila-thumb{width:100%;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;background:#0d1b2e;overflow:hidden;}
-.apostila-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.apostila-thumb img{width:100%;height:100%;object-fit:cover;display:block;animation:apostilaFadeIn .4s ease;}
 .apostila-thumb-icon{display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px;}
 .apostila-thumb-icon svg{width:64px;height:64px;opacity:.9;}
 .apostila-thumb-icon span{font-size:13px;font-weight:800;letter-spacing:.14em;color:rgba(255,255,255,.45);}
@@ -1957,6 +1957,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .apostila-dots{display:flex;gap:5px;margin-top:20px;flex-wrap:wrap;justify-content:center;max-width:320px;flex-shrink:0;}
 .apostila-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .2s,transform .2s;cursor:pointer;}
 .apostila-dot.active{background:#C4A45A;transform:scale(1.5);}
+@keyframes apostilaFadeIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
 .apostila-arrows{display:flex;gap:16px;margin-top:16px;flex-shrink:0;}
 .apostila-arrow{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;user-select:none;}
 .apostila-arrow:hover{background:rgba(196,164,90,.3);border-color:rgba(196,164,90,.5)}
@@ -7728,18 +7729,28 @@ function apostilaNav(dir){
 }
 
 function _apostilaCardHTML(f){
-  var info=getMimeIcon(f.mimeType||'');
+  var info=getMimeIcon(f.mimeType||"");
   var color=info[0],label=info[1],svgPaths=info[2];
-  var thumb=f.thumbnail
-    ? '<img src="'+f.thumbnail+'" alt="" style="width:100%;height:100%;object-fit:cover;display:block">'
-    : '<div class="apostila-thumb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="'+color+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">'+svgPaths+'</svg><span>'+label+'</span></div>';
+  // Tentar thumbnail via lh3 (converte URL do Drive)
+  var thumbUrl=driveImgUrl(f.url||f.link||"");
+  var thumb;
+  if(thumbUrl){
+    thumb='<img src="'+thumbUrl+'" alt="" '
+      +'style="width:100%;height:100%;object-fit:cover;display:block" '
+      +'id="ap_'+f.id+'" '
+      +'onerror="this.style.display=\'none\';">';
+  } else {
+    thumb='<div class="apostila-thumb-icon">'
+      +'<svg viewBox="0 0 24 24" fill="none" stroke="'+color+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">'+svgPaths+'</svg>'
+      +'<span>'+label+'</span></div>';
+  }
   return '<div class="apostila-thumb">'+thumb+'</div>'
     +'<div class="apostila-info">'
     +'<div class="apostila-type">'+label+'</div>'
-    +'<div class="apostila-name">'+(f.nome||f.name||'Arquivo')+'</div>'
-    +'<a class="apostila-open" href="'+(f.url||f.link||'#')+'" target="_blank">'
+    +'<div class="apostila-name">'+( f.nome||f.name||"Arquivo")+'</div>'
+    +'<a class="apostila-open" href="'+( f.url||f.link||"#")+'" target="_blank">'
     +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11" stroke-linecap="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
-    +' Abrir</a></div>';
+    +" Abrir</a></div>";
 }
 
 function _apostilaRender(){
