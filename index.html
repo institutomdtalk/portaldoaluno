@@ -7543,26 +7543,23 @@ function openMaterial(){
   slide.removeAttribute("style");
   slide.classList.remove("img-bg");
   slide.style.background="#F0EDE8";
-  body.style.padding="";
-  body.innerHTML=dash.innerHTML;
-  // mostrar secção "minha" nos elementos clonados
-  ["minha","apoio","curadoria","arquivados"].forEach(function(k){
-    var sec=body.querySelector("#drive-section-"+k);
-    var btn=body.querySelector("#drive-tab-"+k);
-    if(sec) sec.style.display=(k==="minha")?"":"none";
-    if(btn) btn.style.borderBottomColor=(k==="minha")?"var(--gold)":"transparent";
-  });
-  // Se os ficheiros ainda não carregaram no clone, usar cache
-  if(window._cachedDriveFiles && window._cachedDriveFiles.length){
-    var firstRow=body.querySelector("#drive-first-row");
-    var statusEl=body.querySelector("#drive-files-status");
-    if(statusEl && statusEl.textContent.indexOf("Carregando")>-1){
-      // Repopular via innerHTML do original (já tem os files)
-      var origSection=document.querySelector("#drive-section-minha");
-      var cloneSection=body.querySelector("#drive-section-minha");
-      if(origSection && cloneSection) cloneSection.innerHTML=origSection.innerHTML;
+  body.style.padding="0";
+  // Mover o elemento real para o slide
+  dash.style.cssText="display:block;width:100%;box-sizing:border-box;";
+  body.appendChild(dash);
+  // Popular o grid de ficheiros
+  setTimeout(function(){
+    if(window._cachedDriveFiles && window._cachedDriveFiles.length){
+      renderDriveFilesCard(window._cachedDriveFiles);
+      switchDriveTab("minha");
+    } else if(window.currentStudent && window.currentStudent.login){
+      callScript(
+        "action=get_drive_files&login="+encodeURIComponent(currentStudent.login),
+        function(d){if(d.success){window._cachedDriveFiles=d.files||[];renderDriveFilesCard(d.files||[]);switchDriveTab("minha");}},
+        function(){}
+      );
     }
-  }
+  },150);
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-conteudo");if(si)si.classList.add("active");
   requestAnimationFrame(function(){slide.classList.add("open");body.scrollTop=0;});
