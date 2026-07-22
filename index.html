@@ -2859,7 +2859,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
     </div>
   </div>
 
-  <div class="nb-panel" id="panel-dashboard">
+  <div id="panel-dashboard">
   <main class="dashboard">
 
     
@@ -7978,19 +7978,28 @@ function uploadAvatarFoto(input){
 
 // ── HERO SLIDE ──────────────────────────────────────────────────────
 function _heroSlideOpen(tabId, bgImg) {
-  var panel=document.getElementById("panel-"+tabId);
+  var panel;
+  if(tabId==="dashboard"){
+    panel=document.querySelector(".dashboard");
+  } else {
+    panel=document.getElementById("panel-"+tabId);
+  }
   var body=document.getElementById("heroSlideBody");
   var slide=document.getElementById("heroSlide");
   if(!slide) return;
   if(!panel){switchTab(tabId);return;}
   slide.removeAttribute("style");
   slide.classList.remove("img-bg");
-  if(bgImg){slide.style.backgroundImage="url("+bgImg+")";slide.style.backgroundSize="cover";slide.style.backgroundPosition="center";slide.classList.add("img-bg");}
-  else{slide.style.backgroundColor="#F0EDE8";}
+  if(bgImg){
+    slide.style.backgroundImage="url("+bgImg+")";
+    slide.style.backgroundSize="cover";
+    slide.style.backgroundPosition="center";
+    slide.classList.add("img-bg");
+  } else {
+    slide.style.backgroundColor="#F0EDE8";
+  }
   if(body) body.innerHTML=panel.innerHTML;
   if(tabId==="progresso") setTimeout(renderNbProgresso,60);
-  var mainArea=document.getElementById("panel-dashboard");
-  if(mainArea) mainArea.style.visibility=(tabId==="dashboard")?"hidden":"";
   var hi=document.getElementById("header-inner");
   if(hi) hi.style.visibility="hidden";
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
@@ -8023,7 +8032,6 @@ function goSalaDeAula(){
 function closeHeroSlide(){
   var slide=document.getElementById("heroSlide"); if(!slide) return;
   slide.classList.remove("open","img-bg");
-  var mainArea=document.getElementById("panel-dashboard"); if(mainArea) mainArea.style.visibility="";
   setTimeout(function(){
     slide.removeAttribute("style");
     var b=document.getElementById("heroSlideBody"); if(b) b.innerHTML="";
