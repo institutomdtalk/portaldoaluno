@@ -1967,6 +1967,68 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .maint-title{font-family:"Cormorant Garamond",serif;font-size:1.55rem;font-weight:400;color:#0B1D3A;margin-bottom:14px}
 .maint-text{font-family:Raleway,sans-serif;font-size:13px;color:rgba(11,29,58,.6);line-height:1.7;margin-bottom:28px}
 .maint-btn{font-family:Raleway,sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:#0B1D3A;border:none;border-radius:8px;padding:13px 32px;cursor:pointer}
+
+/* ── HERO SLIDE ────────────────────────────────────────────────────── */
+.hero-slide{
+  position:absolute;inset:0;z-index:30;
+  display:flex;flex-direction:column;
+  transform:translateY(100%);
+  transition:transform .5s cubic-bezier(.16,1,.3,1), opacity .3s ease;
+  opacity:0;
+  pointer-events:none;
+  background:#F0EDE8;
+}
+.hero-slide.open{
+  transform:translateY(0);
+  opacity:1;
+  pointer-events:all;
+}
+.hero-slide.img-bg{
+  background-size:cover;
+  background-position:center;
+}
+.hero-slide.img-bg::before{
+  content:"";
+  position:absolute;inset:0;
+  background:rgba(5,13,26,.65);
+  z-index:0;
+}
+.hero-slide-close{
+  position:absolute;top:18px;right:20px;z-index:40;
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.15);
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+  color:#fff;
+}
+.hero-slide-close:hover{background:rgba(255,255,255,.28)}
+.hero-slide-body{
+  flex:1;overflow-y:auto;position:relative;z-index:1;
+  padding:36px 40px;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(196,164,90,.25) transparent;
+}
+.hero-slide-body::-webkit-scrollbar{width:4px}
+.hero-slide-body::-webkit-scrollbar-thumb{background:rgba(196,164,90,.3);border-radius:2px}
+/* Glassmorphism cards para fundo escuro */
+.hero-slide.img-bg .rc-card{
+  background:rgba(255,255,255,.08) !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+.hero-slide.img-bg .rc-card:hover{
+  background:rgba(255,255,255,.16) !important;
+  border-color:rgba(196,164,90,.5) !important;
+}
+.hero-slide.img-bg .rc-icon svg{stroke:rgba(255,255,255,.75) !important}
+.hero-slide.img-bg .rc-title{color:#fff !important}
+.hero-slide.img-bg .rc-sub{color:rgba(255,255,255,.5) !important}
+.hero-slide.img-bg .rc-head h2{color:#fff !important}
+.hero-slide.img-bg .rc-head h2 em{color:#C4A45A !important;-webkit-text-fill-color:#C4A45A !important}
+.hero-slide.img-bg .rc-head p{color:rgba(255,255,255,.5) !important}
+/* ─────────────────────────────────────────────────────────────────── */
 </style>
 </head>
 <body>
@@ -2035,9 +2097,9 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
     <div class="side-menu">
       <div class="side-item active" id="si-dashboard" onclick="sideNav_go('dashboard')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Sala de Aula</div>
       <div class="side-item" id="si-conteudo" onclick="sideNav_go('dashboard')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Conteúdo</div>
-      <div class="side-item" id="si-recursos" onclick="switchTab('recursos')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Recursos</div>
-      <div class="side-item" id="si-sala" onclick="switchTab('sala')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Perfil</div>
-      <div class="side-item" id="si-progresso" onclick="switchTab('progresso')"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Meu Progresso</div>
+      <div class="side-item" id="si-recursos" onclick="openHeroSlideImg('recursos')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Recursos</div>
+      <div class="side-item" id="si-sala" onclick="openHeroSlide('sala')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Perfil</div>
+      <div class="side-item" id="si-progresso" onclick="openHeroSlide('progresso')"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Meu Progresso</div>
       <div class="side-item" id="si-reagendamento" onclick="openHeroSlideIframe('https://calendar.google.com/calendar/appointments/schedules/AcZssZ3MN8RUbKmxCM4F247bcDvL4Tw_Se20-owX-4IGmc11egu4DYyALyoBkx9xXP01gHvDjtiudJBt?gv=true')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Reagendamentos</div>
       <div class="side-item" id="si-outros" onclick="toggleSideSubMenu()"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Outros Cursos<svg class="side-item-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
       <div class="side-sub" id="sideSubOutros"><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/treinamento/','_blank')">Treinamento Complementar</div><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/expansao/','_blank')">Expansão</div></div>
@@ -2136,6 +2198,11 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       </div>
     </div>
     <div class="header-gold-line"></div>
+    <!-- Hero Slide Overlay -->
+    <div class="hero-slide" id="heroSlide">
+      <button class="hero-slide-close" onclick="closeHeroSlide()" title="Fechar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <div class="hero-slide-body" id="heroSlideBody"></div>
+    </div>
   </header>
 
   <!-- ══ NOTEBOOK TAB BAR ══ -->
@@ -7961,15 +8028,67 @@ function uploadAvatarFoto(input){
   input.value="";
 }
 
-function openHeroSlideIframe(url){
-  var slide=document.getElementById("heroSlide");
+
+// ── HERO SLIDE ──────────────────────────────────────────────────────
+function _heroSlideOpen(tabId, bgImg){
+  var panel=document.getElementById("panel-"+tabId);
   var body=document.getElementById("heroSlideBody");
-  if(!slide||!body) return;
-  slide.removeAttribute("style");
-  slide.style.background="#fff";
-  body.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;border:none" frameborder="0" allowfullscreen></iframe>';
-  slide.classList.add("open");
+  var slide=document.getElementById("heroSlide");
+  if(!slide||!panel||!body) return;
+  // reset
+  slide.style.backgroundImage="";
+  slide.classList.remove("img-bg");
+  // background
+  if(bgImg){
+    slide.style.backgroundImage="url("+bgImg+")";
+    slide.classList.add("img-bg");
+  } else {
+    slide.style.background="#F0EDE8";
+  }
+  // conteúdo
+  body.innerHTML=panel.innerHTML;
+  if(tabId==="progresso") setTimeout(renderNbProgresso,80);
+  // marcar ativo
+  document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
+  var si=document.getElementById("si-"+tabId); if(si) si.classList.add("active");
+  // abrir
+  requestAnimationFrame(function(){
+    slide.classList.add("open");
+    body.scrollTop=0;
+  });
 }
+function openHeroSlide(tabId){ _heroSlideOpen(tabId, null); }
+function openHeroSlideImg(tabId){
+  var img=HERO_IMGS[Math.floor(Math.random()*HERO_IMGS.length)];
+  _heroSlideOpen(tabId, img);
+}
+function openHeroSlideIframe(url){
+  var body=document.getElementById("heroSlideBody");
+  var slide=document.getElementById("heroSlide");
+  if(!slide||!body) return;
+  slide.style.backgroundImage="";
+  slide.classList.remove("img-bg");
+  slide.style.background="#fff";
+  body.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;min-height:550px;border:none" frameborder="0" allowfullscreen></iframe>';
+  requestAnimationFrame(function(){slide.classList.add("open");body.scrollTop=0;});
+  document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
+  var si=document.getElementById("si-reagendamento"); if(si) si.classList.add("active");
+}
+function closeHeroSlide(){
+  var slide=document.getElementById("heroSlide");
+  if(!slide) return;
+  slide.classList.remove("open","img-bg");
+  setTimeout(function(){
+    var b=document.getElementById("heroSlideBody"); if(b) b.innerHTML="";
+    slide.style.backgroundImage="";
+    slide.style.background="";
+  },520);
+  document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
+  var si=document.getElementById("si-dashboard"); if(si) si.classList.add("active");
+}
+document.addEventListener("keydown",function(e){if(e.key==="Escape") closeHeroSlide();});
+// ────────────────────────────────────────────────────────────────────
+
 function toggleSideSubMenu(){
   var s=document.getElementById("sideSubOutros");
   var it=document.getElementById("si-outros");
