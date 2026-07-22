@@ -5133,9 +5133,7 @@ function switchTab(tab) {
   var activeBtn = document.getElementById('tab-' + tab);
   if (activeBtn) activeBtn.classList.add('active');
 
-  if (tab === 'dashboard') {
-    if (dash) dash.style.display = '';
-  } else {
+  if (tab === 'dashboard') { /* via hero slide */ } else {
     if (dash) dash.style.display = 'none';
     var panel = document.getElementById('panel-' + tab);
     if (panel) panel.classList.add('active');
