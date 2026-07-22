@@ -7515,8 +7515,8 @@ function openHome(){
   slide.style.backgroundPosition="center";
   slide.classList.add("img-bg");
   body.style.padding="0";
-  body.style.display="flex";
-  body.style.flexDirection="column";
+  body.style.display="block";
+  body.style.overflowY="auto";
   // Nome do aluno
   var nome=(window.currentStudent&&window.currentStudent.nome_display)||"médico(a)";
   var primeiroNome=nome.split(" ")[0];
@@ -7548,7 +7548,7 @@ function openHome(){
   // Cards de recursos
   if(panelClone){
     panelClone.classList.remove("nb-panel","notas-page");
-    panelClone.style.cssText="display:block;flex:1;padding:28px 36px 36px;overflow-y:auto";
+    panelClone.style.cssText="display:block;width:100%;padding:28px 36px 36px";
     body.appendChild(panelClone);
   }
   // Marcar ativo
