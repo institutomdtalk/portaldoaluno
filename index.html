@@ -7982,9 +7982,12 @@ function openHome(){
   if(!slide||!body) return;
   // background aleatório
   var img=HERO_IMGS[Math.floor(Math.random()*HERO_IMGS.length)];
+  slide.removeAttribute("style");
+  slide.classList.remove("img-bg");
   slide.style.backgroundImage="url("+img+")";
+  slide.style.backgroundSize="cover";
+  slide.style.backgroundPosition="center";
   slide.classList.add("img-bg");
-  slide.style.background="";
   body.style.padding="0";
   body.style.display="flex";
   body.style.flexDirection="column";
