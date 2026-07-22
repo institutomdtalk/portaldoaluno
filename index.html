@@ -2029,6 +2029,9 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .hero-slide.img-bg .rc-head h2 em{color:#C4A45A !important;-webkit-text-fill-color:#C4A45A !important}
 .hero-slide.img-bg .rc-head p{color:rgba(255,255,255,.5) !important}
 /* ─────────────────────────────────────────────────────────────────── */
+
+/* Tab bar oculto — navegação via sidebar */
+#nb-tabs-bar{ display:none; }
 </style>
 </head>
 <body>
@@ -2839,7 +2842,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 <div class="rc-head"><h2>Meus <em>Recursos</em></h2><p>Ferramentas e materiais selecionados para o meu programa.</p></div>
 <div class="rc-grid">
 <div class="rc-card" onclick="switchTab('dashboard');switchDriveTab('minha')"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div><div><div class="rc-title">Material</div><div class="rc-sub">aulas disponíveis</div></div></div>
-<div class="rc-card" onclick="switchTab('biblioteca')"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div><div><div class="rc-title">Biblioteca</div><div class="rc-sub">leituras médicas</div></div></div>
+<div class="rc-card" onclick="openSlideIframe('https://institutomdtalk.github.io/mdlibrary595684894514849845158489/')"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div><div><div class="rc-title">Biblioteca</div><div class="rc-sub">leituras médicas</div></div></div>
 <div class="rc-card" onclick="openSlideIframe('https://institutomdtalk.github.io/listeninghub/')"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg></div><div><div class="rc-title">Listening Hub</div><div class="rc-sub">áudios do programa</div></div></div>
 <div class="rc-card" onclick="switchTab('quiz')"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div><div class="rc-title">Quiz</div><div class="rc-sub">grammar médico</div></div></div>
 <div class="rc-card" onclick="switchTab('patient')"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div><div class="rc-title">Patient Simulator</div><div class="rc-sub">casos clínicos</div></div></div>
@@ -2917,7 +2920,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
     </div>
   </div>
 
-  <main class="dashboard">
+  <main class="dashboard" style="display:none" id="main-dashboard">
 
     <!-- INTRO / BOAS-VINDAS -->
     <div style="grid-column:1/-1;margin-bottom:10px">
@@ -5549,7 +5552,7 @@ function switchTab(tab) {
   if (activeBtn) activeBtn.classList.add('active');
 
   if (tab === 'dashboard') {
-    if (dash) dash.style.display = '';
+    if (dash) { dash.style.display = ''; }
   } else {
     if (dash) dash.style.display = 'none';
     var panel = document.getElementById('panel-' + tab);
@@ -8033,7 +8036,7 @@ function uploadAvatarFoto(input){
 function _heroSlideOpen(tabId, bgImg){
   var panel;
   if(tabId==="dashboard"){
-    panel=document.querySelector(".dashboard");
+    panel=document.getElementById("main-dashboard") || document.querySelector(".dashboard");
   } else {
     panel=document.getElementById("panel-"+tabId);
   }
