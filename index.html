@@ -2823,114 +2823,35 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   </div>
 
   <!-- ══ PAINEL RECURSOS ══ -->
-   <div class="nb-panel notas-page" id="panel-recursos" style="padding:40px">
-
+   <div class="nb-panel notas-page" id="panel-recursos" style="padding:36px 40px">
 <style>
-.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;width:100%}
-.rec-card{
-  background:rgba(255,255,255,.09);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:16px;
-  padding:24px 22px 20px;
-  cursor:pointer;
-  transition:all .2s;
-  backdrop-filter:blur(10px);
-  display:flex;flex-direction:column;gap:10px;
-  text-decoration:none;
-}
-.rec-card:hover{background:rgba(255,255,255,.15);border-color:rgba(196,164,90,.4);transform:translateY(-2px)}
-.rec-card-icon{
-  width:44px;height:44px;border-radius:10px;
-  background:rgba(255,255,255,.08);
-  display:flex;align-items:center;justify-content:center;
-}
-.rec-card-icon svg{width:22px;height:22px;stroke:rgba(196,164,90,.9);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.rec-card-title{font-family:Raleway,sans-serif;font-size:13px;font-weight:700;color:#fff;letter-spacing:.02em}
-.rec-card-sub{font-family:Raleway,sans-serif;font-size:11px;color:rgba(255,255,255,.5);line-height:1.4}
-.rec-header{margin-bottom:28px}
-.rec-header h2{font-family:"Cormorant Garamond",serif;font-size:2rem;font-weight:300;color:#fff;margin-bottom:4px}
-.rec-header h2 em{font-style:italic;color:var(--gold,#C4A45A);-webkit-text-fill-color:var(--gold,#C4A45A)}
-.rec-header p{font-size:12px;color:rgba(255,255,255,.5);letter-spacing:.3px}
+.rc-header{margin-bottom:26px}
+.rc-header h2{font-family:"Cormorant Garamond",serif;font-size:1.9rem;font-weight:300;color:#fff;margin-bottom:4px}
+.rc-header h2 em{font-style:italic;color:#C4A45A;-webkit-text-fill-color:#C4A45A}
+.rc-header p{font-family:Raleway,sans-serif;font-size:12px;color:rgba(255,255,255,.45);letter-spacing:.3px}
+.rc-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:13px;width:100%}
+.rc-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.11);border-radius:14px;padding:18px 16px 15px;cursor:pointer;transition:background .2s,border-color .2s,transform .18s;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;flex-direction:column;gap:11px;text-decoration:none}
+.rc-card:hover{background:rgba(255,255,255,.14);border-color:rgba(196,164,90,.3);transform:translateY(-2px)}
+.rc-icon{width:34px;height:34px;display:flex;align-items:center;justify-content:center}
+.rc-icon svg{width:19px;height:19px;stroke:rgba(255,255,255,.6);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.rc-title{font-family:Raleway,sans-serif;font-size:13px;font-weight:700;color:#fff}
+.rc-sub{font-family:Raleway,sans-serif;font-size:11px;color:rgba(255,255,255,.38);line-height:1.4;margin-top:-4px}
 </style>
-
-<div class="rec-header">
-  <h2>Meus <em>Recursos</em></h2>
-  <p>Ferramentas e materiais selecionados para o meu programa.</p>
+<div class="rc-header"><h2>Meus <em>Recursos</em></h2><p>Ferramentas e materiais selecionados para o meu programa.</p></div>
+<div class="rc-grid">
+<div class="rc-card" onclick="closeHeroSlide();setTimeout(function(){switchTab('dashboard');switchDriveTab('minha')},350)"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div><div><div class="rc-title">Material</div><div class="rc-sub">aulas disponíveis</div></div></div>
+<div class="rc-card" onclick="closeHeroSlide();setTimeout(function(){switchTab('biblioteca')},350)"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div><div><div class="rc-title">Biblioteca</div><div class="rc-sub">leituras médicas</div></div></div>
+<div class="rc-card" onclick="closeHeroSlide();setTimeout(function(){switchTab('listening')},350)"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg></div><div><div class="rc-title">Listening Hub</div><div class="rc-sub">áudios do programa</div></div></div>
+<div class="rc-card" onclick="closeHeroSlide();setTimeout(function(){switchTab('quiz')},350)"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div><div class="rc-title">Quiz</div><div class="rc-sub">grammar médico</div></div></div>
+<div class="rc-card" onclick="closeHeroSlide();setTimeout(function(){switchTab('patient')},350)"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div><div class="rc-title">Patient Simulator</div><div class="rc-sub">casos clínicos</div></div></div>
+<div class="rc-card" onclick="openHeroSlide('progresso')"><div class="rc-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div><div class="rc-title">Progresso</div><div class="rc-sub">frequência e desempenho</div></div></div>
+<div class="rc-card" onclick="closeHeroSlide();setTimeout(function(){switchTab('dashboard');switchDriveTab('curadoria')},350)"><div class="rc-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div><div class="rc-title">Curadoria</div><div class="rc-sub">conteúdo selecionado</div></div></div>
+<div class="rc-card" onclick="openHeroSlideIframe('https://calendar.google.com/calendar/appointments/schedules/AcZssZ3MN8RUbKmxCM4F247bcDvL4Tw_Se20-owX-4IGmc11egu4DYyALyoBkx9xXP01gHvDjtiudJBt?gv=true')"><div class="rc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div class="rc-title">Agenda</div><div class="rc-sub">próxima aula</div></div></div>
+<div class="rc-card" onclick="closeHeroSlide();setTimeout(function(){switchTab('games')},350)"><div class="rc-icon"><svg viewBox="0 0 24 24"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15" cy="11" r="1"/><circle cx="17" cy="13" r="1"/><rect x="2" y="6" width="20" height="12" rx="2"/></svg></div><div><div class="rc-title">Games</div><div class="rc-sub">sala de espera</div></div></div>
+<div class="rc-card" onclick="closeHeroSlide();setTimeout(function(){switchTab('notas')},350)"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div><div class="rc-title">Assistente Virtual</div><div class="rc-sub">tire suas dúvidas</div></div></div>
+<div class="rc-card" onclick="closeHeroSlide();setTimeout(function(){switchTab('termos')},350)"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div><div><div class="rc-title">Termos</div><div class="rc-sub">políticas do programa</div></div></div>
 </div>
-
-<div class="rec-grid">
-
-  <a class="rec-card" href="https://institutomdtalk.github.io/infograficos/" target="_blank">
-    <div class="rec-card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
-    <div class="rec-card-title">Infográficos</div>
-    <div class="rec-card-sub">Vocabulário clínico visual</div>
-  </a>
-
-  <a class="rec-card" href="https://institutomdtalk.github.io/patientsimulator/" target="_blank">
-    <div class="rec-card-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-    <div class="rec-card-title">Patient Simulator</div>
-    <div class="rec-card-sub">Casos clínicos em inglês</div>
-  </a>
-
-  <a class="rec-card" href="https://institutomdtalk.github.io/mdlibrary595684894514849845158489/" target="_blank">
-    <div class="rec-card-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
-    <div class="rec-card-title">Biblioteca</div>
-    <div class="rec-card-sub">Leituras médicas em inglês</div>
-  </a>
-
-  <div class="rec-card" onclick="sideNav_go('quiz')">
-    <div class="rec-card-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
-    <div class="rec-card-title">Grammar Quiz</div>
-    <div class="rec-card-sub">Teste sua gramática médica</div>
-  </div>
-
-  <div class="rec-card" onclick="sideNav_go('notas')">
-    <div class="rec-card-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-    <div class="rec-card-title">Minhas Notas</div>
-    <div class="rec-card-sub">Anotações do programa</div>
-  </div>
-
-  <div class="rec-card" onclick="sideNav_go('termos')">
-    <div class="rec-card-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div>
-    <div class="rec-card-title">Meus Termos</div>
-    <div class="rec-card-sub">Vocabulário dominado</div>
-  </div>
-
-</div>
-
    </div>
-
-  <!-- ══ PAINEL BIBLIOTECA ══ -->
-  <div class="nb-panel prog-page" id="panel-biblioteca">
-    <div style="margin-bottom:32px">
-      <h2 style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--navy);margin-bottom:6px;line-height:1.1">Minha <em style="font-style:italic;color:var(--gold)">Biblioteca</em></h2>
-      <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);letter-spacing:0.3px">Conteúdos e materiais de referência para o meu aprendizado.</p>
-    </div>
-    <div id="biblioteca-lista">
-      <div style="display:flex;justify-content:flex-end;margin-bottom:10px">
-        <button id="btn-bib-fs" onclick="toggleBibliotecaFS()"
-          style="display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:none;border:1px solid rgba(0,0,0,0.15);border-radius:20px;padding:6px 14px;cursor:pointer;color:#888;transition:all 0.2s">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-          Tela cheia
-        </button>
-      </div>
-      <div id="bib-iframe-wrap">
-        <iframe id="bib-iframe"
-          src="https://institutomdtalk.github.io/mdlibrary595684894514849845158489/"
-          width="100%"
-          style="height:calc(100vh - 260px);min-height:500px;border:none;border-radius:12px;display:block"
-          loading="lazy"
-          allowfullscreen
-          title="MD Library">
-        </iframe>
-      </div>
-    </div>
-  </div>
-
-
-
-
-  <!-- ══ PAINEL PATIENT SIMULATOR ══ -->
   <div class="nb-panel" id="panel-patient" style="padding:0;height:calc(100vh - 120px)">
     <div style="height:100%;display:flex;flex-direction:column">
       <div style="display:flex;justify-content:flex-end;padding:6px 12px;background:var(--off-white);border-bottom:1px solid var(--border);flex-shrink:0">
