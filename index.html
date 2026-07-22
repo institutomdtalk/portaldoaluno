@@ -3377,6 +3377,14 @@ function setPerfilField(id, val) {
   if (el && val) el.value = val;
 }
 
+function toggleSideNav(){
+  var nav=document.getElementById("sideNav");
+  var tog=document.getElementById("sideToggle");
+  if(!nav) return;
+  var collapsed=nav.classList.toggle("collapsed");
+  if(tog) tog.classList.toggle("collapsed", collapsed);
+}
+
 function togglePerfilEdit() {
   _perfilEditando = !_perfilEditando;
   var inputs = ['perfil-nome','perfil-profissao','perfil-especialidade','perfil-cidade'];
