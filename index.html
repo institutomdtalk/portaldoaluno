@@ -1995,7 +1995,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
     <div class="side-menu">
       <div class="side-item" id="si-recursos" onclick="openHome()"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</div>
       <div class="side-item active" id="si-dashboard" onclick="sideNav_go('dashboard')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Sala de Aula</div>
-      <div class="side-item" id="si-conteudo" onclick="openHeroSlide('dashboard')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Conteúdo</div>
+      <div class="side-item" id="si-conteudo" onclick="openMaterial()"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Conteúdo</div>
 
       <div class="side-item" id="si-sala" onclick="openHeroSlide('sala')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Perfil</div>
       <div class="side-item" id="si-progresso" onclick="openHeroSlide('progresso')"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Meu Progresso</div>
@@ -5135,7 +5135,7 @@ function switchTab(tab) {
   var activeBtn = document.getElementById('tab-' + tab);
   if (activeBtn) activeBtn.classList.add('active');
 
-  if (tab === 'dashboard') { /* via hero slide */ } else {
+  if (tab === 'dashboard') { if (dash) { dash.style.display = ''; } } else {
     if (dash) dash.style.display = 'none';
     var panel = document.getElementById('panel-' + tab);
     if (panel) panel.classList.add('active');
@@ -7537,30 +7537,31 @@ function openHome(){
 
 
 function openMaterial(){
-  var dash=document.getElementById("main-dashboard");
-  var body=document.getElementById("heroSlideBody");
   var slide=document.getElementById("heroSlide");
-  if(!slide||!dash||!body) return;
+  var body=document.getElementById("heroSlideBody");
+  var dash=document.getElementById("main-dashboard");
+  if(!slide||!body||!dash) return;
+  // reset slide
   slide.removeAttribute("style");
   slide.classList.remove("img-bg");
   slide.style.background="#F0EDE8";
   body.style.padding="0";
-  // mover dashboard para o slide e torná-lo visível
+  body.innerHTML="";
+  // mover o main-dashboard para dentro do slide
+  dash.style.removeProperty("display");
   body.appendChild(dash);
-  dash.style.display="";
-  // popular ficheiros
-  if(window._allDriveFiles && window._allDriveFiles.length){
-    renderDriveFilesCard(window._allDriveFiles);
-  } else if(window._cachedDriveFiles && window._cachedDriveFiles.length){
-    renderDriveFilesCard(window._cachedDriveFiles);
-  } else if(window.currentStudent && window.currentStudent.login){
-    callScript(
-      "action=get_drive_files&login="+encodeURIComponent(currentStudent.login),
+  // garantir que os ficheiros aparecem
+  var files=window._allDriveFiles||window._cachedDriveFiles;
+  if(files && files.length){
+    var fr=document.getElementById("drive-first-row");
+    if(fr && fr.children.length===0) renderDriveFilesCard(files);
+    switchDriveTab("minha");
+  } else if(window.currentStudent){
+    callScript("action=get_drive_files&login="+encodeURIComponent(currentStudent.login),
       function(d){if(d.success){window._cachedDriveFiles=d.files||[];renderDriveFilesCard(d.files||[]);switchDriveTab("minha");}},
       function(){}
     );
   }
-  switchDriveTab("minha");
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-conteudo");if(si)si.classList.add("active");
   requestAnimationFrame(function(){slide.classList.add("open");body.scrollTop=0;});
@@ -7571,14 +7572,12 @@ function openHeroSlideImg(t){_heroSlideOpen(t,HERO_IMGS[Math.floor(Math.random()
 function openHeroSlideIframe(url){var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");if(!s||!b)return;s.style.backgroundImage="";s.classList.remove("img-bg");s.style.background="#fff";b.style.padding="0";b.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;min-height:550px;border:none;display:block" frameborder="0" allowfullscreen></iframe>';requestAnimationFrame(function(){s.classList.add("open");b.scrollTop=0;});document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});var si=document.getElementById("si-reagendamento");if(si)si.classList.add("active");}
 function openSlideIframe(url){var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");if(!s||!b)return;s.style.backgroundImage="";s.classList.remove("img-bg");s.style.background="#fff";b.style.padding="0";b.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;border:none;display:block" frameborder="0" allowfullscreen></iframe>';if(!s.classList.contains("open"))requestAnimationFrame(function(){s.classList.add("open");});}
 function closeHeroSlide(){
-  // devolver main-dashboard ao seu lugar
   var dash=document.getElementById("main-dashboard");
   var orig=document.getElementById("panel-dashboard");
-  if(dash && orig && dash.parentElement && dash.parentElement.id==="heroSlideBody"){
+  if(dash && dash.parentElement && dash.parentElement.id==="heroSlideBody"){
     dash.style.display="none";
-    orig.appendChild(dash);
+    if(orig) orig.appendChild(dash); else document.body.appendChild(dash);
   }
-
   var s=document.getElementById("heroSlide");if(!s)return;s.classList.remove("open","img-bg");setTimeout(function(){var b=document.getElementById("heroSlideBody");if(b){b.innerHTML="";b.style.padding="";}s.style.backgroundImage="";s.style.background="";},520);document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});var si=document.getElementById("si-dashboard");if(si)si.classList.add("active");}
 function toggleSideSubMenu(){var s=document.getElementById("sideSubOutros"),it=document.getElementById("si-outros");if(!s)return;s.classList.toggle("open");if(it)it.classList.toggle("sub-open");}
 document.addEventListener("keydown",function(e){if(e.key==="Escape")closeHeroSlide();});
