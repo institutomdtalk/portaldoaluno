@@ -305,7 +305,6 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .header{
   background:var(--navy-deep);
   position:relative;
-  overflow:hidden;
 }
 
 .header-bg-img{
@@ -886,7 +885,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 /* ── SIDEBAR LATERAL ────────────────────────────────────────────── */
 #app-layout{display:flex;align-items:stretch;min-height:100%;}
-#app-main-col{flex:1;min-width:0;display:flex;flex-direction:column;}
+#app-main-col{flex:1;min-width:0;display:flex;flex-direction:column;position:relative;}
 .side-nav{
   width:220px;flex-shrink:0;
   background:#07111E;
@@ -2071,40 +2070,11 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
 
 <div id="app-main-col">
+<div class="hero-slide" id="heroSlide"><button class="hero-slide-close" onclick="closeHeroSlide()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="hero-slide-body" id="heroSlideBody"></div></div>
 
 
   
-  <nav class="topbar" id="topbar">
-    <div class="topbar-nav">
-      <a class="topbar-item" href="https://institutomdtalk.github.io/welcome/" target="_blank" rel="noopener">Welcome</a>
-      <div class="topbar-sep"></div>
-      <a class="topbar-item" href="https://calendar.app.google/9s8vRTnw3YE6p5fR9" target="_blank" rel="noopener">Consultar disponibilidade para remanejo</a>
-      <div class="topbar-sep"></div>
-      <div class="topbar-dropdown" style="position:relative;height:42px;display:flex;align-items:center">
-        <button class="topbar-item" style="gap:5px">
-          Google Docs / Drive
-          <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="topbar-drop-menu">
-          <button class="topbar-drop-item" id="topbar-gdocs-btn" onclick="abrirLinkAluno('link_docs')">Google Docs</button>
-          <button class="topbar-drop-item" id="topbar-gdrive-btn" onclick="abrirLinkAluno('link_drive')">Google Drive</button>
-        </div>
-      </div>
-      <div class="topbar-sep"></div>
-      <div class="topbar-dropdown" style="position:relative;height:42px;display:flex;align-items:center">
-        <button class="topbar-item" style="gap:5px">
-          Outros Cursos
-          <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="topbar-drop-menu">
-          <a href="https://institutomdtalk.github.io/treinamento/" target="_blank" rel="noopener" class="topbar-drop-item">Treinamento Complementar</a>
-          <a href="https://institutomdtalk.github.io/expansao/" target="_blank" rel="noopener" class="topbar-drop-item">Expansão</a>
-        </div>
-      </div>
-      <div class="topbar-sep"></div>
-      <a class="topbar-item" href="https://forms.office.com/r/LNQR544es5" target="_blank" rel="noopener">Feedback</a>
-    </div>
-  </nav>
+  
 
   <header class="header">
     <div class="header-bg-img" id="hero-bg"></div>
@@ -2180,9 +2150,6 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       </div>
     </div>
     <div class="header-gold-line"></div>
-    <div class="hero-slide" id="heroSlide">
-      <button class="hero-slide-close" onclick="closeHeroSlide()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-      <div class="hero-slide-body" id="heroSlideBody"></div>
     </div>
   </header>
 
@@ -2892,7 +2859,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
     </div>
   </div>
 
-  <div class="nb-panel" id="panel-dashboard" style="display:block">
+  <div class="nb-panel" id="panel-dashboard">
   <main class="dashboard">
 
     
