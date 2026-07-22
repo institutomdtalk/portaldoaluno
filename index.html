@@ -7550,43 +7550,40 @@ function openMaterial(){
   var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
   var dash=document.getElementById("main-dashboard");
   if(!s||!b||!dash) return;
-  b.innerHTML=""; b.style.cssText="padding:0;display:block";
+  b.innerHTML=""; b.style.cssText="overflow-y:auto";
   s.removeAttribute("style"); s.classList.remove("img-bg"); s.style.background="#F0EDE8";
-  // Clonar conteúdo
-  b.innerHTML=dash.innerHTML;
-  // Função para sincronizar conteúdo do original para o clone
-  function syncToClone(){
-    ["drive-first-row","drive-rest-rows","drive-files-count","drive-files-status"].forEach(function(id){
+  // Envolver clone com classe .dashboard para herdar grid CSS
+  var wrapper=document.createElement("div");
+  wrapper.className="dashboard";
+  wrapper.style.display="grid";
+  wrapper.innerHTML=dash.innerHTML;
+  b.appendChild(wrapper);
+  // Sincronizar conteúdo do drive (render acontece no original, copia para o wrapper)
+  function syncDrive(){
+    ["drive-first-row","drive-rest-rows","drive-files-count","drive-files-status","proximos-passos-texto"].forEach(function(id){
       var orig=dash.querySelector("#"+id);
-      var clone=b.querySelector("#"+id);
+      var clone=wrapper.querySelector("#"+id);
       if(orig&&clone) clone.innerHTML=orig.innerHTML;
     });
-    var pp=dash.querySelector("#proximos-passos-texto");
-    var ppc=b.querySelector("#proximos-passos-texto");
-    if(pp&&ppc) ppc.innerHTML=pp.innerHTML;
     ["minha","apoio","curadoria","arquivados"].forEach(function(k){
-      var sec=b.querySelector("#drive-section-"+k);
-      var btn=b.querySelector("#drive-tab-"+k);
+      var sec=wrapper.querySelector("#drive-section-"+k);
+      var btn=wrapper.querySelector("#drive-tab-"+k);
       if(sec) sec.style.display=(k==="minha")?"":"none";
       if(btn) btn.style.borderBottomColor=(k==="minha")?"var(--gold)":"transparent";
     });
   }
   var files=window._allDriveFiles||window._cachedDriveFiles;
   if(files&&files.length){
-    // Re-renderizar no original, depois copiar para o clone
     var fr=dash.querySelector("#drive-first-row");
     if(fr&&fr.children.length===0) renderDriveFilesCard(files);
-    syncToClone();
+    syncDrive();
   } else if(window.currentStudent){
     callScript("action=get_drive_files&login="+encodeURIComponent(currentStudent.login),
-      function(d){
-        if(d.success){
-          window._cachedDriveFiles=d.files||[];
-          renderDriveFilesCard(d.files||[]);
-          syncToClone();
-        }
-      },function(){}
+      function(d){if(d.success){window._cachedDriveFiles=d.files||[];renderDriveFilesCard(d.files||[]);syncDrive();}},
+      function(){}
     );
+  } else {
+    syncDrive();
   }
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-conteudo");if(si)si.classList.add("active");
