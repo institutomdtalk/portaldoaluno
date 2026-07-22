@@ -2004,6 +2004,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       <div class="side-sub" id="sideSubOutros"><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/treinamento/','_blank')">Treinamento Complementar</div><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/expansao/','_blank')">Expansão</div></div>
       <div class="side-item" id="si-feedback" onclick="window.open('https://forms.office.com/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAYAABgpFVNUQjE3VzVNUTU1Q045N0VNQTRYRzRZWEU0RS4u&route=shorturl','_blank')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Feedback</div>
     <div class="side-footer">
+      <div class="side-item" id="si-tutorial" onclick="abrirTutorial()" style="margin-top:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="8"/><path d="M12 12v4"/></svg>Tutorial</div>
       <div class="side-logout" onclick="doLogout()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sair
       </div>
@@ -2057,10 +2058,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;margin-top:10px">
           <div style="display:flex;align-items:center;gap:10px">
-          <button onclick="abrirTutorial()" style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.13);border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.75);font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:7px 14px;border-radius:20px;cursor:pointer;transition:all 0.3s" onmouseover="this.style.background='rgba(255,255,255,0.22)';this.style.color='rgba(255,255,255,0.95)'" onmouseout="this.style.background='rgba(255,255,255,0.13)';this.style.color='rgba(255,255,255,0.75)'">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            Tutorial
-          </button>
+          
           <button id="btn-live" onclick="toggleLiveMode()">
             <span class="live-pulse"></span>
             Registre durante a Aula
@@ -3587,72 +3585,57 @@ function fecharLembretePagamento() {
 var _tutStep = 0;
 var _tutSteps = [
   {
-    title: 'Bem-vindo ao seu Portal',
-    body: 'Este é o seu portal de Medical English do Instituto MD Talk. Vamos fazer um tour rápido para você conhecer tudo o que está disponível aqui.',
-    target: null,
-    pos: 'center'
+    title: "Bem-vindo ao seu Portal",
+    body: "Este é o seu portal de Medical English do Instituto MD Talk. Aqui você tem acesso ao seu material, histórico de aulas, progresso e muito mais. Vamos fazer um tour rápido!",
+    target: null, pos: "center"
   },
   {
-    title: 'Perfil',
-    body: 'A primeira aba é a sua Sala de Aula. Aqui você confirma presenças, visualiza o calendário de frequência e registra termos durante a aula.',
-    target: 'tab-sala',
-    pos: 'bottom'
+    title: "Sala de Aula",
+    body: "A Sala de Aula é a sua tela principal. Aqui você vê o seu cumprimento personalizado, o horário em tempo real e os botões de ação da aula.",
+    target: "si-dashboard", pos: "right"
   },
   {
-    title: 'Confirmar Presença',
-    body: 'Use os botões no hero para confirmar sua presença ou registrar uma falta. O registro é salvo automaticamente na planilha.',
-    target: 'btn-presente',
-    pos: 'bottom'
+    title: "Confirmar Presença",
+    body: "Use os botões Confirmar Presença ou Registrar Falta durante a aula. O registro é salvo automaticamente na sua planilha.",
+    target: "btn-presente", pos: "top"
   },
   {
-    title: 'Registre Durante a Aula',
-    body: 'O botão verde pulsante abre o painel de registro ao vivo. Durante a aula, anote vocabulário, frases e termos clínicos em tempo real.',
-    target: 'btn-live',
-    pos: 'bottom'
+    title: "Home",
+    body: "O menu Home abre um painel com acesso rápido a todos os seus recursos: Material, Biblioteca, Listening Hub, Patient Simulator e Termos.",
+    target: "si-recursos", pos: "right"
   },
   {
-    title: 'Conteúdo',
-    body: 'A aba Conteúdo exibe seus arquivos do Google Drive organizados por pasta. Você pode marcar arquivos como concluídos, favoritos e muito mais.',
-    target: 'tab-dashboard',
-    pos: 'bottom'
+    title: "Conteúdo",
+    body: "Em Conteúdo estão todos os seus arquivos do Google Drive organizados por categoria: Material principal, Material de Apoio, Curadoria e Arquivados.",
+    target: "si-conteudo", pos: "right"
   },
   {
-    title: 'Meu Progresso',
-    body: 'Acompanhe sua evolução — termos dominados, aulas realizadas, arquivos concluídos e uma mensagem personalizada da sua mentora.',
-    target: 'tab-progresso',
-    pos: 'bottom'
+    title: "Perfil",
+    body: "Em Perfil você visualiza os seus dados cadastrais, frequência e histórico de presença nas aulas.",
+    target: "si-sala", pos: "right"
   },
   {
-    title: 'Banco de Termos',
-    body: 'Todos os termos registrados durante as aulas ficam salvos aqui. Você pode editar, filtrar por seção e exportar seu vocabulário clínico.',
-    target: 'tab-termos',
-    pos: 'bottom'
+    title: "Meu Progresso",
+    body: "Acompanhe a sua evolução — frequência, termos dominados, aulas realizadas e arquivos concluídos. Uma visão completa do seu percurso.",
+    target: "si-progresso", pos: "right"
   },
   {
-    title: 'Notas',
-    body: 'Escreva notas formatadas com cores, negrito, grifo e ícones. Use o modo tela cheia para escrever durante a aula compartilhando a tela.',
-    target: 'tab-notas',
-    pos: 'bottom'
+    title: "Reagendamentos",
+    body: "Precisa reagendar uma aula? Clique aqui para aceder diretamente ao calendário de agendamento da sua mentora.",
+    target: "si-reagendamento", pos: "right"
   },
   {
-    title: 'Recursos',
-    body: 'Acesse rapidamente o Cambridge Dictionary, YouGlish, sua coleção de infográficos e a tabela de verbos irregulares.',
-    target: 'tab-recursos',
-    pos: 'bottom'
+    title: "Feedback",
+    body: "Use o Feedback para enviar sugestões, elogios ou dúvidas à equipa do Instituto MD Talk. A sua opinião é muito importante!",
+    target: "si-feedback", pos: "right"
   },
   {
-    title: 'Navbar Superior',
-    body: 'A barra no topo dá acesso rápido a: Remanejo de aulas, Google Docs, Google Drive, Calendário, Outros Cursos, Personalize e Feedback.',
-    target: 'topbar',
-    pos: 'bottom'
-  },
-  {
-    title: 'Tudo pronto!',
-    body: 'Você já conhece o seu portal. Qualquer dúvida, use o botão <strong>Feedback</strong> na barra superior ou fale com sua mentora pelo WhatsApp.',
-    target: null,
-    pos: 'center'
+    title: "Tudo pronto!",
+    body: "Você já conhece o seu portal. Qualquer dúvida, use o Feedback no menu lateral ou fale com a sua mentora. Bons estudos!",
+    target: null, pos: "center"
   }
 ];
+
 
 function abrirTutorial() {
   _tutStep = 0;
