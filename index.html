@@ -7572,7 +7572,14 @@ function openHeroSlide(t){_heroSlideOpen(t,null);}
 function openHeroSlideImg(t){_heroSlideOpen(t,HERO_IMGS[Math.floor(Math.random()*HERO_IMGS.length)]);}
 function openHeroSlideIframe(url){var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");if(!s||!b)return;s.style.backgroundImage="";s.classList.remove("img-bg");s.style.background="#fff";b.style.padding="0";b.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;min-height:550px;border:none;display:block" frameborder="0" allowfullscreen></iframe>';requestAnimationFrame(function(){s.classList.add("open");b.scrollTop=0;});document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});var si=document.getElementById("si-reagendamento");if(si)si.classList.add("active");}
 function openSlideIframe(url){var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");if(!s||!b)return;s.style.backgroundImage="";s.classList.remove("img-bg");s.style.background="#fff";b.style.padding="0";b.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;border:none;display:block" frameborder="0" allowfullscreen></iframe>';if(!s.classList.contains("open"))requestAnimationFrame(function(){s.classList.add("open");});}
-function closeHeroSlide(){var s=document.getElementById("heroSlide");if(!s)return;s.classList.remove("open","img-bg");setTimeout(function(){var b=document.getElementById("heroSlideBody");if(b){b.innerHTML="";b.style.padding="";}s.style.backgroundImage="";s.style.background="";},520);document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});var si=document.getElementById("si-dashboard");if(si)si.classList.add("active");}
+function closeHeroSlide(){
+  var dash=document.getElementById("main-dashboard");
+  var orig=document.getElementById("panel-dashboard");
+  if(dash&&orig&&dash.parentElement&&dash.parentElement.id==="heroSlideBody"){
+    dash.style.cssText="display:none";
+    orig.appendChild(dash);
+  }
+  var s=document.getElementById("heroSlide");if(!s)return;s.classList.remove("open","img-bg");setTimeout(function(){var b=document.getElementById("heroSlideBody");if(b){b.innerHTML="";b.style.padding="";}s.style.backgroundImage="";s.style.background="";},520);document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});var si=document.getElementById("si-dashboard");if(si)si.classList.add("active");}
 function toggleSideSubMenu(){var s=document.getElementById("sideSubOutros"),it=document.getElementById("si-outros");if(!s)return;s.classList.toggle("open");if(it)it.classList.toggle("sub-open");}
 document.addEventListener("keydown",function(e){if(e.key==="Escape")closeHeroSlide();});
 function toggleSideNav(){
