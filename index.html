@@ -352,6 +352,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .hgeo--line{width:1px;height:100px;background:linear-gradient(180deg,transparent,rgba(196,164,90,0.12),transparent);top:15%;left:8%;animation:geoFloat 18s ease-in-out infinite}
 .hgeo--diamond{width:10px;height:10px;border:1px solid rgba(196,164,90,0.15);transform:rotate(45deg);top:40%;right:12%;animation:geoPulse 7s ease-in-out infinite}
 
+
 /* ── AVATAR ORBITAL ── */
 .dash-avatar-wrap{position:relative;width:128px;height:128px;flex-shrink:0;margin-right:26px}
 .dash-avatar-img{position:absolute;top:0;left:0;z-index:3;width:128px;height:128px;border-radius:50%;object-fit:cover;object-position:center 12%;border:2px solid rgba(255,255,255,.2);display:none;box-shadow:0 0 0 3px rgba(200,210,220,.12),0 4px 24px rgba(0,0,0,.4)}
@@ -1954,6 +1955,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 </head>
 <body>
 
+
 <div id="page-login">
 
   <div class="geo geo--ring1"></div>
@@ -1990,6 +1992,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   <div class="login-scroll-hint"><span></span></div>
 </div>
 
+
 <div id="page-loading" class="active">
   <div class="geo geo--ring1"></div>
   <div class="geo geo--ring2"></div>
@@ -2000,8 +2003,10 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   <p class="loading-text">Carregando seu portal...</p>
 </div>
 
+
 <div id="page-dashboard">
 <div id="app-layout">
+
 
 <nav class="side-nav" id="sideNav">
   <div class="side-nav-inner">
@@ -2039,11 +2044,14 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   </div>
 </nav>
 
+
 <div class="side-toggle" id="sideToggle" onclick="toggleSideNav()">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
 </div>
 
+
 <div id="app-main-col">
+
 
   
   <nav class="topbar" id="topbar">
@@ -2461,6 +2469,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
         </details>
       </div>
     </div>
+
 
   </div>
 
@@ -2895,6 +2904,9 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
     </div>
   </div>
 
+
+
+
   
   <div class="nb-panel" id="panel-patient" style="padding:0;height:calc(100vh - 120px)">
     <div style="height:100%;display:flex;flex-direction:column">
@@ -3070,6 +3082,11 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       </div>
     </div>
 
+
+
+
+
+
   </main>
 
   <footer class="footer" style="padding:42px 0;border-top:1px solid rgba(196,164,90,.1)">
@@ -3092,10 +3109,13 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
     </div>
   </footer>
 
+
 </div>
 </div>
 
 </div>
+
+
 
 <div class="drive-viewer-overlay" id="drive-viewer">
   <div class="drive-viewer-box">
@@ -3122,6 +3142,9 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   <button class="drive-zoom-btn" onclick="zoomViewer(-1)" title="Reduzir">−</button>
   <button class="drive-zoom-btn" onclick="zoomViewer(1)" title="Ampliar">+</button>
 </div>
+
+
+
 
 <div id="panels-container" style="display:none;max-width:1100px;margin:0 auto;padding:28px 36px 60px">
 
@@ -3306,6 +3329,7 @@ function renderDashboard(a) {
     btnF.style.opacity = '';
   }
 
+
   var topbar = document.getElementById('topbar');
   if (topbar) topbar.classList.add('visible');
 
@@ -3429,6 +3453,7 @@ function renderDashboard(a) {
   var fraseEl = document.getElementById('hero-frase');
   if (fraseEl) fraseEl.textContent = _frases[Math.floor(Math.random() * _frases.length)];
 
+
   // Próxima aula
   var proxEl = document.getElementById('proxima-aula-txt');
   if (proxEl) proxEl.innerHTML = (a.proxima_aula && a.proxima_aula.trim())
@@ -3508,6 +3533,7 @@ function renderDashboard(a) {
 
 // ── RELÓGIO ──
 var clockInterval = null;
+
 
 // ── CALENDÁRIO ──
 var calYear, calMonth, calData = [];
@@ -3675,13 +3701,8 @@ function renderHistorico(historico) {
   initCalendar(historico||[], window._calFreq||null);
 }
 
-function buildStatusBadge(status) {
-  var s = (status||'').toLowerCase().trim();
-  var cls = s === 'pago' ? 'pago' : s === 'atrasado' ? 'atrasado' : 'pendente';
-  var dot = s === 'atrasado' ? '<span class="pag-dot-alert"></span>' : '';
-  var label = s === 'pago' ? 'Pago' : s === 'atrasado' ? 'Atrasado' : 'Pendente';
-  return '<span class="pag-status-pill ' + cls + '">' + dot + label + '</span>';
-}
+
+
 
 // ── EDITOR FULLSCREEN ──
 function abrirEditorFullscreen() {
@@ -4004,10 +4025,7 @@ function mostrarPopupLembrete(venc) {
   document.body.appendChild(ov);
 }
 
-function fecharLembretePagamento() {
-  var reminder = document.getElementById('perfil-payment-reminder');
-  if (reminder) reminder.style.display = 'none';
-}
+
 
 // ── SALA DE AULA ──
 // ── TUTORIAL ──
@@ -4187,21 +4205,7 @@ function fecharTutorial() {
 var _dicDir = 'pt-en';
 var _dicTimer = null;
 
-function setDicDir(dir) {
-  _dicDir = dir;
-  var btnPt = document.getElementById('dic-btn-pt');
-  var btnEn = document.getElementById('dic-btn-en');
-  if (btnPt && btnEn) {
-    if (dir === 'pt-en') {
-      btnPt.style.background = 'var(--navy)'; btnPt.style.color = '#fff'; btnPt.style.border = 'none';
-      btnEn.style.background = '#fff'; btnEn.style.color = 'var(--text-muted)'; btnEn.style.border = '1px solid var(--border)';
-    } else {
-      btnEn.style.background = 'var(--navy)'; btnEn.style.color = '#fff'; btnEn.style.border = 'none';
-      btnPt.style.background = '#fff'; btnPt.style.color = 'var(--text-muted)'; btnPt.style.border = '1px solid var(--border)';
-    }
-  }
-  buscarDicionario();
-}
+
 
 function buscarDicionario() {
   clearTimeout(_dicTimer);
@@ -4670,6 +4674,7 @@ function ppSalvar() {
   currentStudent.proximos_passos = valor;
 }
 
+
 // ── PERFIL VIEW/EDIT ──
 function perfilEditar() {
   document.getElementById('perfil-view').style.display = 'none';
@@ -4899,9 +4904,7 @@ var _driveFilesOpen = false;
 var _allDriveFiles = [];
 var _driveConluidos = {};
 
-function getDriveConcluidosKey() {
-  return 'mdtalk_drive_tags_' + (currentStudent ? currentStudent.login : 'guest');
-}
+
 
 function _refreshDriveTagClasses() {
   var allTagKeys = Object.keys(TAG_CONFIG).concat(['arquivado']);
@@ -5447,24 +5450,7 @@ function carregarVerbos(verbosConhecidos) {
   atualizarContadoresVerbos();
 }
 
-function resetVerbos() {
-  if (!confirm('Resetar todos os verbos marcados?')) return;
-  document.querySelectorAll('.vb-check').forEach(function(cb){
-    cb.checked = false;
-    var row = document.getElementById('row_vb_' + cb.dataset.verb.replace(/\//g,'_').replace(/ /g,'_'));
-    if (row) row.classList.remove('known');
-    if (currentStudent) {
-      callScript(
-        'action=salvar_verbo&login=' + encodeURIComponent(currentStudent.login) +
-        '&verbo=' + encodeURIComponent(cb.dataset.verb) + '&conhece=nao',
-        function(){}, function(){}
-      );
-    }
-  });
-  var key = 'mdtalk_verbos_' + (currentStudent ? currentStudent.login : 'guest');
-  localStorage.removeItem(key);
-  atualizarContadoresVerbos();
-}
+
 
 // ── DRAWER HELPERS ──
 function abrirLinkAluno(campo) {
@@ -5478,35 +5464,7 @@ function abrirLinkAluno(campo) {
 }
 
 // ── DRAWER MENU ──
-function openPanel(panelId) {
-  // Hide dashboard, show panels container
-  var dashboard = document.querySelector('.dashboard');
-  var container = document.getElementById('panels-container');
-  if (dashboard) dashboard.style.display = 'none';
-  if (container) container.style.display = 'block';
-  // Hide all panels, show target
-  document.querySelectorAll('.dash-panel').forEach(function(p){ p.classList.remove('active'); });
-  var panel = document.getElementById(panelId);
-  if (panel) panel.classList.add('active');
-  // Mark active drawer item
-  document.querySelectorAll('.drawer-item').forEach(function(b){ b.classList.remove('active'); });
-  document.querySelectorAll('.drawer-item').forEach(function(b){
-    if (b.getAttribute('onclick') && b.getAttribute('onclick').indexOf(panelId) >= 0) b.classList.add('active');
-  });
-  // Special panel logic
-  if (panelId === 'panel-gdocs' && currentStudent) {
-    var link = document.getElementById('panel-gdocs-link');
-    if (link && currentStudent.link_docs) link.href = currentStudent.link_docs;
-  }
-  if (panelId === 'panel-gdrive' && currentStudent) {
-    var link2 = document.getElementById('panel-gdrive-link');
-    if (link2 && currentStudent.link_drive) link2.href = currentStudent.link_drive;
-  }
-  if (panelId === 'panel-calendario') {
-    setTimeout(function(){ renderCalendar2(); }, 50);
-  }
-  window.scrollTo(0, 0);
-}
+
 
 function closePanel() {
   var dashboard = document.querySelector('.dashboard');
@@ -5516,6 +5474,7 @@ function closePanel() {
   document.querySelectorAll('.dash-panel').forEach(function(p){ p.classList.remove('active'); });
   document.querySelectorAll('.drawer-item').forEach(function(b){ b.classList.remove('active'); });
 }
+
 
 // Second calendar instance for panel
 var _cal2Month, _cal2Year;
@@ -5827,6 +5786,7 @@ function renderProgHeatmap() {
   }
   el.innerHTML = html;
 }
+
 
 // ── BANCO DE TERMOS ──
 var _ntOrdem = 'recente';
@@ -6562,13 +6522,7 @@ function salvarEdicaoNota() {
   );
 }
 
-function toggleTopbarDropdown(btn) {
-  var menu = btn.parentElement.querySelector('.topbar-drop-menu');
-  if (!menu) return;
-  var isOpen = menu.style.display === 'block';
-  document.querySelectorAll('.topbar-drop-menu').forEach(function(m){ m.style.display='none'; });
-  if (!isOpen) menu.style.display = 'block';
-}
+
 
 // ── LIVE CLASS MODE ──
 var _liveOpen = false;
@@ -6591,6 +6545,8 @@ function loadLiveItems() {
 function saveLiveItems() {
   localStorage.setItem(getLiveKey(), JSON.stringify(_liveItems));
 }
+
+
 
 // ── MD LIBRARY INTEGRATION ──
 window.addEventListener('message', function(e) {
@@ -6647,6 +6603,7 @@ document.addEventListener('keydown', function(e) {
     );
   }
 
+
   if (e.data.type === 'mdlibrary_save_term') {
     if (!currentStudent) return;
     var id  = 'nt_' + Date.now();
@@ -6680,6 +6637,7 @@ var OPENAI_SYS  = 'You are a Medical English assistant for Brazilian physicians.
   + 'Help with vocabulary, pronunciation, grammar, and clinical communication in English. '
   + 'When the user writes in Portuguese, respond in both languages when helpful. '
   + 'Be concise and practical.';
+
 
 function enviarLidosParaBiblioteca() {
   if (!currentStudent) return;
@@ -6923,6 +6881,7 @@ function buildCalModal() {
   return d;
 }
 
+
 function abrirModalCalendario() {
   var modal = getOrCreateModal('modal-calendario', buildCalModal);
   modal.classList.add('active');
@@ -7013,6 +6972,7 @@ function agendarSalvar(id, valor) {
   _anotSaveTimer = setTimeout(salvarAnotacoes, 1000);
 }
 
+
 function carregarAnotacoes(anotacoes) {
   _anotData = anotacoes || [];
   renderAnotacoes();
@@ -7021,18 +6981,8 @@ function carregarAnotacoes(anotacoes) {
   }, 100);
 }
 
-function openPdfModal(embedUrl, name, viewUrl) {
-  var modal   = document.getElementById('pdf-modal');
-  var iframe  = document.getElementById('pdf-modal-iframe');
-  var title   = document.getElementById('pdf-modal-title');
-  var driveLink = document.getElementById('pdf-modal-drive-link');
-  if (!modal || !iframe) return;
-  iframe.src = embedUrl;
-  if (title) title.textContent = name;
-  if (driveLink) driveLink.href = viewUrl;
-  modal.classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
+
+
 
 function closePdfModal() {
   var modal  = document.getElementById('pdf-modal');
@@ -7165,10 +7115,7 @@ function buildTrilhaCard(m) {
   '</div>';
 }
 
-function animateCounter(el, target) {
-  var duration=1200; var start=performance.now();
-  (function tick(now){ var p=Math.min((now-start)/duration,1); var e=1-Math.pow(1-p,3); el.textContent=Math.round(e*target); if(p<1) requestAnimationFrame(tick); })(start);
-}
+
 
 // ── VERIFICAR HOJE ──
 function verificarRegistroHoje(historico) {
@@ -7355,6 +7302,7 @@ document.addEventListener('DOMContentLoaded', function() {
     _cal2Month++; if(_cal2Month>11){_cal2Month=0;_cal2Year++;} renderCalendar2();
   });
 
+
   // Registre durante a Aula
   var lpClose = document.getElementById('lp-close-btn');
   if (lpClose) lpClose.addEventListener('click', toggleLiveMode);
@@ -7379,11 +7327,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+
   var btnPresente=document.getElementById('btn-presente');
   if(btnPresente) btnPresente.addEventListener('click', function(){ registrarPresenca('presente'); });
 
   var btnFalta=document.getElementById('btn-falta');
   if(btnFalta) btnFalta.addEventListener('click', function(){ registrarPresenca('falta'); });
+
+
+
+
 
   document.addEventListener('keydown', function(e){
     if(e.key==='Escape') {
@@ -7468,6 +7421,8 @@ window.addEventListener('load', function(){
 });
 </script>
 
+
+
 <div class="nt-modal-overlay" id="nt-edit-modal">
   <div class="nt-modal">
     <h3 class="nt-modal-title">Editar Entrada</h3>
@@ -7505,6 +7460,7 @@ window.addEventListener('load', function(){
     </div>
   </div>
 </div>
+
 
   
   <div class="nt-modal-overlay" id="nt-modal">
@@ -7544,6 +7500,9 @@ window.addEventListener('load', function(){
     </div>
   </div>
 
+
+
+
 <div id="live-panel">
   <div class="lp-head">
     <div class="lp-head-left">
@@ -7571,6 +7530,7 @@ window.addEventListener('load', function(){
     <p class="lp-empty">Nenhuma anotação ainda. Comece a digitar!</p>
   </div>
 </div>
+
 
 <div id="gemini-panel">
   <div class="gp-head">
@@ -7655,6 +7615,8 @@ window.addEventListener('load', function(){
   </div>
 </div>
 
+
+
 <div class="nota-view-overlay" id="nota-view-modal">
   <div class="nota-view-modal">
     <div class="nota-view-header">
@@ -7708,6 +7670,7 @@ window.addEventListener('load', function(){
     <div id="arquivados-grid" style="overflow-y:auto;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;flex:1"></div>
   </div>
 </div>
+
 
 <div id="revisar-overlay" style="display:none;position:fixed;inset:0;background:#F0EDE8;z-index:99900;flex-direction:column">
 
@@ -7790,6 +7753,8 @@ window.addEventListener('load', function(){
     </button>
   </div>
 </div>
+
+
 
 <div class="nb-panel prog-page" id="panel-quiz">
 <style>
@@ -7910,6 +7875,7 @@ window.addEventListener('load', function(){
 </div>
 
 <script>
+
 
 function driveImgUrl(url){
   if(!url) return "";
