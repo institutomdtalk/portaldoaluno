@@ -7523,15 +7523,6 @@ function openHome(){
   var panel=document.getElementById("panel-recursos");
   var panelClone=panel ? panel.cloneNode(true) : null;
   body.innerHTML="";
-  // Bloco de saudação personalizado
-  var saudDiv=document.createElement("div");
-  saudDiv.style.cssText="position:relative;z-index:1;padding:36px 40px 28px;border-bottom:1px solid rgba(196,164,90,.2)";
-  saudDiv.innerHTML=
-    '<p style="font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:rgba(196,164,90,.75);margin-bottom:14px">Instituto MD Talk</p>'
-    +'<h2 style="font-family:&quot;Cormorant Garamond&quot;,serif;font-size:2.6rem;font-weight:300;color:#fff;margin:0;line-height:1.15">'+frases[idx]+'</h2>'
-    +'<h2 style="font-family:&quot;Cormorant Garamond&quot;,serif;font-size:2.6rem;font-weight:300;font-style:italic;color:#C4A45A;margin:0 0 16px;line-height:1.15">'+primeiroNome+'.</h2>'
-    +'<p style="font-family:Raleway,sans-serif;font-size:12px;font-style:italic;color:rgba(255,255,255,.55);line-height:1.7;max-width:520px;margin:0">'+sugestoes[idx]+'</p>';
-  body.appendChild(saudDiv);
   // Cards de recursos
   if(panelClone){
     panelClone.classList.remove("nb-panel","notas-page");
