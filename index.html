@@ -7495,18 +7495,42 @@ function openHome(){
   body.style.padding="0";
   body.style.display="flex";
   body.style.flexDirection="column";
+  // Nome do aluno
+  var nome=(window.currentStudent&&window.currentStudent.nome_display)||"médico(a)";
+  var primeiroNome=nome.split(" ")[0];
+  // Frases de boas-vindas variadas
+  var saudacoes=[
+    primeiroNome+", como você deseja praticar o seu inglês hoje?",
+    primeiroNome+", o que vamos explorar no inglês médico hoje?",
+    primeiroNome+", pronto(a) para mais um mergulho no inglês clínico?",
+    primeiroNome+", por onde quer começar a prática hoje?",
+    primeiroNome+", que área do inglês médico vamos trabalhar agora?"
+  ];
+  // Sugestões variadas
+  var sugestoes=[
+    "Que tal um pouco de <strong>listening</strong> hoje? Acesse o <em>Listening Hub</em> nos cards abaixo.",
+    "Que tal treinar a sua <strong>leitura clínica</strong>? A <em>Biblioteca</em> tem textos selecionados para você.",
+    "Que tal praticar com um <strong>paciente virtual</strong>? Experimente o <em>Patient Simulator</em> abaixo.",
+    "Que tal revisar os seus <strong>termos médicos</strong> dominados? Acesse <em>Termos</em> nos cards.",
+    "Que tal explorar o <strong>material</strong> da sua última aula? Está em <em>Conteúdo</em> no menu lateral."
+  ];
+  var idx=Math.floor(Math.random()*saudacoes.length);
   // Clonar header-inner
   var hi=document.querySelector(".header-inner");
   var hiClone=hi ? hi.cloneNode(true) : null;
-  // Clonar cards (panel-recursos)
+  // Clonar panel-recursos (cards)
   var panel=document.getElementById("panel-recursos");
   var panelClone=panel ? panel.cloneNode(true) : null;
-  // Montar
   body.innerHTML="";
-  if(hiClone){
-    hiClone.style.cssText="position:relative;z-index:1;max-width:100%;margin:0;padding:32px 36px 24px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px;border-bottom:1px solid rgba(196,164,90,.15)";
-    body.appendChild(hiClone);
-  }
+  // Bloco de saudação personalizado
+  var saudDiv=document.createElement("div");
+  saudDiv.style.cssText="position:relative;z-index:1;padding:36px 40px 28px;border-bottom:1px solid rgba(196,164,90,.2)";
+  saudDiv.innerHTML=
+    '<p style="font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(196,164,90,.7);margin-bottom:10px">Instituto MD Talk</p>'
+    +'<h2 style="font-family:&quot;Cormorant Garamond&quot;,serif;font-size:2rem;font-weight:300;color:#fff;margin-bottom:10px;line-height:1.2">'+saudacoes[idx]+"</h2>"
+    +'<p style="font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.65);margin:0">'+sugestoes[idx]+"</p>";
+  body.appendChild(saudDiv);
+  // Cards de recursos
   if(panelClone){
     panelClone.classList.remove("nb-panel","notas-page");
     panelClone.style.cssText="display:block;flex:1;padding:28px 36px 36px;overflow-y:auto";
@@ -7514,8 +7538,8 @@ function openHome(){
   }
   // Marcar ativo
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
-  var si=document.getElementById("si-recursos"); if(si) si.classList.add("active");
-  requestAnimationFrame(function(){slide.classList.add("open"); body.scrollTop=0;});
+  var si=document.getElementById("si-recursos");if(si)si.classList.add("active");
+  requestAnimationFrame(function(){slide.classList.add("open");body.scrollTop=0;});
 }
 
 
