@@ -3202,6 +3202,10 @@ function doLogin() {
         localStorage.setItem('mdtalk_login', d.aluno.login);
         localStorage.setItem('mdtalk_senha', btoa(encodeURIComponent(document.getElementById('f-senha').value.trim())));
         renderDashboard(d.aluno);
+        setTimeout(function(){
+          var ov=document.getElementById('maintOverlay');
+          if(ov) ov.style.display='flex';
+        }, 1000);
       }
       else showErr(d.message || 'Login ou senha incorretos.');
     },
