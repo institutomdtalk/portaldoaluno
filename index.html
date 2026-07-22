@@ -2098,66 +2098,6 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
     <div class="hero-slide" id="heroSlide"><button class="hero-slide-close" onclick="closeHeroSlide()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="hero-slide-body" id="heroSlideBody"></div></div>
   </header>
 
-  <!-- ══ NOTEBOOK TAB BAR ══ -->
-        <span class="tp-label">Perfil &amp; Progresso</span>
-        <svg class="tp-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-    </div>
-    <!-- Linha 1: Pessoal / Progresso -->
-    <div class="nb-tabs-row nb-row-top" id="nb-row-top">
-      <button class="nb-tab" id="tab-sala" onclick="switchTab('sala')">
-        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        Perfil
-      </button>
-      <button class="nb-tab" id="tab-progresso" onclick="switchTab('progresso')">
-        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        Meu Progresso
-      </button>
-      <button class="nb-tab" id="tab-cronograma" onclick="switchTab('cronograma')">
-        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Cronograma de Estudos
-      </button>
-      <button class="nb-tab" id="tab-games" onclick="switchTab('games')">
-        <svg viewBox="0 0 24 24"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15" cy="11" r="1"/><circle cx="17" cy="13" r="1"/><rect x="2" y="6" width="20" height="12" rx="2"/></svg>
-        Sala de Espera / Games
-      </button>
-    </div>
-    <!-- Linha 2: Conteúdo / Ferramentas -->
-    <div class="nb-tabs-row nb-row-bottom">
-      <button class="nb-tab active" id="tab-dashboard" onclick="switchTab('dashboard')">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        Principal
-      </button>
-      <button class="nb-tab" id="tab-termos" onclick="switchTab('termos')">
-        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-        Meus Termos / Flashcards
-      </button>
-      <button class="nb-tab" id="tab-notas" onclick="switchTab('notas')">
-        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        Notas
-      </button>
-      <button class="nb-tab" id="tab-recursos" onclick="switchTab('recursos')">
-        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-        Recursos
-      </button>
-      <button class="nb-tab" id="tab-biblioteca" onclick="switchTab('biblioteca')">
-        <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-        Biblioteca
-      </button>
-      <button class="nb-tab" id="tab-patient" onclick="switchTab('patient')">
-        <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-        Patient Simulator
-      </button>
-      <button class="nb-tab" id="tab-listening" onclick="switchTab('listening')">
-        <svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>
-        Listening Hub
-      </button>
-      <button class="nb-tab" id="tab-quiz" onclick="switchTab('quiz')">
-        <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-        Grammar Quiz
-      </button>
-    </div>
-  </div>
 
   <!-- ══ PAINEL PERFIL ══ -->
   <div class="nb-panel prog-page" id="panel-sala" style="font-family:Raleway,sans-serif">
@@ -2579,147 +2519,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   </div>
 
   <!-- ══ PAINEL NOTAS ══ -->
-  <div class="nb-panel notas-page" id="panel-notas">
-    <div class="notas-title-block">
-      <h2 style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--navy);margin-bottom:6px;line-height:1.1">Minhas <em style="font-style:italic;color:var(--gold)">Notas</em></h2>
-      <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);letter-spacing:0.3px">Minhas anotações e registros de estudo.</p>
-      <p id="notas-count">0 notas</p>
-    </div>
-    <div class="notas-editor">
-      <input type="text" id="nota-titulo-input" class="notas-editor-titulo" placeholder="Título da nota (opcional)">
-      <div class="notas-toolbar" id="nota-toolbar">
-        <!-- Fonte -->
-        <select class="notas-fmt-select" onchange="notaFmtApply('nota','font',this.value)" title="Fonte">
-          <option value="inherit">Fonte</option>
-          <option value="Cormorant Garamond, serif">Cormorant</option>
-          <option value="Raleway, sans-serif">Raleway</option>
-          <option value="Georgia, serif">Georgia</option>
-          <option value="Arial, sans-serif">Arial</option>
-          <option value="Courier New, monospace">Courier</option>
-        </select>
-        <div class="notas-fmt-divider"></div>
-        <!-- Tamanho -->
-        <div class="notas-size-ctrl">
-          <button class="notas-size-btn" onclick="notaFmtApply('nota','size',-1)">−</button>
-          <span class="notas-size-display" id="nota-size-display">14</span>
-          <button class="notas-size-btn" onclick="notaFmtApply('nota','size',1)">+</button>
-        </div>
-        <div class="notas-fmt-divider"></div>
-        <!-- B I U -->
-        <button class="notas-fmt-btn" onclick="notaFmtApply('nota','bold')" title="Negrito"><strong>B</strong></button>
-        <button class="notas-fmt-btn notas-fmt-i" onclick="notaFmtApply('nota','italic')" title="Itálico"><em>I</em></button>
-        <button class="notas-fmt-btn" onclick="notaFmtApply('nota','underline')" title="Sublinhado"><span style="text-decoration:underline">U</span></button>
-        <button class="notas-fmt-btn" onclick="notaFmtApply('nota','strike')" title="Tachado"><span style="text-decoration:line-through">S</span></button>
-        <div class="notas-fmt-divider"></div>
-        <!-- Cor de texto -->
-        <div class="notas-color-group">
-          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','color','#C0392B')" title="Vermelho"><span class="notas-color-swatch" style="background:#C0392B"></span></button>
-          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','color','#E67E22')" title="Laranja"><span class="notas-color-swatch" style="background:#E67E22"></span></button>
-          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','color','#D4AC0D')" title="Amarelo"><span class="notas-color-swatch" style="background:#D4AC0D"></span></button>
-          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','color','#27AE60')" title="Verde"><span class="notas-color-swatch" style="background:#27AE60"></span></button>
-          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','color','#1A8F8F')" title="Teal"><span class="notas-color-swatch" style="background:#1A8F8F"></span></button>
-          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','color','#2471A3')" title="Azul"><span class="notas-color-swatch" style="background:#2471A3"></span></button>
-          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','color','#7D3C98')" title="Roxo"><span class="notas-color-swatch" style="background:#7D3C98"></span></button>
-        </div>
-        <div class="notas-fmt-divider"></div>
-        <!-- Grifo -->
-        <div class="notas-color-group">
-          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','highlight','#FADADD')" title="Rosa"><span class="notas-color-swatch" style="background:#FADADD"></span></button>
-          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','highlight','#FAD7C0')" title="Pêssego"><span class="notas-color-swatch" style="background:#FAD7C0"></span></button>
-          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','highlight','#FDF3C0')" title="Amarelo"><span class="notas-color-swatch" style="background:#FDF3C0"></span></button>
-          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','highlight','#D5F0D5')" title="Verde"><span class="notas-color-swatch" style="background:#D5F0D5"></span></button>
-          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','highlight','#D6EAF8')" title="Azul claro"><span class="notas-color-swatch" style="background:#D6EAF8"></span></button>
-          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','highlight','#E8DAEF')" title="Lilás"><span class="notas-color-swatch" style="background:#E8DAEF"></span></button>
-          <button class="notas-fmt-btn notas-color-btn" onclick="notaFmtApply('nota','highlight','#F5EEF8')" title="Lavanda"><span class="notas-color-swatch" style="background:#F5EEF8"></span></button>
-        </div>
-        <div class="notas-fmt-divider"></div>
-        <!-- Borracha -->
-        <button class="notas-fmt-btn" onclick="notaFmtApply('nota','clear')" title="Limpar formatação">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 20H7L3 16l10-10 7 7-2.5 2.5"/><path d="M6.5 17.5l5-5"/></svg>
-        </button>
-        <div class="notas-fmt-divider"></div>
-        <!-- Ícones básicos sempre visíveis -->
-        <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','check')" title="✓ Check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></button>
-        <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','cross')" title="✕ Cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-        <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','arrow-right')" title="→"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
-        <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','warning')" title="⚠ Atenção"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
-        <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','speaker')" title="🔊 Pronúncia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14"/><path d="M15.54 8.46a5 5 0 010 7.07"/></svg></button>
-        <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','bulb')" title="💡 Ideia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0018 8A6 6 0 006 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 018.91 14"/></svg></button>
-        <!-- Retrátil: mais ícones -->
-        <button class="notas-fmt-btn notas-more-btn" onclick="toggleMoreIcons('nota')" title="Mais ícones" id="nota-more-btn" style="font-size:11px;letter-spacing:0;color:#aaa;min-width:28px">+ ícones</button>
-        <div class="notas-more-icons" id="nota-more-icons" style="display:none;flex-wrap:wrap;gap:2px;width:100%;padding-top:6px;border-top:1px solid rgba(0,0,0,0.06);margin-top:4px">
-          <span style="font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#bbb;width:100%;padding:2px 0 4px">Pronúncia</span>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','pron-stress')" title="Sílaba tônica"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v8"/><path d="M5 10c0 3.87 3.13 7 7 7s7-3.13 7-7"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','pron-syllable')" title="Sílabas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="8" width="6" height="8" rx="1"/><rect x="10" y="6" width="6" height="12" rx="1"/><rect x="18" y="9" width="4" height="6" rx="1"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','pron-silent')" title="Letra muda"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','pron-repeat')" title="Repetir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','pron-long')" title="Vogal longa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="8" x2="2" y2="16"/><line x1="22" y1="8" x2="22" y2="16"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','pron-short')" title="Vogal curta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="8" x2="8" y2="16"/><line x1="16" y1="8" x2="16" y2="16"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','pron-rising')" title="Entonação subindo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 18 C8 18 12 10 20 6"/><polyline points="15 6 20 6 20 11"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','pron-falling')" title="Entonação caindo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6 C8 6 12 14 20 18"/><polyline points="15 18 20 18 20 13"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','pron-connect')" title="Ligação de sons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></button>
-          <span style="font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#bbb;width:100%;padding:6px 0 4px">Gramática</span>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','gram-tense')" title="Tempo verbal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','gram-verb')" title="Verbo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','gram-noun')" title="Substantivo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','gram-rule')" title="Regra"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','gram-exception')" title="Exceção"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','gram-compare')" title="Comparar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M4 6h8"/><path d="M4 12h16"/><path d="M4 18h12"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','gram-example')" title="Exemplo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','gram-question')" title="Dúvida"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
-          <span style="font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#bbb;width:100%;padding:6px 0 4px">Vocabulário</span>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','vocab-formal')" title="Formal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','vocab-clinical')" title="Clínico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','vocab-synonym')" title="Sinônimo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 16V4m0 0L3 8m4-4l4 4"/><path d="M17 8v12m0 0l4-4m-4 4l-4-4"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','vocab-antonym')" title="Antônimo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8l4-4 4 4"/><path d="M17 16l4 4-4 4"/><path d="M7 4v16"/><path d="M21 4H11"/><path d="M3 20h10"/></svg></button>
-          <span style="font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#bbb;width:100%;padding:6px 0 4px">Habilidades & Organização</span>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','skill-speak')" title="Speaking"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','skill-listen')" title="Listening"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3z"/><path d="M3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','skill-read')" title="Reading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','skill-write')" title="Writing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','skill-review')" title="Revisar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 4v6h6"/><path d="M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','org-important')" title="Importante"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','org-target')" title="Meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','org-practice')" title="Praticar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','org-doubt')" title="Dúvida"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','star')" title="Destaque"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','org-bookmark')" title="Bookmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','org-tag')" title="Tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','org-progress')" title="Progresso"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','arrow-left')" title="←"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','arrow-up')" title="↑"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button>
-          <button class="notas-fmt-btn" onclick="notaInsertIcon('nota','arrow-down')" title="↓"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></button>
-        </div>
-      </div>
-      <div id="nota-corpo-input" class="notas-editor-body" contenteditable="true" data-placeholder="Escreva sua nota aqui..."></div>
-      <div class="notas-editor-footer">
-        <span class="notas-editor-hint">Ctrl+Enter para salvar</span>
-        <div style="display:flex;align-items:center;gap:10px">
-          <button onclick="abrirEditorFullscreen()" title="Expandir para tela cheia" style="background:none;border:1px solid rgba(0,0,0,0.1);border-radius:6px;padding:6px 12px;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#aaa;transition:all 0.2s" onmouseover="this.style.borderColor='#0B1D3A';this.style.color='#0B1D3A'" onmouseout="this.style.borderColor='rgba(0,0,0,0.1)';this.style.color='#aaa'">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-            Tela cheia
-          </button>
-          <button class="notas-save-btn" onclick="salvarNota()">
-            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Adicionar Nota
-          </button>
-        </div>
-      </div>
-    </div>
-    <p class="notas-section-label">Suas Notas</p>
-    <div class="notas-grid" id="notas-grid">
-      <p class="notas-empty">Nenhuma nota ainda. Escreva sua primeira nota acima.</p>
-    </div>
-    <!-- Arquivadas -->
-    <div style="margin-top:40px;padding:0 40px 40px">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;cursor:pointer;user-select:none" onclick="toggleNotasArq()">
-        <span style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#aaa;font-family:Raleway,sans-serif">Arquivadas</span>
-        <span id="notas-arq-count" style="font-size:10px;color:#bbb;font-family:Raleway,sans-serif"></span>
-        <svg id="notas-arq-chevron" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="margin-left:auto;transition:transform .3s"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div id="notas-arq-grid" style="display:none" class="notas-grid"></div>
-    </div>
-  </div>
+
 
   <!-- ══ PAINEL RECURSOS ══ -->
    <div class="nb-panel notas-page" id="panel-recursos" style="padding:36px 40px">
@@ -2733,71 +2533,21 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 <div class="rc-card" onclick="openHeroSlide('termos')"><div class="rc-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div><div><div class="rc-title">Termos</div><div class="rc-sub">vocabulário dominado</div></div></div>
 </div>
    </div>
-  <div class="nb-panel prog-page" id="panel-biblioteca">
-    <div style="margin-bottom:32px">
-      <h2 style="font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--navy);margin-bottom:6px;line-height:1.1">Minha <em style="font-style:italic;color:var(--gold)">Biblioteca</em></h2>
-      <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);letter-spacing:0.3px">Conteúdos e materiais de referência para o meu aprendizado.</p>
-    </div>
-    <div id="biblioteca-lista">
-      <div style="display:flex;justify-content:flex-end;margin-bottom:10px">
-        <button id="btn-bib-fs" onclick="toggleBibliotecaFS()"
-          style="display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:none;border:1px solid rgba(0,0,0,0.15);border-radius:20px;padding:6px 14px;cursor:pointer;color:#888;transition:all 0.2s">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-          Tela cheia
-        </button>
-      </div>
-      <div id="bib-iframe-wrap">
-        <iframe id="bib-iframe"
-          src="https://institutomdtalk.github.io/mdlibrary595684894514849845158489/"
-          width="100%"
-          style="height:calc(100vh - 260px);min-height:500px;border:none;border-radius:12px;display:block"
-          loading="lazy"
-          allowfullscreen
-          title="MD Library">
-        </iframe>
-      </div>
-    </div>
-  </div>
+
 
 
 
 
   <!-- ══ PAINEL PATIENT SIMULATOR ══ -->
-  <div class="nb-panel" id="panel-patient" style="padding:0;height:calc(100vh - 120px)">
-    <div style="height:100%;display:flex;flex-direction:column">
-      <div style="display:flex;justify-content:flex-end;padding:6px 12px;background:var(--off-white);border-bottom:1px solid var(--border);flex-shrink:0">
-        <button id="btn-patient-fs" onclick="togglePatientFS()" style="display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border:1px solid var(--border);border-radius:6px;background:none;cursor:pointer;font-family:Raleway,sans-serif;font-size:11px;font-weight:600;color:var(--navy)">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-          Tela cheia
-        </button>
-      </div>
-      <div id="patient-iframe-wrap" style="flex:1;overflow:hidden">
-        <iframe id="patient-iframe" src="about:blank" style="width:100%;height:100%;border:none;" loading="lazy" allow="microphone *"></iframe>
-      </div>
-    </div>
-  </div>
+
   <!-- ══ PAINEL LISTENING HUB ══ -->
-  <div class="nb-panel" id="panel-listening" style="padding:0;height:calc(100vh - 120px)">
-    <iframe id="listening-iframe" src="about:blank" style="width:100%;height:100%;border:none;" loading="lazy"></iframe>
-  </div>
+
 
   <!-- ══ PAINEL CRONOGRAMA ══ -->
-  <div class="nb-panel prog-page" id="panel-cronograma">
-    <div class="coming-soon-panel">
-      <div class="coming-soon-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-      <div class="coming-soon-label">Cronograma de <em style="font-style:italic;color:var(--primary)">Estudos</em></div>
-      <div class="coming-soon-sub">Seu planejamento semanal de inglês médico — em breve.</div>
-    </div>
-  </div>
+
 
   <!-- ══ PAINEL GAMES ══ -->
-  <div class="nb-panel prog-page" id="panel-games">
-    <div class="coming-soon-panel">
-      <div class="coming-soon-icon"><svg viewBox="0 0 24 24"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15" cy="11" r="1"/><circle cx="17" cy="13" r="1"/><rect x="2" y="6" width="20" height="12" rx="2"/></svg></div>
-      <div class="coming-soon-label">Sala de Espera / <em style="font-style:italic;color:var(--primary)">Games</em></div>
-      <div class="coming-soon-sub">Word games, quiz e atividades lúdicas — em breve.</div>
-    </div>
-  </div>
+
 
   <main class="dashboard" id="main-dashboard" style="display:none">
 
@@ -2993,67 +2743,22 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   </button>
 
   <!-- PANEL: WELCOME -->
-  <div class="dash-panel" id="panel-welcome">
-    <div class="panel-header"><h2 class="panel-title">Welcome to MD Talk</h2><p class="panel-desc">Conheça o Instituto MD Talk e seu programa de Medical English.</p></div>
-    <a href="https://institutomdtalk.github.io/welcome/" target="_blank" rel="noopener" class="panel-link-card">
-      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-      <div class="panel-link-body"><p class="panel-link-label">Instituto MD Talk</p><p class="panel-link-title">Welcome to MD Talk</p><p class="panel-link-desc">Página de boas-vindas e apresentação do programa.</p></div>
-      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
-    </a>
-  </div>
+
 
   <!-- PANEL: DISPONIBILIDADE -->
-  <div class="dash-panel" id="panel-disponibilidade">
-    <div class="panel-header"><h2 class="panel-title">Disponibilidade para Remanejo</h2><p class="panel-desc">Informe seus horários disponíveis para reagendamento de aulas.</p></div>
-    <a href="https://calendar.app.google/9s8vRTnw3YE6p5fR9" target="_blank" rel="noopener" class="panel-link-card">
-      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-      <div class="panel-link-body"><p class="panel-link-label">Agenda</p><p class="panel-link-title">Disponibilidade para Remanejo</p><p class="panel-link-desc">Selecione os horários em que está disponível para reagendar.</p></div>
-      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
-    </a>
-  </div>
+
 
   <!-- PANEL: GOOGLE DOCS -->
-  <div class="dash-panel" id="panel-gdocs">
-    <div class="panel-header"><h2 class="panel-title">Google Docs</h2><p class="panel-desc">Acesse seu documento pessoal do programa.</p></div>
-    <a id="panel-gdocs-link" href="#" target="_blank" rel="noopener" class="panel-link-card">
-      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-      <div class="panel-link-body"><p class="panel-link-label">Seus Documentos</p><p class="panel-link-title">Meu Google Docs</p><p class="panel-link-desc">Anotações de aula, vocabulário e registros do seu progresso.</p></div>
-      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
-    </a>
-  </div>
+
 
   <!-- PANEL: GOOGLE DRIVE -->
-  <div class="dash-panel" id="panel-gdrive">
-    <div class="panel-header"><h2 class="panel-title">Google Drive</h2><p class="panel-desc">Sua pasta pessoal com todos os materiais do programa.</p></div>
-    <a id="panel-gdrive-link" href="#" target="_blank" rel="noopener" class="panel-link-card">
-      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
-      <div class="panel-link-body"><p class="panel-link-label">Seus Arquivos</p><p class="panel-link-title">Google Drive</p><p class="panel-link-desc">Materiais, atividades e recursos enviados pela sua mentora.</p></div>
-      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
-    </a>
-  </div>
+
 
   <!-- PANEL: HOMEWORK -->
-  <div class="dash-panel" id="panel-homework">
-    <div class="panel-header"><h2 class="panel-title">Envio de Atividades</h2><p class="panel-desc">Submita as respostas das suas tarefas e atividades.</p></div>
-    <a href="https://institutomdtalk.github.io/homework/" target="_blank" rel="noopener" class="panel-link-card">
-      <div class="panel-link-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-      <div class="panel-link-body"><p class="panel-link-label">Tarefas</p><p class="panel-link-title">Envio de Atividades</p><p class="panel-link-desc">Submita aqui as respostas das suas tarefas e atividades do programa.</p></div>
-      <div class="panel-link-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></div>
-    </a>
-  </div>
+
 
   <!-- PANEL: CALENDÁRIO -->
-  <div class="dash-panel" id="panel-calendario">
-    <div class="panel-header"><h2 class="panel-title">Meu Calendário de Aulas</h2><p class="panel-desc">Histórico completo de presenças e faltas.</p></div>
-    <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm)">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-        <button id="cal-btn-prev2" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8249;</button>
-        <span id="cal-month-label2" style="font-family:var(--serif);font-size:1.15rem;font-weight:500;color:var(--navy);min-width:140px;text-align:center"></span>
-        <button id="cal-btn-next2" style="background:none;border:1px solid var(--border);border-radius:var(--radius);width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center">&#8250;</button>
-      </div>
-      <div id="cal-grid2" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px"></div>
-    </div>
-  </div>
+
 
 </div><!-- end panels-container -->
 
@@ -7685,123 +7390,7 @@ window.addEventListener('load', function(){
 
 
 <!-- ══ PAINEL AVALIE-SE ══ -->
-<div class="nb-panel prog-page" id="panel-quiz">
-<style>
-#panel-quiz{font-family:'Raleway',sans-serif}
-.qz-header{margin-bottom:36px}
-.qz-header h2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--navy);margin-bottom:4px}
-.qz-header p{font-size:12px;color:var(--text-muted);letter-spacing:.3px}
-/* Setup */
-.qz-section-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px}
-.qz-levels{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap}
-.qz-lvl{padding:9px 24px;border-radius:20px;border:1.5px solid var(--border);background:none;cursor:pointer;font-family:'Raleway',sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--text-muted);transition:all .2s}
-.qz-lvl:hover{border-color:var(--primary);color:var(--primary)}
-.qz-lvl.active-easy{background:rgba(74,222,128,.12);border-color:#4ade80;color:#16a34a}
-.qz-lvl.active-moderate{background:rgba(196,164,90,.12);border-color:var(--primary);color:#b45309}
-.qz-lvl.active-hard{background:rgba(248,113,113,.12);border-color:#f87171;color:#dc2626}
-.qz-select{width:100%;max-width:360px;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Raleway',sans-serif;font-size:13px;color:var(--navy);background:#fff;margin-bottom:28px;cursor:pointer}
-.qz-start{padding:12px 36px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-family:'Raleway',sans-serif;font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:opacity .2s;opacity:.4}
-.qz-start.ready{opacity:1}
-/* Loading */
-#qz-loading{display:none;flex-direction:column;align-items:center;justify-content:center;padding:80px 0;gap:18px}
-.qz-spinner{width:36px;height:36px;border:2.5px solid rgba(196,164,90,.2);border-top-color:var(--primary);border-radius:50%;animation:qzspin 1s linear infinite}
-@keyframes qzspin{to{transform:rotate(360deg)}}
-#qz-loading p{font-size:12px;color:var(--text-muted);letter-spacing:.18em;text-transform:uppercase}
-/* Game */
-#qz-game{display:none}
-.qz-progress-bar{height:4px;background:var(--border);border-radius:2px;margin-bottom:24px;overflow:hidden}
-.qz-progress-fill{height:100%;background:var(--primary);border-radius:2px;transition:width .4s ease}
-.qz-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
-.qz-qnum{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)}
-.qz-score{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--navy)}
-.qz-question{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:400;color:var(--navy);line-height:1.55;margin-bottom:28px;min-height:60px}
-.qz-opts{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
-.qz-opt{display:flex;align-items:center;gap:12px;padding:13px 16px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all .2s;background:#fff}
-.qz-opt:hover:not(.qz-opt-locked){border-color:var(--primary);background:rgba(196,164,90,.06)}
-.qz-opt.selected{border-color:var(--primary);background:rgba(196,164,90,.1)}
-.qz-opt.correct{border-color:#16a34a;background:rgba(74,222,128,.1)!important}
-.qz-opt.wrong{border-color:#dc2626;background:rgba(248,113,113,.1)!important}
-.qz-opt-locked{cursor:default}
-.qz-opt-letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text-muted);flex-shrink:0;transition:all .2s}
-.qz-opt.selected .qz-opt-letter{background:var(--primary);color:#fff}
-.qz-opt.correct .qz-opt-letter{background:#16a34a;color:#fff}
-.qz-opt.wrong .qz-opt-letter{background:#dc2626;color:#fff}
-.qz-opt-text{font-size:13px;color:var(--navy);flex:1}
-.qz-opt-icon{font-size:16px;margin-left:auto;opacity:0;transition:opacity .2s}
-.qz-opt.correct .qz-opt-icon,.qz-opt.wrong .qz-opt-icon{opacity:1}
-.qz-actions{display:flex;gap:12px}
-.qz-btn{padding:11px 28px;border-radius:8px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .2s;border:1.5px solid transparent}
-.qz-btn-confirm{background:var(--primary);color:#fff;border-color:var(--primary);opacity:.4}
-.qz-btn-confirm.ready{opacity:1}
-.qz-btn-next{background:none;border-color:var(--border);color:var(--navy);display:none}
-.qz-btn-next:hover{border-color:var(--primary);color:var(--primary)}
-/* Results */
-#qz-results{display:none;text-align:center;padding:40px 0}
-.qz-score-ring{width:120px;height:120px;border-radius:50%;border:3px solid var(--primary);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 24px}
-.qz-score-big{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:500;color:var(--navy);line-height:1}
-.qz-score-denom{font-size:11px;color:var(--text-muted);letter-spacing:.1em}
-.qz-result-msg{font-size:15px;color:var(--navy);margin-bottom:8px;font-weight:600}
-.qz-result-sub{font-size:12px;color:var(--text-muted);margin-bottom:32px}
-.qz-btn-retry{padding:12px 36px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-family:'Raleway',sans-serif;font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:pointer}
-</style>
-<div class="qz-header">
-  <h2>Avalie-<em style="font-style:italic;color:var(--primary)">se</em></h2>
-  <p>Teste sua gramática em contexto médico — 10 questões por rodada</p>
-</div>
-<!-- Setup -->
-<div id="qz-setup">
-  <div class="qz-section-label">Nível de dificuldade</div>
-  <div class="qz-levels">
-    <button class="qz-lvl" data-level="easy" onclick="qzSetLevel('easy',this)">Easy</button>
-    <button class="qz-lvl" data-level="moderate" onclick="qzSetLevel('moderate',this)">Moderate</button>
-    <button class="qz-lvl" data-level="hard" onclick="qzSetLevel('hard',this)">Hard</button>
-  </div>
-  <div class="qz-section-label">Área médica</div>
-  <select class="qz-select" id="qz-specialty">
-    <option value="general medical English">Geral</option>
-    <option value="cardiology">Cardiologia</option>
-    <option value="oncology">Oncologia</option>
-    <option value="neurology">Neurologia</option>
-    <option value="orthopedics">Ortopedia</option>
-    <option value="pediatrics">Pediatria</option>
-    <option value="gynecology and obstetrics">Ginecologia e Obstetrícia</option>
-    <option value="surgery">Cirurgia</option>
-    <option value="emergency medicine">Emergência</option>
-    <option value="intensive care (ICU)">UTI / Intensivismo</option>
-    <option value="medical congresses and presentations">Congressos e Apresentações</option>
-  </select>
-  <button class="qz-start" id="qz-start-btn" onclick="qzStart()">Iniciar Quiz</button>
-</div>
-<!-- Loading -->
-<div id="qz-loading">
-  <div class="qz-spinner"></div>
-  <p>Gerando quiz...</p>
-</div>
-<!-- Game -->
-<div id="qz-game">
-  <div class="qz-progress-bar"><div class="qz-progress-fill" id="qz-prog"></div></div>
-  <div class="qz-meta">
-    <span class="qz-qnum" id="qz-qnum">Questão 1 de 10</span>
-    <span class="qz-score" id="qz-scoreboard">✓ 0</span>
-  </div>
-  <div class="qz-question" id="qz-question"></div>
-  <div class="qz-opts" id="qz-opts"></div>
-  <div class="qz-actions">
-    <button class="qz-btn qz-btn-confirm" id="qz-confirm" onclick="qzConfirm()">Confirmar</button>
-    <button class="qz-btn qz-btn-next" id="qz-next" onclick="qzNext()">Próxima →</button>
-  </div>
-</div>
-<!-- Results -->
-<div id="qz-results">
-  <div class="qz-score-ring">
-    <div class="qz-score-big" id="qz-final-score">0</div>
-    <div class="qz-score-denom">de 10</div>
-  </div>
-  <div class="qz-result-msg" id="qz-result-msg"></div>
-  <div class="qz-result-sub" id="qz-result-sub"></div>
-  <button class="qz-btn-retry" onclick="qzRetry()">Nova Rodada</button>
-</div>
-</div>
+
 
 <script>
 
@@ -7907,7 +7496,6 @@ function uploadAvatarFoto(input){
   reader.readAsDataURL(input.files[0]);
   input.value="";
 }
-
 
 function openHome(){
   var slide=document.getElementById("heroSlide");
