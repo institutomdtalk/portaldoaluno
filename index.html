@@ -4919,12 +4919,20 @@ function loadThumbsBatch(files, batchSize, delay) {
       function(d) {
         if (d.success && d.thumb && d.thumb.length > 100) {
           var ph = document.getElementById('ph_' + d.id);
+          if(!window._thumbCache) window._thumbCache={};
+          window._thumbCache[d.id]=d.thumb;
+          // Guardar também no objecto do ficheiro
+          var allFiles=window._allDriveFiles||window._cachedDriveFiles||[];
+          for(var _fi=0;_fi<allFiles.length;_fi++){if(allFiles[_fi].id===d.id){allFiles[_fi]._thumb=d.thumb;break;}}
           if (ph) {
             var img = document.createElement('img');
             img.className = 'drive-card-thumb';
             img.src = d.thumb;
             ph.parentNode.replaceChild(img, ph);
           }
+          // Actualizar apostila se estiver aberto
+          var apImg=document.getElementById("ap_"+d.id);
+          if(apImg) apImg.src=d.thumb;
         }
         next(); // immediately fetch next
       },
@@ -7731,24 +7739,40 @@ function apostilaNav(dir){
 function _apostilaCardHTML(f){
   var info=getMimeIcon(f.mimeType||"");
   var color=info[0],label=info[1],svgPaths=info[2];
-  // Tentar thumbnail via lh3 (converte URL do Drive)
-  var thumbUrl=driveImgUrl(f.url||f.link||"");
-  var thumb;
-  if(thumbUrl){
-    thumb='<img src="'+thumbUrl+'" alt="" '
-      +'style="width:100%;height:100%;object-fit:cover;display:block" '
-      +'id="ap_'+f.id+'" '
-      +'onerror="this.style.display=\'none\';">';
-  } else {
-    thumb='<div class="apostila-thumb-icon">'
-      +'<svg viewBox="0 0 24 24" fill="none" stroke="'+color+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">'+svgPaths+'</svg>'
-      +'<span>'+label+'</span></div>';
+  var iconHtml='<div class="apostila-thumb-icon">'
+    +'<svg viewBox="0 0 24 24" fill="none" stroke="'+color+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">'+svgPaths+'</svg>'
+    +'<span>'+label+'</span></div>';
+  // Usar thumb já carregada (no obj ou na cache global)
+  var thumb=f._thumb||(window._thumbCache&&window._thumbCache[f.id]);
+  var thumbInner=thumb
+    ? '<img src="'+thumb+'" id="ap_'+f.id+'" style="width:100%;height:100%;object-fit:cover;display:block;animation:apostilaFadeIn .4s ease">'
+    : iconHtml+'<img id="ap_'+f.id+'" style="display:none">';
+  // Se não há thumb, pedir ao backend
+  if(!thumb&&f.id){
+    setTimeout(function(){
+      if(f._thumb)return;
+      callScript("action=get_thumbs&ids="+encodeURIComponent(f.id),
+        function(d){
+          if(!d.success||!d.thumb||d.thumb.length<100)return;
+          if(!window._thumbCache)window._thumbCache={};
+          window._thumbCache[d.id]=d.thumb;
+          f._thumb=d.thumb;
+          var img=document.getElementById("ap_"+d.id);
+          if(img){
+            img.src=d.thumb;
+            img.style.cssText="width:100%;height:100%;object-fit:cover;display:block;animation:apostilaFadeIn .5s ease";
+            var prev=img.previousElementSibling;
+            if(prev&&prev.classList.contains("apostila-thumb-icon"))prev.style.display="none";
+          }
+        },function(){}
+      );
+    },80);
   }
-  return '<div class="apostila-thumb">'+thumb+'</div>'
+  return '<div class="apostila-thumb">'+thumbInner+'</div>'
     +'<div class="apostila-info">'
     +'<div class="apostila-type">'+label+'</div>'
     +'<div class="apostila-name">'+( f.nome||f.name||"Arquivo")+'</div>'
-    +'<a class="apostila-open" href="'+( f.url||f.link||"#")+'" target="_blank">'
+    +'<a class="apostila-open" href="'+( f.url||f.link||"#")+'" target="_blank" onclick="event.stopPropagation()">'
     +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11" stroke-linecap="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
     +" Abrir</a></div>";
 }
