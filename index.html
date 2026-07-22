@@ -60,7 +60,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 #page-login{display:none;flex-direction:column;background:var(--navy-deep);position:relative;overflow:hidden}
 #page-login.active{display:flex;min-height:100vh}
 #page-dashboard{display:none;height:0;overflow:hidden;background:var(--white)}
-#page-dashboard.active{display:block;height:auto;overflow:visible;background:var(--white)}
+#page-dashboard.active{display:flex;flex-direction:column;min-height:100vh;overflow:visible;background:var(--white)}
 
 /* ═══════════════════════════════════════
    LOGIN — CINEMATIC HERO
@@ -306,6 +306,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   background:var(--navy-deep);
   position:relative;
   overflow:hidden;
+  flex:1;
+  min-height:100vh;
 }
 
 .header-bg-img{
@@ -885,8 +887,8 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 ═══════════════════════════════════════ */
 
 /* ── SIDEBAR LATERAL ────────────────────────────────────────────── */
-#app-layout{display:flex;align-items:stretch;min-height:100%;}
-#app-main-col{flex:1;min-width:0;display:flex;flex-direction:column;}
+#app-layout{display:flex;align-items:stretch;min-height:100vh;}
+#app-main-col{flex:1;min-width:0;display:flex;flex-direction:column;min-height:100vh;}
 .side-nav{
   width:220px;flex-shrink:0;
   background:#07111E;
@@ -3056,7 +3058,7 @@ function renderDashboard(a) {
   if (a.link_drive && a.link_drive.trim()) {
     callScript(
       'action=get_drive_files&login=' + encodeURIComponent(a.login),
-      function(d) { if (d.success) renderDriveFilesCard(d.files || []); },
+      function(d) { if (d.success) { window._cachedDriveFiles=d.files||[]; renderDriveFilesCard(d.files || []); } },
       function()  { var s = document.getElementById('drive-files-status'); if(s) s.textContent = 'Não foi possível carregar os arquivos.'; }
     );
   } else {
@@ -7543,14 +7545,24 @@ function openMaterial(){
   slide.style.background="#F0EDE8";
   body.style.padding="";
   body.innerHTML=dash.innerHTML;
-  // mostrar secção "minha" e ocultar as restantes nos elementos CLONADOS
-  var keys=["minha","apoio","curadoria","arquivados"];
-  keys.forEach(function(k){
+  // mostrar secção "minha" nos elementos clonados
+  ["minha","apoio","curadoria","arquivados"].forEach(function(k){
     var sec=body.querySelector("#drive-section-"+k);
     var btn=body.querySelector("#drive-tab-"+k);
     if(sec) sec.style.display=(k==="minha")?"":"none";
     if(btn) btn.style.borderBottomColor=(k==="minha")?"var(--gold)":"transparent";
   });
+  // Se os ficheiros ainda não carregaram no clone, usar cache
+  if(window._cachedDriveFiles && window._cachedDriveFiles.length){
+    var firstRow=body.querySelector("#drive-first-row");
+    var statusEl=body.querySelector("#drive-files-status");
+    if(statusEl && statusEl.textContent.indexOf("Carregando")>-1){
+      // Repopular via innerHTML do original (já tem os files)
+      var origSection=document.querySelector("#drive-section-minha");
+      var cloneSection=body.querySelector("#drive-section-minha");
+      if(origSection && cloneSection) cloneSection.innerHTML=origSection.innerHTML;
+    }
+  }
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-conteudo");if(si)si.classList.add("active");
   requestAnimationFrame(function(){slide.classList.add("open");body.scrollTop=0;});
