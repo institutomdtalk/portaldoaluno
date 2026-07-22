@@ -984,96 +984,34 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 .side-toggle.collapsed svg{transform:rotate(180deg)}
 /* ─────────────────────────────────────────────────────────────────── */
 
-.nb-tabs-bar{
-  background:var(--off-white);
-  box-shadow:0 2px 8px rgba(0,0,0,0.06);
-  display:flex;flex-direction:column;
-  position:sticky;top:0;z-index:200;
-}
+
 .nb-tabs-row{
   display:flex;align-items:center;gap:2px;
   padding:4px 28px 0;overflow-x:auto;
   scrollbar-width:none;
 }
 .nb-tabs-row::-webkit-scrollbar{display:none}
-.nb-row-top{
-  background:rgba(11,29,58,.03);
-  border-bottom:1px solid var(--border);
-  max-height:0;overflow:hidden;
-  transition:max-height .3s ease, opacity .3s ease;
-  opacity:0;padding-top:0;padding-bottom:0;
-}
-.nb-row-top.expanded{
-  max-height:60px;opacity:1;
-  padding-top:4px;
-}
-.nb-row-toggle{
-  display:flex;align-items:center;justify-content:center;
-  padding:5px 36px;
-  background:var(--off-white);
-  border-bottom:1px solid var(--border);
-  cursor:pointer;
-}
-.nb-toggle-pill{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:11px 22px 12px;
-  border-radius:8px 8px 0 0;
-  background:none;
-  border:1px solid transparent;border-bottom:none;
-  transition:all .2s;
-}
-.nb-row-toggle:hover .nb-toggle-pill{
-  color:var(--navy);background:rgba(255,255,255,.6);
-}
-.nb-toggle-pill .tp-icon{
-  width:13px;height:13px;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;opacity:.45;
-}
-.nb-toggle-pill .tp-icon svg{
-  width:13px;height:13px;stroke:currentColor;stroke-width:1.8;
-  fill:none;stroke-linecap:round;stroke-linejoin:round;
-}
-.nb-toggle-pill .tp-label{
-  font-family:Raleway,sans-serif;font-size:12px;font-weight:500;
-  letter-spacing:.3px;color:var(--text-muted);white-space:nowrap;
-}
-.nb-toggle-pill .tp-chevron{
-  width:12px;height:12px;stroke:var(--text-muted);stroke-width:2;
-  fill:none;stroke-linecap:round;stroke-linejoin:round;
-  transition:transform .3s;opacity:.6;
-}
-.nb-row-toggle.expanded .tp-chevron{transform:rotate(180deg)}
-.nb-row-toggle.expanded .nb-toggle-pill{
-  color:var(--navy);background:var(--white);
-  border-color:var(--border);border-bottom-color:var(--white);
-  box-shadow:-2px -2px 6px rgba(0,0,0,.06),2px -2px 6px rgba(0,0,0,.06);
-}
+
+
+
+
+
+
+
+
+
+
+
 .nb-row-bottom{
   background:var(--off-white);
   border-bottom:1px solid var(--border);
 }
-.nb-row-top .nb-tab{
-  padding:11px 22px 12px;font-size:12px;
-}
-.nb-tabs-bar::-webkit-scrollbar{display:none}
-.nb-tab{
-  display:flex;align-items:center;gap:8px;
-  padding:11px 22px 12px;font-family:var(--sans);font-size:12px;
-  font-weight:500;letter-spacing:0.3px;color:var(--text-muted);
-  border:1px solid transparent;border-bottom:none;
-  background:none;cursor:pointer;border-radius:8px 8px 0 0;
-  margin-bottom:-1px;transition:all 0.2s ease;white-space:nowrap;
-}
-.nb-tab svg{width:13px;height:13px;flex-shrink:0;opacity:0.45;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:opacity 0.2s}
-.nb-tab:hover{color:var(--navy);background:rgba(255,255,255,0.6)}
-.nb-tab.active{
-  color:var(--navy);background:var(--white);
-  border-color:var(--border);border-bottom-color:var(--white);
-  font-weight:600;
-  box-shadow:-2px -2px 6px rgba(0,0,0,0.06),2px -2px 6px rgba(0,0,0,0.06);
-}
-.nb-tab.active svg{opacity:1}
+
+
+
+
+
+
 /* Notebook panels */
 .nb-panel{display:none;padding:0;max-width:none;margin:0}
 .nb-panel.active{display:block}
@@ -1952,7 +1890,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   .mentora-pin-cancel-btn{background:none;border:none;color:#bbb;font-family:var(--sans);font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:10px 16px;transition:color .2s;margin-top:6px;display:block;width:100%}
   .mentora-pin-cancel-btn:hover{color:var(--navy)}
   
-#nb-tabs-bar{display:none}
+
 .hero-slide{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;transform:translateY(110%);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;pointer-events:none;background:#F0EDE8}
 .hero-slide.open{transform:translateY(0);opacity:1;pointer-events:all}
 .hero-slide.img-bg{background-size:cover;background-position:center}
@@ -2161,11 +2099,6 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   </header>
 
   <!-- ══ NOTEBOOK TAB BAR ══ -->
-  <div class="nb-tabs-bar" id="nb-tabs-bar">
-    <!-- Toggle linha pessoal -->
-    <div class="nb-row-toggle" id="nb-row-toggle" onclick="toggleTopRow()">
-      <div class="nb-toggle-pill">
-        <div class="tp-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
         <span class="tp-label">Perfil &amp; Progresso</span>
         <svg class="tp-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
