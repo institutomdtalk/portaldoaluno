@@ -7556,34 +7556,34 @@ function openHome(){
 }
 
 
+var _dashOrigParent=null;
 function openMaterial(){
   var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
   var dash=document.getElementById("main-dashboard");
   if(!s||!b||!dash) return;
+  // Guardar o pai original se ainda não foi guardado
+  if(!_dashOrigParent) _dashOrigParent=dash.parentElement;
+  // Preparar slide
   b.innerHTML=""; b.style.cssText="overflow-y:auto";
   s.removeAttribute("style"); s.classList.remove("img-bg"); s.style.background="#F0EDE8";
-  // Clonar dentro de wrapper com grid
-  var w=document.createElement("div");
-  w.className="dashboard"; w.style.cssText="display:grid;width:100%";
-  w.innerHTML=dash.innerHTML;
-  b.appendChild(w);
-  // Tabs
-  ["minha","apoio","curadoria","arquivados"].forEach(function(k){
-    var sec=w.querySelector("#drive-section-"+k);
-    var btn=w.querySelector("#drive-tab-"+k);
-    if(sec) sec.style.display=(k==="minha")?"":"none";
-    if(btn) btn.style.borderBottomColor=(k==="minha")?"var(--gold)":"transparent";
-  });
-  // Disparar render para que o auto-sync copie para o clone
-  var files=window._allDriveFiles||window._cachedDriveFiles;
-  if(files&&files.length){
-    renderDriveFilesCard(files);
-  } else if(window.currentStudent){
-    callScript("action=get_drive_files&login="+encodeURIComponent(currentStudent.login),
-      function(d){if(d.success){window._cachedDriveFiles=d.files||[];renderDriveFilesCard(d.files||[]);}},
-      function(){}
-    );
+  // Mover o elemento REAL para o slide
+  b.appendChild(dash);
+  dash.style.removeProperty("display");
+  dash.style.setProperty("display","grid","important");
+  // Popular ficheiros se necessário
+  var fr=document.getElementById("drive-first-row");
+  if(fr && fr.children.length===0){
+    var files=window._allDriveFiles||window._cachedDriveFiles;
+    if(files&&files.length){
+      renderDriveFilesCard(files);
+    } else if(window.currentStudent){
+      callScript("action=get_drive_files&login="+encodeURIComponent(currentStudent.login),
+        function(d){if(d.success){window._cachedDriveFiles=d.files||[];renderDriveFilesCard(d.files||[]);}},
+        function(){}
+      );
+    }
   }
+  switchDriveTab("minha");
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-conteudo");if(si)si.classList.add("active");
   s.classList.add("open"); b.scrollTop=0;
@@ -7605,7 +7605,13 @@ function openGoogleDoc(){
 }
 
 function _restoreDash(){
-  // main-dashboard nunca é movido agora — nada a restaurar
+  var dash=document.getElementById("main-dashboard");
+  if(!dash) return;
+  if(dash.parentElement && dash.parentElement.id==="heroSlideBody"){
+    dash.style.setProperty("display","none","important");
+    var parent=_dashOrigParent||document.getElementById("app-main-col");
+    if(parent) parent.appendChild(dash);
+  }
 }
 function _slideOpen(s,b,bg){
   _restoreDash();
