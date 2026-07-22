@@ -8004,7 +8004,8 @@ function openHome(){
     body.appendChild(hiClone);
   }
   if(panelClone){
-    panelClone.style.cssText="flex:1;padding:28px 36px 36px;overflow-y:auto";
+    panelClone.classList.remove("nb-panel","notas-page");
+    panelClone.style.cssText="display:block;flex:1;padding:28px 36px 36px;overflow-y:auto";
     body.appendChild(panelClone);
   }
   // Marcar ativo
