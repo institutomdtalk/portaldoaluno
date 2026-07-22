@@ -1929,29 +1929,38 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .maint-btn{font-family:Raleway,sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:#0B1D3A;border:none;border-radius:8px;padding:13px 32px;cursor:pointer}
 
 /* ── MODO APOSTILA ─────────────────────────────────────────── */
-.apostila-overlay{position:fixed;inset:0;z-index:200;background:rgba(5,13,26,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s ease;}
+.apostila-overlay{position:fixed;inset:0;z-index:200;background:rgba(5,13,26,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s ease;overflow:hidden;}
 .apostila-overlay.open{opacity:1;pointer-events:all;}
-.apostila-close{position:absolute;top:20px;right:24px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.12);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;transition:background .2s;z-index:10;}
+.apostila-close{position:absolute;top:20px;right:24px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.12);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;transition:background .2s;z-index:10;}
 .apostila-close:hover{background:rgba(255,255,255,.25)}
-.apostila-counter{font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:24px;}
-.apostila-track{display:flex;align-items:center;gap:24px;width:100%;max-width:700px;padding:0 20px;box-sizing:border-box;}
-.apostila-arrow{width:44px;height:44px;border-radius:50%;flex-shrink:0;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;user-select:none;}
+.apostila-close svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;}
+.apostila-counter{font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:24px;flex-shrink:0;}
+.apostila-stage{position:relative;width:100%;height:500px;perspective:1400px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.apostila-item{position:absolute;width:230px;cursor:pointer;transition:all .5s cubic-bezier(.16,1,.3,1);transform-origin:center center;border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+.apostila-item.pos-center{transform:translateX(0) scale(1) rotateY(0deg);z-index:10;box-shadow:0 32px 80px rgba(0,0,0,.7);}
+.apostila-item.pos-left1{transform:translateX(-270px) scale(0.78) rotateY(30deg);z-index:6;opacity:.55;filter:brightness(.65);}
+.apostila-item.pos-left2{transform:translateX(-430px) scale(0.6) rotateY(40deg);z-index:4;opacity:.22;filter:brightness(.4);}
+.apostila-item.pos-right1{transform:translateX(270px) scale(0.78) rotateY(-30deg);z-index:6;opacity:.55;filter:brightness(.65);}
+.apostila-item.pos-right2{transform:translateX(430px) scale(0.6) rotateY(-40deg);z-index:4;opacity:.22;filter:brightness(.4);}
+.apostila-item.pos-hide-l{transform:translateX(-640px) scale(0.4) rotateY(50deg);z-index:1;opacity:0;pointer-events:none;}
+.apostila-item.pos-hide-r{transform:translateX(640px) scale(0.4) rotateY(-50deg);z-index:1;opacity:0;pointer-events:none;}
+.apostila-thumb{width:100%;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;background:#0d1b2e;overflow:hidden;}
+.apostila-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.apostila-thumb-icon{display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px;}
+.apostila-thumb-icon svg{width:64px;height:64px;opacity:.9;}
+.apostila-thumb-icon span{font-size:13px;font-weight:800;letter-spacing:.14em;color:rgba(255,255,255,.45);}
+.apostila-info{padding:12px 14px 14px;background:#fff;}
+.apostila-type{font-family:Raleway,sans-serif;font-size:8px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#C4A45A;margin-bottom:4px;}
+.apostila-name{font-family:"Cormorant Garamond",serif;font-size:.95rem;font-weight:500;color:#0B1D3A;line-height:1.3;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.apostila-open{display:inline-flex;align-items:center;gap:5px;font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:#0B1D3A;border:none;border-radius:6px;padding:7px 14px;cursor:pointer;text-decoration:none;}
+.apostila-open:hover{background:#163158}
+.apostila-dots{display:flex;gap:5px;margin-top:20px;flex-wrap:wrap;justify-content:center;max-width:320px;flex-shrink:0;}
+.apostila-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .2s,transform .2s;cursor:pointer;}
+.apostila-dot.active{background:#C4A45A;transform:scale(1.5);}
+.apostila-arrows{display:flex;gap:16px;margin-top:16px;flex-shrink:0;}
+.apostila-arrow{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;user-select:none;}
 .apostila-arrow:hover{background:rgba(196,164,90,.3);border-color:rgba(196,164,90,.5)}
 .apostila-arrow.disabled{opacity:.25;pointer-events:none}
-.apostila-card{flex:1;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.5);display:flex;flex-direction:column;min-height:420px;max-height:70vh;transition:transform .3s cubic-bezier(.16,1,.3,1);}
-.apostila-thumb{width:100%;height:220px;display:flex;align-items:center;justify-content:center;background:#f0f0f0;flex-shrink:0;overflow:hidden;}
-.apostila-thumb img{width:100%;height:100%;object-fit:cover;}
-.apostila-thumb-icon{display:flex;flex-direction:column;align-items:center;gap:10px;}
-.apostila-thumb-icon svg{width:56px;height:56px;}
-.apostila-thumb-icon span{font-size:11px;font-weight:800;letter-spacing:.12em;color:rgba(0,0,0,.3);}
-.apostila-info{padding:20px 24px 24px;flex:1;overflow-y:auto;}
-.apostila-type{font-family:Raleway,sans-serif;font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--gold,#C4A45A);margin-bottom:8px;}
-.apostila-name{font-family:"Cormorant Garamond",serif;font-size:1.4rem;font-weight:400;color:#0B1D3A;line-height:1.3;margin-bottom:16px;}
-.apostila-open{display:inline-flex;align-items:center;gap:6px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:#0B1D3A;border:none;border-radius:8px;padding:10px 20px;cursor:pointer;text-decoration:none;transition:background .2s;}
-.apostila-open:hover{background:#163158}
-.apostila-dots{display:flex;gap:6px;margin-top:20px;}
-.apostila-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .2s;cursor:pointer;}
-.apostila-dot.active{background:#C4A45A;}
 .apostila-btn{position:absolute;top:18px;right:70px;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);border-radius:8px;padding:8px 14px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s;z-index:10;}
 .apostila-btn:hover{background:rgba(196,164,90,.2);border-color:rgba(196,164,90,.4)}
 /* ─────────────────────────────────────────────────────────── */
@@ -7682,93 +7691,115 @@ function openGoogleDoc(){
 }
 
 // ── MODO APOSTILA ──────────────────────────────────────────────────
-var _apostilaFiles = [];
-var _apostilaIdx   = 0;
-var _apostilaTouchX = null;
+var _apostilaFiles=[], _apostilaIdx=0, _apostilaTouchX=null;
 
 function abrirApostila(){
-  var files = window._allDriveFiles || window._cachedDriveFiles || [];
-  // Filtrar só minha pasta (não apoio, curadoria, arquivados)
-  _apostilaFiles = files.filter(function(f){
-    return !f.tag || f.tag === '' || f.tag === 'minha';
-  });
-  if(!_apostilaFiles.length){ showToast('Nenhum arquivo encontrado.','warning'); return; }
-  _apostilaIdx = 0;
+  var files=window._allDriveFiles||window._cachedDriveFiles||[];
+  _apostilaFiles=files.filter(function(f){return !f.tag||f.tag===''||f.tag==='minha';});
+  if(!_apostilaFiles.length){showToast('Nenhum arquivo encontrado.','warning');return;}
+  _apostilaIdx=0;
   _apostilaRender();
   document.getElementById('apostilaOverlay').classList.add('open');
-  document.addEventListener('keydown', _apostilaKey);
+  document.addEventListener('keydown',_apostilaKey);
+  var stage=document.getElementById('apostilaStage');
+  stage.ontouchstart=function(e){_apostilaTouchX=e.touches[0].clientX;};
+  stage.ontouchend=function(e){
+    if(_apostilaTouchX===null)return;
+    var dx=e.changedTouches[0].clientX-_apostilaTouchX;
+    if(Math.abs(dx)>40)apostilaNav(dx<0?1:-1);
+    _apostilaTouchX=null;
+  };
 }
 
 function fecharApostila(){
   document.getElementById('apostilaOverlay').classList.remove('open');
-  document.removeEventListener('keydown', _apostilaKey);
+  document.removeEventListener('keydown',_apostilaKey);
 }
 
 function _apostilaKey(e){
-  if(e.key === 'ArrowLeft')  apostilaNav(-1);
-  if(e.key === 'ArrowRight') apostilaNav(1);
-  if(e.key === 'Escape')     fecharApostila();
+  if(e.key==='ArrowLeft') apostilaNav(-1);
+  if(e.key==='ArrowRight') apostilaNav(1);
+  if(e.key==='Escape') fecharApostila();
 }
 
 function apostilaNav(dir){
-  _apostilaIdx = Math.max(0, Math.min(_apostilaFiles.length - 1, _apostilaIdx + dir));
+  _apostilaIdx=Math.max(0,Math.min(_apostilaFiles.length-1,_apostilaIdx+dir));
   _apostilaRender();
 }
 
-function _apostilaRender(){
-  var f    = _apostilaFiles[_apostilaIdx];
-  var n    = _apostilaFiles.length;
-  var card = document.getElementById('apostilaCard');
-  var ctr  = document.getElementById('apostilaCounter');
-  var dots = document.getElementById('apostilaDots');
-  var al   = document.getElementById('apostilaArrowL');
-  var ar   = document.getElementById('apostilaArrowR');
-
-  ctr.textContent = (_apostilaIdx + 1) + ' / ' + n;
-  al.classList.toggle('disabled', _apostilaIdx === 0);
-  ar.classList.toggle('disabled', _apostilaIdx === n - 1);
-
-  // Dots
-  dots.innerHTML = '';
-  _apostilaFiles.forEach(function(_, i){
-    var d = document.createElement('div');
-    d.className = 'apostila-dot' + (i === _apostilaIdx ? ' active' : '');
-    d.onclick = (function(idx){ return function(){ _apostilaIdx=idx; _apostilaRender(); }; })(i);
-    dots.appendChild(d);
-  });
-
-  // Tipo e ícone
-  var info  = getMimeIcon(f.mimeType||'');
-  var color = info[0], label = info[1], svgPaths = info[2];
-  var thumb = '';
-  if(f.thumbnail){
-    thumb = '<img src="'+f.thumbnail+'" alt="'+f.nome+'" onerror="this.style.display=\'none\'">';
-  } else {
-    thumb = '<div class="apostila-thumb-icon">'
-      + '<svg viewBox="0 0 24 24" fill="none" stroke="'+color+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">'+svgPaths+'</svg>'
-      + '<span>'+label+'</span></div>';
-  }
-
-  card.innerHTML =
-    '<div class="apostila-thumb">'+thumb+'</div>'
+function _apostilaCardHTML(f){
+  var info=getMimeIcon(f.mimeType||'');
+  var color=info[0],label=info[1],svgPaths=info[2];
+  var thumb=f.thumbnail
+    ? '<img src="'+f.thumbnail+'" alt="" style="width:100%;height:100%;object-fit:cover;display:block">'
+    : '<div class="apostila-thumb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="'+color+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">'+svgPaths+'</svg><span>'+label+'</span></div>';
+  return '<div class="apostila-thumb">'+thumb+'</div>'
     +'<div class="apostila-info">'
     +'<div class="apostila-type">'+label+'</div>'
     +'<div class="apostila-name">'+(f.nome||f.name||'Arquivo')+'</div>'
     +'<a class="apostila-open" href="'+(f.url||f.link||'#')+'" target="_blank">'
-    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13" stroke-linecap="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
-    +' Abrir arquivo</a>'
-    +'</div>';
-
-  // Touch / swipe
-  card.ontouchstart = function(e){ _apostilaTouchX = e.touches[0].clientX; };
-  card.ontouchend   = function(e){
-    if(_apostilaTouchX===null) return;
-    var dx = e.changedTouches[0].clientX - _apostilaTouchX;
-    if(Math.abs(dx) > 40) apostilaNav(dx < 0 ? 1 : -1);
-    _apostilaTouchX = null;
-  };
+    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11" stroke-linecap="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
+    +' Abrir</a></div>';
 }
-// ───────────────────────────────────────────────────────────────────
+
+function _apostilaRender(){
+  var n=_apostilaFiles.length, ci=_apostilaIdx;
+  var stage=document.getElementById('apostilaStage');
+  var ctr=document.getElementById('apostilaCounter');
+  var dots=document.getElementById('apostilaDots');
+  var al=document.getElementById('apostilaArrowL');
+  var ar=document.getElementById('apostilaArrowR');
+  if(!stage) return;
+
+  ctr.textContent=(ci+1)+' / '+n;
+  al.classList.toggle('disabled',ci===0);
+  ar.classList.toggle('disabled',ci===n-1);
+
+  // Dots
+  dots.innerHTML='';
+  for(var di=0;di<n;di++){
+    var d=document.createElement('div');
+    d.className='apostila-dot'+(di===ci?' active':'');
+    (function(idx){d.onclick=function(){_apostilaIdx=idx;_apostilaRender();};})(di);
+    dots.appendChild(d);
+  }
+
+  // Coverflow: mostrar até 7 cards (-3 a +3 do centro)
+  var positions=['pos-hide-l','pos-left2','pos-left1','pos-center','pos-right1','pos-right2','pos-hide-r'];
+  var offsets=[-3,-2,-1,0,1,2,3];
+  var needed=Math.min(n,7);
+
+  // Criar/remover elementos conforme necessário
+  while(stage.children.length<needed){
+    var el=document.createElement('div');
+    el.className='apostila-item';
+    stage.appendChild(el);
+  }
+  while(stage.children.length>needed){
+    stage.removeChild(stage.lastChild);
+  }
+
+  var items=Array.from(stage.children);
+  for(var si=0;si<items.length;si++){
+    var item=items[si];
+    var fileIdx=ci+offsets[si];
+    if(fileIdx<0||fileIdx>=n){
+      item.className='apostila-item '+(offsets[si]<0?'pos-hide-l':'pos-hide-r');
+      item.style.pointerEvents='none';
+      continue;
+    }
+    item.className='apostila-item '+positions[si];
+    item.style.pointerEvents=fileIdx!==ci?'all':'none';
+    if(item.dataset.idx!==String(fileIdx)){
+      item.dataset.idx=String(fileIdx);
+      item.innerHTML=_apostilaCardHTML(_apostilaFiles[fileIdx]);
+    }
+    (function(idx,el){
+      el.onclick=function(){if(idx!==ci){_apostilaIdx=idx;_apostilaRender();}};
+    })(fileIdx,item);
+  }
+}
+// ───────────────────────────────────────────────────────────────────────────
 
 function _restoreDash(){
   var dash=document.getElementById("main-dashboard");
@@ -8023,14 +8054,15 @@ function qzRetry() {
 
 <!-- Modo Apostila -->
 <div class="apostila-overlay" id="apostilaOverlay">
-  <button class="apostila-close" onclick="fecharApostila()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <button class="apostila-close" onclick="fecharApostila()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   <div class="apostila-counter" id="apostilaCounter">1 / 1</div>
-  <div class="apostila-track">
+  <div class="apostila-stage" id="apostilaStage"></div>
+  <div class="apostila-dots" id="apostilaDots"></div>
+  <div class="apostila-arrows">
     <button class="apostila-arrow" id="apostilaArrowL" onclick="apostilaNav(-1)">&#8592;</button>
-    <div class="apostila-card" id="apostilaCard"></div>
     <button class="apostila-arrow" id="apostilaArrowR" onclick="apostilaNav(1)">&#8594;</button>
   </div>
-  <div class="apostila-dots" id="apostilaDots"></div>
+</div>
 </div>
 </body>
 </html>
