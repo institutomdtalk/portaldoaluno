@@ -7896,6 +7896,8 @@ function _slideOpen(s,b,bg){
   else{s.style.background="#F0EDE8";}
 }
 function openHeroSlide(t){
+  var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
+
   var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
   var p=document.getElementById("panel-"+t);
   if(!s||!b||!p) return;
@@ -7907,6 +7909,8 @@ function openHeroSlide(t){
   s.classList.add("open"); b.scrollTop=0;
 }
 function openHeroSlideImg(t){
+  var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
+
   var b2=document.getElementById("heroSlideBody");if(b2)b2.style.cssText="padding:40px 44px;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;width:100%";
   var img=HERO_IMGS[Math.floor(Math.random()*HERO_IMGS.length)];
   var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
@@ -7919,6 +7923,8 @@ function openHeroSlideImg(t){
   s.classList.add("open"); b.scrollTop=0;
 }
 function openHeroSlideIframe(url){
+  var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
+
   var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
   if(!s||!b) return;
   _slideOpen(s,b,null); s.style.background="#fff"; b.style.cssText="padding:0";
@@ -7946,6 +7952,8 @@ function openHome(){
   s.classList.add("open"); b.scrollTop=0;
 }
 function closeHeroSlide(){
+  var ba=document.getElementById("btnApostila");if(ba)ba.remove();
+
   _restoreDash();
   var s=document.getElementById("heroSlide");if(!s) return;
   s.classList.remove("open","img-bg");
