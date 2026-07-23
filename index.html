@@ -2015,21 +2015,18 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .com-comment-send-btn:hover{background:#163158}
 .com-empty{font-family:Raleway,sans-serif;font-size:13px;color:rgba(11,29,58,.35);text-align:center;padding:48px 20px;font-style:italic}
 .com-loading{text-align:center;padding:40px;font-family:Raleway,sans-serif;font-size:12px;color:rgba(11,29,58,.3)}
-/* Compositor modal -->
-.com-modal-overlay{position:fixed;inset:0;z-index:300;background:rgba(5,13,26,.6);backdrop-filter:blur(4px);display:none;align-items:flex-end;justify-content:center}
-.com-modal-overlay.open{display:flex}
-.com-modal-box{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:640px;padding:20px 20px 32px}
-.com-modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.com-modal-title{font-family:Raleway,sans-serif;font-size:13px;font-weight:700;color:#0B1D3A}
-.com-modal-close{background:none;border:none;cursor:pointer;color:rgba(11,29,58,.4);font-size:18px;padding:0}
-.com-modal-ta{width:100%;border:none;outline:none;resize:none;font-family:Raleway,sans-serif;font-size:14px;color:#0B1D3A;line-height:1.65;min-height:100px;box-sizing:border-box;margin-bottom:12px}
-.com-modal-ta::placeholder{color:rgba(11,29,58,.3)}
-.com-modal-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid rgba(11,29,58,.08);padding-top:12px}
-.com-modal-tags{flex:1;border:none;outline:none;font-family:Raleway,sans-serif;font-size:12px;color:#C4A45A;background:rgba(196,164,90,.08);border-radius:20px;padding:7px 14px}
-.com-modal-tags::placeholder{color:rgba(196,164,90,.4)}
-.com-modal-post-btn{background:#0B1D3A;color:#C4A45A;border:none;border-radius:20px;padding:9px 22px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
-.com-modal-post-btn:hover{background:#163158}
-.com-modal-post-btn:disabled{opacity:.4;cursor:not-allowed}
+/* Compositor inline expandível */
+.com-composer-expanded{display:none;background:#fff;border:1px solid rgba(196,164,90,.25);border-radius:16px;padding:16px;margin-top:8px}
+.com-composer-expanded.open{display:block}
+.com-composer-ta{width:100%;border:none;outline:none;resize:none;font-family:Raleway,sans-serif;font-size:14px;color:#0B1D3A;line-height:1.65;min-height:90px;box-sizing:border-box;margin-bottom:12px;background:transparent}
+.com-composer-ta::placeholder{color:rgba(11,29,58,.3)}
+.com-composer-bottom{display:flex;align-items:center;gap:10px;border-top:1px solid rgba(11,29,58,.07);padding-top:10px}
+.com-tags-input{flex:1;border:none;outline:none;font-family:Raleway,sans-serif;font-size:12px;color:#C4A45A;background:rgba(196,164,90,.08);border-radius:20px;padding:7px 14px;box-sizing:border-box}
+.com-tags-input::placeholder{color:rgba(196,164,90,.4)}
+.com-cancel-btn{background:none;border:none;font-family:Raleway,sans-serif;font-size:12px;color:rgba(11,29,58,.4);cursor:pointer;padding:0}
+.com-post-btn{background:#0B1D3A;color:#C4A45A;border:none;border-radius:20px;padding:8px 20px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.com-post-btn:hover{background:#163158}
+.com-post-btn:disabled{opacity:.4;cursor:not-allowed}
 /* ─────────────────────────────────────────────────────────────── */
 </style>
 </head>
@@ -2717,6 +2714,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   </div>
 
   
+  
   <!-- ══ PAINEL COMUNIDADE ══ -->
   <div class="nb-panel" id="panel-comunidade" style="padding:0;overflow-y:auto;background:#F7F5F2;min-height:100%">
     <div class="com-wrap">
@@ -2729,29 +2727,25 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
           </div>
           <div class="com-count-badge" id="comCountBadge">—</div>
         </div>
-        <!-- Composer trigger -->
+        <!-- Composer -->
         <div class="com-composer-row">
-          <div class="com-avatar" id="comMyAvatar" style="background:#0B1D3A">?</div>
-          <div class="com-composer-input" onclick="comAbrirModal()">Compartilhe uma dica, case ou conquista...</div>
+          <div class="com-avatar" id="comMyAvatar" style="background:#0B1D3A;flex-shrink:0">?</div>
+          <div style="flex:1">
+            <div class="com-composer-input" id="comTrigger" onclick="comExpandir()">Compartilhe uma dica, case ou conquista...</div>
+            <div class="com-composer-expanded" id="comExpanded">
+              <textarea class="com-composer-ta" id="comTexto" placeholder="Compartilhe uma dica clínica, case ou conquista com a turma..."></textarea>
+              <div class="com-composer-bottom">
+                <input class="com-tags-input" id="comHashtags" placeholder="# cardiologia  # english  # dica" type="text">
+                <button class="com-cancel-btn" onclick="comRecolher()">Cancelar</button>
+                <button class="com-post-btn" id="comPostBtn" onclick="comPublicar()">Publicar</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <!-- Feed -->
       <div class="com-feed" id="comFeed">
         <div class="com-loading">Carregando posts...</div>
-      </div>
-    </div>
-    <!-- Modal compositor -->
-    <div class="com-modal-overlay" id="comModal" onclick="if(event.target===this)comFecharModal()">
-      <div class="com-modal-box">
-        <div class="com-modal-header">
-          <span class="com-modal-title">Nova publicação</span>
-          <button class="com-modal-close" onclick="comFecharModal()">&#x2715;</button>
-        </div>
-        <textarea class="com-modal-ta" id="comTexto" placeholder="Compartilhe uma dica clínica, case ou conquista com a turma..."></textarea>
-        <div class="com-modal-footer">
-          <input class="com-modal-tags" id="comHashtags" placeholder="# cardiologia  # english  # dica" type="text">
-          <button class="com-modal-post-btn" id="comPostBtn" onclick="comPublicar()">Publicar</button>
-        </div>
       </div>
     </div>
   </div>
@@ -7313,13 +7307,17 @@ function comLoad(){
   });
 }
 
-function comAbrirModal(){
-  var modal=document.getElementById('comModal');
-  if(modal){ modal.classList.add('open'); setTimeout(function(){var ta=document.getElementById('comTexto');if(ta)ta.focus();},100); }
+function comExpandir(){
+  var ex=document.getElementById('comExpanded');
+  var tr=document.getElementById('comTrigger');
+  if(ex){ex.classList.add('open');if(tr)tr.style.display='none';}
+  setTimeout(function(){var ta=document.getElementById('comTexto');if(ta)ta.focus();},50);
 }
-function comFecharModal(){
-  var modal=document.getElementById('comModal');
-  if(modal) modal.classList.remove('open');
+function comRecolher(){
+  var ex=document.getElementById('comExpanded');
+  var tr=document.getElementById('comTrigger');
+  if(ex)ex.classList.remove('open');
+  if(tr)tr.style.display='';
 }
 
 function comRenderFeed(){
@@ -7429,7 +7427,7 @@ function comPublicar(){
         comRenderFeed();
         document.getElementById('comTexto').value='';
         document.getElementById('comHashtags').value='';
-        comFecharModal();
+        comRecolher();
         var badge=document.getElementById('comCountBadge');
         if(badge) badge.textContent=_comPosts.length+' publicaç'+(_comPosts.length===1?'ão':'ões');
       }
