@@ -2046,6 +2046,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       <div class="side-sub" id="sideSubOutros"><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/treinamento/','_blank')">Treinamento Complementar</div><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/expansao/','_blank')">Expansão</div></div>
       <div class="side-item" id="si-feedback" onclick="closeHeroSlide();window.open('https://forms.office.com/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAYAABgpFVNUQjE3VzVNUTU1Q045N0VNQTRYRzRZWEU0RS4u&route=shorturl','_blank')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Feedback</div>
     <div class="side-footer">
+      <div class="side-item" id="si-contato" onclick="openHeroSlide('contato')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Contato</div>
       <div class="side-item" id="si-tutorial" onclick="closeHeroSlide();abrirTutorial()" style="margin-top:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="8"/><path d="M12 12v4"/></svg>Tutorial</div>
       <div class="side-logout" onclick="doLogout()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sair
@@ -2624,6 +2625,59 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
 
   <!-- ══ PAINEL GAMES ══ -->
+
+
+  <!-- ══ PAINEL CONTATO ══ -->
+  <div class="nb-panel" id="panel-contato">
+    <div style="padding:40px 36px 48px;max-width:560px">
+      <p style="font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Instituto MD Talk</p>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--navy);line-height:1.2;margin-bottom:8px">Fale <em style="font-style:italic;color:var(--gold)">conosco</em></h2>
+      <p style="font-family:Raleway,sans-serif;font-size:12px;color:var(--text-muted);margin-bottom:32px;line-height:1.7">Siga-nos nas redes e nos marque após a sua aula. A sua evolução inspira outros médicos!</p>
+
+      <!-- Contatos -->
+      <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:36px">
+        <!-- Email -->
+        <a href="mailto:contato@institutomdtalk.com.br" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border:1px solid rgba(196,164,90,.2);border-radius:12px;text-decoration:none;transition:border-color .2s;background:#fff" onmouseover="this.style.borderColor='rgba(196,164,90,.5)'" onmouseout="this.style.borderColor='rgba(196,164,90,.2)'">
+          <div style="width:40px;height:40px;border-radius:10px;background:rgba(196,164,90,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:3px">E-mail</div>
+            <div style="font-family:Raleway,sans-serif;font-size:13px;color:var(--navy);font-weight:500">contato@institutomdtalk.com.br</div>
+          </div>
+        </a>
+
+        <!-- Instagram -->
+        <a href="https://instagram.com/inglesmedico.thaifaria" target="_blank" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border:1px solid rgba(196,164,90,.2);border-radius:12px;text-decoration:none;transition:border-color .2s;background:#fff" onmouseover="this.style.borderColor='rgba(196,164,90,.5)'" onmouseout="this.style.borderColor='rgba(196,164,90,.2)'">
+          <div style="width:40px;height:40px;border-radius:10px;background:rgba(196,164,90,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </div>
+          <div>
+            <div style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:3px">Instagram</div>
+            <div style="font-family:Raleway,sans-serif;font-size:13px;color:var(--navy);font-weight:500">@inglesmedico.thaifaria</div>
+          </div>
+        </a>
+
+        <!-- WhatsApp com QR Code -->
+        <div style="display:flex;align-items:center;gap:14px;padding:16px 20px;border:1px solid rgba(196,164,90,.2);border-radius:12px;background:#fff">
+          <div style="width:40px;height:40px;border-radius:10px;background:rgba(196,164,90,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+          </div>
+          <div style="flex:1">
+            <div style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:3px">WhatsApp</div>
+            <div style="font-family:Raleway,sans-serif;font-size:13px;color:var(--navy);font-weight:500">Aponte a câmera para o QR Code</div>
+          </div>
+          <!-- QR Code -->
+          <div style="flex-shrink:0">
+            <img src="https://institutomdtalk.github.io/portaldoaluno/assets/qr-whatsapp.png" alt="QR Code WhatsApp" style="width:80px;height:80px;border-radius:8px;object-fit:contain" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div style="display:none;width:80px;height:80px;border-radius:8px;background:#f5f5f5;align-items:center;justify-content:center;font-size:9px;color:#999;text-align:center;font-family:Raleway,sans-serif">QR Code<br>em breve</div>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-family:Raleway,sans-serif;font-size:11px;color:var(--text-muted);line-height:1.7;font-style:italic">Nos marque com <strong style="color:var(--gold)">#institutomdtalk</strong> e <strong style="color:var(--gold)">#inglesmedico</strong> nas suas conquistas. Cada aula é um passo para uma comunicação mais segura.</p>
+    </div>
+  </div>
 
 
   <main class="dashboard" id="main-dashboard" style="display:none">
