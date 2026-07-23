@@ -1959,9 +1959,11 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .apostila-dot.active{background:#C4A45A;transform:scale(1.5);}
 @keyframes apostilaFadeIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
 .apostila-arrows{display:none;}
-.apostila-arrow{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,opacity .2s;user-select:none;z-index:20;}
-#apostilaArrowL{left:20px;}
-#apostilaArrowR{right:20px;}
+.apostila-arrow{position:fixed;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,opacity .2s;user-select:none;z-index:300;flex-shrink:0;}
+.apostila-arrow:hover{background:rgba(196,164,90,.3);border-color:rgba(196,164,90,.5)}
+.apostila-arrow.disabled{opacity:.2;pointer-events:none}
+#apostilaArrowL{left:24px;}
+#apostilaArrowR{right:24px;}
 .apostila-arrow:hover{background:rgba(196,164,90,.3);border-color:rgba(196,164,90,.5)}
 .apostila-arrow.disabled{opacity:.25;pointer-events:none}
 .apostila-btn{position:absolute;top:18px;right:70px;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);border-radius:8px;padding:8px 14px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s;z-index:10;}
@@ -7739,44 +7741,42 @@ function apostilaNav(dir){
 }
 
 function _apostilaCardHTML(f){
-  var info=getMimeIcon(f.mimeType||"");
+  var info=getMimeIcon(f.mimeType||'');
   var color=info[0],label=info[1],svgPaths=info[2];
   var iconHtml='<div class="apostila-thumb-icon">'
     +'<svg viewBox="0 0 24 24" fill="none" stroke="'+color+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">'+svgPaths+'</svg>'
     +'<span>'+label+'</span></div>';
-  // Usar thumb já carregada (no obj ou na cache global)
   var thumb=f._thumb||(window._thumbCache&&window._thumbCache[f.id]);
   var thumbInner=thumb
     ? '<img src="'+thumb+'" id="ap_'+f.id+'" style="width:100%;height:100%;object-fit:cover;display:block;animation:apostilaFadeIn .4s ease">'
     : iconHtml+'<img id="ap_'+f.id+'" style="display:none">';
-  // Se não há thumb, pedir ao backend
   if(!thumb&&f.id){
     setTimeout(function(){
       if(f._thumb)return;
-      callScript("action=get_thumbs&ids="+encodeURIComponent(f.id),
-        function(d){
-          if(!d.success||!d.thumb||d.thumb.length<100)return;
-          if(!window._thumbCache)window._thumbCache={};
-          window._thumbCache[d.id]=d.thumb;
-          f._thumb=d.thumb;
-          var img=document.getElementById("ap_"+d.id);
-          if(img){
-            img.src=d.thumb;
-            img.style.cssText="width:100%;height:100%;object-fit:cover;display:block;animation:apostilaFadeIn .5s ease";
-            var prev=img.previousElementSibling;
-            if(prev&&prev.classList.contains("apostila-thumb-icon"))prev.style.display="none";
-          }
-        },function(){}
-      );
+      callScript('action=get_thumbs&ids='+encodeURIComponent(f.id),function(d){
+        if(!d.success||!d.thumb||d.thumb.length<100)return;
+        if(!window._thumbCache)window._thumbCache={};
+        window._thumbCache[d.id]=d.thumb; f._thumb=d.thumb;
+        var img=document.getElementById('ap_'+d.id);
+        if(img){
+          img.src=d.thumb;
+          img.style.cssText='width:100%;height:100%;object-fit:cover;display:block;animation:apostilaFadeIn .5s ease';
+          var prev=img.previousElementSibling;
+          if(prev&&prev.classList.contains('apostila-thumb-icon'))prev.style.display='none';
+        }
+      },function(){});
     },80);
   }
+  var url=f.url||f.link||'';
+  var nome=f.nome||f.name||'Arquivo';
+  // Usar data-url para evitar conflito de aspas
   return '<div class="apostila-thumb">'+thumbInner+'</div>'
     +'<div class="apostila-info">'
     +'<div class="apostila-type">'+label+'</div>'
-    +'<div class="apostila-name">'+( f.nome||f.name||"Arquivo")+'</div>'
-    +'<a class="apostila-open" href="'+( f.url||f.link||"#")+'" target="_blank" onclick="event.stopPropagation()">'
+    +'<div class="apostila-name">'+nome+'</div>'
+    +'<button class="apostila-open" data-url="'+url+'" onclick="event.stopPropagation();var u=this.getAttribute(\'data-url\');if(u)window.open(u,\'_blank\')">'
     +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11" stroke-linecap="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
-    +" Abrir</a></div>";
+    +' Abrir</button></div>';
 }
 
 function _apostilaRender(){
@@ -8093,10 +8093,9 @@ function qzRetry() {
 <div class="apostila-overlay" id="apostilaOverlay">
   <button class="apostila-close" onclick="fecharApostila()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   <div class="apostila-counter" id="apostilaCounter">1 / 1</div>
-  <div class="apostila-stage" id="apostilaStage">
-    <button class="apostila-arrow" id="apostilaArrowL" onclick="apostilaNav(-1)">&#8592;</button>
-    <button class="apostila-arrow" id="apostilaArrowR" onclick="apostilaNav(1)">&#8594;</button>
-  </div>
+  <button class="apostila-arrow" id="apostilaArrowL" onclick="apostilaNav(-1)">&#8592;</button>
+  <div class="apostila-stage" id="apostilaStage"></div>
+  <button class="apostila-arrow" id="apostilaArrowR" onclick="apostilaNav(1)">&#8594;</button>
   <div class="apostila-dots" id="apostilaDots"></div>
 </div>
 </div>
