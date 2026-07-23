@@ -1789,7 +1789,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   animation:perfil-reveal 0.55s cubic-bezier(0.22,1,0.36,1) both;
   transform-style:preserve-3d;
   transition:transform 0.4s cubic-bezier(0.22,1,0.36,1),box-shadow 0.4s cubic-bezier(0.22,1,0.36,1),border-color 0.4s;
-}
+;min-width:0;box-sizing:border-box}
 .perfil-card:nth-child(1){animation-delay:0.05s}
 .perfil-card:nth-child(2){animation-delay:0.15s}
 .perfil-card::before{
@@ -1893,7 +1893,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   .mentora-pin-cancel-btn:hover{color:var(--navy)}
   
 
-.hero-slide{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;transform:translateY(110%);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;pointer-events:none;background:#F0EDE8}
+.hero-slide{position:absolute;inset:0;z-index:30;overflow:hidden;display:flex;flex-direction:column;transform:translateY(110%);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;pointer-events:none;background:#F0EDE8}
 .hero-slide.open{transform:translateY(0);opacity:1;pointer-events:all}
 .hero-slide.img-bg{background-size:cover;background-position:center}
 .hero-slide.img-bg::before{content:"";position:absolute;inset:0;background:rgba(5,13,26,.65);z-index:0}
@@ -2045,13 +2045,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       <div class="side-item" id="si-outros" onclick="toggleSideSubMenu()"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Outros Cursos<svg class="side-item-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
       <div class="side-sub" id="sideSubOutros"><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/treinamento/','_blank')">Treinamento Complementar</div><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/expansao/','_blank')">Expansão</div></div>
       <div class="side-item" id="si-feedback" onclick="closeHeroSlide();window.open('https://forms.office.com/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAYAABgpFVNUQjE3VzVNUTU1Q045N0VNQTRYRzRZWEU0RS4u&route=shorturl','_blank')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Feedback</div>
-    <div class="side-footer">
-      <div class="side-item" id="si-contato" onclick="openHeroSlideImg('contato')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Contato</div>
-      <div class="side-item" id="si-tutorial" onclick="closeHeroSlide();abrirTutorial()" style="margin-top:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="8"/><path d="M12 12v4"/></svg>Tutorial</div>
-      <div class="side-logout" onclick="doLogout()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sair
-      </div>
-    </div>
+    
   </div>
 </nav>
 
@@ -2150,7 +2144,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       <p style="font-family:var(--sans);font-size:12px;color:var(--text-muted);letter-spacing:0.3px">Aqui registro minha jornada e evolução no programa.</p>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;max-width:100%;min-width:0">
 
       <!-- CARD ESQUERDO: MEUS DADOS + PERSONALIZE -->
       <div class="perfil-card" style="display:flex;flex-direction:column;gap:20px">
@@ -7956,6 +7950,7 @@ function openHeroSlide(t){
   var p=document.getElementById("panel-"+t);
   if(!s||!b||!p) return;
   _slideOpen(s,b,null);
+  b.style.overflowX="hidden";
   b.innerHTML=p.innerHTML;
   if(t==="progresso") setTimeout(renderNbProgresso,80);
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
@@ -7968,8 +7963,7 @@ function openHeroSlideImg(t){
   var p=document.getElementById("panel-"+t);
   if(!s||!b||!p) return;
   _slideOpen(s,b,img);
-  b.style.padding="40px 44px";
-  b.style.overflowY="auto";
+  b.style.cssText="padding:40px 44px;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;width:100%";
   b.innerHTML=p.innerHTML;
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-"+t);if(si)si.classList.add("active");
