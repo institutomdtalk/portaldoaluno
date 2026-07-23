@@ -2716,7 +2716,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   
   
   <!-- ══ PAINEL COMUNIDADE ══ -->
-  <div class="nb-panel" id="panel-comunidade" style="padding:0;overflow-y:auto;background:#F7F5F2;min-height:100%">
+  <div class="nb-panel" id="panel-comunidade">
     <div class="com-wrap">
       <!-- Header -->
       <div class="com-header">
@@ -2743,13 +2743,6 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
           </div>
         </div>
       </div>
-      <!-- Feed -->
-      <div class="com-feed" id="comFeed">
-        <div class="com-loading">Carregando posts...</div>
-      </div>
-    </div>
-  </div>
-
       <!-- Feed -->
       <div class="com-feed" id="comFeed">
         <div class="com-loading">Carregando posts...</div>
@@ -7412,33 +7405,44 @@ function comLike(postId){
 }
 
 function comPublicar(){
-  var texto=(comEl('comTexto')||{}).value||'';
-  var hashtags=(comEl('comHashtags')||{}).value||'';
-  var btn=comEl('comPostBtn');
-  if(!texto.trim()) return;
-  if(!window.currentStudent) return;
-  var autor=currentStudent.nome_display||currentStudent.nome||'Aluno';
-  var esp=currentStudent.especialidade||currentStudent.profissao||'';
-  if(btn){btn.disabled=true;btn.textContent='Publicando...';}
-  callScript(
-    'action=add_post&autor='+encodeURIComponent(autor)
-    +'&especialidade='+encodeURIComponent(esp)
-    +'&texto='+encodeURIComponent(texto.trim())
-    +'&hashtags='+encodeURIComponent(hashtags.trim()),
+  var textoEl=comEl("comTexto");
+  var hashEl=comEl("comHashtags");
+  var btn=comEl("comPostBtn");
+  var texto=textoEl?textoEl.value.trim():"";
+  var hashtags=hashEl?hashEl.value.trim():"";
+  if(!texto){showToast("Escreva algo antes de publicar.","warning");return;}
+  if(!window.currentStudent||!currentStudent.login){
+    showToast("Sessão expirada. Recarregue a página.","error");return;
+  }
+  var autor=currentStudent.nome_display||currentStudent.nome||"Aluno";
+  var esp=currentStudent.especialidade||currentStudent.profissao||"";
+  if(btn){btn.disabled=true;btn.textContent="Publicando...";}
+  var params="action=add_post"
+    +"&autor="+encodeURIComponent(autor)
+    +"&especialidade="+encodeURIComponent(esp)
+    +"&texto="+encodeURIComponent(texto)
+    +"&hashtags="+encodeURIComponent(hashtags);
+  callScript(params,
     function(d){
-      if(d.success){
-        var newPost={id:d.id,autor:autor,especialidade:esp,texto:texto.trim(),hashtags:hashtags.trim(),curtidas:0,timestamp:d.timestamp,comentarios:[]};
+      if(d&&d.success){
+        var newPost={id:d.id,autor:autor,especialidade:esp,texto:texto,hashtags:hashtags,curtidas:0,timestamp:d.timestamp,comentarios:[]};
         _comPosts.unshift(newPost);
         comRenderFeed();
-        comEl('comTexto').value='';
-        comEl('comHashtags').value='';
+        if(textoEl)textoEl.value="";
+        if(hashEl)hashEl.value="";
         comRecolher();
-        var badge=comEl('comCountBadge');
-        if(badge) badge.textContent=_comPosts.length+' publicaç'+(_comPosts.length===1?'ão':'ões');
+        var badge=comEl("comCountBadge");
+        if(badge)badge.textContent=_comPosts.length+" publicaç"+(_comPosts.length===1?"ão":"ões");
+        showToast("Post publicado!","success");
+      } else {
+        showToast("Erro: "+(d&&d.error?d.error:"Verifique o backend e republique o Apps Script."),"error");
       }
-      if(btn){btn.disabled=false;btn.textContent='Publicar';}
+      if(btn){btn.disabled=false;btn.textContent="Publicar";}
     },
-    function(){if(btn){btn.disabled=false;btn.textContent='Publicar';}}
+    function(){
+      showToast("Sem resposta do servidor. Verifique se o Apps Script foi republicado com a nova versão.","error");
+      if(btn){btn.disabled=false;btn.textContent="Publicar";}
+    }
   );
 }
 
@@ -8212,7 +8216,10 @@ function openHeroSlide(t){
   _slideOpen(s,b,null);
   b.innerHTML=p.innerHTML;
   if(t==="progresso") setTimeout(renderNbProgresso,80);
-  if(t==="comunidade") setTimeout(comLoad,80);
+  if(t==="comunidade"){
+    b.style.cssText="padding:0;overflow-y:auto;overflow-x:hidden;background:#F7F5F2;min-height:100%;box-sizing:border-box";
+    setTimeout(comLoad,80);
+  }
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-"+t);if(si)si.classList.add("active");
   s.classList.add("open"); b.scrollTop=0;
