@@ -2046,7 +2046,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       <div class="side-sub" id="sideSubOutros"><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/treinamento/','_blank')">Treinamento Complementar</div><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/expansao/','_blank')">Expansão</div></div>
       <div class="side-item" id="si-feedback" onclick="closeHeroSlide();window.open('https://forms.office.com/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAYAABgpFVNUQjE3VzVNUTU1Q045N0VNQTRYRzRZWEU0RS4u&route=shorturl','_blank')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Feedback</div>
     <div class="side-footer">
-      <div class="side-item" id="si-contato" onclick="openHeroSlide('contato')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Contato</div>
+      <div class="side-item" id="si-contato" onclick="openHeroSlideImg('contato')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Contato</div>
       <div class="side-item" id="si-tutorial" onclick="closeHeroSlide();abrirTutorial()" style="margin-top:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="8"/><path d="M12 12v4"/></svg>Tutorial</div>
       <div class="side-logout" onclick="doLogout()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sair
@@ -2628,52 +2628,73 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
 
   
+  
   <!-- ══ PAINEL CONTATO ══ -->
   <div class="nb-panel" id="panel-contato">
-    <div style="padding:40px 36px 48px;max-width:560px">
-      <p style="font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Instituto MD Talk</p>
-      <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--navy);line-height:1.2;margin-bottom:8px">Fale <em style="font-style:italic;color:var(--gold)">conosco</em></h2>
-      <p style="font-family:Raleway,sans-serif;font-size:12px;color:var(--text-muted);margin-bottom:32px;line-height:1.7">Siga-nos nas redes e nos marque após a sua aula. A sua evolução inspira outros médicos!</p>
+    <p style="font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:rgba(196,164,90,.75);margin-bottom:14px">Instituto MD Talk</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:#fff;line-height:1.2;margin-bottom:6px">Fale <em style="font-style:italic;color:#C4A45A">conosco</em></h2>
+    <p style="font-family:Raleway,sans-serif;font-size:12px;color:rgba(255,255,255,.55);margin-bottom:32px;line-height:1.7;max-width:440px">Siga-nos nas redes e nos marque após a sua aula. A sua evolução inspira outros médicos!</p>
 
-      <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:36px">
+    <div style="display:flex;flex-direction:column;gap:14px;max-width:480px">
 
-        <!-- Email -->
-        <a href="mailto:mdtalk.office@gmail.com" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border:1px solid rgba(196,164,90,.2);border-radius:12px;text-decoration:none;background:#fff;transition:border-color .2s" onmouseover="this.style.borderColor='rgba(196,164,90,.5)'" onmouseout="this.style.borderColor='rgba(196,164,90,.2)'">
-          <div style="width:40px;height:40px;border-radius:10px;background:rgba(196,164,90,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <div>
-            <div style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:3px">E-mail</div>
-            <div style="font-family:Raleway,sans-serif;font-size:13px;color:var(--navy);font-weight:500">mdtalk.office@gmail.com</div>
-          </div>
-        </a>
-
-        <!-- WhatsApp -->
-        <a href="https://wa.me/5514997758941" target="_blank" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border:1px solid rgba(196,164,90,.2);border-radius:12px;text-decoration:none;background:#fff;transition:border-color .2s" onmouseover="this.style.borderColor='rgba(196,164,90,.5)'" onmouseout="this.style.borderColor='rgba(196,164,90,.2)'">
-          <div style="width:40px;height:40px;border-radius:10px;background:rgba(196,164,90,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-          </div>
-          <div>
-            <div style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:3px">WhatsApp</div>
-            <div style="font-family:Raleway,sans-serif;font-size:13px;color:var(--navy);font-weight:500">(14) 99775-8941</div>
-          </div>
-        </a>
-
-        <!-- Instagram + QR Code -->
-        <div style="display:flex;align-items:center;gap:14px;padding:16px 20px;border:1px solid rgba(196,164,90,.2);border-radius:12px;background:#fff">
-          <div style="width:40px;height:40px;border-radius:10px;background:rgba(196,164,90,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </div>
-          <div style="flex:1">
-            <div style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:3px">Instagram</div>
-            <div style="font-family:Raleway,sans-serif;font-size:13px;color:var(--navy);font-weight:500">@inglesmedico.thaifaria</div>
-            <div style="font-family:Raleway,sans-serif;font-size:10px;color:var(--text-muted);margin-top:3px">Aponte a câmera para o QR Code &#8594;</div>
-          </div>
-          <div style="flex-shrink:0">
-            <img src="https://institutomdtalk.github.io/portaldoaluno/assets/qr-instagram.png" alt="QR Code Instagram" style="width:84px;height:84px;border-radius:8px;object-fit:contain" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div style="display:none;width:84px;height:84px;border-radius:8px;background:#f5f5f5;align-items:center;justify-content:center;font-size:9px;color:#999;text-align:center;font-family:Raleway,sans-serif;line-height:1.5">QR Code<br>em breve</div>
-          </div>
+      <!-- Email -->
+      <a href="mailto:mdtalk.office@gmail.com"
+         style="display:flex;align-items:center;gap:16px;padding:18px 22px;
+                background:rgba(255,255,255,.08);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+                border:1px solid rgba(255,255,255,.14);border-radius:16px;
+                text-decoration:none;transition:background .25s,border-color .25s"
+         onmouseover="this.style.background='rgba(196,164,90,.15)';this.style.borderColor='rgba(196,164,90,.4)'"
+         onmouseout="this.style.background='rgba(255,255,255,.08)';this.style.borderColor='rgba(255,255,255,.14)'">
+        <div style="width:42px;height:42px;border-radius:12px;background:rgba(196,164,90,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </div>
+        <div>
+          <div style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,164,90,.8);margin-bottom:4px">E-mail</div>
+          <div style="font-family:Raleway,sans-serif;font-size:13px;color:#fff;font-weight:500">mdtalk.office@gmail.com</div>
+        </div>
+      </a>
+
+      <!-- WhatsApp -->
+      <a href="https://wa.me/5514997758941" target="_blank"
+         style="display:flex;align-items:center;gap:16px;padding:18px 22px;
+                background:rgba(255,255,255,.08);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+                border:1px solid rgba(255,255,255,.14);border-radius:16px;
+                text-decoration:none;transition:background .25s,border-color .25s"
+         onmouseover="this.style.background='rgba(196,164,90,.15)';this.style.borderColor='rgba(196,164,90,.4)'"
+         onmouseout="this.style.background='rgba(255,255,255,.08)';this.style.borderColor='rgba(255,255,255,.14)'">
+        <div style="width:42px;height:42px;border-radius:12px;background:rgba(196,164,90,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        </div>
+        <div>
+          <div style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,164,90,.8);margin-bottom:4px">WhatsApp</div>
+          <div style="font-family:Raleway,sans-serif;font-size:13px;color:#fff;font-weight:500">(14) 99775-8941</div>
+        </div>
+      </a>
+
+      <!-- Instagram + QR -->
+      <div style="display:flex;align-items:center;gap:16px;padding:18px 22px;
+                  background:rgba(255,255,255,.08);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+                  border:1px solid rgba(255,255,255,.14);border-radius:16px;">
+        <div style="width:42px;height:42px;border-radius:12px;background:rgba(196,164,90,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+        <div style="flex:1">
+          <div style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,164,90,.8);margin-bottom:4px">Instagram</div>
+          <div style="font-family:Raleway,sans-serif;font-size:13px;color:#fff;font-weight:500">@inglesmedico.thaifaria</div>
+          <div style="font-family:Raleway,sans-serif;font-size:10px;color:rgba(255,255,255,.4);margin-top:3px">Aponte a câmera &#8594;</div>
+        </div>
+        <div style="flex-shrink:0">
+          <img src="https://institutomdtalk.github.io/portaldoaluno/assets/qr-instagram.png" alt="QR Instagram"
+               style="width:80px;height:80px;border-radius:10px;object-fit:contain;background:#fff;padding:4px"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:80px;height:80px;border-radius:10px;background:rgba(255,255,255,.08);align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,.35);text-align:center;font-family:Raleway,sans-serif;line-height:1.5">QR Code<br>em breve</div>
+        </div>
+      </div>
+
+    </div>
+
+    <p style="font-family:Raleway,sans-serif;font-size:11px;color:rgba(255,255,255,.35);line-height:1.7;font-style:italic;margin-top:28px;max-width:440px">Marque-nos com <strong style="color:#C4A45A">#institutomdtalk</strong> e <strong style="color:#C4A45A">#inglesmedico</strong> nas suas conquistas.</p>
+  </div>
 
       </div>
 
@@ -7945,6 +7966,8 @@ function openHeroSlideImg(t){
   var p=document.getElementById("panel-"+t);
   if(!s||!b||!p) return;
   _slideOpen(s,b,img);
+  b.style.padding="40px 44px";
+  b.style.overflowY="auto";
   b.innerHTML=p.innerHTML;
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-"+t);if(si)si.classList.add("active");
