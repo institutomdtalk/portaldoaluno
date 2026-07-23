@@ -7711,6 +7711,16 @@ function abrirApostila(){
   document.getElementById('apostilaOverlay').classList.add('open');
   document.addEventListener('keydown',_apostilaKey);
   var stage=document.getElementById('apostilaStage');
+  // Event delegation para botão Abrir
+  stage.addEventListener('click',function(e){
+    var btn=e.target.closest('#apostilaStage .apostila-open');
+    if(btn){
+      e.stopPropagation();
+      var fid=btn.id.replace('apbtn_','');
+      var f=window._apFiles&&window._apFiles[fid];
+      if(f) openDriveViewer(f);
+    }
+  });
   stage.ontouchstart=function(e){_apostilaTouchX=e.touches[0].clientX;};
   stage.ontouchend=function(e){
     if(_apostilaTouchX===null)return;
@@ -7732,9 +7742,10 @@ function _apostilaKey(e){
 }
 
 function apostilaAbrir(btnId){
-  event.stopPropagation();
-  var url=window._apURLs&&window._apURLs[btnId];
-  if(url) window.open(url,"_blank");
+  var fid=btnId.replace("apbtn_","");
+  var f=window._apFiles&&window._apFiles[fid];
+  if(!f) return;
+  openDriveViewer(f);
 }
 
 function apostilaNav(dir){
@@ -7769,17 +7780,15 @@ function _apostilaCardHTML(f){
       },function(){});
     },80);
   }
-  var url=f.url||f.link||'';
+  // Guardar referência do ficheiro para o botão poder aceder
+  if(!window._apFiles)window._apFiles={};
+  window._apFiles[f.id]=f;
   var nome=f.nome||f.name||'Arquivo';
-  var btnId='apbtn_'+f.id;
-  // Guardar url no objeto global para o botão poder aceder
-  if(!window._apURLs)window._apURLs={};
-  window._apURLs[btnId]=url;
   return '<div class="apostila-thumb">'+thumbInner+'</div>'
     +'<div class="apostila-info">'
     +'<div class="apostila-type">'+label+'</div>'
     +'<div class="apostila-name">'+nome+'</div>'
-    +'<button class="apostila-open" id="'+btnId+'" onclick="apostilaAbrir(\''+btnId+'\')">'
+    +'<button class="apostila-open" id="apbtn_'+f.id+'">'
     +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11" stroke-linecap="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
     +' Abrir</button></div>';
 }
