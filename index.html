@@ -1969,6 +1969,51 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .apostila-btn{position:absolute;top:18px;right:70px;display:flex;align-items:center;gap:6px;background:rgba(196,164,90,.15);border:1px solid rgba(196,164,90,.5);color:#C4A45A;border-radius:8px;padding:8px 14px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .2s;z-index:10;}
 .apostila-btn:hover{background:rgba(196,164,90,.3);border-color:#C4A45A;color:#D4BA7A}
 /* ─────────────────────────────────────────────────────────── */
+
+/* ── COMUNIDADE MD TALK ────────────────────────────────────────── */
+.com-wrap{max-width:640px;width:100%}
+.com-composer{background:#fff;border:1px solid rgba(196,164,90,.2);border-radius:16px;padding:20px;margin-bottom:24px;box-shadow:0 2px 12px rgba(11,29,58,.06)}
+.com-composer textarea{width:100%;border:none;outline:none;resize:none;font-family:Raleway,sans-serif;font-size:13px;color:#0B1D3A;line-height:1.6;min-height:80px;background:transparent;box-sizing:border-box}
+.com-composer textarea::placeholder{color:rgba(11,29,58,.35)}
+.com-composer-footer{display:flex;align-items:center;justify-content:space-between;margin-top:12px;gap:10px;flex-wrap:wrap}
+.com-hashtag-input{border:none;outline:none;font-family:Raleway,sans-serif;font-size:11px;color:#C4A45A;background:rgba(196,164,90,.08);border-radius:20px;padding:5px 12px;flex:1;min-width:120px}
+.com-hashtag-input::placeholder{color:rgba(196,164,90,.5)}
+.com-post-btn{background:#0B1D3A;color:#C4A45A;border:none;border-radius:20px;padding:8px 20px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s;white-space:nowrap}
+.com-post-btn:hover{background:#163158}
+.com-post-btn:disabled{opacity:.4;cursor:not-allowed}
+.com-feed{display:flex;flex-direction:column;gap:14px}
+.com-card{background:#fff;border:1px solid rgba(196,164,90,.15);border-radius:16px;padding:18px 20px;box-shadow:0 2px 12px rgba(11,29,58,.05);transition:border-color .2s}
+.com-card:hover{border-color:rgba(196,164,90,.35)}
+.com-card-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.com-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#0B1D3A,#C4A45A);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1rem;color:#fff;font-weight:500;flex-shrink:0}
+.com-card-meta{flex:1;min-width:0}
+.com-card-autor{font-family:Raleway,sans-serif;font-size:12px;font-weight:700;color:#0B1D3A}
+.com-card-esp{font-family:Raleway,sans-serif;font-size:10px;color:#C4A45A;font-weight:600;letter-spacing:.06em}
+.com-card-ts{font-family:Raleway,sans-serif;font-size:10px;color:rgba(11,29,58,.35);margin-left:auto;white-space:nowrap}
+.com-card-texto{font-family:Raleway,sans-serif;font-size:13px;color:#2a3a52;line-height:1.7;margin-bottom:10px;word-break:break-word}
+.com-hashtags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.com-tag{font-family:Raleway,sans-serif;font-size:10px;font-weight:700;color:#C4A45A;background:rgba(196,164,90,.09);border-radius:20px;padding:3px 10px}
+.com-actions{display:flex;align-items:center;gap:16px;padding-top:10px;border-top:1px solid rgba(11,29,58,.06)}
+.com-like-btn{display:flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;font-family:Raleway,sans-serif;font-size:11px;color:rgba(11,29,58,.45);transition:color .2s;padding:0}
+.com-like-btn:hover,.com-like-btn.liked{color:#e53e3e}
+.com-like-btn.liked svg{fill:#e53e3e;stroke:#e53e3e}
+.com-comment-toggle{display:flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;font-family:Raleway,sans-serif;font-size:11px;color:rgba(11,29,58,.45);transition:color .2s;padding:0}
+.com-comment-toggle:hover{color:#0B1D3A}
+.com-comments-section{margin-top:14px;padding-top:14px;border-top:1px solid rgba(11,29,58,.06);display:none;flex-direction:column;gap:10px}
+.com-comments-section.open{display:flex}
+.com-comment{background:rgba(196,164,90,.05);border-radius:10px;padding:10px 12px}
+.com-comment-autor{font-family:Raleway,sans-serif;font-size:10px;font-weight:700;color:#0B1D3A;margin-bottom:3px}
+.com-comment-esp{color:#C4A45A;font-weight:600}
+.com-comment-texto{font-family:Raleway,sans-serif;font-size:12px;color:#2a3a52;line-height:1.5}
+.com-comment-form{display:flex;gap:8px;align-items:flex-start;margin-top:8px}
+.com-comment-form textarea{flex:1;border:1px solid rgba(196,164,90,.2);border-radius:10px;padding:8px 12px;font-family:Raleway,sans-serif;font-size:12px;color:#0B1D3A;resize:none;outline:none;min-height:36px;background:#fff}
+.com-comment-form textarea:focus{border-color:rgba(196,164,90,.5)}
+.com-comment-send{background:#0B1D3A;color:#C4A45A;border:none;border-radius:10px;padding:8px 14px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;align-self:flex-end}
+.com-comment-send:hover{background:#163158}
+.com-empty{font-family:Raleway,sans-serif;font-size:13px;color:rgba(11,29,58,.35);text-align:center;padding:40px 0;font-style:italic}
+.com-mentor-badge{font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:#C4A45A;color:#fff;border-radius:4px;padding:2px 7px;margin-left:6px}
+.com-loading{text-align:center;padding:32px;font-family:Raleway,sans-serif;font-size:12px;color:rgba(11,29,58,.35)}
+/* ─────────────────────────────────────────────────────────────── */
 </style>
 </head>
 <body>
@@ -2046,7 +2091,8 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       <div class="side-sub" id="sideSubOutros"><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/treinamento/','_blank')">Treinamento Complementar</div><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/expansao/','_blank')">Expansão</div></div>
       <div class="side-item" id="si-feedback" onclick="closeHeroSlide();window.open('https://forms.office.com/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAYAABgpFVNUQjE3VzVNUTU1Q045N0VNQTRYRzRZWEU0RS4u&route=shorturl','_blank')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Feedback</div>
     <div class="side-footer">
-            <div class="side-item" id="si-contato" onclick="openHeroSlideImg('contato')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Contato</div>
+                  <div class="side-item" id="si-comunidade" onclick="openHeroSlide('comunidade')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>Comunidade</div>
+      <div class="side-item" id="si-contato" onclick="openHeroSlideImg('contato')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Contato</div>
       <div class="side-item" id="si-tutorial" onclick="closeHeroSlide();abrirTutorial()" style="margin-top:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="8"/><path d="M12 12v4"/></svg>Tutorial</div>
       <div class="side-logout" onclick="doLogout()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sair
@@ -2652,6 +2698,30 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
     </div>
     <p style="font-family:Raleway,sans-serif;font-size:11px;color:rgba(255,255,255,.35);line-height:1.7;font-style:italic;margin-top:28px;max-width:440px">Marque-nos com <strong style="color:#C4A45A">#institutomdtalk</strong> e <strong style="color:#C4A45A">#inglesmedico</strong> nas suas conquistas.</p>
   </div>
+
+  <!-- ══ PAINEL COMUNIDADE ══ -->
+  <div class="nb-panel" id="panel-comunidade" style="padding:36px 40px;overflow-y:auto;background:#F7F5F2;min-height:100%">
+    <div class="com-wrap">
+      <p style="font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Instituto MD Talk</p>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--navy);margin-bottom:4px">Comunidade <em style="color:var(--gold);font-style:italic">MD Talk</em></h2>
+      <p style="font-family:Raleway,sans-serif;font-size:12px;color:var(--text-muted);margin-bottom:24px;line-height:1.6">Compartilhe dicas, cases e conquistas com a turma. Networking médico em inglês!</p>
+
+      <!-- Compositor -->
+      <div class="com-composer" id="comComposer">
+        <textarea id="comTexto" placeholder="Compartilhe uma dica clínica, case ou conquista com a turma..."></textarea>
+        <div class="com-composer-footer">
+          <input class="com-hashtag-input" id="comHashtags" placeholder="# cardiologia  # networking  # english" type="text">
+          <button class="com-post-btn" id="comPostBtn" onclick="comPublicar()">Publicar</button>
+        </div>
+      </div>
+
+      <!-- Feed -->
+      <div class="com-feed" id="comFeed">
+        <div class="com-loading">Carregando posts...</div>
+      </div>
+    </div>
+  </div>
+
 
   <main class="dashboard" id="main-dashboard" style="display:none">
 
@@ -7166,6 +7236,159 @@ window.addEventListener('load', function(){
   }
   showPage('login'); // no saved credentials
 });
+// ── COMUNIDADE MD TALK ─────────────────────────────────────────────
+var _comPosts      = [];
+var _comLikedPosts = JSON.parse(localStorage.getItem('comLikes')||'{}');
+
+function comLoad(){
+  callScript('action=get_posts', function(d){
+    if(!d.success) return;
+    _comPosts = d.posts || [];
+    comRenderFeed();
+  }, function(){
+    document.getElementById('comFeed').innerHTML =
+      '<p class="com-empty">Não foi possível carregar os posts. Tente novamente.</p>';
+  });
+}
+
+function comRenderFeed(){
+  var feed = document.getElementById('comFeed');
+  if(!feed) return;
+  if(!_comPosts.length){
+    feed.innerHTML = '<p class="com-empty">Ainda não há posts. Seja o primeiro a compartilhar!</p>';
+    return;
+  }
+  feed.innerHTML = _comPosts.map(comBuildCard).join('');
+}
+
+function comBuildCard(p){
+  var inicial = (p.autor||'?')[0].toUpperCase();
+  var isMentor = p.autor === 'Thaiana Faria' || p.especialidade === 'Mentora';
+  var liked = !!_comLikedPosts[p.id];
+  var tags = (p.hashtags||'').split(/[\s,]+/).filter(Boolean).map(function(t){
+    var tag = t.startsWith('#') ? t : '#'+t;
+    return '<span class="com-tag">'+tag+'</span>';
+  }).join('');
+
+  return '<div class="com-card" id="card_'+p.id+'">'
+    +'<div class="com-card-header">'
+    +'<div class="com-avatar">'+inicial+'</div>'
+    +'<div class="com-card-meta">'
+    +'<div class="com-card-autor">'+p.autor+(isMentor?'<span class="com-mentor-badge">Mentora</span>':'')+'</div>'
+    +'<div class="com-card-esp">'+p.especialidade+'</div>'
+    +'</div>'
+    +'<div class="com-card-ts">'+p.timestamp+'</div>'
+    +'</div>'
+    +'<div class="com-card-texto">'+p.texto.replace(/\n/g,'<br>')+'</div>'
+    +(tags?'<div class="com-hashtags">'+tags+'</div>':'')
+    +'<div class="com-actions">'
+    +'<button class="com-like-btn'+(liked?' liked':'')+'" id="like_'+p.id+'" onclick="comLike(\''+p.id+'\')">'
+    +'<svg viewBox="0 0 24 24" fill="'+(liked?'#e53e3e':'none')+'" stroke="currentColor" stroke-width="2" width="15" height="15" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>'
+    +' <span id="likeCount_'+p.id+'">'+(p.curtidas||0)+'</span>'
+    +'</button>'
+    +'<button class="com-comment-toggle" onclick="comToggleComments(\''+p.id+'\')">'
+    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>'
+    +' '+(p.comentarios?p.comentarios.length:0)+' comentário'+(p.comentarios&&p.comentarios.length!==1?'s':'')
+    +'</button>'
+    +'</div>'
+    +'<div class="com-comments-section" id="comments_'+p.id+'">'
+    +comBuildComments(p)
+    +'<div class="com-comment-form">'
+    +'<textarea id="commentText_'+p.id+'" placeholder="Escreva um comentário..." rows="1" onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();comComment(\''+p.id+'\');}"></textarea>'
+    +'<button class="com-comment-send" onclick="comComment(\''+p.id+'\')">Enviar</button>'
+    +'</div>'
+    +'</div>'
+    +'</div>';
+}
+
+function comBuildComments(p){
+  if(!p.comentarios||!p.comentarios.length) return '';
+  return p.comentarios.map(function(c){
+    return '<div class="com-comment">'
+      +'<div class="com-comment-autor">'+c.autor+' <span class="com-comment-esp">• '+c.especialidade+'</span>'
+      +'<span style="font-family:Raleway,sans-serif;font-size:10px;color:rgba(11,29,58,.3);margin-left:8px">'+c.ts+'</span></div>'
+      +'<div class="com-comment-texto">'+c.texto+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function comToggleComments(postId){
+  var sec = document.getElementById('comments_'+postId);
+  if(sec) sec.classList.toggle('open');
+}
+
+function comLike(postId){
+  if(_comLikedPosts[postId]) return; // já curtiu
+  _comLikedPosts[postId] = true;
+  localStorage.setItem('comLikes', JSON.stringify(_comLikedPosts));
+  var btn = document.getElementById('like_'+postId);
+  var cnt = document.getElementById('likeCount_'+postId);
+  if(btn){ btn.classList.add('liked'); btn.querySelector('svg').setAttribute('fill','#e53e3e'); }
+  if(cnt){ cnt.textContent = (parseInt(cnt.textContent)||0) + 1; }
+  callScript('action=like_post&id='+encodeURIComponent(postId), function(){}, function(){});
+}
+
+function comPublicar(){
+  var texto   = (document.getElementById('comTexto')||{}).value||'';
+  var hashtags= (document.getElementById('comHashtags')||{}).value||'';
+  var btn     = document.getElementById('comPostBtn');
+  if(!texto.trim()) return;
+  if(!window.currentStudent) return;
+  var autor = currentStudent.nome_display || currentStudent.nome || 'Aluno';
+  var esp   = currentStudent.especialidade || currentStudent.profissao || '';
+  if(btn){ btn.disabled=true; btn.textContent='Publicando...'; }
+  callScript(
+    'action=add_post&autor='+encodeURIComponent(autor)
+    +'&especialidade='+encodeURIComponent(esp)
+    +'&texto='+encodeURIComponent(texto.trim())
+    +'&hashtags='+encodeURIComponent(hashtags.trim()),
+    function(d){
+      if(d.success){
+        var newPost = { id:d.id, autor:autor, especialidade:esp, texto:texto.trim(),
+          hashtags:hashtags.trim(), curtidas:0, timestamp:d.timestamp, comentarios:[] };
+        _comPosts.unshift(newPost);
+        comRenderFeed();
+        document.getElementById('comTexto').value='';
+        document.getElementById('comHashtags').value='';
+      }
+      if(btn){ btn.disabled=false; btn.textContent='Publicar'; }
+    },
+    function(){ if(btn){ btn.disabled=false; btn.textContent='Publicar'; } }
+  );
+}
+
+function comComment(postId){
+  var ta  = document.getElementById('commentText_'+postId);
+  var txt = ta ? ta.value.trim() : '';
+  if(!txt || !window.currentStudent) return;
+  var autor = currentStudent.nome_display || currentStudent.nome || 'Aluno';
+  var esp   = currentStudent.especialidade || currentStudent.profissao || '';
+  ta.value = '';
+  callScript(
+    'action=add_comment&id='+encodeURIComponent(postId)
+    +'&autor='+encodeURIComponent(autor)
+    +'&especialidade='+encodeURIComponent(esp)
+    +'&texto='+encodeURIComponent(txt),
+    function(d){
+      if(d.success){
+        var p = _comPosts.find(function(x){return x.id===postId;});
+        if(p){ p.comentarios = d.comentarios; }
+        var sec = document.getElementById('comments_'+postId);
+        if(sec){
+          sec.innerHTML = comBuildComments({comentarios:d.comentarios})
+            + '<div class="com-comment-form">'
+            + '<textarea id="commentText_'+postId+'" placeholder="Escreva um comentário..." rows="1" onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();comComment(\''+postId+'\');}"></textarea>'
+            + '<button class="com-comment-send" onclick="comComment(\''+postId+'\')">Enviar</button>'
+            + '</div>';
+          sec.classList.add('open');
+        }
+      }
+    },
+    function(){}
+  );
+}
+// ───────────────────────────────────────────────────────────────────
+
 </script>
 <!-- MODALS -->
 
@@ -7904,6 +8127,7 @@ function openHeroSlide(t){
   _slideOpen(s,b,null);
   b.innerHTML=p.innerHTML;
   if(t==="progresso") setTimeout(renderNbProgresso,80);
+  if(t==="comunidade") setTimeout(comLoad,80);
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-"+t);if(si)si.classList.add("active");
   s.classList.add("open"); b.scrollTop=0;
