@@ -60,7 +60,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 #page-login{display:none;flex-direction:column;background:var(--navy-deep);position:relative;overflow:hidden}
 #page-login.active{display:flex;min-height:100vh}
 #page-dashboard{display:none;height:0;overflow:hidden;background:var(--white)}
-#page-dashboard.active{display:flex;flex-direction:column;min-height:100vh;overflow:visible;background:var(--white)}
+#page-dashboard.active{display:flex;flex-direction:column;overflow:visible;background:var(--white)}
 
 /* ═══════════════════════════════════════
    LOGIN — CINEMATIC HERO
@@ -888,7 +888,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 /* ── SIDEBAR LATERAL ────────────────────────────────────────────── */
 #app-layout{display:flex;align-items:stretch;min-height:100vh;}
-#app-main-col{flex:1;min-width:0;display:flex;flex-direction:column;min-height:100vh;}
+#app-main-col{flex:1;min-width:0;display:flex;flex-direction:column;}
 .side-nav{
   width:220px;flex-shrink:0;
   background:#07111E;
@@ -1015,7 +1015,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 
 /* Notebook panels */
-.nb-panel{display:none;padding:0;max-width:none;margin:0}
+.nb-panel{display:none;padding:0;max-width:none;margin:0;height:0;overflow:hidden}
 .nb-panel.active{display:block}
 /* Dashboard stays as-is */
 
@@ -3676,55 +3676,56 @@ var _tutStep = 0;
 var _tutSteps = [
   {
     title: "Bem-vindo ao seu Portal",
-    body: "Este é o seu portal de Medical English do Instituto MD Talk. Aqui você tem acesso ao seu material, histórico de aulas, progresso e muito mais. Vamos fazer um tour rápido!",
+    body: "Este é o seu portal de Medical English do Instituto MD Talk. Aqui você acessa tudo do seu programa num só lugar. Vamos fazer um tour rápido!",
     target: null, pos: "center"
   },
   {
-    title: "Sala de Aula",
-    body: "A Sala de Aula é a sua tela principal. Aqui você vê o seu cumprimento personalizado, o horário em tempo real e os botões de ação da aula.",
+    title: "Home",
+    body: "O botão Home traz você de volta à tela principal — com o seu cumprimento personalizado, o horário em tempo real e os botões de ação da aula.",
     target: "si-dashboard", pos: "right"
   },
   {
-    title: "Confirmar Presença",
-    body: "Use os botões Confirmar Presença ou Registrar Falta durante a aula. O registro é salvo automaticamente na sua planilha.",
-    target: "btn-presente", pos: "top"
-  },
-  {
-    title: "Home",
-    body: "O menu Home abre um painel com acesso rápido a todos os seus recursos: Material, Biblioteca, Listening Hub, Patient Simulator e Termos.",
+    title: "Recursos",
+    body: "Em Recursos você acessa os 8 portais do seu programa: Google Docs, Banco de Termos, Acervo de Textos, Listening Hub, Patient Simulator, Infográficos, YouGlish e Cambridge Dictionary.",
     target: "si-recursos", pos: "right"
   },
   {
     title: "Conteúdo",
-    body: "Em Conteúdo estão todos os seus arquivos do Google Drive organizados por categoria: Material principal, Material de Apoio, Curadoria e Arquivados.",
+    body: "Em Conteúdo estão todos os seus arquivos organizados por categoria: Material, Material de Apoio, Curadoria e Arquivados. Também há o Modo Apostila para navegar pelos materiais em carrossel!",
     target: "si-conteudo", pos: "right"
   },
   {
+    title: "Confirmar Presença",
+    body: "Clique em Confirmar Presença ou Registrar Falta durante a aula. O registro é salvo automaticamente.",
+    target: "btn-presente", pos: "top"
+  },
+  {
     title: "Perfil",
-    body: "Em Perfil você visualiza os seus dados cadastrais, frequência e histórico de presença nas aulas.",
+    body: "Em Perfil você visualiza os seus dados, frequência e histórico de presença nas aulas.",
     target: "si-sala", pos: "right"
   },
   {
     title: "Meu Progresso",
-    body: "Acompanhe a sua evolução — frequência, termos dominados, aulas realizadas e arquivos concluídos. Uma visão completa do seu percurso.",
+    body: "Acompanhe a sua evolução — frequência, termos dominados, aulas realizadas e arquivos concluídos.",
     target: "si-progresso", pos: "right"
   },
   {
     title: "Reagendamentos",
-    body: "Precisa reagendar uma aula? Clique aqui para aceder diretamente ao calendário de agendamento da sua mentora.",
+    body: "Precisa reagendar uma aula? Acesse diretamente o calendário da sua mentora para escolher um novo horário.",
     target: "si-reagendamento", pos: "right"
   },
   {
     title: "Feedback",
-    body: "Use o Feedback para enviar sugestões, elogios ou dúvidas à equipa do Instituto MD Talk. A sua opinião é muito importante!",
+    body: "Use o Feedback para enviar sugestões, elogios ou dúvidas à equipe do Instituto MD Talk.",
     target: "si-feedback", pos: "right"
   },
   {
     title: "Tudo pronto!",
-    body: "Você já conhece o seu portal. Qualquer dúvida, use o Feedback no menu lateral ou fale com a sua mentora. Bons estudos!",
+    body: "Você já conhece o seu portal. Em caso de dúvidas, use o Feedback ou fale com a sua mentora. Bons estudos!",
     target: null, pos: "center"
   }
 ];
+
 
 
 function abrirTutorial() {
