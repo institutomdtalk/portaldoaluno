@@ -1893,13 +1893,13 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   .mentora-pin-cancel-btn:hover{color:var(--navy)}
   
 
-.hero-slide{position:absolute;inset:0;z-index:30;overflow:hidden;display:flex;flex-direction:column;transform:translateY(110%);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;pointer-events:none;background:#F0EDE8}
+.hero-slide{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;transform:translateY(110%);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;pointer-events:none;background:#F0EDE8}
 .hero-slide.open{transform:translateY(0);opacity:1;pointer-events:all}
 .hero-slide.img-bg{background-size:cover;background-position:center}
 .hero-slide.img-bg::before{content:"";position:absolute;inset:0;background:rgba(5,13,26,.65);z-index:0}
 .hero-slide-close{position:absolute;top:18px;right:20px;z-index:40;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;color:#fff}
 .hero-slide-close:hover{background:rgba(255,255,255,.3)}
-.hero-slide-body{flex:1;overflow-y:auto;position:relative;z-index:1;padding:36px 40px;scrollbar-width:thin;scrollbar-color:rgba(196,164,90,.25) transparent}
+.hero-slide-body{flex:1;overflow-y:auto;overflow-x:hidden;position:relative;z-index:1;padding:36px 40px;scrollbar-width:thin;scrollbar-color:rgba(196,164,90,.25) transparent}
 .hero-slide-body::-webkit-scrollbar{width:4px}
 .hero-slide-body::-webkit-scrollbar-thumb{background:rgba(196,164,90,.3);border-radius:2px}
 .rc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;width:100%}
@@ -7478,6 +7478,20 @@ function comComment(postId){
 }
 // ───────────────────────────────────────────────────────────────────
 
+// Event delegation para rc-cards no heroSlideBody
+document.addEventListener("DOMContentLoaded", function(){
+  var body = document.getElementById("heroSlideBody");
+  if(body) body.addEventListener("click", function(e){
+    var card = e.target.closest(".rc-card");
+    if(!card) return;
+    var onclick = card.getAttribute("onclick");
+    if(onclick){
+      e.stopPropagation();
+      try{ eval(onclick); }catch(err){ console.error("rc-card onclick:", err); }
+    }
+  });
+});
+
 </script>
 <!-- MODALS -->
 
@@ -7936,7 +7950,6 @@ function openHome(){
   slide.style.backgroundPosition="center";
   slide.classList.add("img-bg");
   body.style.padding="0";
-  body.style.display="block";
   body.style.overflowY="auto";
   // Nome do aluno
   var nome=(window.currentStudent&&window.currentStudent.nome_display)||"médico(a)";
@@ -8250,11 +8263,15 @@ function openHeroSlideIframe(url){
   s.classList.add("open"); b.scrollTop=0;
 }
 function openSlideIframe(url){
-  var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
-  if(!s||!b) return;
-  _slideOpen(s,b,null); s.style.background="#fff"; b.style.cssText="padding:0";
-  b.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;border:none;display:block" frameborder="0" allowfullscreen></iframe>';
-  s.classList.add("open");
+  try{
+    var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
+    if(!s||!b){showToast("Erro: slide não encontrado","error");return;}
+    _slideOpen(s,b,null);
+    s.style.background="#fff";
+    b.style.cssText="padding:0;flex:1";
+    b.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;min-height:500px;border:none;display:block" frameborder="0" allowfullscreen></iframe>';
+    if(!s.classList.contains("open")) s.classList.add("open");
+  }catch(e){showToast("Erro ao abrir: "+e.message,"error");}
 }
 function openHome(){
   var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
