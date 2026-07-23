@@ -7826,7 +7826,7 @@ function _apostilaRender(){
       continue;
     }
     item.className='apostila-item '+positions[si];
-    item.style.pointerEvents=fileIdx!==ci?'all':'none';
+    item.style.pointerEvents='all'; // sempre clicável (botão Abrir no centro)
     if(item.dataset.idx!==String(fileIdx)){
       item.dataset.idx=String(fileIdx);
       item.innerHTML=_apostilaCardHTML(_apostilaFiles[fileIdx]);
