@@ -7274,6 +7274,11 @@ window.addEventListener('load', function(){
 // ── COMUNIDADE MD TALK ─────────────────────────────────────────────
 var _comPosts      = [];
 var _comLikedPosts = {};
+function comEl(id){
+  var b=document.getElementById("heroSlideBody");
+  var el=b?b.querySelector("#"+id):null;
+  return el||document.getElementById(id);
+}
 try{ _comLikedPosts=JSON.parse(localStorage.getItem('comLikes')||'{}'); }catch(e){}
 
 var _comAvatarColors = ['#0B1D3A','#1a3a5c','#2d1a4a','#0d3a2d','#3a1a0d','#1a2d3a','#2d2d0d'];
@@ -7286,42 +7291,42 @@ function comAvatarColor(name){
 function comLoad(){
   // Actualizar avatar do compositor
   if(window.currentStudent){
-    var av=document.getElementById('comMyAvatar');
+    var av=comEl('comMyAvatar');
     if(av){
       var nome=currentStudent.nome_display||currentStudent.nome||'?';
       av.textContent=nome[0].toUpperCase();
       av.style.background=comAvatarColor(nome);
     }
-    var badge=document.getElementById('comCountBadge');
+    var badge=comEl('comCountBadge');
     if(badge) badge.textContent='a carregar...';
   }
   callScript('action=get_posts', function(d){
     if(!d.success) return;
     _comPosts = d.posts || [];
-    var badge=document.getElementById('comCountBadge');
+    var badge=comEl('comCountBadge');
     if(badge) badge.textContent=_comPosts.length+' publicaç'+((_comPosts.length===1)?'ão':'ões');
     comRenderFeed();
   }, function(){
-    var feed=document.getElementById('comFeed');
+    var feed=comEl('comFeed');
     if(feed) feed.innerHTML='<p class="com-empty">Não foi possível carregar. Tente novamente.</p>';
   });
 }
 
 function comExpandir(){
-  var ex=document.getElementById('comExpanded');
-  var tr=document.getElementById('comTrigger');
+  var ex=comEl('comExpanded');
+  var tr=comEl('comTrigger');
   if(ex){ex.classList.add('open');if(tr)tr.style.display='none';}
-  setTimeout(function(){var ta=document.getElementById('comTexto');if(ta)ta.focus();},50);
+  setTimeout(function(){var ta=comEl('comTexto');if(ta)ta.focus();},50);
 }
 function comRecolher(){
-  var ex=document.getElementById('comExpanded');
-  var tr=document.getElementById('comTrigger');
+  var ex=comEl('comExpanded');
+  var tr=comEl('comTrigger');
   if(ex)ex.classList.remove('open');
   if(tr)tr.style.display='';
 }
 
 function comRenderFeed(){
-  var feed=document.getElementById('comFeed');
+  var feed=comEl('comFeed');
   if(!feed) return;
   if(!_comPosts.length){
     feed.innerHTML='<p class="com-empty">Ainda não há posts. Seja o primeiro a compartilhar!</p>';
@@ -7388,28 +7393,28 @@ function comBuildCommentForm(postId){
 }
 
 function comToggleComments(postId){
-  var sec=document.getElementById('comments_'+postId);
+  var sec=comEl('comments_'+postId);
   if(!sec) return;
   var isOpen=sec.style.display!=='none'&&sec.style.display!=='';
   sec.style.display=isOpen?'none':'block';
-  if(!isOpen){ var ta=document.getElementById('commentText_'+postId); if(ta) ta.focus(); }
+  if(!isOpen){ var ta=comEl('commentText_'+postId); if(ta) ta.focus(); }
 }
 
 function comLike(postId){
   if(_comLikedPosts[postId]) return;
   _comLikedPosts[postId]=true;
   try{ localStorage.setItem('comLikes',JSON.stringify(_comLikedPosts)); }catch(e){}
-  var btn=document.getElementById('like_'+postId);
-  var cnt=document.getElementById('likeCount_'+postId);
+  var btn=comEl('like_'+postId);
+  var cnt=comEl('likeCount_'+postId);
   if(btn){ btn.classList.add('liked'); var svg=btn.querySelector('svg'); if(svg){svg.setAttribute('fill','#e53e3e');svg.setAttribute('stroke','#e53e3e');} }
   if(cnt) cnt.textContent=(parseInt(cnt.textContent)||0)+1;
   callScript('action=like_post&id='+encodeURIComponent(postId),function(){},function(){});
 }
 
 function comPublicar(){
-  var texto=(document.getElementById('comTexto')||{}).value||'';
-  var hashtags=(document.getElementById('comHashtags')||{}).value||'';
-  var btn=document.getElementById('comPostBtn');
+  var texto=(comEl('comTexto')||{}).value||'';
+  var hashtags=(comEl('comHashtags')||{}).value||'';
+  var btn=comEl('comPostBtn');
   if(!texto.trim()) return;
   if(!window.currentStudent) return;
   var autor=currentStudent.nome_display||currentStudent.nome||'Aluno';
@@ -7425,10 +7430,10 @@ function comPublicar(){
         var newPost={id:d.id,autor:autor,especialidade:esp,texto:texto.trim(),hashtags:hashtags.trim(),curtidas:0,timestamp:d.timestamp,comentarios:[]};
         _comPosts.unshift(newPost);
         comRenderFeed();
-        document.getElementById('comTexto').value='';
-        document.getElementById('comHashtags').value='';
+        comEl('comTexto').value='';
+        comEl('comHashtags').value='';
         comRecolher();
-        var badge=document.getElementById('comCountBadge');
+        var badge=comEl('comCountBadge');
         if(badge) badge.textContent=_comPosts.length+' publicaç'+(_comPosts.length===1?'ão':'ões');
       }
       if(btn){btn.disabled=false;btn.textContent='Publicar';}
@@ -7438,7 +7443,7 @@ function comPublicar(){
 }
 
 function comComment(postId){
-  var ta=document.getElementById('commentText_'+postId);
+  var ta=comEl('commentText_'+postId);
   var texto=ta?ta.value.trim():'';
   if(!texto||!window.currentStudent) return;
   var autor=currentStudent.nome_display||currentStudent.nome||'Aluno';
@@ -7453,14 +7458,14 @@ function comComment(postId){
       if(d.success){
         var p=_comPosts.find(function(x){return x.id===postId;});
         if(p) p.comentarios=d.comentarios;
-        var sec=document.getElementById('comments_'+postId);
+        var sec=comEl('comments_'+postId);
         if(sec){
           var p2=_comPosts.find(function(x){return x.id===postId;});
           sec.innerHTML=comBuildCommentsList(p2||{comentarios:d.comentarios})+comBuildCommentForm(postId);
           sec.style.display='block';
         }
         // Actualizar contador
-        var btn=document.querySelector('#post_'+postId+' .com-action-btn:nth-child(2)');
+        var btn=(function(){var b=document.getElementById('heroSlideBody')||document;return b.querySelector('#post_'+postId+' .com-action-btn:nth-child(2)');})();
         if(btn&&p) btn.innerHTML=btn.innerHTML.replace(/\d+ comentário/,d.comentarios.length+' comentário');
       }
     },
