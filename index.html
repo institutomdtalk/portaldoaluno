@@ -2133,6 +2133,10 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
 #app-main-col:has(#heroSlide.open) #main-dashboard,
 #app-main-col:has(#heroSlide.open) #page-dashboard{ display:none !important; }
+
+/* Full-screen overlay para cobrir área abaixo do header quando slide está aberto */
+#slideOverlay{position:fixed;inset:0;background:#0B1D3A;z-index:25;display:none;pointer-events:none}
+#slideOverlay.visible{display:block}
 </style>
 </head>
 <body>
@@ -2304,7 +2308,8 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       </div>
     </div>
     <div class="header-gold-line"></div>
-    <div class="hero-slide" id="heroSlide"><button class="hero-slide-close" onclick="closeHeroSlide()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="hero-slide-body" id="heroSlideBody"></div></div>
+    <div class="hero-slide" id="heroSlide"><button class="hero-slide-close" onclick="closeHeroSlide()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="hero-slide-body" id="heroSlideBody"></div>
+<div id="slideOverlay"></div></div>
   </header>
 
 
@@ -3062,6 +3067,28 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
 
 </div><!-- end panels-container -->
+
+
+  <!-- ══ PAINEL CONTATO ══ -->
+  <div class="nb-panel" id="panel-contato" style="padding:36px 40px">
+    <p style="font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:rgba(196,164,90,.75);margin-bottom:14px">Instituto MD Talk</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:#fff;line-height:1.2;margin-bottom:8px">Entre em <em style="color:#C4A45A;font-style:italic">Contacto</em></h2>
+    <p style="font-family:Raleway,sans-serif;font-size:12px;color:rgba(255,255,255,.55);margin-bottom:32px;line-height:1.7">Estamos aqui para ajudar. Escolha o canal mais conveniente.</p>
+    <div style="display:flex;flex-direction:column;gap:14px;max-width:480px">
+      <a href="mailto:mdtalk.office@gmail.com" style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.07);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px 20px;text-decoration:none;transition:all .2s">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <div><div style="font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C4A45A;margin-bottom:3px">E-mail</div><div style="font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.75)">mdtalk.office@gmail.com</div></div>
+      </a>
+      <a href="https://wa.me/5514997758941" target="_blank" style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.07);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px 20px;text-decoration:none;transition:all .2s">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        <div><div style="font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C4A45A;margin-bottom:3px">WhatsApp</div><div style="font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.75)">(14) 99775-8941</div></div>
+      </a>
+      <a href="https://instagram.com/inglesmedico.thaifaria" target="_blank" style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.07);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px 20px;text-decoration:none;transition:all .2s">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        <div><div style="font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C4A45A;margin-bottom:3px">Instagram</div><div style="font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.75)">@inglesmedico.thaifaria</div></div>
+      </a>
+    </div>
+  </div>
 
 <script>
 var HERO_IMGS = [
@@ -8277,6 +8304,7 @@ function _restoreDash(){
   }
 }
 function _slideOpen(s,b,bg){
+  var ov=document.getElementById("slideOverlay");if(ov)ov.classList.add("visible");
   if(_closeTimer){clearTimeout(_closeTimer);_closeTimer=null;}
   _restoreDash();
   b.innerHTML=""; b.style.cssText="";
@@ -9129,6 +9157,7 @@ function openHome(){
   s.classList.add("open"); b.scrollTop=0;
 }
 function closeHeroSlide(){
+  var ov=document.getElementById("slideOverlay");if(ov)ov.classList.remove("visible");
   if(typeof _closeTimer!=="undefined"&&_closeTimer) clearTimeout(_closeTimer);
   _restoreDash();
   var dash=document.getElementById("main-dashboard");
