@@ -1893,7 +1893,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   .mentora-pin-cancel-btn:hover{color:var(--navy)}
   
 
-.hero-slide{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;transform:translateY(110%);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;pointer-events:none;background:#F0EDE8}
+.hero-slide{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;transform:translateY(110%);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;pointer-events:none;background:var(--navy-deep,#050D1A)}
 .hero-slide.open{transform:translateY(0);opacity:1;pointer-events:all}
 .hero-slide.img-bg{background-size:cover;background-position:center}
 .hero-slide.img-bg::before{content:"";position:absolute;inset:0;background:rgba(5,13,26,.65);z-index:0}
@@ -2135,8 +2135,9 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 #app-main-col:has(#heroSlide.open) #page-dashboard{ display:none !important; }
 
 /* Full-screen overlay para cobrir área abaixo do header quando slide está aberto */
-#slideOverlay{position:fixed;inset:0;background:#0B1D3A;z-index:25;display:none;pointer-events:none}
+#slideOverlay{position:fixed;inset:0;background:#0B1D3A;z-index:29;display:none;pointer-events:none}
 #slideOverlay.visible{display:block}
+.hero-slide.open ~ #slideOverlay{display:block}
 </style>
 </head>
 <body>
