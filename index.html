@@ -2710,6 +2710,17 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
         <div class="prog-kpi-bar"><div class="prog-kpi-fill" style="background:#7c3aed;width:0%" id="kpi-bar-trilha"></div></div>
       </div>
     </div>
+      <div class="prog-kpi">
+        <div class="prog-kpi-accent" style="background:#4f7c5a"></div>
+        <div class="prog-kpi-icon" style="background:#4f7c5a">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <span class="prog-kpi-badge" style="background:rgba(79,124,90,0.1);color:#4f7c5a" id="kpi-badge-verbos"></span>
+        <div class="prog-kpi-num" id="kpi-verbos">0</div>
+        <div class="prog-kpi-label">Verbos dominados</div>
+        <div class="prog-kpi-sub" id="kpi-sub-verbos">de 163 verbos irregulares</div>
+        <div class="prog-kpi-bar"><div class="prog-kpi-fill" style="background:#4f7c5a;width:0%" id="kpi-bar-verbos"></div></div>
+      </div>
 
     <!-- ROW 2: Distribution + Activity -->
     <div class="prog-two-col">
@@ -5731,6 +5742,14 @@ function renderNbProgresso() {
   var trilhaConcluidos = trilha.filter(function(m){ return m.concluido; }).length;
   var trilhaTotal = trilha.length;
 
+  // ── Verbos stats ──
+  var verbosTotal = 163;
+  var verbosDominados = Object.keys(_ivMastered||{}).filter(function(k){ return _ivMastered[k]; }).length;
+  var verbosPct = Math.round((verbosDominados/verbosTotal)*100);
+  var verbosInic = Object.keys(_ivMastered||{}).filter(function(k){ return k.indexOf("iniciante_")===0 && _ivMastered[k]; }).length;
+  var verbosMed  = Object.keys(_ivMastered||{}).filter(function(k){ return k.indexOf("medio_")===0 && _ivMastered[k]; }).length;
+  var verbosAv   = Object.keys(_ivMastered||{}).filter(function(k){ return k.indexOf("avancado_")===0 && _ivMastered[k]; }).length;
+
   // ── Streak ──
   var streak = calcStreak();
 
@@ -5754,6 +5773,11 @@ function renderNbProgresso() {
   if (el('kpi-sub-trilha')) el('kpi-sub-trilha').textContent = trilhaConcluidos + ' de ' + trilhaTotal + ' módulos';
   if (el('kpi-badge-trilha')) el('kpi-badge-trilha').textContent = trilhaTotal > 0 ? Math.round((trilhaConcluidos/trilhaTotal)*100) + '%' : '—';
   if (el('kpi-bar-trilha')) el('kpi-bar-trilha').style.width = trilhaTotal > 0 ? Math.round((trilhaConcluidos/trilhaTotal)*100) + '%' : '0%';
+
+  if (el('kpi-verbos')) el('kpi-verbos').textContent = verbosDominados;
+  if (el('kpi-sub-verbos')) el('kpi-sub-verbos').textContent = verbosPct + '% · inic:' + verbosInic + ' · inter:' + verbosMed + ' · av:' + verbosAv;
+  if (el('kpi-badge-verbos')) el('kpi-badge-verbos').textContent = verbosPct + '%';
+  if (el('kpi-bar-verbos')) el('kpi-bar-verbos').style.width = verbosPct + '%';
 
   // ── Badges ──
   if (el('nb-streak-days')) el('nb-streak-days').textContent = streak;
@@ -5872,6 +5896,10 @@ function renderProgMilestones(termos, aulas, freq, arquivos, modulos, streak) {
     { label:'Primeiro módulo da trilha', sub:'A trilha está em movimento', done: modulos >= 1 },
     { label:'7 dias de streak', sub:'Hábito criado', done: streak >= 7 },
     { label:'50 termos dominados', sub:'Vocabulário clínico em expansão', done: termos >= 50 },
+  
+    { label:'10 verbos irregulares dominados', sub:'A memória em ação', done: (Object.keys(_ivMastered||{}).filter(function(k){return _ivMastered[k];}).length >= 10) },
+    { label:'50 verbos irregulares dominados', sub:'Fluência a caminho', done: (Object.keys(_ivMastered||{}).filter(function(k){return _ivMastered[k];}).length >= 50) },
+    { label:'Todos os verbos Iniciante dominados', sub:'Base sólida em irregular verbs', done: (Object.keys(_ivMastered||{}).filter(function(k){return k.indexOf("iniciante_")===0 && _ivMastered[k];}).length >= 40) },
   ];
   el.innerHTML = milestones.map(function(m){
     return '<div class="prog-milestone">' +
