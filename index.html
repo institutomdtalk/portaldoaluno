@@ -8859,16 +8859,24 @@ function openHome(){
   s.classList.add("open"); b.scrollTop=0;
 }
 function closeHeroSlide(){
-  var s=document.getElementById("heroSlide");if(s)s.classList.remove("mural-mode");
+  var s=document.getElementById("heroSlide");
+  if(s) s.classList.remove("mural-mode");
   var ba=document.getElementById("btnApostila");if(ba)ba.remove();
-
   _restoreDash();
-  var s=document.getElementById("heroSlide");if(!s) return;
+  // Repor dashboard visível (caso openMural o tenha escondido directamente)
+  var dash=document.getElementById("main-dashboard");
+  if(dash && dash.parentElement && dash.parentElement.id!=="heroSlideBody"){
+    dash.style.removeProperty("display");
+  }
+  var page=document.getElementById("page-dashboard");
+  if(page) page.style.removeProperty("display");
+  if(!s) return;
   s.classList.remove("open","img-bg");
+  s.style.cssText="";
   setTimeout(function(){
     var b=document.getElementById("heroSlideBody");
     if(b){b.innerHTML="";b.style.cssText="";}
-    s.removeAttribute("style");
+    if(s)s.removeAttribute("style");
   },520);
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-dashboard");if(si)si.classList.add("active");
