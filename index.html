@@ -8027,30 +8027,32 @@ function muralDeletar(id){
 // ────────────────────────────────────────────────────────────────────
 
 function openMural(){
-  var _ba=document.getElementById('btnApostila');if(_ba)_ba.remove();
-  var s=document.getElementById('heroSlide'),b=document.getElementById('heroSlideBody');
-  var p=document.getElementById('panel-mural');
+  var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
+  var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
+  var p=document.getElementById("panel-mural");
   if(!s||!b||!p) return;
-  // Limpar modo anterior
-  s.classList.remove('img-bg');
-  s.removeAttribute('style');
-  s.style.background='linear-gradient(135deg,#050D1A 0%,#0B1D3A 60%,#0d2444 100%)';
-  s.classList.add('mural-mode');
-  b.style.cssText='padding:0;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;width:100%';
-  b.innerHTML='';
-  // Elementos geométricos
-  var geos=['mural-geo mural-geo-ring1','mural-geo mural-geo-ring2','mural-geo mural-geo-ring3',
-    'mural-geo mural-geo-diamond','mural-geo mural-geo-line','mural-geo mural-geo-dot1',
-    'mural-geo mural-geo-dot2','mural-geo mural-geo-dot3','mural-geo mural-geo-cross'];
-  geos.forEach(function(cls){var d=document.createElement('div');d.className=cls;b.appendChild(d);});
+  // Usar _slideOpen para limpar correctamente (esconde dashboard, limpa body)
+  _slideOpen(s,b,null);
+  // Aplicar fundo navy
+  s.style.background="linear-gradient(135deg,#050D1A 0%,#0B1D3A 60%,#0d2444 100%)";
+  s.classList.add("mural-mode");
+  b.style.cssText="padding:0;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;width:100%;position:relative";
+  // Elementos geométricos animados
+  var geoHTML='<div class="mural-geo mural-geo-ring1"></div>'
+    +'<div class="mural-geo mural-geo-ring2"></div>'
+    +'<div class="mural-geo mural-geo-ring3"></div>'
+    +'<div class="mural-geo mural-geo-diamond"></div>'
+    +'<div class="mural-geo mural-geo-line"></div>'
+    +'<div class="mural-geo mural-geo-dot1"></div>'
+    +'<div class="mural-geo mural-geo-dot2"></div>'
+    +'<div class="mural-geo mural-geo-dot3"></div>'
+    +'<div class="mural-geo mural-geo-cross"></div>';
   // Conteúdo do painel
-  var wrap=document.createElement('div');
-  wrap.innerHTML=p.innerHTML;
-  b.appendChild(wrap);
+  b.innerHTML=geoHTML+'<div style="position:relative;z-index:1">'+p.innerHTML+"</div>";
   // Sidebar active
-  document.querySelectorAll('.side-item').forEach(function(el){el.classList.remove('active');});
-  var si=document.getElementById('si-mural');if(si)si.classList.add('active');
-  s.classList.add('open');b.scrollTop=0;
+  document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
+  var si=document.getElementById("si-mural");if(si)si.classList.add("active");
+  s.classList.add("open");b.scrollTop=0;
   setTimeout(muralLoad,80);
   setTimeout(muralMarcarVisto,1500);
 }
