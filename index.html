@@ -7366,9 +7366,9 @@ setInterval(function(){
 
 function comSetSort(s){
   _comSort=s;
-  var nb=comEl('comSortNew'),ob=comEl('comSortOld');
-  if(nb){nb.classList.toggle('active',s==='new');}
-  if(ob){ob.classList.toggle('active',s==='old');}
+  // Usar querySelectorAll para apanhar TODOS os botões (clone + original)
+  document.querySelectorAll('#comSortNew').forEach(function(el){el.classList.toggle('active',s==='new');});
+  document.querySelectorAll('#comSortOld').forEach(function(el){el.classList.toggle('active',s==='old');});
   comRenderFeed();
 }
 
