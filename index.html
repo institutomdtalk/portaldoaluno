@@ -896,7 +896,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   display:flex;flex-direction:column;
   position:sticky;top:0;height:100vh;align-self:flex-start;
   transition:width .3s ease,opacity .3s;
-  overflow:hidden;z-index:10001;
+  overflow:hidden;z-index:300;
 }
 .side-nav.collapsed{width:0;border-right:none;opacity:0;}
 .side-nav-inner{width:220px;display:flex;flex-direction:column;height:100%;overflow:hidden;}
@@ -1894,7 +1894,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   .mentora-pin-cancel-btn:hover{color:var(--navy)}
   
 
-.hero-slide{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;transform:translateY(110%);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;pointer-events:none;background:#F0EDE8}
+.hero-slide{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;transform:translateY(110%);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;pointer-events:none;background:#F0EDE8}
 .hero-slide.open{transform:translateY(0);opacity:1;pointer-events:all}
 .hero-slide.img-bg{background-size:cover;background-position:center}
 .hero-slide.img-bg::before{content:"";position:absolute;inset:0;background:rgba(5,13,26,.65);z-index:0}
@@ -2157,9 +2157,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .com-edit-cancel{background:none;border:none;color:rgba(255,255,255,.35);font-family:Raleway,sans-serif;font-size:11px;cursor:pointer}
 /* ─────────────────────────────────────────────────────────────── */
 
-/* Esconder dashboard quando slide está aberto */
-#heroSlide.open ~ * #main-dashboard,
-#heroSlide.open ~ * #page-dashboard{ display:none !important; }
+
 #app-main-col:has(#heroSlide.open) #main-dashboard,
 #app-main-col:has(#heroSlide.open) #page-dashboard{ display:none !important; }
 </style>
@@ -8033,6 +8031,10 @@ function muralDeletar(id){
 // ────────────────────────────────────────────────────────────────────
 
 function openMural(){
+  var dash=document.getElementById("main-dashboard");
+  var page=document.getElementById("page-dashboard");
+  if(dash) dash.style.setProperty("display","none","important");
+  if(page) page.style.setProperty("display","none","important");
   var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
   var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
   var p=document.getElementById("panel-mural");
@@ -8053,6 +8055,10 @@ function openMural(){
 }
 
 function openComunidade(){
+  var dash=document.getElementById("main-dashboard");
+  var page=document.getElementById("page-dashboard");
+  if(dash) dash.style.setProperty("display","none","important");
+  if(page) page.style.setProperty("display","none","important");
   var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
   var p=document.getElementById("panel-comunidade");
   if(!s||!b||!p) return;
@@ -8812,6 +8818,10 @@ function openHeroSlide(t){
   s.classList.add("open"); b.scrollTop=0;
 }
 function openHeroSlideImg(t){
+  var dash=document.getElementById("main-dashboard");
+  var page=document.getElementById("page-dashboard");
+  if(dash) dash.style.setProperty("display","none","important");
+  if(page) page.style.setProperty("display","none","important");
   var img=HERO_IMGS[Math.floor(Math.random()*HERO_IMGS.length)];
   var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
   var p=document.getElementById("panel-"+t);
@@ -8820,7 +8830,8 @@ function openHeroSlideImg(t){
   b.innerHTML=p.innerHTML;
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-"+t);if(si)si.classList.add("active");
-  s.classList.add("open"); b.scrollTop=0;
+  s.classList.add("open");b.scrollTop=0;
+  if(t==="comunidade"){ setTimeout(comLoad,80); setTimeout(comMarcarVisto,1500); }
 }
 function openHeroSlideIframe(url){
   var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
@@ -8857,8 +8868,12 @@ function openHome(){
 }
 function closeHeroSlide(){
   _restoreDash();
+  var dash=document.getElementById("main-dashboard");
+  if(dash) dash.style.removeProperty("display");
+  var page=document.getElementById("page-dashboard");
+  if(page) page.style.removeProperty("display");
   var s=document.getElementById("heroSlide");if(!s) return;
-  s.classList.remove("open","img-bg");
+  s.classList.remove("open","img-bg","mural-mode");
   setTimeout(function(){
     var b=document.getElementById("heroSlideBody");
     if(b){b.innerHTML="";b.style.cssText="";}
