@@ -945,7 +945,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   flex-shrink:0;opacity:.85;
 }
 .side-footer{
-  padding:12px 22px 22px;
+  padding:12px 0 16px;
   border-top:1px solid rgba(255,255,255,.06);
 }
 .side-logout{
@@ -1893,13 +1893,13 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   .mentora-pin-cancel-btn:hover{color:var(--navy)}
   
 
-.hero-slide{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;transform:translateY(110%);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;pointer-events:none;background:var(--navy-deep,#050D1A)}
+.hero-slide{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;transform:translateY(110%);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;pointer-events:none;background:#F0EDE8}
 .hero-slide.open{transform:translateY(0);opacity:1;pointer-events:all}
 .hero-slide.img-bg{background-size:cover;background-position:center}
 .hero-slide.img-bg::before{content:"";position:absolute;inset:0;background:rgba(5,13,26,.65);z-index:0}
 .hero-slide-close{position:absolute;top:18px;right:20px;z-index:40;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;color:#fff}
 .hero-slide-close:hover{background:rgba(255,255,255,.3)}
-.hero-slide-body{flex:1;overflow-y:auto;position:relative;z-index:1;padding:36px 40px;scrollbar-width:thin;scrollbar-color:rgba(196,164,90,.25) transparent}
+.hero-slide-body{flex:1;overflow-y:auto;overflow-x:hidden;position:relative;z-index:1;padding:36px 40px;scrollbar-width:thin;scrollbar-color:rgba(196,164,90,.25) transparent}
 .hero-slide-body::-webkit-scrollbar{width:4px}
 .hero-slide-body::-webkit-scrollbar-thumb{background:rgba(196,164,90,.3);border-radius:2px}
 .rc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;width:100%}
@@ -1969,69 +1969,11 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .apostila-btn{position:absolute;top:18px;right:70px;display:flex;align-items:center;gap:6px;background:rgba(196,164,90,.15);border:1px solid rgba(196,164,90,.5);color:#C4A45A;border-radius:8px;padding:8px 14px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .2s;z-index:10;}
 .apostila-btn:hover{background:rgba(196,164,90,.3);border-color:#C4A45A;color:#D4BA7A}
 /* ─────────────────────────────────────────────────────────── */
-/* ── MURAL MD TALK ──────────────────────────────────────────────── */
-.mural-wrap{width:100%;max-width:680px}
-.mural-header{padding:28px 28px 20px;display:flex;align-items:center;justify-content:space-between}
-.mural-header-left .mural-label{font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(196,164,90,.85);margin-bottom:4px}
-.mural-header-left h2{font-family:"Cormorant Garamond",serif;font-size:2rem;font-weight:300;color:#fff;margin:0}
-.mural-header-left h2 em{font-style:italic;color:#C4A45A}
-.mural-post-btn{display:flex;align-items:center;gap:7px;background:rgba(196,164,90,.18);color:#C4A45A;border:1px solid rgba(196,164,90,.4);border-radius:20px;padding:9px 18px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .2s;backdrop-filter:blur(12px)}
-.mural-post-btn:hover{background:rgba(196,164,90,.32);border-color:#C4A45A}
-/* Grid de cards */
-.mural-grid{padding:0 20px 40px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.mural-grid:empty::after{content:"Nenhuma publicação ainda.";font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.3);font-style:italic;grid-column:1/-1;text-align:center;padding:48px 0}
-/* Card base */
-.mural-card{background:rgba(255,255,255,.09);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid rgba(255,255,255,.14);border-radius:18px;overflow:hidden;transition:all .25s;box-shadow:0 4px 24px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.12);position:relative}
-.mural-card:hover{border-color:rgba(196,164,90,.3);box-shadow:0 8px 40px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.18)}
-/* Card destaque (ocupa 2 colunas) */
-.mural-card.wide{grid-column:1/-1}
-/* Tipo badge */
-.mural-type-badge{position:absolute;top:10px;left:12px;font-family:Raleway,sans-serif;font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:rgba(5,13,26,.6);backdrop-filter:blur(8px);color:rgba(255,255,255,.7);padding:3px 9px;border-radius:20px;border:1px solid rgba(255,255,255,.12);z-index:2}
-/* Botão excluir */
-.mural-del-btn{position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:50%;background:rgba(220,50,50,.2);border:1px solid rgba(220,50,50,.3);cursor:pointer;display:none;align-items:center;justify-content:center;color:rgba(255,100,100,.8);font-size:12px;z-index:2;transition:all .2s}
-.mural-card:hover .mural-del-btn{display:flex}
-.mural-del-btn:hover{background:rgba(220,50,50,.4)}
-/* Conteúdo dos cards */
-.mural-card-body{padding:16px}
-.mural-card-text{font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.85);line-height:1.7;word-break:break-word}
-.mural-card-ts{font-family:Raleway,sans-serif;font-size:10px;color:rgba(255,255,255,.3);margin-top:10px}
-/* Vídeo embed */
-.mural-embed{width:100%;aspect-ratio:16/9;border:none;display:block}
-/* Música Spotify */
-.mural-spotify{width:100%;border:none;height:152px;display:block;border-radius:0}
-/* Link card */
-.mural-link{display:flex;align-items:center;gap:12px;padding:14px 16px;text-decoration:none}
-.mural-link-icon{width:38px;height:38px;border-radius:10px;background:rgba(196,164,90,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.mural-link-text .mural-link-title{font-family:Raleway,sans-serif;font-size:12px;font-weight:700;color:#fff;margin-bottom:3px}
-.mural-link-text .mural-link-url{font-family:Raleway,sans-serif;font-size:10px;color:rgba(196,164,90,.7);word-break:break-all}
-/* Imagem */
-.mural-img{width:100%;display:block;object-fit:cover;max-height:280px}
-/* Modal de publicação */
-.mural-modal-overlay{position:fixed;inset:0;z-index:99997;background:rgba(5,13,26,.7);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center}
-.mural-modal-overlay.open{display:flex}
-.mural-modal{background:#fff;border-radius:24px;padding:28px;width:90%;max-width:500px;box-shadow:0 24px 80px rgba(0,0,0,.35);max-height:90vh;overflow-y:auto}
-.mural-modal h3{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:300;color:#fff;margin:0 0 20px}
-.mural-modal h3 em{font-style:italic;color:#C4A45A}
-.mural-field-label{font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(196,164,90,.7);margin-bottom:7px;display:block}
-.mural-tipo-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;border:1px solid rgba(11,29,58,.1);border-radius:14px;background:#f8f8f8;cursor:pointer;font-family:Raleway,sans-serif;font-size:10px;font-weight:600;letter-spacing:.06em;color:rgba(11,29,58,.5);transition:all .2s}
-.mural-tipo-btn:hover{background:#f0ede8;border-color:rgba(196,164,90,.4);color:#0B1D3A}
-.mural-tipo-btn.active{background:rgba(196,164,90,.12);border-color:rgba(196,164,90,.5);color:#0B1D3A}
-.mural-tipo-btn.active svg{stroke:#C4A45A}
-.mural-input{width:100%;background:#f8f8f8;border:1px solid rgba(11,29,58,.1);border-radius:12px;padding:10px 14px;font-family:Raleway,sans-serif;font-size:13px;color:#0B1D3A;outline:none;box-sizing:border-box;transition:border-color .2s}
-.mural-input:focus{border-color:rgba(196,164,90,.5);background:#fff}
-.mural-input::placeholder{color:rgba(11,29,58,.3)}
-.mural-ta{min-height:90px;resize:none}
-.mural-senha-row{display:flex;align-items:center;gap:10px;margin:14px 0}
-.mural-modal-footer{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;border-top:1px solid rgba(255,255,255,.08);padding-top:16px}
-.mural-cancel-btn{background:none;border:none;font-family:Raleway,sans-serif;font-size:12px;color:rgba(11,29,58,.35);cursor:pointer}
-.mural-publish-btn{background:#0B1D3A;color:#C4A45A;border:1px solid #0B1D3A;border-radius:16px;padding:10px 24px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s}
-.mural-publish-btn:hover{background:#163158}
-.mural-publish-btn:disabled{opacity:.35;cursor:not-allowed}
-.mural-loading{text-align:center;padding:48px;font-family:Raleway,sans-serif;font-size:12px;color:rgba(255,255,255,.3)}
-/* ─────────────────────────────────────────────────────────────── */
+
+
 /* ── COMUNIDADE MD TALK ────────────────────────────────────────── */
 .com-wrap{max-width:620px;width:100%;margin:0}
-.com-header{padding:24px 20px 0;background:transparent}
+.com-header{padding:24px 20px 0}
 .com-header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
 .com-header-label{font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(196,164,90,.85);margin-bottom:4px}
 .com-header-title{font-family:"Cormorant Garamond",serif;font-size:2rem;font-weight:300;color:#fff;margin:0;line-height:1.2}
@@ -2052,7 +1994,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .com-post-btn{background:rgba(196,164,90,.22);color:#C4A45A;border:1px solid rgba(196,164,90,.45);border-radius:20px;padding:8px 22px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;backdrop-filter:blur(12px);box-shadow:0 2px 12px rgba(196,164,90,.15)}
 .com-post-btn:hover{background:rgba(196,164,90,.38);border-color:#C4A45A;box-shadow:0 4px 20px rgba(196,164,90,.25)}
 .com-post-btn:disabled{opacity:.3;cursor:not-allowed}
-.com-feed{padding:14px 20px 36px;display:flex;flex-direction:column;gap:14px;background:transparent}
+.com-feed{padding:14px 20px 36px;display:flex;flex-direction:column;gap:14px}
 .com-post{background:rgba(255,255,255,.1);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:18px 20px;transition:all .25s;box-shadow:0 4px 24px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.15)}
 .com-post:hover{background:rgba(255,255,255,.16);border-color:rgba(196,164,90,.3);box-shadow:0 8px 40px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.2)}
 .com-post-row{display:flex;gap:12px}
@@ -2129,10 +2071,6 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .com-edit-save{background:rgba(196,164,90,.25);color:#C4A45A;border:1px solid rgba(196,164,90,.4);border-radius:10px;padding:6px 16px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;cursor:pointer}
 .com-edit-cancel{background:none;border:none;color:rgba(255,255,255,.35);font-family:Raleway,sans-serif;font-size:11px;cursor:pointer}
 /* ─────────────────────────────────────────────────────────────── */
-
-
-#app-main-col:has(#heroSlide.open) #main-dashboard,
-#app-main-col:has(#heroSlide.open) #page-dashboard{ display:none !important; }
 </style>
 </head>
 <body>
@@ -2210,7 +2148,6 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       <div class="side-sub" id="sideSubOutros"><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/treinamento/','_blank')">Treinamento Complementar</div><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/expansao/','_blank')">Expansão</div></div>
       <div class="side-item" id="si-feedback" onclick="closeHeroSlide();window.open('https://forms.office.com/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAYAABgpFVNUQjE3VzVNUTU1Q045N0VNQTRYRzRZWEU0RS4u&route=shorturl','_blank')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Feedback</div>
     <div class="side-footer">
-            <div class="side-item" id="si-mural" onclick="openHeroSlideImg('mural')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Mural MD Talk<span class="side-bell" id="muralBell" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="side-bell-dot"></span></span></div>
       <div class="side-item" id="si-comunidade" onclick="openHeroSlideImg('comunidade')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>Comunidade<span class="side-bell" id="comBell" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="side-bell-dot"></span></span></div>
       <div class="side-item" id="si-contato" onclick="openHeroSlideImg('contato')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Contato</div>
       <div class="side-item" id="si-tutorial" onclick="closeHeroSlide();abrirTutorial()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="8"/><path d="M12 12v4"/></svg>Tutorial</div>
@@ -2793,6 +2730,35 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   <!-- ══ PAINEL GAMES ══ -->
 
 
+  <!-- ══ PAINEL CONTATO ══ -->
+  <div class="nb-panel" id="panel-contato">
+    <p style="font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:rgba(196,164,90,.75);margin-bottom:14px">Instituto MD Talk</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:#fff;line-height:1.2;margin-bottom:6px">Fale <em style="font-style:italic;color:#C4A45A">conosco</em></h2>
+    <p style="font-family:Raleway,sans-serif;font-size:12px;color:rgba(255,255,255,.55);margin-bottom:32px;line-height:1.7;max-width:440px">Siga-nos nas redes e nos marque após a sua aula. A sua evolução inspira outros médicos!</p>
+    <div style="display:flex;flex-direction:column;gap:14px;max-width:480px">
+      <a href="mailto:mdtalk.office@gmail.com" style="display:flex;align-items:center;gap:16px;padding:18px 22px;background:rgba(255,255,255,.08);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:16px;text-decoration:none;transition:background .25s,border-color .25s" onmouseover="this.style.background='rgba(196,164,90,.15)';this.style.borderColor='rgba(196,164,90,.4)'" onmouseout="this.style.background='rgba(255,255,255,.08)';this.style.borderColor='rgba(255,255,255,.14)'">
+        <div style="width:42px;height:42px;border-radius:12px;background:rgba(196,164,90,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div><div style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,164,90,.8);margin-bottom:4px">E-mail</div><div style="font-family:Raleway,sans-serif;font-size:13px;color:#fff;font-weight:500">mdtalk.office@gmail.com</div></div>
+      </a>
+      <a href="https://wa.me/5514997758941" target="_blank" style="display:flex;align-items:center;gap:16px;padding:18px 22px;background:rgba(255,255,255,.08);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:16px;text-decoration:none;transition:background .25s,border-color .25s" onmouseover="this.style.background='rgba(196,164,90,.15)';this.style.borderColor='rgba(196,164,90,.4)'" onmouseout="this.style.background='rgba(255,255,255,.08)';this.style.borderColor='rgba(255,255,255,.14)'">
+        <div style="width:42px;height:42px;border-radius:12px;background:rgba(196,164,90,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
+        <div><div style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,164,90,.8);margin-bottom:4px">WhatsApp</div><div style="font-family:Raleway,sans-serif;font-size:13px;color:#fff;font-weight:500">(14) 99775-8941</div></div>
+      </a>
+      <div style="display:flex;align-items:center;gap:16px;padding:18px 22px;background:rgba(255,255,255,.08);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:16px;">
+        <div style="width:42px;height:42px;border-radius:12px;background:rgba(196,164,90,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+        <div style="flex:1"><div style="font-family:Raleway,sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,164,90,.8);margin-bottom:4px">Instagram</div><div style="font-family:Raleway,sans-serif;font-size:13px;color:#fff;font-weight:500">@inglesmedico.thaifaria</div><div style="font-family:Raleway,sans-serif;font-size:10px;color:rgba(255,255,255,.4);margin-top:3px">Toque no QR para ampliar &#8594;</div></div>
+        <div style="flex-shrink:0;cursor:pointer" onclick="document.getElementById('qrLightbox').style.display='flex'">
+          <img src="https://institutomdtalk.github.io/portaldoaluno/assets/qr-instagram.png" alt="QR Instagram" style="width:80px;height:80px;border-radius:10px;object-fit:contain;background:#fff;padding:4px;transition:transform .2s" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:80px;height:80px;border-radius:10px;background:rgba(255,255,255,.08);align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,.35);text-align:center;font-family:Raleway,sans-serif;line-height:1.5">QR Code<br>em breve</div>
+        </div>
+      </div>
+    </div>
+    <p style="font-family:Raleway,sans-serif;font-size:11px;color:rgba(255,255,255,.35);line-height:1.7;font-style:italic;margin-top:28px;max-width:440px">Marque-nos com <strong style="color:#C4A45A">#institutomdtalk</strong> e <strong style="color:#C4A45A">#inglesmedico</strong> nas suas conquistas.</p>
+  </div>
+
+  
+  
+  
   <!-- ══ PAINEL COMUNIDADE ══ -->
   <div class="nb-panel" id="panel-comunidade" style="padding:0;overflow-y:auto;min-height:100%">
     <div class="com-wrap">
@@ -2831,24 +2797,6 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       </div>
     </div>
   </div>
-
-
-  <!-- ══ PAINEL MURAL MD TALK ══ -->
-  <div class="nb-panel" id="panel-mural" style="padding:0;overflow-y:auto;min-height:100%">
-    <div class="mural-wrap">
-
-      <!-- Header -->
-      <div class="mural-header">
-        <div class="mural-header-left">
-          <div class="mural-label">Instituto MD Talk</div>
-          <h2>Mural <em>MD Talk</em></h2>
-        </div>
-        <button class="mural-post-btn" id="muralOpenBtn" onclick="muralToggleForm()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="13" height="13"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Nova publicação
-        </button>
-      </div>
-
 
   <main class="dashboard" id="main-dashboard" style="display:none">
 
@@ -3062,28 +3010,6 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
 
 </div><!-- end panels-container -->
-
-
-  <!-- ══ PAINEL CONTATO ══ -->
-  <div class="nb-panel" id="panel-contato" style="padding:36px 40px">
-    <p style="font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:rgba(196,164,90,.75);margin-bottom:14px">Instituto MD Talk</p>
-    <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:#fff;line-height:1.2;margin-bottom:8px">Entre em <em style="color:#C4A45A;font-style:italic">Contacto</em></h2>
-    <p style="font-family:Raleway,sans-serif;font-size:12px;color:rgba(255,255,255,.55);margin-bottom:32px;line-height:1.7">Estamos aqui para ajudar. Escolha o canal mais conveniente.</p>
-    <div style="display:flex;flex-direction:column;gap:14px;max-width:480px">
-      <a href="mailto:mdtalk.office@gmail.com" style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.07);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px 20px;text-decoration:none;transition:all .2s">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        <div><div style="font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C4A45A;margin-bottom:3px">E-mail</div><div style="font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.75)">mdtalk.office@gmail.com</div></div>
-      </a>
-      <a href="https://wa.me/5514997758941" target="_blank" style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.07);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px 20px;text-decoration:none;transition:all .2s">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-        <div><div style="font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C4A45A;margin-bottom:3px">WhatsApp</div><div style="font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.75)">(14) 99775-8941</div></div>
-      </a>
-      <a href="https://instagram.com/inglesmedico.thaifaria" target="_blank" style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.07);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px 20px;text-decoration:none;transition:all .2s">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        <div><div style="font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C4A45A;margin-bottom:3px">Instagram</div><div style="font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.75)">@inglesmedico.thaifaria</div></div>
-      </a>
-    </div>
-  </div>
 
 <script>
 var HERO_IMGS = [
@@ -7385,8 +7311,6 @@ window.addEventListener('load', function(){
   }
   showPage('login'); // no saved credentials
 });
-
-// ─── JS Comunidade ───
 // ── COMUNIDADE MD TALK ─────────────────────────────────────────────
 var _comPosts      = [];
 var _comLikedPosts = {};
@@ -7710,690 +7634,20 @@ function comComment(postId){
 }
 // ───────────────────────────────────────────────────────────────────
 
-// ─── JS Mural ───
-// ── MURAL MD TALK ──────────────────────────────────────────────────
-var _muralPosts = [];
-// Verificar novos posts do Mural a cada 5 minutos
-setInterval(function(){
-  var slide=document.getElementById("heroSlide");
-  var isMuralOpen=slide&&slide.classList.contains("open")&&document.getElementById("muralGrid");
-  if(!isMuralOpen){
-    callScript("action=get_mural",function(d){
-      if(d&&d.success&&d.posts&&d.posts.length){
-        _muralPosts=d.posts;
-        muralCheckNovos();
-      }
-    },function(){});
-  }
-},300000);
-var MURAL_SENHA = '0202';
-
-function muralEl(id){
-  var b=document.getElementById('heroSlideBody');
-  var el=b?b.querySelector('#'+id):null;
-  return el||document.getElementById(id);
-}
-
-function muralCheckNovos(){
-  var lastSeen=localStorage.getItem("muralLastSeen")||"";
-  var bell=document.getElementById("muralBell");
-  if(!bell||!_muralPosts.length) return;
-  var latest=_muralPosts[0]&&_muralPosts[0].id;
-  bell.style.display=(latest&&latest!==lastSeen)?"inline-flex":"none";
-}
-function muralMarcarVisto(){
-  if(_muralPosts.length){
-    localStorage.setItem("muralLastSeen",_muralPosts[0].id);
-    var bell=document.getElementById("muralBell");
-    if(bell) bell.style.display="none";
-  }
-}
-function muralLoad(){
-  // Encontrar o grid — procurar em todo o documento
-  var grid=document.querySelector('#heroSlideBody #muralGrid')
-    ||document.getElementById('muralGrid');
-  if(!grid){
-    // Tentar novamente em 200ms se o DOM ainda não estiver pronto
-    setTimeout(muralLoad,200);
-    return;
-  }
-  grid.innerHTML='<div class="mural-loading">A carregar publicações...</div>';
-  callScript('action=get_mural',
-    function(d){
-      var g=document.querySelector('#heroSlideBody #muralGrid')||document.getElementById('muralGrid');
-      if(!g) return;
-      if(!d||!d.success){
-        g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:32px;font-family:Raleway,sans-serif;color:rgba(255,255,255,.4)">Erro: '+(d&&d.error?d.error:'Backend não reconhece get_mural. Republique o Apps Script.')+'<br><br><button onclick="muralLoad()" style="color:#C4A45A;background:rgba(196,164,90,.15);border:1px solid rgba(196,164,90,.3);border-radius:12px;padding:7px 16px;font-family:Raleway,sans-serif;font-size:11px;cursor:pointer">Tentar novamente</button></div>';
-        return;
-      }
-      _muralPosts=d.posts||[];
-      muralRenderGrid(g);
-      muralCheckNovos();
-    },
-    function(){
-      var g=document.querySelector('#heroSlideBody #muralGrid')||document.getElementById('muralGrid');
-      if(g) g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:32px;font-family:Raleway,sans-serif;color:rgba(255,255,255,.4)">Sem resposta do servidor.<br><small style="opacity:.6">Verifique se o Apps Script foi republicado com a versão mais recente.</small><br><br><button onclick="muralLoad()" style="color:#C4A45A;background:rgba(196,164,90,.15);border:1px solid rgba(196,164,90,.3);border-radius:12px;padding:7px 16px;font-family:Raleway,sans-serif;font-size:11px;cursor:pointer">Tentar novamente</button></div>';
-    }
-  );
-}
-
-function muralRender(){
-  var g=document.querySelector('#heroSlideBody #muralGrid')||document.getElementById('muralGrid');
-  if(g) muralRenderGrid(g);
-}
-function muralRenderGrid(grid){
-  if(!_muralPosts.length){
-    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:48px 0;font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.3);font-style:italic">Nenhuma publicação ainda.</div>';
-    return;
-  }
-  grid.innerHTML=_muralPosts.map(muralBuildCard).join('');
-}
-
-function muralBuildCard(p){
-  var tipo=p.tipo||'aviso';
-  var wide=tipo==='video'||tipo==='musica'?'wide':'';
-  var badgeLabel={aviso:'Aviso',link:'Link',video:'Vídeo',musica:'Música',imagem:'Imagem'}[tipo]||tipo;
-  var ts='<div class="mural-card-ts">Thaiana · '+p.timestamp+'</div>';
-  var body='';
-
-  if(tipo==='aviso'){
-    body='<div class="mural-card-body">'
-      +'<div class="mural-card-text">'+p.conteudo.replace(/\n/g,'<br>')+'</div>'
-      +ts+'</div>';
-
-  } else if(tipo==='link'){
-    var desc=p.descricao?'<div style="font-family:Raleway,sans-serif;font-size:11px;color:rgba(255,255,255,.45);margin-top:6px">'+p.descricao+'</div>':'';
-    body='<a class="mural-link" href="'+p.conteudo+'" target="_blank">'
-      +'<div class="mural-link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" width="18" height="18"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>'
-      +'<div class="mural-link-text"><div class="mural-link-title">'+(p.descricao||p.conteudo)+'</div><div class="mural-link-url">'+p.conteudo+'</div></div>'
-      +'</a>'
-      +'<div class="mural-card-body" style="padding-top:0">'+ts+'</div>';
-
-  } else if(tipo==='video'){
-    // Converter URL YouTube para embed
-    var yt=p.conteudo.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-    var embed=yt?'https://www.youtube.com/embed/'+yt[1]+'?rel=0':p.conteudo;
-    body='<iframe class="mural-embed" src="'+embed+'" allowfullscreen></iframe>'
-      +'<div class="mural-card-body">'+(p.descricao?'<div class="mural-card-text" style="margin-bottom:8px">'+p.descricao+'</div>':'')+ts+'</div>';
-
-  } else if(tipo==='musica'){
-    var raw=p.conteudo;
-    var sp=raw.split('?')[0];
-    // Remover locale ex: /intl-pt/
-    sp=sp.replace(/\/intl-[a-z]{2,5}\//g,'/');
-    // Remover trailing slash
-    sp=sp.replace(/\/$/,'');
-    // Só funciona com open.spotify.com — validar
-    if(sp.indexOf('open.spotify.com')===-1){
-      body='<div class="mural-card-body">'
-        +'<div class="mural-card-text" style="color:rgba(255,100,100,.8)">Link Spotify inválido. Use o link completo: open.spotify.com/track/...</div>'
-        +'<a href="'+raw+'" target="_blank" style="color:#C4A45A;font-family:Raleway,sans-serif;font-size:11px">Tentar abrir ↗</a>'
-        +ts+'</div>';
-    } else {
-      if(sp.indexOf('/embed/')===-1){
-        sp=sp.replace('https://open.spotify.com/','https://open.spotify.com/embed/');
-      }
-      sp=sp.replace(/\/embed\/embed\//g,'/embed/');
-      sp+='?utm_source=generator&theme=0';
-      body='<div>'
-        +'<iframe src="'+sp+'" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" style="border-radius:0;display:block"></iframe>'
-        +'</div>'
-        +'<div class="mural-card-body">'+(p.descricao?'<div class="mural-card-text" style="margin-bottom:8px">'+p.descricao+'</div>':'')
-        +'<a href="'+raw+'" target="_blank" style="display:inline-flex;align-items:center;gap:4px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;margin-top:6px">Abrir no Spotify &#8599;</a>'
-        +ts+'</div>';
-    }
-  } else if(tipo==='imagem'){
-    body='<img class="mural-img" src="'+p.conteudo+'" alt="'+(p.descricao||'Imagem')+'" onerror="this.style.display=\'none\'">'
-      +'<div class="mural-card-body">'+(p.descricao?'<div class="mural-card-text" style="margin-bottom:8px">'+p.descricao+'</div>':'')+ts+'</div>';
-  }
-
-  return '<div class="mural-card '+wide+'" id="mcard_'+p.id+'">'
-    +'<div class="mural-type-badge">'+badgeLabel+'</div>'
-    +'<button class="mural-del-btn" onclick="muralDeletar(\''+p.id+'\')" title="Excluir">✕</button>'
-    +body+'</div>';
-}
-
-function muralToggleForm(){
-  var b=document.getElementById("heroSlideBody");
-  var form=b?b.querySelector("#muralForm"):document.getElementById("muralForm");
-  var btn=b?b.querySelector("#muralOpenBtn"):document.getElementById("muralOpenBtn");
-  if(!form) return;
-  var open=form.style.display!=="none";
-  form.style.display=open?"none":"block";
-  if(!open){
-    window._muralTipoActual="aviso";
-    var senha=form.querySelector("#muralSenha");if(senha)senha.value="";
-    var cont=form.querySelector("#muralConteudo");if(cont)cont.value="";
-    var desc=form.querySelector("#muralDescricao");if(desc)desc.value="";
-    form.querySelectorAll(".mural-tipo-btn").forEach(function(b,i){b.classList.toggle("active",i===0);});
-    muralSelectTipo("aviso",form.querySelector(".mural-tipo-btn"));
-  }
-}
-function muralAbrirModal(){ muralToggleForm(); }
-function muralFecharModal(){ muralToggleForm(); }
-
-
-function muralSelectTipo(tipo, btn){
-  window._muralTipoActual=tipo;
-  var container=btn?btn.closest("#muralForm"):null;
-  var b=document.getElementById("heroSlideBody");
-  if(!container) container=b?b.querySelector("#muralForm"):document.getElementById("muralForm");
-  if(container){
-    container.querySelectorAll(".mural-tipo-btn").forEach(function(el){el.classList.remove("active");});
-    if(btn) btn.classList.add("active");
-  }
-  var labels={aviso:"Texto / Aviso",link:"URL do link",video:"URL do YouTube",musica:"URL do Spotify",imagem:"URL da imagem"};
-  var placeholders={aviso:"Escreva o aviso ou mensagem...",link:"https://...",video:"https://youtube.com/watch?v=...",musica:"https://open.spotify.com/track/...",imagem:"https://..."};
-  var lbl=container?container.querySelector("#muralConteudoLabel"):null;
-  var ta=container?container.querySelector("#muralConteudo"):null;
-  var wrap=container?container.querySelector("#muralDescricaoWrap"):null;
-  if(lbl) lbl.textContent=labels[tipo]||"Conteúdo";
-  if(ta){ ta.placeholder=placeholders[tipo]||""; ta.rows=(tipo==="aviso"?4:2); }
-  if(wrap) wrap.style.display=(tipo==="aviso"?"none":"block");
-}
-function muralTipoChange(){ muralSelectTipo(window._muralTipoActual||"aviso", document.querySelector(".mural-tipo-btn.active")); }
-
-function muralPublicar(){
-  var b=document.getElementById("heroSlideBody");
-  var tipo=window._muralTipoActual||"aviso";
-  var conteudoEl=b?b.querySelector("#muralConteudo"):document.getElementById("muralConteudo");
-  var descEl=b?b.querySelector("#muralDescricao"):document.getElementById("muralDescricao");
-  var senhaEl=b?b.querySelector("#muralSenha"):document.getElementById("muralSenha");
-  var btnEl=b?b.querySelector("#muralPublishBtn"):document.getElementById("muralPublishBtn");
-  var conteudo=conteudoEl?conteudoEl.value.trim():"";
-  var descricao=descEl?descEl.value.trim():"";
-  var senha=senhaEl?senhaEl.value:"";
-  if(!conteudo){showToast("Preencha o conteúdo.","warning");return;}
-  // Validar URL Spotify
-  if(tipo==="musica" && conteudo.indexOf("open.spotify.com")===-1){
-    showToast("Use o link completo do Spotify: open.spotify.com/track/...","warning");
-    return;
-  }
-  if(senha!==MURAL_SENHA){showToast("Senha incorreta.","error");if(senhaEl)senhaEl.focus();return;}
-  if(btnEl){btnEl.disabled=true;btnEl.textContent="Publicando...";}
-  callScript("action=add_mural&tipo="+encodeURIComponent(tipo)
-    +"&conteudo="+encodeURIComponent(conteudo)
-    +"&descricao="+encodeURIComponent(descricao),
-    function(d){
-      if(d&&d.success){
-        var newPost={id:d.id,tipo:tipo,conteudo:conteudo,descricao:descricao,timestamp:d.timestamp};
-        _muralPosts.unshift(newPost);
-        var g=b?b.querySelector("#muralGrid"):document.getElementById("muralGrid");
-        if(g) muralRenderGrid(g);
-        muralMarcarVisto();
-        muralToggleForm();
-        showToast("Publicado no Mural!","success");
-      } else showToast("Erro: "+(d&&d.error?d.error:"Verifique o backend."),"error");
-      if(btnEl){btnEl.disabled=false;btnEl.textContent="Publicar no Mural";}
-    },
-    function(){
-      showToast("Sem resposta. Republique o Apps Script.","error");
-      if(btnEl){btnEl.disabled=false;btnEl.textContent="Publicar no Mural";}
-    }
-  );
-}
-
-function muralDeletar(id){
-  if(!confirm("Excluir esta publicação do Mural?")) return;
-  var senha=prompt("Senha para excluir:");
-  if(senha!==MURAL_SENHA){showToast("Senha incorreta.","error");return;}
-  callScript("action=delete_mural&id="+encodeURIComponent(id),
-    function(d){
-      if(d&&d.success){
-        _muralPosts=_muralPosts.filter(function(p){return p.id!==id;});
-        var b=document.getElementById("heroSlideBody");
-        var gd=b?b.querySelector("#muralGrid"):document.getElementById("muralGrid");
-        if(gd) muralRenderGrid(gd);
-        showToast("Publicação excluída.","success");
-      } else showToast("Erro ao excluir.","error");
-    },function(){showToast("Erro de conexão.","error");}
-  );
-}
-// ────────────────────────────────────────────────────────────────────
-
-// ─── openMural ───
-function openMural(){
-  var dash=document.getElementById("main-dashboard");
-  var page=document.getElementById("page-dashboard");
-  if(dash) dash.style.setProperty("display","none","important");
-  if(page) page.style.setProperty("display","none","important");
-  var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
-  var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
-  var p=document.getElementById("panel-mural");
-  if(!s||!b||!p) return;
-  _slideOpen(s,b,null);
-  s.style.background="linear-gradient(135deg,#050D1A 0%,#0B1D3A 60%,#0d2444 100%)";
-  s.classList.add("mural-mode");
-  b.style.cssText="padding:0;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;width:100%;position:relative";
-  var geo=["mural-geo-ring1","mural-geo-ring2","mural-geo-ring3","mural-geo-diamond",
-    "mural-geo-line","mural-geo-dot1","mural-geo-dot2","mural-geo-dot3","mural-geo-cross"];
-  b.innerHTML=geo.map(function(c){return '<div class="mural-geo '+c+'"></div>';}).join("")
-    +'<div style="position:relative;z-index:1">'+p.innerHTML+"</div>";
-  document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
-  var si=document.getElementById("si-mural");if(si)si.classList.add("active");
-  s.classList.add("open");b.scrollTop=0;
-  setTimeout(muralLoad,80);
-  setTimeout(muralMarcarVisto,1500);
-}
-
-// ─── openComunidade ───
-function openComunidade(){
-  var dash=document.getElementById("main-dashboard");
-  var page=document.getElementById("page-dashboard");
-  if(dash) dash.style.setProperty("display","none","important");
-  if(page) page.style.setProperty("display","none","important");
-  var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
-  var p=document.getElementById("panel-comunidade");
-  if(!s||!b||!p) return;
-  _slideOpen(s,b,null);
-  s.style.background="linear-gradient(135deg,#050D1A 0%,#0B1D3A 60%,#0d2444 100%)";
-  b.style.cssText="padding:0;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;width:100%;position:relative";
-  b.innerHTML=p.innerHTML;
-  document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
-  var si=document.getElementById("si-comunidade");if(si)si.classList.add("active");
-  s.classList.add("open");b.scrollTop=0;
-  setTimeout(comLoad,80);
-  setTimeout(comMarcarVisto,1500);
-}
-
-// ─── comHelp+Bell ───
-function comHelpAbrir(){var o=document.getElementById("comHelpOverlay");if(o)o.classList.add("open");}
-function comHelpFechar(){var o=document.getElementById("comHelpOverlay");if(o)o.classList.remove("open");}
-
-function comCheckNovos(){
-  // Verificar se há posts mais recentes do que o último visto
-  var lastSeen=localStorage.getItem("comLastSeen")||"";
-  var bell=document.getElementById("comBell");
-  if(!bell||!_comPosts.length) return;
-  var latest=_comPosts[0]&&_comPosts[0].id;
-  if(latest && latest!==lastSeen){
-    bell.style.display="inline-flex";
-  } else {
-    bell.style.display="none";
-  }
-}
-
-function comMarcarVisto(){
-  if(_comPosts.length){
-    localStorage.setItem("comLastSeen",_comPosts[0].id);
-    var bell=document.getElementById("comBell");
-    if(bell) bell.style.display="none";
-  }
-}
-
-function comLoad(){
-  var av=comEl("comMyAvatar");
-  if(av&&window.currentStudent){var n=comMeuNome();av.textContent=n[0]?n[0].toUpperCase():"?";av.style.background=comAvatarColor(n);}
-  var badge=comEl("comCountBadge");if(badge)badge.textContent="carregando...";
-  var feed=comEl("comFeed");
-  if(feed)feed.innerHTML='<div class="com-loading">Carregando posts...</div>';
-  callScript("action=get_posts",function(d){
-    if(!d||!d.success){
-      if(feed)feed.innerHTML='<div style="text-align:center;padding:32px"><p class="com-empty" style="margin-bottom:16px">Erro ao carregar posts.</p>'
-        +'<button onclick="comLoad()" style="background:rgba(196,164,90,.2);color:#C4A45A;border:1px solid rgba(196,164,90,.35);border-radius:16px;padding:8px 20px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.1em;text-transform:uppercase">Tentar novamente</button></div>';
-      return;
-    }
-    _comPosts=d.posts||[];
-    var b=comEl("comCountBadge");if(b)b.textContent=_comPosts.length+" publicaç"+(_comPosts.length===1?"ão":"ões");
-    comRenderFeed();
-    comCheckNovos();
-  },function(){
-    // Tentar novamente automaticamente após 3s
-    if(feed)feed.innerHTML='<div style="text-align:center;padding:32px"><p class="com-empty" style="margin-bottom:16px">Sem resposta do servidor. Verificando...</p>'
-      +'<button onclick="comLoad()" style="background:rgba(196,164,90,.2);color:#C4A45A;border:1px solid rgba(196,164,90,.35);border-radius:16px;padding:8px 20px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.1em;text-transform:uppercase">Tentar novamente</button></div>';
-    setTimeout(comLoad, 3000);
-  });
-}
-
-// Verificar novos posts a cada 5 minutos (apenas em background)
-setInterval(function(){
-  var slide=document.getElementById("heroSlide");
-  var isComOpen=slide&&slide.classList.contains("open")&&document.getElementById("comFeed");
-  if(!isComOpen&&_comPosts.length){
-    callScript("action=get_posts",function(d){if(d&&d.success&&d.posts&&d.posts.length){_comPosts=d.posts;comCheckNovos();}},function(){});
-  }
-},300000);
-
-
-
-// ─── muralBell ───
-function muralCheckNovos(){
-  var lastSeen=localStorage.getItem("muralLastSeen")||"";
-  var bell=document.getElementById("muralBell");
-  if(!bell||!_muralPosts.length) return;
-  var latest=_muralPosts[0]&&_muralPosts[0].id;
-  bell.style.display=(latest&&latest!==lastSeen)?"inline-flex":"none";
-}
-function muralMarcarVisto(){
-  if(_muralPosts.length){
-    localStorage.setItem("muralLastSeen",_muralPosts[0].id);
-    var bell=document.getElementById("muralBell");
-    if(bell) bell.style.display="none";
-  }
-}
-
-
-// ─── polling ───
-// Verificar novos posts do Mural a cada 5 minutos
-setInterval(function(){
-  var slide=document.getElementById("heroSlide");
-  var isMuralOpen=slide&&slide.classList.contains("open")&&document.getElementById("muralGrid");
-  if(!isMuralOpen){
-    callScript("action=get_mural",function(d){
-      if(d&&d.success&&d.posts&&d.posts.length){
-        _muralPosts=d.posts;
-        muralCheckNovos();
-      }
-    },function(){});
-  }
-},300000);
-
-// ─── closeTimer ───
-var _closeTimer=null;
-var _dashOrigParent=null;
-function openMaterial(){
-  var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
-  var dash=document.getElementById("main-dashboard");
-  if(!s||!b||!dash) return;
-  // Guardar o pai original se ainda não foi guardado
-  if(!_dashOrigParent) _dashOrigParent=dash.parentElement;
-  // Preparar slide
-  b.innerHTML=""; b.style.cssText="overflow-y:auto";
-  s.removeAttribute("style"); s.classList.remove("img-bg"); s.style.background="#F0EDE8";
-  // Mover o elemento REAL para o slide
-  b.appendChild(dash);
-  dash.style.removeProperty("display");
-  dash.style.setProperty("display","grid","important");
-  // Popular ficheiros se necessário
-  var fr=document.getElementById("drive-first-row");
-  if(fr && fr.children.length===0){
-    var files=window._allDriveFiles||window._cachedDriveFiles;
-    if(files&&files.length){
-      renderDriveFilesCard(files);
-    } else if(window.currentStudent){
-      callScript("action=get_drive_files&login="+encodeURIComponent(currentStudent.login),
-        function(d){if(d.success){window._cachedDriveFiles=d.files||[];renderDriveFilesCard(d.files||[]);}},
-        function(){}
-      );
-    }
-  }
-  switchDriveTab("minha");
-  document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
-  var si=document.getElementById("si-conteudo");if(si)si.classList.add("active");
-  s.classList.add("open"); b.scrollTop=0;
-  // Botão Modo Apostila
-  setTimeout(function(){
-    if(!document.getElementById('btnApostila')){
-      var btn=document.createElement('button');
-      btn.id='btnApostila';
-      btn.className='apostila-btn';
-      btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> Modo Apostila';
-      btn.onclick=abrirApostila;
-      s.appendChild(btn);
-    }
-  },200);
-}
-function openGoogleDoc(){
-  if(!window.currentStudent) return;
-  var url=currentStudent.link_docs;
-  if(!url||!url.trim()||url.trim()==="undefined"){
-    showToast("Google Doc não configurado. Fale com a Thaiana.","warning");
-    return;
-  }
-  // Garantir formato embed
-  var embedUrl=url.trim();
-  if(embedUrl.indexOf("embedded=true")===-1){
-    embedUrl+=(embedUrl.indexOf("?")===-1?"?":"&")+"embedded=true";
-  }
-  openSlideIframe(embedUrl);
-  document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
-}
-
-// ── MODO APOSTILA ──────────────────────────────────────────────────
-var _apostilaFiles=[], _apostilaIdx=0, _apostilaTouchX=null;
-
-function abrirApostila(){
-  var files=window._allDriveFiles||window._cachedDriveFiles||[];
-  _apostilaFiles=files.filter(function(f){return !f.tag||f.tag===''||f.tag==='minha';});
-  if(!_apostilaFiles.length){showToast('Nenhum arquivo encontrado.','warning');return;}
-  _apostilaIdx=0;
-  _apostilaRender();
-  document.getElementById('apostilaOverlay').classList.add('open');
-  document.addEventListener('keydown',_apostilaKey);
-  var stage=document.getElementById('apostilaStage');
-  // Event delegation para botão Abrir
-  stage.addEventListener('click',function(e){
-    var btn=e.target.closest('#apostilaStage .apostila-open');
-    if(btn){
+// Event delegation para rc-cards no heroSlideBody
+document.addEventListener("DOMContentLoaded", function(){
+  var body = document.getElementById("heroSlideBody");
+  if(body) body.addEventListener("click", function(e){
+    var card = e.target.closest(".rc-card");
+    if(!card) return;
+    var onclick = card.getAttribute("onclick");
+    if(onclick){
       e.stopPropagation();
-      var fid=btn.id.replace('apbtn_','');
-      var f=window._apFiles&&window._apFiles[fid];
-      if(f) openDriveViewer(f);
+      try{ eval(onclick); }catch(err){ console.error("rc-card onclick:", err); }
     }
   });
-  stage.ontouchstart=function(e){_apostilaTouchX=e.touches[0].clientX;};
-  stage.ontouchend=function(e){
-    if(_apostilaTouchX===null)return;
-    var dx=e.changedTouches[0].clientX-_apostilaTouchX;
-    if(Math.abs(dx)>40)apostilaNav(dx<0?1:-1);
-    _apostilaTouchX=null;
-  };
-}
+});
 
-function fecharApostila(){
-  document.getElementById('apostilaOverlay').classList.remove('open');
-  document.removeEventListener('keydown',_apostilaKey);
-}
-
-function _apostilaKey(e){
-  if(e.key==='ArrowLeft') apostilaNav(-1);
-  if(e.key==='ArrowRight') apostilaNav(1);
-  if(e.key==='Escape') fecharApostila();
-}
-
-function apostilaAbrir(btnId){
-  var fid=btnId.replace("apbtn_","");
-  var f=window._apFiles&&window._apFiles[fid];
-  if(!f) return;
-  openDriveViewer(f);
-}
-
-function apostilaNav(dir){
-  _apostilaIdx=Math.max(0,Math.min(_apostilaFiles.length-1,_apostilaIdx+dir));
-  _apostilaRender();
-}
-
-function _apostilaCardHTML(f){
-  var info=getMimeIcon(f.mimeType||'');
-  var color=info[0],label=info[1],svgPaths=info[2];
-  var iconHtml='<div class="apostila-thumb-icon">'
-    +'<svg viewBox="0 0 24 24" fill="none" stroke="'+color+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">'+svgPaths+'</svg>'
-    +'<span>'+label+'</span></div>';
-  var thumb=f._thumb||(window._thumbCache&&window._thumbCache[f.id]);
-  var thumbInner=thumb
-    ? '<img src="'+thumb+'" id="ap_'+f.id+'" style="width:100%;height:100%;object-fit:cover;display:block;animation:apostilaFadeIn .4s ease">'
-    : iconHtml+'<img id="ap_'+f.id+'" style="display:none">';
-  if(!thumb&&f.id){
-    setTimeout(function(){
-      if(f._thumb)return;
-      callScript('action=get_thumbs&ids='+encodeURIComponent(f.id),function(d){
-        if(!d.success||!d.thumb||d.thumb.length<100)return;
-        if(!window._thumbCache)window._thumbCache={};
-        window._thumbCache[d.id]=d.thumb; f._thumb=d.thumb;
-        var img=document.getElementById('ap_'+d.id);
-        if(img){
-          img.src=d.thumb;
-          img.style.cssText='width:100%;height:100%;object-fit:cover;display:block;animation:apostilaFadeIn .5s ease';
-          var prev=img.previousElementSibling;
-          if(prev&&prev.classList.contains('apostila-thumb-icon'))prev.style.display='none';
-        }
-      },function(){});
-    },80);
-  }
-  // Guardar referência do ficheiro para o botão poder aceder
-  if(!window._apFiles)window._apFiles={};
-  window._apFiles[f.id]=f;
-  var nome=f.nome||f.name||'Arquivo';
-  return '<div class="apostila-thumb">'+thumbInner+'</div>'
-    +'<div class="apostila-info">'
-    +'<div class="apostila-type">'+label+'</div>'
-    +'<div class="apostila-name">'+nome+'</div>'
-    +'<button class="apostila-open" id="apbtn_'+f.id+'">'
-    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11" stroke-linecap="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
-    +' Abrir</button></div>';
-}
-
-function _apostilaRender(){
-  var n=_apostilaFiles.length, ci=_apostilaIdx;
-  var stage=document.getElementById('apostilaStage');
-  var ctr=document.getElementById('apostilaCounter');
-  var dots=document.getElementById('apostilaDots');
-  var al=document.getElementById('apostilaArrowL');
-  var ar=document.getElementById('apostilaArrowR');
-  if(!stage) return;
-
-  ctr.textContent=(ci+1)+' / '+n;
-  al.classList.toggle('disabled',ci===0);
-  ar.classList.toggle('disabled',ci===n-1);
-
-  // Dots
-  dots.innerHTML='';
-  for(var di=0;di<n;di++){
-    var d=document.createElement('div');
-    d.className='apostila-dot'+(di===ci?' active':'');
-    (function(idx){d.onclick=function(){_apostilaIdx=idx;_apostilaRender();};})(di);
-    dots.appendChild(d);
-  }
-
-  // Coverflow: mostrar até 7 cards (-3 a +3 do centro)
-  var positions=['pos-hide-l','pos-left2','pos-left1','pos-center','pos-right1','pos-right2','pos-hide-r'];
-  var offsets=[-3,-2,-1,0,1,2,3];
-  var needed=Math.min(n,7);
-
-  // Criar/remover elementos conforme necessário
-  while(stage.children.length<needed){
-    var el=document.createElement('div');
-    el.className='apostila-item';
-    stage.appendChild(el);
-  }
-  while(stage.children.length>needed){
-    stage.removeChild(stage.lastChild);
-  }
-
-  var items=Array.from(stage.children);
-  for(var si=0;si<items.length;si++){
-    var item=items[si];
-    var fileIdx=ci+offsets[si];
-    if(fileIdx<0||fileIdx>=n){
-      item.className='apostila-item '+(offsets[si]<0?'pos-hide-l':'pos-hide-r');
-      item.style.pointerEvents='none';
-      continue;
-    }
-    item.className='apostila-item '+positions[si];
-    item.style.pointerEvents='all'; // sempre clicável (botão Abrir no centro)
-    if(item.dataset.idx!==String(fileIdx)){
-      item.dataset.idx=String(fileIdx);
-      item.innerHTML=_apostilaCardHTML(_apostilaFiles[fileIdx]);
-    }
-    (function(idx,el){
-      el.onclick=function(){if(idx!==ci){_apostilaIdx=idx;_apostilaRender();}};
-    })(fileIdx,item);
-  }
-}
-// ───────────────────────────────────────────────────────────────────────────
-
-function _restoreDash(){
-  var dash=document.getElementById("main-dashboard");
-  if(!dash) return;
-  if(dash.parentElement && dash.parentElement.id==="heroSlideBody"){
-    dash.style.setProperty("display","none","important");
-    var parent=_dashOrigParent||document.getElementById("app-main-col");
-    if(parent) parent.appendChild(dash);
-  }
-}
-function _slideOpen(s,b,bg){
-  if(_closeTimer){clearTimeout(_closeTimer);_closeTimer=null;}
-  _restoreDash();
-  b.innerHTML=""; b.style.cssText="";
-  s.removeAttribute("style"); s.classList.remove("img-bg");
-  if(bg){s.style.backgroundImage="url("+bg+")";s.style.backgroundSize="cover";s.style.backgroundPosition="center";s.classList.add("img-bg");}
-  else{s.style.background="#F0EDE8";}
-}
-function openHeroSlide(t){
-  var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
-
-  var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
-  var p=document.getElementById("panel-"+t);
-  if(!s||!b||!p) return;
-  _slideOpen(s,b,null);
-  b.innerHTML=p.innerHTML;
-  if(t==="progresso") setTimeout(renderNbProgresso,80);
-  if(t==="comunidade"){
-    b.style.cssText="padding:0;overflow-y:auto;overflow-x:hidden;background:#F7F5F2;min-height:100%;box-sizing:border-box";
-    setTimeout(comLoad,80);
-  }
-  document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
-  var si=document.getElementById("si-"+t);if(si)si.classList.add("active");
-  s.classList.add("open"); b.scrollTop=0;
-}
-function openHeroSlideImg(t){
-  var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
-  if(typeof _closeTimer!=="undefined"&&_closeTimer){clearTimeout(_closeTimer);_closeTimer=null;}
-  var dash=document.getElementById("main-dashboard");
-  var page=document.getElementById("page-dashboard");
-  if(dash) dash.style.setProperty("display","none","important");
-  if(page) page.style.setProperty("display","none","important");
-  var img=HERO_IMGS[Math.floor(Math.random()*HERO_IMGS.length)];
-  var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
-  var p=document.getElementById("panel-"+t);
-  if(!s||!b||!p) return;
-  _slideOpen(s,b,img);
-  // Comunidade e Mural precisam de padding:0 (têm layout próprio)
-  if(t==="comunidade"||t==="mural"){
-    b.style.cssText="padding:0;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;width:100%;position:relative";
-  } else {
-    b.style.cssText="padding:40px 44px;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;width:100%";
-  }
-  b.innerHTML=p.innerHTML;
-  document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
-  var si=document.getElementById("si-"+t);if(si)si.classList.add("active");
-  s.classList.add("open");b.scrollTop=0;
-  if(t==="comunidade"){ setTimeout(comLoad,80); setTimeout(comMarcarVisto,1500); }
-  if(t==="mural"){ setTimeout(muralLoad,80); setTimeout(muralMarcarVisto,1500); }
-}
-function openHeroSlideIframe(url){
-  var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
-
-  var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
-  if(!s||!b) return;
-  _slideOpen(s,b,null); s.style.background="#fff"; b.style.cssText="padding:0";
-  b.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;min-height:550px;border:none;display:block" frameborder="0" allowfullscreen></iframe>';
-  document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
-  var si=document.getElementById("si-reagendamento");if(si)si.classList.add("active");
-  s.classList.add("open"); b.scrollTop=0;
-}
-function openSlideIframe(url){
-  try{
-    var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
-    if(!s||!b){showToast("Erro: slide não encontrado","error");return;}
-    _slideOpen(s,b,null);
-    s.style.background="#fff";
-    b.style.cssText="padding:0;flex:1";
-    b.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;min-height:500px;border:none;display:block" frameborder="0" allowfullscreen></iframe>';
-    if(!s.classList.contains("open")) s.classList.add("open");
-  }catch(e){showToast("Erro ao abrir: "+e.message,"error");}
-}
-function openHome(){
-  var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
-  if(!s||!b) return;
-  var img=HERO_IMGS[Math.floor(Math.random()*HERO_IMGS.length)];
-  _slideOpen(s,b,img);
-  var panel=document.getElementById("panel-recursos"),pc=panel?panel.cloneNode(true):null;
-  if(pc){pc.classList.remove("nb-panel","notas-page");pc.style.cssText="display:block;padding:28px 36px 36px";b.appendChild(pc);}
-  document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
-  var si=document.getElementById("si-recursos");if(si)si.classList.add("active");
-  s.classList.add("open"); b.scrollTop=0;
-}
 </script>
 <!-- MODALS -->
 
@@ -8852,7 +8106,6 @@ function openHome(){
   slide.style.backgroundPosition="center";
   slide.classList.add("img-bg");
   body.style.padding="0";
-  body.style.display="block";
   body.style.overflowY="auto";
   // Nome do aluno
   var nome=(window.currentStudent&&window.currentStudent.nome_display)||"médico(a)";
@@ -9124,17 +8377,26 @@ function _slideOpen(s,b,bg){
   else{s.style.background="#F0EDE8";}
 }
 function openHeroSlide(t){
+  var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
+
   var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
   var p=document.getElementById("panel-"+t);
   if(!s||!b||!p) return;
   _slideOpen(s,b,null);
   b.innerHTML=p.innerHTML;
   if(t==="progresso") setTimeout(renderNbProgresso,80);
+  if(t==="comunidade"){
+    b.style.cssText="padding:0;overflow-y:auto;overflow-x:hidden;background:#F7F5F2;min-height:100%;box-sizing:border-box";
+    setTimeout(comLoad,80);
+  }
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-"+t);if(si)si.classList.add("active");
   s.classList.add("open"); b.scrollTop=0;
 }
 function openHeroSlideImg(t){
+  var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
+
+  var b2=document.getElementById("heroSlideBody");if(b2)b2.style.cssText="padding:40px 44px;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;width:100%";
   var img=HERO_IMGS[Math.floor(Math.random()*HERO_IMGS.length)];
   var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
   var p=document.getElementById("panel-"+t);
@@ -9144,8 +8406,11 @@ function openHeroSlideImg(t){
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-"+t);if(si)si.classList.add("active");
   s.classList.add("open"); b.scrollTop=0;
+  if(t==="comunidade"){ setTimeout(comLoad,80); setTimeout(comMarcarVisto,1500); }
 }
 function openHeroSlideIframe(url){
+  var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
+
   var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
   if(!s||!b) return;
   _slideOpen(s,b,null); s.style.background="#fff"; b.style.cssText="padding:0";
@@ -9155,11 +8420,15 @@ function openHeroSlideIframe(url){
   s.classList.add("open"); b.scrollTop=0;
 }
 function openSlideIframe(url){
-  var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
-  if(!s||!b) return;
-  _slideOpen(s,b,null); s.style.background="#fff"; b.style.cssText="padding:0";
-  b.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;border:none;display:block" frameborder="0" allowfullscreen></iframe>';
-  s.classList.add("open");
+  try{
+    var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
+    if(!s||!b){showToast("Erro: slide não encontrado","error");return;}
+    _slideOpen(s,b,null);
+    s.style.background="#fff";
+    b.style.cssText="padding:0;flex:1";
+    b.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;min-height:500px;border:none;display:block" frameborder="0" allowfullscreen></iframe>';
+    if(!s.classList.contains("open")) s.classList.add("open");
+  }catch(e){showToast("Erro ao abrir: "+e.message,"error");}
 }
 function openHome(){
   var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
@@ -9173,17 +8442,12 @@ function openHome(){
   s.classList.add("open"); b.scrollTop=0;
 }
 function closeHeroSlide(){
-  var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
-  if(typeof _closeTimer!=="undefined"&&_closeTimer) clearTimeout(_closeTimer);
+  var ba=document.getElementById("btnApostila");if(ba)ba.remove();
+
   _restoreDash();
-  var dash=document.getElementById("main-dashboard");
-  if(dash) dash.style.removeProperty("display");
-  var page=document.getElementById("page-dashboard");
-  if(page) page.style.removeProperty("display");
   var s=document.getElementById("heroSlide");if(!s) return;
-  s.classList.remove("open","img-bg","mural-mode");
-  _closeTimer=setTimeout(function(){
-    _closeTimer=null;
+  s.classList.remove("open","img-bg");
+  setTimeout(function(){
     var b=document.getElementById("heroSlideBody");
     if(b){b.innerHTML="";b.style.cssText="";}
     s.removeAttribute("style");
@@ -9376,6 +8640,17 @@ function qzRetry() {
 </div>
 </div>
 
+<!-- QR Lightbox -->
+<div id="qrLightbox" onclick="this.style.display='none'" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(5,13,26,.92);backdrop-filter:blur(8px);align-items:center;justify-content:center;flex-direction:column;gap:20px;cursor:pointer">
+  <div style="background:#fff;border-radius:20px;padding:24px;box-shadow:0 32px 80px rgba(0,0,0,.6)" onclick="event.stopPropagation()">
+    <img src="https://institutomdtalk.github.io/portaldoaluno/assets/qr-instagram.png" alt="QR Code" style="width:260px;height:260px;object-fit:contain;display:block">
+  </div>
+  <p style="font-family:Raleway,sans-serif;font-size:12px;color:rgba(255,255,255,.6);letter-spacing:.1em;text-transform:uppercase">@inglesmedico.thaifaria</p>
+  <button onclick="document.getElementById('qrLightbox').style.display='none'" style="position:absolute;top:20px;right:24px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.12);border:none;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+</div>
+
 <!-- Comunidade: pop-up instrução -->
 <div class="com-help-popup-overlay" id="comHelpOverlay" onclick="if(event.target===this)comHelpFechar()">
   <div class="com-help-popup">
@@ -9383,10 +8658,10 @@ function qzRetry() {
     <div class="com-help-subtitle">Instituto MD Talk</div>
     <h2 class="com-help-title">Como usar a Comunidade</h2>
     <p class="com-help-body">Este é o espaço de <strong style="color:#C4A45A">networking médico</strong> do Instituto MD Talk. Troque experiências, compartilhe dicas clínicas e conecte-se com outros médicos que estudam inglês médico.</p>
-    <div class="com-help-item"><div class="com-help-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" width="14" height="14"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><p><strong>Publique</strong> — dicas, cases, conquistas ou dúvidas de inglês médico.</p></div>
-    <div class="com-help-item"><div class="com-help-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" width="14" height="14"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div><p><strong>Curta</strong> — mostre apoio às publicações dos colegas.</p></div>
+    <div class="com-help-item"><div class="com-help-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" width="14" height="14"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><p><strong>Publique</strong> — dicas de vocabulário clínico, cases, conquistas ou dúvidas de inglês médico.</p></div>
+    <div class="com-help-item"><div class="com-help-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" width="14" height="14"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div><p><strong>Curta</strong> — mostre apoio às publicações dos colegas com um coração.</p></div>
     <div class="com-help-item"><div class="com-help-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" width="14" height="14"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><p><strong>Comente</strong> — responda, complemente e incentive os colegas.</p></div>
-    <div class="com-help-item"><div class="com-help-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" width="14" height="14"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></div><p><strong>Use hashtags</strong> — <em style="color:#C4A45A">#cardiologia #english #USMLE #dica</em></p></div>
+    <div class="com-help-item"><div class="com-help-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" width="14" height="14"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></div><p><strong>Use hashtags</strong> — <em style="color:#C4A45A">#cardiologia #english #USMLE #dica</em> para organizar os temas.</p></div>
     <p class="com-help-footer">Ambiente profissional e acolhedor — respeite e inspire.</p>
   </div>
 </div>
