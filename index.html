@@ -888,7 +888,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
 
 /* ── SIDEBAR LATERAL ────────────────────────────────────────────── */
 #app-layout{display:flex;align-items:flex-start;}
-#app-main-col{flex:1;min-width:0;display:flex;flex-direction:column;min-height:0;}
+#app-main-col{flex:1;min-width:0;display:flex;flex-direction:column;min-height:0;position:relative;}
 .side-nav{
   width:220px;flex-shrink:0;
   background:#07111E;
@@ -2330,9 +2330,11 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       </div>
     </div>
     <div class="header-gold-line"></div>
-    <div class="hero-slide" id="heroSlide"><button class="hero-slide-close" onclick="closeHeroSlide()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="hero-slide-body" id="heroSlideBody"></div></div>
+    
   </header>
 
+
+<div class="hero-slide" id="heroSlide"><button class="hero-slide-close" onclick="closeHeroSlide()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="hero-slide-body" id="heroSlideBody"></div></div>
 
   <!-- ══ PAINEL PERFIL ══ -->
   <div class="nb-panel prog-page" id="panel-sala" style="font-family:Raleway,sans-serif">
