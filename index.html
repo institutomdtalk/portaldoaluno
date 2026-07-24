@@ -7768,24 +7768,44 @@ function muralMarcarVisto(){
   }
 }
 function muralLoad(){
-  var grid=muralEl('muralGrid');
-  if(grid) grid.innerHTML='<div class="mural-loading">Carregando...</div>';
-  callScript('action=get_mural', function(d){
-    if(!d||!d.success){ if(grid) grid.innerHTML='<p style="text-align:center;padding:40px;font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.3)">Erro ao carregar. <button onclick="muralLoad()" style="color:#C4A45A;background:none;border:none;cursor:pointer;font-family:Raleway,sans-serif;font-weight:700">Tentar novamente</button></p>'; return; }
-    _muralPosts = d.posts||[];
-    if(!_muralPosts.length) showToast("Mural vazio — publique algo!","warning");
-    muralRender();
-    muralCheckNovos();
-  }, function(){
-    if(grid) grid.innerHTML='<p style="text-align:center;padding:40px;font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.3)">Sem resposta. <button onclick="muralLoad()" style="color:#C4A45A;background:none;border:none;cursor:pointer;font-family:Raleway,sans-serif;font-weight:700">Tentar novamente</button></p>';
-  });
+  // Encontrar o grid — procurar em todo o documento
+  var grid=document.querySelector('#heroSlideBody #muralGrid')
+    ||document.getElementById('muralGrid');
+  if(!grid){
+    // Tentar novamente em 200ms se o DOM ainda não estiver pronto
+    setTimeout(muralLoad,200);
+    return;
+  }
+  grid.innerHTML='<div class="mural-loading">A carregar publicações...</div>';
+  callScript('action=get_mural',
+    function(d){
+      var g=document.querySelector('#heroSlideBody #muralGrid')||document.getElementById('muralGrid');
+      if(!g) return;
+      if(!d||!d.success){
+        g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:32px;font-family:Raleway,sans-serif;color:rgba(255,255,255,.4)">Erro: '+(d&&d.error?d.error:'Backend não reconhece get_mural. Republique o Apps Script.')+'<br><br><button onclick="muralLoad()" style="color:#C4A45A;background:rgba(196,164,90,.15);border:1px solid rgba(196,164,90,.3);border-radius:12px;padding:7px 16px;font-family:Raleway,sans-serif;font-size:11px;cursor:pointer">Tentar novamente</button></div>';
+        return;
+      }
+      _muralPosts=d.posts||[];
+      muralRenderGrid(g);
+      muralCheckNovos();
+    },
+    function(){
+      var g=document.querySelector('#heroSlideBody #muralGrid')||document.getElementById('muralGrid');
+      if(g) g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:32px;font-family:Raleway,sans-serif;color:rgba(255,255,255,.4)">Sem resposta do servidor.<br><small style="opacity:.6">Verifique se o Apps Script foi republicado com a versão mais recente.</small><br><br><button onclick="muralLoad()" style="color:#C4A45A;background:rgba(196,164,90,.15);border:1px solid rgba(196,164,90,.3);border-radius:12px;padding:7px 16px;font-family:Raleway,sans-serif;font-size:11px;cursor:pointer">Tentar novamente</button></div>';
+    }
+  );
 }
 
 function muralRender(){
-  var grid=muralEl('muralGrid');
-  if(!grid) return;
-  if(!_muralPosts.length){ grid.innerHTML='<p style="grid-column:1/-1;text-align:center;padding:48px 0;font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.3);font-style:italic">Nenhuma publicação ainda.</p>'; return; }
-  grid.innerHTML = _muralPosts.map(muralBuildCard).join('');
+  var g=document.querySelector('#heroSlideBody #muralGrid')||document.getElementById('muralGrid');
+  if(g) muralRenderGrid(g);
+}
+function muralRenderGrid(grid){
+  if(!_muralPosts.length){
+    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:48px 0;font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.3);font-style:italic">Nenhuma publicação ainda.</div>';
+    return;
+  }
+  grid.innerHTML=_muralPosts.map(muralBuildCard).join('');
 }
 
 function muralBuildCard(p){
@@ -7891,7 +7911,8 @@ function muralPublicar(){
       if(d&&d.success){
         var newPost={id:d.id,tipo:tipo,conteudo:conteudo,descricao:descricao,timestamp:d.timestamp};
         _muralPosts.unshift(newPost);
-        muralRender();
+        var g=document.querySelector('#heroSlideBody #muralGrid')||document.getElementById('muralGrid');
+        if(g) muralRenderGrid(g);
         muralMarcarVisto();
         muralFecharModal();
         showToast('Publicado no Mural!','success');
@@ -7910,7 +7931,8 @@ function muralDeletar(id){
     function(d){
       if(d&&d.success){
         _muralPosts=_muralPosts.filter(function(p){return p.id!==id;});
-        muralRender();
+        var gd=document.querySelector('#heroSlideBody #muralGrid')||document.getElementById('muralGrid');
+        if(gd) muralRenderGrid(gd);
         showToast('Publicação excluída.','success');
       } else showToast('Erro ao excluir.','error');
     }, function(){showToast('Erro de conexão.','error');}
