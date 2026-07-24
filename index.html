@@ -2028,6 +2028,48 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 .com-comment-send-btn:hover{background:rgba(196,164,90,.38);border-color:#C4A45A}
 .com-empty{font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.3);text-align:center;padding:48px 20px;font-style:italic}
 .com-loading{text-align:center;padding:40px;font-family:Raleway,sans-serif;font-size:12px;color:rgba(255,255,255,.28)}
+
+/* Comunidade — opções de post */
+
+/* Comunidade — pop-up instrução e sininho */
+.com-help-btn{position:absolute;top:18px;right:20px;width:32px;height:32px;border-radius:50%;background:rgba(196,164,90,.15);border:1px solid rgba(196,164,90,.3);cursor:pointer;display:flex;align-items:center;justify-content:center;color:#C4A45A;transition:all .2s;z-index:10;backdrop-filter:blur(12px)}
+.com-help-btn:hover{background:rgba(196,164,90,.28);border-color:#C4A45A}
+.com-help-popup-overlay{position:fixed;inset:0;z-index:400;background:rgba(5,13,26,.5);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center}
+.com-help-popup-overlay.open{display:flex}
+.com-help-popup{background:#fff;border-radius:24px;padding:28px 28px 24px;max-width:440px;width:90%;box-shadow:0 24px 80px rgba(0,0,0,.35);position:relative;max-height:80vh;overflow-y:auto}
+.com-help-popup-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:#f0f0f0;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(11,29,58,.5);transition:background .2s;font-size:14px}
+.com-help-popup-close:hover{background:#e0e0e0;color:#0B1D3A}
+.com-help-title{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:400;color:#0B1D3A;margin:0 0 4px}
+.com-help-subtitle{font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#C4A45A;margin:0 0 16px}
+.com-help-body{font-family:Raleway,sans-serif;font-size:13px;color:rgba(11,29,58,.7);line-height:1.75;margin:0 0 16px}
+.com-help-item{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}
+.com-help-icon{width:32px;height:32px;border-radius:50%;background:rgba(196,164,90,.1);border:1px solid rgba(196,164,90,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.com-help-item p{font-family:Raleway,sans-serif;font-size:12.5px;color:rgba(11,29,58,.65);line-height:1.6;margin:0}
+.com-help-footer{font-family:"Cormorant Garamond",serif;font-size:13px;font-style:italic;color:rgba(11,29,58,.4);border-top:1px solid rgba(11,29,58,.08);padding-top:14px;margin-top:4px}
+/* Sininho no menu lateral */
+.side-bell{display:inline-flex;align-items:center;justify-content:center;margin-left:6px;position:relative;flex-shrink:0}
+.side-bell svg{color:#C4A45A;animation:bellRing 1.5s ease infinite}
+.side-bell-dot{position:absolute;top:-2px;right:-2px;width:7px;height:7px;border-radius:50%;background:#e87979;border:1.5px solid #07111E}
+@keyframes bellRing{0%,100%{transform:rotate(0)}20%{transform:rotate(12deg)}40%{transform:rotate(-12deg)}60%{transform:rotate(6deg)}80%{transform:rotate(-6deg)}}
+.com-sort-bar{display:flex;align-items:center;justify-content:flex-end;padding:10px 0 2px;gap:8px}
+.com-sort-btn{background:none;border:none;cursor:pointer;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:5px 10px;border-radius:20px;transition:all .2s}
+.com-sort-btn.active{color:#C4A45A;background:rgba(196,164,90,.14);border:1px solid rgba(196,164,90,.25)}
+.com-sort-btn:hover:not(.active){color:rgba(255,255,255,.65)}
+.com-post-opts{position:relative;margin-left:auto}
+.com-opts-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.3);padding:2px 6px;border-radius:6px;transition:all .2s;font-size:16px;line-height:1}
+.com-opts-btn:hover{color:rgba(255,255,255,.75);background:rgba(255,255,255,.1)}
+.com-opts-menu{position:absolute;right:0;top:calc(100% + 4px);background:rgba(15,25,50,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:6px;min-width:130px;z-index:50;box-shadow:0 8px 32px rgba(0,0,0,.4);display:none}
+.com-opts-menu.open{display:block}
+.com-opts-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;cursor:pointer;font-family:Raleway,sans-serif;font-size:12px;color:rgba(255,255,255,.7);transition:all .15s;border:none;background:none;width:100%;text-align:left}
+.com-opts-item:hover{background:rgba(255,255,255,.1);color:#fff}
+.com-opts-item.danger:hover{background:rgba(220,50,50,.15);color:#ff7070}
+.com-edit-form{margin-top:10px;display:none}
+.com-edit-form.open{display:block}
+.com-edit-ta{width:100%;border:1px solid rgba(196,164,90,.35);border-radius:12px;padding:10px 14px;font-family:Raleway,sans-serif;font-size:13px;color:#fff;resize:none;outline:none;background:rgba(255,255,255,.1);backdrop-filter:blur(12px);line-height:1.6;box-sizing:border-box}
+.com-edit-ta:focus{border-color:rgba(196,164,90,.6)}
+.com-edit-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+.com-edit-save{background:rgba(196,164,90,.25);color:#C4A45A;border:1px solid rgba(196,164,90,.4);border-radius:10px;padding:6px 16px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;cursor:pointer}
+.com-edit-cancel{background:none;border:none;color:rgba(255,255,255,.35);font-family:Raleway,sans-serif;font-size:11px;cursor:pointer}
 /* ─────────────────────────────────────────────────────────────── */
 </style>
 </head>
@@ -2106,7 +2148,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       <div class="side-sub" id="sideSubOutros"><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/treinamento/','_blank')">Treinamento Complementar</div><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/expansao/','_blank')">Expansão</div></div>
       <div class="side-item" id="si-feedback" onclick="closeHeroSlide();window.open('https://forms.office.com/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAYAABgpFVNUQjE3VzVNUTU1Q045N0VNQTRYRzRZWEU0RS4u&route=shorturl','_blank')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Feedback</div>
     <div class="side-footer">
-                  <div class="side-item" id="si-comunidade" onclick="openHeroSlideImg('comunidade')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>Comunidade</div>
+                  <div class="side-item" id="si-comunidade" onclick="openHeroSlideImg('comunidade')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>Comunidade<span class="side-bell" id="comBell" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="side-bell-dot"></span></span></div>
       <div class="side-item" id="si-contato" onclick="openHeroSlideImg('contato')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Contato</div>
       <div class="side-item" id="si-tutorial" onclick="closeHeroSlide();abrirTutorial()" style="margin-top:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="8"/><path d="M12 12v4"/></svg>Tutorial</div>
       <div class="side-logout" onclick="doLogout()">
@@ -2743,37 +2785,13 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
           </div>
         </div>
       </div>
-      <!-- Instruções de uso -->
-      <div style="margin:16px 0 4px">
-        <button onclick="(function(b,i){b.classList.toggle('open');i.style.display=i.style.display==='none'?'block':'none';})(this,document.getElementById('comGuia'))" style="display:flex;align-items:center;gap:8px;background:rgba(196,164,90,.12);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(196,164,90,.25);border-radius:12px;padding:9px 16px;cursor:pointer;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#C4A45A;transition:all .2s;width:auto" onmouseover="this.style.background='rgba(196,164,90,.22)'" onmouseout="this.style.background='rgba(196,164,90,.12)'">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          Como usar a Comunidade
-          <svg id="comGuiaChevron" viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2.5" stroke-linecap="round" width="12" height="12" style="transition:transform .3s"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div id="comGuia" style="display:none;margin-top:10px;background:rgba(196,164,90,.08);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid rgba(196,164,90,.22);border-radius:16px;padding:18px 20px;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)">
-          <p style="font-family:Raleway,sans-serif;font-size:12.5px;color:rgba(255,255,255,.72);line-height:1.75;margin:0 0 14px">Este é o espaço de <strong style="color:#C4A45A">networking médico</strong> do Instituto MD Talk — troque experiências, compartilhe dicas clínicas e conecte-se com outros médicos que estudam inglês médico.</p>
-          <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:14px">
-            <div style="display:flex;gap:10px;align-items:flex-start">
-              <div style="width:22px;height:22px;border-radius:50%;background:rgba(196,164,90,.18);border:1px solid rgba(196,164,90,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" width="11" height="11"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-              <p style="font-family:Raleway,sans-serif;font-size:12px;color:rgba(255,255,255,.6);line-height:1.6;margin:0"><strong style="color:rgba(255,255,255,.85)">Publique</strong> — dicas de vocabulário, cases, conquistas ou dúvidas de inglês médico.</p>
-            </div>
-            <div style="display:flex;gap:10px;align-items:flex-start">
-              <div style="width:22px;height:22px;border-radius:50%;background:rgba(196,164,90,.18);border:1px solid rgba(196,164,90,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" width="11" height="11"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
-              <p style="font-family:Raleway,sans-serif;font-size:12px;color:rgba(255,255,255,.6);line-height:1.6;margin:0"><strong style="color:rgba(255,255,255,.85)">Curta</strong> — mostre apoio às publicações dos colegas.</p>
-            </div>
-            <div style="display:flex;gap:10px;align-items:flex-start">
-              <div style="width:22px;height:22px;border-radius:50%;background:rgba(196,164,90,.18);border:1px solid rgba(196,164,90,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" width="11" height="11"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
-              <p style="font-family:Raleway,sans-serif;font-size:12px;color:rgba(255,255,255,.6);line-height:1.6;margin:0"><strong style="color:rgba(255,255,255,.85)">Comente</strong> — responda, complemente e incentive os colegas.</p>
-            </div>
-            <div style="display:flex;gap:10px;align-items:flex-start">
-              <div style="width:22px;height:22px;border-radius:50%;background:rgba(196,164,90,.18);border:1px solid rgba(196,164,90,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" width="11" height="11"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></div>
-              <p style="font-family:Raleway,sans-serif;font-size:12px;color:rgba(255,255,255,.6);line-height:1.6;margin:0"><strong style="color:rgba(255,255,255,.85)">Use hashtags</strong> — <em style="color:#C4A45A">#cardiologia #english #USMLE #dica</em></p>
-            </div>
-          </div>
-          <p style="font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:rgba(255,255,255,.45);margin:0;line-height:1.6">Ambiente profissional e acolhedor — respeite e inspire.</p>
-        </div>
-      </div>
+      <!-- Botão ajuda (canto superior direito do slide) -->
+      <button class="com-help-btn" onclick="comHelpAbrir()" title="Como usar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
 
+      <div class="com-sort-bar">
+        <button class="com-sort-btn active" id="comSortNew" onclick="comSetSort('new')">↓ Mais recentes</button>
+        <button class="com-sort-btn" id="comSortOld" onclick="comSetSort('old')">↑ Mais antigos</button>
+      </div>
       <div class="com-feed" id="comFeed">
         <div class="com-loading">Carregando posts...</div>
       </div>
@@ -7296,112 +7314,142 @@ window.addEventListener('load', function(){
 // ── COMUNIDADE MD TALK ─────────────────────────────────────────────
 var _comPosts      = [];
 var _comLikedPosts = {};
-function comEl(id){
-  var b=document.getElementById("heroSlideBody");
-  var el=b?b.querySelector("#"+id):null;
-  return el||document.getElementById(id);
-}
+var _comSort       = 'new'; // 'new' | 'old'
 try{ _comLikedPosts=JSON.parse(localStorage.getItem('comLikes')||'{}'); }catch(e){}
 
-var _comAvatarColors = ['#0B1D3A','#1a3a5c','#2d1a4a','#0d3a2d','#3a1a0d','#1a2d3a','#2d2d0d'];
+var _comAvatarColors=['#0B1D3A','#1a3a5c','#2d1a4a','#0d3a2d','#3a1a0d','#1a2d3a','#2d2d0d'];
+function comAvatarColor(n){var h=0;for(var i=0;i<n.length;i++)h+=n.charCodeAt(i);return _comAvatarColors[h%_comAvatarColors.length];}
+function comEl(id){var b=document.getElementById('heroSlideBody');var el=b?b.querySelector('#'+id):null;return el||document.getElementById(id);}
+function comMeuNome(){return window.currentStudent?(currentStudent.nome_display||currentStudent.nome||''):''}
 
-function comAvatarColor(name){
-  var hash=0; for(var i=0;i<name.length;i++) hash+=name.charCodeAt(i);
-  return _comAvatarColors[hash % _comAvatarColors.length];
+function comHelpAbrir(){var o=document.getElementById("comHelpOverlay");if(o)o.classList.add("open");}
+function comHelpFechar(){var o=document.getElementById("comHelpOverlay");if(o)o.classList.remove("open");}
+
+function comCheckNovos(){
+  // Verificar se há posts mais recentes do que o último visto
+  var lastSeen=localStorage.getItem("comLastSeen")||"";
+  var bell=document.getElementById("comBell");
+  if(!bell||!_comPosts.length) return;
+  var latest=_comPosts[0]&&_comPosts[0].id;
+  if(latest && latest!==lastSeen){
+    bell.style.display="inline-flex";
+  } else {
+    bell.style.display="none";
+  }
+}
+
+function comMarcarVisto(){
+  if(_comPosts.length){
+    localStorage.setItem("comLastSeen",_comPosts[0].id);
+    var bell=document.getElementById("comBell");
+    if(bell) bell.style.display="none";
+  }
 }
 
 function comLoad(){
-  // Actualizar avatar do compositor
-  if(window.currentStudent){
-    var av=comEl('comMyAvatar');
-    if(av){
-      var nome=currentStudent.nome_display||currentStudent.nome||'?';
-      av.textContent=nome[0].toUpperCase();
-      av.style.background=comAvatarColor(nome);
-    }
-    var badge=comEl('comCountBadge');
-    if(badge) badge.textContent='a carregar...';
-  }
-  callScript('action=get_posts', function(d){
-    if(!d.success) return;
-    _comPosts = d.posts || [];
-    var badge=comEl('comCountBadge');
-    if(badge) badge.textContent=_comPosts.length+' publicaç'+((_comPosts.length===1)?'ão':'ões');
+  var av=comEl('comMyAvatar');
+  if(av&&window.currentStudent){var n=comMeuNome();av.textContent=n[0]?n[0].toUpperCase():'?';av.style.background=comAvatarColor(n);}
+  var badge=comEl('comCountBadge');if(badge)badge.textContent='carregando...';
+  callScript('action=get_posts',function(d){
+    if(!d.success)return;
+    _comPosts=d.posts||[];
+    var b=comEl('comCountBadge');if(b)b.textContent=_comPosts.length+' publicaç'+(_comPosts.length===1?'ão':'ões');
     comRenderFeed();
-  }, function(){
-    var feed=comEl('comFeed');
-    if(feed) feed.innerHTML='<p class="com-empty">Não foi possível carregar. Tente novamente.</p>';
-  });
+  comCheckNovos();
+  },function(){var f=comEl('comFeed');if(f)f.innerHTML='<p class="com-empty">Erro ao carregar. Tente novamente.</p>';});
 }
 
-function comExpandir(){
-  var ex=comEl('comExpanded');
-  var tr=comEl('comTrigger');
-  if(ex){ex.classList.add('open');if(tr)tr.style.display='none';}
-  setTimeout(function(){var ta=comEl('comTexto');if(ta)ta.focus();},50);
-}
-function comRecolher(){
-  var ex=comEl('comExpanded');
-  var tr=comEl('comTrigger');
-  if(ex)ex.classList.remove('open');
-  if(tr)tr.style.display='';
+// Verificar novos posts a cada 2 minutos
+setInterval(function(){
+  if(_comPosts.length) callScript("action=get_posts",function(d){if(d.success&&d.posts&&d.posts.length){_comPosts=d.posts;comCheckNovos();}},function(){});
+},120000);
+
+function comSetSort(s){
+  _comSort=s;
+  var nb=comEl('comSortNew'),ob=comEl('comSortOld');
+  if(nb){nb.classList.toggle('active',s==='new');}
+  if(ob){ob.classList.toggle('active',s==='old');}
+  comRenderFeed();
 }
 
 function comRenderFeed(){
-  var feed=comEl('comFeed');
-  if(!feed) return;
-  if(!_comPosts.length){
-    feed.innerHTML='<p class="com-empty">Ainda não há posts. Seja o primeiro a compartilhar!</p>';
-    return;
-  }
-  feed.innerHTML=_comPosts.map(comBuildPost).join('');
+  var feed=comEl('comFeed');if(!feed)return;
+  if(!_comPosts.length){feed.innerHTML='<p class="com-empty">Ainda não há posts. Seja o primeiro!</p>';return;}
+  var sorted=_comSort==='old'?_comPosts.slice().reverse():_comPosts.slice();
+  feed.innerHTML=sorted.map(comBuildPost).join('');
+  // Fechar menus ao clicar fora
+  document.addEventListener('click',comCloseMenus,{once:true});
+}
+
+function comCloseMenus(){
+  document.querySelectorAll('.com-opts-menu.open').forEach(function(m){m.classList.remove('open');});
 }
 
 function comBuildPost(p){
-  var inicial=(p.autor||'?')[0].toUpperCase();
-  var bgColor=comAvatarColor(p.autor||'');
+  var ini=(p.autor||'?')[0].toUpperCase();
+  var bg=comAvatarColor(p.autor||'');
   var isMentor=p.especialidade==='Mentora'||p.autor==='Thaiana Faria';
+  var isOwner=p.autor===comMeuNome()&&comMeuNome();
   var liked=!!_comLikedPosts[p.id];
-  var tags=(p.hashtags||'').split(/[\s,]+/).filter(Boolean).map(function(t){
-    return '<span class="com-tag">'+(t.startsWith('#')?t:'#'+t)+'</span>';
-  }).join('');
+  var tags=(p.hashtags||'').split(/[\s,]+/).filter(Boolean).map(function(t){return '<span class="com-tag">'+(t.startsWith('#')?t:'#'+t)+'</span>';}).join('');
+  var metaEsp=isMentor?'<span class="com-mentor-badge">Mentora</span>':(p.especialidade?'<span class="com-post-esp">· '+p.especialidade+'</span>':'');
+  var optsMenu=isOwner?
+    '<div class="com-post-opts">'
+    +'<button class="com-opts-btn" onclick="event.stopPropagation();comToggleMenu(\'menu_'+p.id+'\')">⋯</button>'
+    +'<div class="com-opts-menu" id="menu_'+p.id+'">'
+    +'<button class="com-opts-item" onclick="comEditPost(\''+p.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Editar</button>'
+    +'<button class="com-opts-item danger" onclick="comDeletePost(\''+p.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg> Excluir</button>'
+    +'</div></div>':'';
   var commentsHtml=comBuildCommentsList(p);
-  var metaEsp=isMentor
-    ?'<span class="com-mentor-badge">Mentora</span>'
-    :(p.especialidade?'<span class="com-post-esp">· '+p.especialidade+'</span>':'');
-
   return '<div class="com-post" id="post_'+p.id+'">'
     +'<div class="com-post-row">'
-    +'<div class="com-avatar" style="background:'+bgColor+'">'+inicial+'</div>'
+    +'<div class="com-avatar" style="background:'+bg+'">'+ini+'</div>'
     +'<div class="com-post-body">'
     +'<div class="com-post-meta"><span class="com-post-autor">'+p.autor+'</span>'+metaEsp
-    +'<span class="com-post-esp">· '+p.timestamp+'</span></div>'
-    +'<p class="com-post-texto">'+p.texto.replace(/\n/g,'<br>')+'</p>'
+    +'<span class="com-post-esp">· '+p.timestamp+'</span>'+optsMenu+'</div>'
+    +'<div class="com-post-texto" id="texto_'+p.id+'">'+p.texto.replace(/\n/g,'<br>')+'</div>'
+    +'<div class="com-edit-form" id="editForm_'+p.id+'">'
+    +'<textarea class="com-edit-ta" id="editTa_'+p.id+'" rows="3">'+p.texto+'</textarea>'
+    +'<div class="com-edit-actions">'
+    +'<button class="com-edit-cancel" onclick="comCancelEditPost(\''+p.id+'\')">Cancelar</button>'
+    +'<button class="com-edit-save" onclick="comSaveEditPost(\''+p.id+'\')">Salvar</button>'
+    +'</div></div>'
     +(tags?'<div class="com-hashtags">'+tags+'</div>':'')
     +'<div class="com-actions">'
     +'<button class="com-action-btn'+(liked?' liked':'')+'" id="like_'+p.id+'" onclick="comLike(\''+p.id+'\')">'
-    +'<svg viewBox="0 0 24 24" fill="'+(liked?'#e53e3e':'none')+'" stroke="'+(liked?'#e53e3e':'currentColor')+'" stroke-width="2" width="15" height="15"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>'
+    +'<svg viewBox="0 0 24 24" fill="'+(liked?'#e87979':'none')+'" stroke="'+(liked?'#e87979':'currentColor')+'" stroke-width="2" width="15" height="15"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>'
     +' <span id="likeCount_'+p.id+'">'+(p.curtidas||0)+'</span></button>'
     +'<button class="com-action-btn" onclick="comToggleComments(\''+p.id+'\')">'
     +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>'
     +' '+(p.comentarios?p.comentarios.length:0)+' comentário'+(p.comentarios&&p.comentarios.length!==1?'s':'')
     +'</button></div>'
-    +(commentsHtml?'<div class="com-comments-wrap" id="comments_'+p.id+'">'+commentsHtml+comBuildCommentForm(p.id)+'</div>'
-      :'<div class="com-comments-wrap" id="comments_'+p.id+'" style="display:none">'+comBuildCommentForm(p.id)+'</div>')
+    +(commentsHtml||p.comentarios&&p.comentarios.length?'<div class="com-comments-wrap" id="comments_'+p.id+'">'+commentsHtml+comBuildCommentForm(p.id)+'</div>':'<div class="com-comments-wrap" id="comments_'+p.id+'" style="display:none">'+comBuildCommentForm(p.id)+'</div>')
     +'</div></div></div>';
 }
 
 function comBuildCommentsList(p){
   if(!p.comentarios||!p.comentarios.length) return '';
-  return p.comentarios.slice(-3).map(function(c){
-    var ci=(c.autor||'?')[0].toUpperCase();
-    var cbg=comAvatarColor(c.autor||'');
-    return '<div class="com-comment-item">'
-      +'<div class="com-comment-avatar" style="background:'+cbg+'">'+ci+'</div>'
+  return p.comentarios.map(function(c,ci){
+    var ini=(c.autor||'?')[0].toUpperCase();
+    var bg=comAvatarColor(c.autor||'');
+    var isOwner=c.autor===comMeuNome()&&comMeuNome();
+    var opts=isOwner?
+      '<span style="margin-left:auto;display:flex;gap:4px">'
+      +'<button class="com-opts-item" style="padding:2px 6px;border-radius:6px;font-size:10px" onclick="comEditComment(\''+p.id+'\','+ci+')">✎</button>'
+      +'<button class="com-opts-item danger" style="padding:2px 6px;border-radius:6px;font-size:10px" onclick="comDeleteComment(\''+p.id+'\','+ci+')">✕</button>'
+      +'</span>':'';
+    return '<div class="com-comment-item" id="comment_'+p.id+'_'+ci+'">'
+      +'<div class="com-comment-avatar" style="background:'+bg+'">'+ini+'</div>'
       +'<div class="com-comment-bubble">'
-      +'<div class="com-comment-autor">'+c.autor+' <span class="com-comment-esp">· '+c.especialidade+'</span>'
-      +'<span class="com-comment-ts">'+c.ts+'</span></div>'
-      +'<div class="com-comment-texto">'+c.texto+'</div>'
+      +'<div class="com-comment-autor" style="display:flex;align-items:center">'+c.autor+' <span class="com-comment-esp" style="margin-left:5px">· '+c.especialidade+'</span>'
+      +'<span class="com-comment-ts">'+c.ts+'</span>'+opts+'</div>'
+      +'<div class="com-comment-texto" id="commentTexto_'+p.id+'_'+ci+'">'+c.texto+'</div>'
+      +'<div class="com-edit-form" id="commentEdit_'+p.id+'_'+ci+'">'
+      +'<textarea class="com-edit-ta" id="commentTa_'+p.id+'_'+ci+'" rows="2">'+c.texto+'</textarea>'
+      +'<div class="com-edit-actions">'
+      +'<button class="com-edit-cancel" onclick="comCancelEditComment(\''+p.id+'\','+ci+')">Cancelar</button>'
+      +'<button class="com-edit-save" onclick="comSaveEditComment(\''+p.id+'\','+ci+')">Salvar</button>'
+      +'</div></div>'
       +'</div></div>';
   }).join('');
 }
@@ -7414,96 +7462,160 @@ function comBuildCommentForm(postId){
     +'</div>';
 }
 
+function comToggleMenu(menuId){
+  var menu=comEl(menuId)||document.getElementById(menuId);
+  if(!menu)return;
+  var isOpen=menu.classList.contains('open');
+  document.querySelectorAll('.com-opts-menu.open').forEach(function(m){m.classList.remove('open');});
+  if(!isOpen) menu.classList.add('open');
+}
+
 function comToggleComments(postId){
-  var sec=comEl('comments_'+postId);
-  if(!sec) return;
-  var isOpen=sec.style.display!=='none'&&sec.style.display!=='';
-  sec.style.display=isOpen?'none':'block';
-  if(!isOpen){ var ta=comEl('commentText_'+postId); if(ta) ta.focus(); }
+  var sec=comEl('comments_'+postId)||document.getElementById('comments_'+postId);
+  if(!sec)return;
+  var open=sec.style.display!=='none'&&sec.style.display!=='';
+  sec.style.display=open?'none':'block';
+  if(!open){var ta=document.getElementById('commentText_'+postId)||comEl('commentText_'+postId);if(ta)ta.focus();}
 }
 
 function comLike(postId){
-  if(_comLikedPosts[postId]) return;
+  if(_comLikedPosts[postId])return;
   _comLikedPosts[postId]=true;
-  try{ localStorage.setItem('comLikes',JSON.stringify(_comLikedPosts)); }catch(e){}
-  var btn=comEl('like_'+postId);
-  var cnt=comEl('likeCount_'+postId);
-  if(btn){ btn.classList.add('liked'); var svg=btn.querySelector('svg'); if(svg){svg.setAttribute('fill','#e53e3e');svg.setAttribute('stroke','#e53e3e');} }
-  if(cnt) cnt.textContent=(parseInt(cnt.textContent)||0)+1;
+  try{localStorage.setItem('comLikes',JSON.stringify(_comLikedPosts));}catch(e){}
+  var btn=comEl('like_'+postId)||document.getElementById('like_'+postId);
+  var cnt=comEl('likeCount_'+postId)||document.getElementById('likeCount_'+postId);
+  if(btn){btn.classList.add('liked');var svg=btn.querySelector('svg');if(svg){svg.setAttribute('fill','#e87979');svg.setAttribute('stroke','#e87979');}}
+  if(cnt)cnt.textContent=(parseInt(cnt.textContent)||0)+1;
   callScript('action=like_post&id='+encodeURIComponent(postId),function(){},function(){});
 }
 
-function comPublicar(){
-  var textoEl=comEl("comTexto");
-  var hashEl=comEl("comHashtags");
-  var btn=comEl("comPostBtn");
-  var texto=textoEl?textoEl.value.trim():"";
-  var hashtags=hashEl?hashEl.value.trim():"";
-  if(!texto){showToast("Escreva algo antes de publicar.","warning");return;}
-  if(!window.currentStudent||!currentStudent.login){
-    showToast("Sessão expirada. Recarregue a página.","error");return;
-  }
-  var autor=currentStudent.nome_display||currentStudent.nome||"Aluno";
-  var esp=currentStudent.especialidade||currentStudent.profissao||"";
-  if(btn){btn.disabled=true;btn.textContent="Publicando...";}
-  var params="action=add_post"
-    +"&autor="+encodeURIComponent(autor)
-    +"&especialidade="+encodeURIComponent(esp)
-    +"&texto="+encodeURIComponent(texto)
-    +"&hashtags="+encodeURIComponent(hashtags);
-  callScript(params,
+// ── EDITAR / EXCLUIR POST ──
+function comEditPost(postId){
+  comEl('editForm_'+postId)&&(comEl('editForm_'+postId).classList.add('open'));
+  comEl('texto_'+postId)&&(comEl('texto_'+postId).style.display='none');
+  var menu=comEl('menu_'+postId)||document.getElementById('menu_'+postId);if(menu)menu.classList.remove('open');
+}
+function comCancelEditPost(postId){
+  comEl('editForm_'+postId)&&(comEl('editForm_'+postId).classList.remove('open'));
+  comEl('texto_'+postId)&&(comEl('texto_'+postId).style.display='');
+}
+function comSaveEditPost(postId){
+  var ta=comEl('editTa_'+postId)||document.getElementById('editTa_'+postId);
+  var novo=ta?ta.value.trim():'';
+  if(!novo)return;
+  callScript('action=edit_post&id='+encodeURIComponent(postId)+'&texto='+encodeURIComponent(novo),
     function(d){
       if(d&&d.success){
-        var newPost={id:d.id,autor:autor,especialidade:esp,texto:texto,hashtags:hashtags,curtidas:0,timestamp:d.timestamp,comentarios:[]};
-        _comPosts.unshift(newPost);
+        var p=_comPosts.find(function(x){return x.id===postId;});
+        if(p)p.texto=novo;
+        var el=comEl('texto_'+postId)||document.getElementById('texto_'+postId);
+        if(el)el.innerHTML=novo.replace(/\n/g,'<br>');
+        comCancelEditPost(postId);
+      } else showToast('Erro ao editar.','error');
+    },function(){showToast('Erro de conexão.','error');});
+}
+function comDeletePost(postId){
+  if(!confirm('Excluir esta publicação?'))return;
+  callScript('action=delete_post&id='+encodeURIComponent(postId),
+    function(d){
+      if(d&&d.success){
+        _comPosts=_comPosts.filter(function(x){return x.id!==postId;});
         comRenderFeed();
-        if(textoEl)textoEl.value="";
-        if(hashEl)hashEl.value="";
+        showToast('Publicação excluída.','success');
+      } else showToast('Erro ao excluir.','error');
+    },function(){showToast('Erro de conexão.','error');});
+}
+
+// ── EDITAR / EXCLUIR COMENTÁRIO ──
+function comEditComment(postId,ci){
+  var form=document.getElementById('commentEdit_'+postId+'_'+ci);
+  var txt=document.getElementById('commentTexto_'+postId+'_'+ci);
+  if(form)form.classList.add('open');
+  if(txt)txt.style.display='none';
+}
+function comCancelEditComment(postId,ci){
+  var form=document.getElementById('commentEdit_'+postId+'_'+ci);
+  var txt=document.getElementById('commentTexto_'+postId+'_'+ci);
+  if(form)form.classList.remove('open');
+  if(txt)txt.style.display='';
+}
+function comSaveEditComment(postId,ci){
+  var ta=document.getElementById('commentTa_'+postId+'_'+ci);
+  var novo=ta?ta.value.trim():'';
+  if(!novo)return;
+  callScript('action=edit_comment&id='+encodeURIComponent(postId)+'&ci='+ci+'&texto='+encodeURIComponent(novo),
+    function(d){
+      if(d&&d.success){
+        var p=_comPosts.find(function(x){return x.id===postId;});
+        if(p&&p.comentarios&&p.comentarios[ci])p.comentarios[ci].texto=novo;
+        var el=document.getElementById('commentTexto_'+postId+'_'+ci);
+        if(el)el.textContent=novo;
+        comCancelEditComment(postId,ci);
+      } else showToast('Erro ao editar.','error');
+    },function(){showToast('Erro de conexão.','error');});
+}
+function comDeleteComment(postId,ci){
+  if(!confirm('Excluir este comentário?'))return;
+  callScript('action=delete_comment&id='+encodeURIComponent(postId)+'&ci='+ci,
+    function(d){
+      if(d&&d.success){
+        var p=_comPosts.find(function(x){return x.id===postId;});
+        if(p)p.comentarios=d.comentarios;
+        var el=document.getElementById('comment_'+postId+'_'+ci);
+        if(el)el.remove();
+      } else showToast('Erro ao excluir.','error');
+    },function(){showToast('Erro de conexão.','error');});
+}
+
+function comExpandir(){
+  var ex=comEl('comExpanded'),tr=comEl('comTrigger');
+  if(ex){ex.classList.add('open');if(tr)tr.style.display='none';}
+  setTimeout(function(){var ta=comEl('comTexto');if(ta)ta.focus();},50);
+}
+function comRecolher(){
+  var ex=comEl('comExpanded'),tr=comEl('comTrigger');
+  if(ex)ex.classList.remove('open');if(tr)tr.style.display='';
+}
+
+function comPublicar(){
+  var textoEl=comEl('comTexto'),hashEl=comEl('comHashtags'),btn=comEl('comPostBtn');
+  var texto=textoEl?textoEl.value.trim():'',hashtags=hashEl?hashEl.value.trim():'';
+  if(!texto){showToast('Escreva algo antes de publicar.','warning');return;}
+  if(!window.currentStudent||!currentStudent.login){showToast('Sessão expirada.','error');return;}
+  var autor=currentStudent.nome_display||currentStudent.nome||'Aluno';
+  var esp=currentStudent.especialidade||currentStudent.profissao||'';
+  if(btn){btn.disabled=true;btn.textContent='Publicando...';}
+  callScript('action=add_post&autor='+encodeURIComponent(autor)+'&especialidade='+encodeURIComponent(esp)+'&texto='+encodeURIComponent(texto)+'&hashtags='+encodeURIComponent(hashtags),
+    function(d){
+      if(d&&d.success){
+        _comPosts.unshift({id:d.id,autor:autor,especialidade:esp,texto:texto,hashtags:hashtags,curtidas:0,timestamp:d.timestamp,comentarios:[]});
+        comRenderFeed();
+        if(textoEl)textoEl.value='';if(hashEl)hashEl.value='';
         comRecolher();
-        var badge=comEl("comCountBadge");
-        if(badge)badge.textContent=_comPosts.length+" publicaç"+(_comPosts.length===1?"ão":"ões");
-        showToast("Post publicado!","success");
-      } else {
-        showToast("Erro: "+(d&&d.error?d.error:"Verifique o backend e republique o Apps Script."),"error");
-      }
-      if(btn){btn.disabled=false;btn.textContent="Publicar";}
-    },
-    function(){
-      showToast("Sem resposta do servidor. Verifique se o Apps Script foi republicado com a nova versão.","error");
-      if(btn){btn.disabled=false;btn.textContent="Publicar";}
-    }
-  );
+        var b=comEl('comCountBadge');if(b)b.textContent=_comPosts.length+' publicaç'+(_comPosts.length===1?'ão':'ões');
+        showToast('Publicado!','success');
+      } else showToast('Erro: '+(d&&d.error?d.error:'Verifique o backend.'),'error');
+      if(btn){btn.disabled=false;btn.textContent='Publicar';}
+    },function(){showToast('Sem resposta do servidor.','error');if(btn){btn.disabled=false;btn.textContent='Publicar';}});
 }
 
 function comComment(postId){
-  var ta=comEl('commentText_'+postId);
+  var ta=comEl('commentText_'+postId)||document.getElementById('commentText_'+postId);
   var texto=ta?ta.value.trim():'';
-  if(!texto||!window.currentStudent) return;
+  if(!texto||!window.currentStudent)return;
   var autor=currentStudent.nome_display||currentStudent.nome||'Aluno';
   var esp=currentStudent.especialidade||currentStudent.profissao||'';
   ta.value='';
-  callScript(
-    'action=add_comment&id='+encodeURIComponent(postId)
-    +'&autor='+encodeURIComponent(autor)
-    +'&especialidade='+encodeURIComponent(esp)
-    +'&texto='+encodeURIComponent(texto),
+  callScript('action=add_comment&id='+encodeURIComponent(postId)+'&autor='+encodeURIComponent(autor)+'&especialidade='+encodeURIComponent(esp)+'&texto='+encodeURIComponent(texto),
     function(d){
-      if(d.success){
-        var p=_comPosts.find(function(x){return x.id===postId;});
-        if(p) p.comentarios=d.comentarios;
-        var sec=comEl('comments_'+postId);
-        if(sec){
-          var p2=_comPosts.find(function(x){return x.id===postId;});
-          sec.innerHTML=comBuildCommentsList(p2||{comentarios:d.comentarios})+comBuildCommentForm(postId);
-          sec.style.display='block';
-        }
-        // Actualizar contador
-        var btn=(function(){var b=document.getElementById('heroSlideBody')||document;return b.querySelector('#post_'+postId+' .com-action-btn:nth-child(2)');})();
-        if(btn&&p) btn.innerHTML=btn.innerHTML.replace(/\d+ comentário/,d.comentarios.length+' comentário');
+      if(d&&d.success){
+        var p=_comPosts.find(function(x){return x.id===postId;});if(p)p.comentarios=d.comentarios;
+        var sec=comEl('comments_'+postId)||document.getElementById('comments_'+postId);
+        if(sec){sec.innerHTML=comBuildCommentsList(p||{comentarios:d.comentarios})+comBuildCommentForm(postId);sec.style.display='block';}
+        var btn=sec?sec.closest('.com-post'):null;
+        if(btn){var ab=btn.querySelector('.com-action-btn:nth-child(2)');if(ab)ab.innerHTML=ab.innerHTML.replace(/\d+ comentário/,d.comentarios.length+' comentário');}
       }
-    },
-    function(){}
-  );
+    },function(){});
 }
 // ───────────────────────────────────────────────────────────────────
 
@@ -8279,7 +8391,7 @@ function openHeroSlideImg(t){
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-"+t);if(si)si.classList.add("active");
   s.classList.add("open"); b.scrollTop=0;
-  if(t==="comunidade") setTimeout(comLoad,80);
+  if(t==="comunidade"){ setTimeout(comLoad,80); setTimeout(comMarcarVisto,1500); }
 }
 function openHeroSlideIframe(url){
   var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
@@ -8522,6 +8634,21 @@ function qzRetry() {
   <button onclick="document.getElementById('qrLightbox').style.display='none'" style="position:absolute;top:20px;right:24px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.12);border:none;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
+</div>
+
+<!-- Comunidade: pop-up instrução -->
+<div class="com-help-popup-overlay" id="comHelpOverlay" onclick="if(event.target===this)comHelpFechar()">
+  <div class="com-help-popup">
+    <button class="com-help-popup-close" onclick="comHelpFechar()">&#x2715;</button>
+    <div class="com-help-subtitle">Instituto MD Talk</div>
+    <h2 class="com-help-title">Como usar a Comunidade</h2>
+    <p class="com-help-body">Este é o espaço de <strong style="color:#C4A45A">networking médico</strong> do Instituto MD Talk. Troque experiências, compartilhe dicas clínicas e conecte-se com outros médicos que estudam inglês médico.</p>
+    <div class="com-help-item"><div class="com-help-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" width="14" height="14"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><p><strong>Publique</strong> — dicas de vocabulário clínico, cases, conquistas ou dúvidas de inglês médico.</p></div>
+    <div class="com-help-item"><div class="com-help-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" width="14" height="14"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div><p><strong>Curta</strong> — mostre apoio às publicações dos colegas com um coração.</p></div>
+    <div class="com-help-item"><div class="com-help-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" width="14" height="14"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><p><strong>Comente</strong> — responda, complemente e incentive os colegas.</p></div>
+    <div class="com-help-item"><div class="com-help-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" width="14" height="14"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></div><p><strong>Use hashtags</strong> — <em style="color:#C4A45A">#cardiologia #english #USMLE #dica</em> para organizar os temas.</p></div>
+    <p class="com-help-footer">Ambiente profissional e acolhedor — respeite e inspire.</p>
+  </div>
 </div>
 </body>
 </html>
