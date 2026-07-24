@@ -8572,6 +8572,7 @@ function openHome(){
 }
 
 
+var _closeTimer=null;
 var _dashOrigParent=null;
 function openMaterial(){
   var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
@@ -8794,6 +8795,7 @@ function _restoreDash(){
   }
 }
 function _slideOpen(s,b,bg){
+  if(_closeTimer){clearTimeout(_closeTimer);_closeTimer=null;}
   _restoreDash();
   b.innerHTML=""; b.style.cssText="";
   s.removeAttribute("style"); s.classList.remove("img-bg");
@@ -8874,7 +8876,9 @@ function closeHeroSlide(){
   if(page) page.style.removeProperty("display");
   var s=document.getElementById("heroSlide");if(!s) return;
   s.classList.remove("open","img-bg","mural-mode");
-  setTimeout(function(){
+  if(_closeTimer) clearTimeout(_closeTimer);
+  _closeTimer=setTimeout(function(){
+    _closeTimer=null;
     var b=document.getElementById("heroSlideBody");
     if(b){b.innerHTML="";b.style.cssText="";}
     s.removeAttribute("style");
