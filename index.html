@@ -8334,7 +8334,12 @@ function openHeroSlideImg(t){
   var p=document.getElementById("panel-"+t);
   if(!s||!b||!p) return;
   _slideOpen(s,b,img);
-  b.style.cssText="padding:40px 44px;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;width:100%";
+  // Comunidade e Mural precisam de padding:0 (têm layout próprio)
+  if(t==="comunidade"||t==="mural"){
+    b.style.cssText="padding:0;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;width:100%;position:relative";
+  } else {
+    b.style.cssText="padding:40px 44px;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;width:100%";
+  }
   b.innerHTML=p.innerHTML;
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-"+t);if(si)si.classList.add("active");
