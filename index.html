@@ -2207,7 +2207,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       <div class="side-sub" id="sideSubOutros"><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/treinamento/','_blank')">Treinamento Complementar</div><div class="side-subitem" onclick="window.open('https://institutomdtalk.github.io/expansao/','_blank')">Expansão</div></div>
       <div class="side-item" id="si-feedback" onclick="closeHeroSlide();window.open('https://forms.office.com/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAYAABgpFVNUQjE3VzVNUTU1Q045N0VNQTRYRzRZWEU0RS4u&route=shorturl','_blank')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Feedback</div>
     <div class="side-footer">
-            <div class="side-item" id="si-mural" onclick="openHeroSlideImg('mural')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Mural MD Talk</div>
+            <div class="side-item" id="si-mural" onclick="openHeroSlideImg('mural')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Mural MD Talk<span class="side-bell" id="muralBell" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="side-bell-dot"></span></span></div>
       <div class="side-item" id="si-comunidade" onclick="openHeroSlideImg('comunidade')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>Comunidade<span class="side-bell" id="comBell" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="#C4A45A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="side-bell-dot"></span></span></div>
       <div class="side-item" id="si-contato" onclick="openHeroSlideImg('contato')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Contato</div>
       <div class="side-item" id="si-tutorial" onclick="closeHeroSlide();abrirTutorial()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="8"/><path d="M12 12v4"/></svg>Tutorial</div>
@@ -7730,6 +7730,19 @@ document.addEventListener("DOMContentLoaded", function(){
 
 // ── MURAL MD TALK ──────────────────────────────────────────────────
 var _muralPosts = [];
+// Verificar novos posts do Mural a cada 5 minutos
+setInterval(function(){
+  var slide=document.getElementById("heroSlide");
+  var isMuralOpen=slide&&slide.classList.contains("open")&&document.getElementById("muralGrid");
+  if(!isMuralOpen){
+    callScript("action=get_mural",function(d){
+      if(d&&d.success&&d.posts&&d.posts.length){
+        _muralPosts=d.posts;
+        muralCheckNovos();
+      }
+    },function(){});
+  }
+},300000);
 var MURAL_SENHA = '0202';
 
 function muralEl(id){
@@ -7738,6 +7751,20 @@ function muralEl(id){
   return el||document.getElementById(id);
 }
 
+function muralCheckNovos(){
+  var lastSeen=localStorage.getItem("muralLastSeen")||"";
+  var bell=document.getElementById("muralBell");
+  if(!bell||!_muralPosts.length) return;
+  var latest=_muralPosts[0]&&_muralPosts[0].id;
+  bell.style.display=(latest&&latest!==lastSeen)?"inline-flex":"none";
+}
+function muralMarcarVisto(){
+  if(_muralPosts.length){
+    localStorage.setItem("muralLastSeen",_muralPosts[0].id);
+    var bell=document.getElementById("muralBell");
+    if(bell) bell.style.display="none";
+  }
+}
 function muralLoad(){
   var grid=muralEl('muralGrid');
   if(grid) grid.innerHTML='<div class="mural-loading">Carregando...</div>';
@@ -7745,6 +7772,7 @@ function muralLoad(){
     if(!d||!d.success){ if(grid) grid.innerHTML='<p style="text-align:center;padding:40px;font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.3)">Erro ao carregar. <button onclick="muralLoad()" style="color:#C4A45A;background:none;border:none;cursor:pointer;font-family:Raleway,sans-serif;font-weight:700">Tentar novamente</button></p>'; return; }
     _muralPosts = d.posts||[];
     muralRender();
+    muralCheckNovos();
   }, function(){
     if(grid) grid.innerHTML='<p style="text-align:center;padding:40px;font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.3)">Sem resposta. <button onclick="muralLoad()" style="color:#C4A45A;background:none;border:none;cursor:pointer;font-family:Raleway,sans-serif;font-weight:700">Tentar novamente</button></p>';
   });
@@ -7843,6 +7871,7 @@ function muralPublicar(){
         var newPost={id:d.id,tipo:tipo,conteudo:conteudo,descricao:descricao,timestamp:d.timestamp};
         _muralPosts.unshift(newPost);
         muralRender();
+        muralMarcarVisto();
         muralFecharModal();
         showToast('Publicado no Mural!','success');
       } else { showToast('Erro: '+(d&&d.error?d.error:'Tente novamente.'),'error'); }
@@ -8626,7 +8655,7 @@ function openHeroSlideImg(t){
   var si=document.getElementById("si-"+t);if(si)si.classList.add("active");
   s.classList.add("open"); b.scrollTop=0;
   if(t==="comunidade"){ setTimeout(comLoad,80); setTimeout(comMarcarVisto,1500); }
-  if(t==="mural") setTimeout(muralLoad,80);
+  if(t==="mural"){ setTimeout(muralLoad,80); setTimeout(muralMarcarVisto,1500); }
 }
 function openHeroSlideIframe(url){
   var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
