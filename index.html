@@ -7773,6 +7773,7 @@ function muralLoad(){
   callScript('action=get_mural', function(d){
     if(!d||!d.success){ if(grid) grid.innerHTML='<p style="text-align:center;padding:40px;font-family:Raleway,sans-serif;font-size:13px;color:rgba(255,255,255,.3)">Erro ao carregar. <button onclick="muralLoad()" style="color:#C4A45A;background:none;border:none;cursor:pointer;font-family:Raleway,sans-serif;font-weight:700">Tentar novamente</button></p>'; return; }
     _muralPosts = d.posts||[];
+    if(!_muralPosts.length) showToast("Mural vazio — publique algo!","warning");
     muralRender();
     muralCheckNovos();
   }, function(){
@@ -7825,8 +7826,12 @@ function muralBuildCard(p){
       sp=sp.replace(/\/embed\/embed\//,'/embed/');
     }
     sp+='?utm_source=generator&theme=0';
-    body='<iframe class="mural-spotify" src="'+sp+'" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>'
-      +'<div class="mural-card-body">'+(p.descricao?'<div class="mural-card-text" style="margin-bottom:8px">'+p.descricao+'</div>':'')+ts+'</div>';
+    body='<div style="position:relative">'
+      +'<iframe class="mural-spotify" src="'+sp+'" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>'
+      +'</div>'
+      +'<div class="mural-card-body">'+(p.descricao?'<div class="mural-card-text" style="margin-bottom:8px">'+p.descricao+'</div>':'')
+      +'<a href="'+p.conteudo+'" target="_blank" style="display:inline-flex;align-items:center;gap:5px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;margin-top:6px">Abrir no Spotify &#8599;</a>'
+      +ts+'</div>';
 
   } else if(tipo==='imagem'){
     body='<img class="mural-img" src="'+p.conteudo+'" alt="'+(p.descricao||'Imagem')+'" onerror="this.style.display=\'none\'">'
@@ -7871,6 +7876,7 @@ function muralTipoChange(){ muralSelectTipo(window._muralTipoActual||"aviso", do
 
 function muralPublicar(){
   var tipo=window._muralTipoActual||'aviso';
+  console.log('[Mural] publicar tipo='+tipo+' conteudo='+conteudo.substring(0,50));
   var conteudo=document.getElementById('muralConteudo').value.trim();
   var descricao=document.getElementById('muralDescricao').value.trim();
   var senha=document.getElementById('muralSenha').value;
