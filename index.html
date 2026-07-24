@@ -8279,6 +8279,7 @@ function openHeroSlideImg(t){
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-"+t);if(si)si.classList.add("active");
   s.classList.add("open"); b.scrollTop=0;
+  if(t==="comunidade") setTimeout(comLoad,80);
 }
 function openHeroSlideIframe(url){
   var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
