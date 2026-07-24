@@ -8783,6 +8783,11 @@ function _restoreDash(){
 }
 function _slideOpen(s,b,bg){
   _restoreDash();
+  // Esconder elementos da home que podem extravasar
+  var dash=document.getElementById("main-dashboard");
+  var page=document.getElementById("page-dashboard");
+  if(dash) dash.style.setProperty("display","none","important");
+  if(page) page.style.setProperty("display","none","important");
   b.innerHTML=""; b.style.cssText="";
   s.removeAttribute("style"); s.classList.remove("img-bg");
   if(bg){s.style.backgroundImage="url("+bg+")";s.style.backgroundSize="cover";s.style.backgroundPosition="center";s.classList.add("img-bg");}
@@ -8852,8 +8857,11 @@ function openHome(){
 }
 function closeHeroSlide(){
   _restoreDash();
+  // Repor elementos da home
   var dash=document.getElementById("main-dashboard");
+  var page=document.getElementById("page-dashboard");
   if(dash) dash.style.removeProperty("display");
+  if(page) page.style.removeProperty("display");
   var s=document.getElementById("heroSlide");if(!s) return;
   s.classList.remove("open","img-bg","mural-mode");
   setTimeout(function(){
