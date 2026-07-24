@@ -7817,23 +7817,31 @@ function muralBuildCard(p){
       +'<div class="mural-card-body">'+(p.descricao?'<div class="mural-card-text" style="margin-bottom:8px">'+p.descricao+'</div>':'')+ts+'</div>';
 
   } else if(tipo==='musica'){
-    var sp=p.conteudo.split('?')[0];
-    // Remover segmentos de locale: /intl-pt/, /intl-en/, etc.
+    var raw=p.conteudo;
+    var sp=raw.split('?')[0];
+    // Remover locale ex: /intl-pt/
     sp=sp.replace(/\/intl-[a-z]{2,5}\//g,'/');
-    // Converter para embed
-    if(sp.indexOf('/embed/')===-1){
-      sp=sp.replace('https://open.spotify.com/','https://open.spotify.com/embed/');
+    // Remover trailing slash
+    sp=sp.replace(/\/$/,'');
+    // Só funciona com open.spotify.com — validar
+    if(sp.indexOf('open.spotify.com')===-1){
+      body='<div class="mural-card-body">'
+        +'<div class="mural-card-text" style="color:rgba(255,100,100,.8)">Link Spotify inválido. Use o link completo: open.spotify.com/track/...</div>'
+        +'<a href="'+raw+'" target="_blank" style="color:#C4A45A;font-family:Raleway,sans-serif;font-size:11px">Tentar abrir ↗</a>'
+        +ts+'</div>';
+    } else {
+      if(sp.indexOf('/embed/')===-1){
+        sp=sp.replace('https://open.spotify.com/','https://open.spotify.com/embed/');
+      }
+      sp=sp.replace(/\/embed\/embed\//g,'/embed/');
+      sp+='?utm_source=generator&theme=0';
+      body='<div>'
+        +'<iframe src="'+sp+'" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" style="border-radius:0;display:block"></iframe>'
+        +'</div>'
+        +'<div class="mural-card-body">'+(p.descricao?'<div class="mural-card-text" style="margin-bottom:8px">'+p.descricao+'</div>':'')
+        +'<a href="'+raw+'" target="_blank" style="display:inline-flex;align-items:center;gap:4px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;margin-top:6px">Abrir no Spotify &#8599;</a>'
+        +ts+'</div>';
     }
-    // Evitar duplo embed
-    sp=sp.replace(/\/embed\/embed\//g,'/embed/');
-    sp+='?utm_source=generator&theme=0';
-    body='<div style="position:relative">'
-      +'<iframe class="mural-spotify" src="'+sp+'" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>'
-      +'</div>'
-      +'<div class="mural-card-body">'+(p.descricao?'<div class="mural-card-text" style="margin-bottom:8px">'+p.descricao+'</div>':'')
-      +'<a href="'+p.conteudo+'" target="_blank" style="display:inline-flex;align-items:center;gap:5px;font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;margin-top:6px">Abrir no Spotify &#8599;</a>'
-      +ts+'</div>';
-
   } else if(tipo==='imagem'){
     body='<img class="mural-img" src="'+p.conteudo+'" alt="'+(p.descricao||'Imagem')+'" onerror="this.style.display=\'none\'">'
       +'<div class="mural-card-body">'+(p.descricao?'<div class="mural-card-text" style="margin-bottom:8px">'+p.descricao+'</div>':'')+ts+'</div>';
@@ -7896,6 +7904,11 @@ function muralPublicar(){
   var descricao=descEl?descEl.value.trim():"";
   var senha=senhaEl?senhaEl.value:"";
   if(!conteudo){showToast("Preencha o conteúdo.","warning");return;}
+  // Validar URL Spotify
+  if(tipo==="musica" && conteudo.indexOf("open.spotify.com")===-1){
+    showToast("Use o link completo do Spotify: open.spotify.com/track/...","warning");
+    return;
+  }
   if(senha!==MURAL_SENHA){showToast("Senha incorreta.","error");if(senhaEl)senhaEl.focus();return;}
   if(btnEl){btnEl.disabled=true;btnEl.textContent="Publicando...";}
   callScript("action=add_mural&tipo="+encodeURIComponent(tipo)
@@ -8324,6 +8337,7 @@ function openHeroSlide(t){
   s.classList.add("open"); b.scrollTop=0;
 }
 function openHeroSlideImg(t){
+  var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
   if(typeof _closeTimer!=="undefined"&&_closeTimer){clearTimeout(_closeTimer);_closeTimer=null;}
   var dash=document.getElementById("main-dashboard");
   var page=document.getElementById("page-dashboard");
@@ -9159,6 +9173,7 @@ function openHome(){
   s.classList.add("open"); b.scrollTop=0;
 }
 function closeHeroSlide(){
+  var _ba=document.getElementById("btnApostila");if(_ba)_ba.remove();
   if(typeof _closeTimer!=="undefined"&&_closeTimer) clearTimeout(_closeTimer);
   _restoreDash();
   var dash=document.getElementById("main-dashboard");
