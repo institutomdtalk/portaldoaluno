@@ -7882,15 +7882,15 @@ function muralBuildCard(p){
       +'<div class="mural-card-body">'+(p.descricao?'<div class="mural-card-text" style="margin-bottom:8px">'+p.descricao+'</div>':'')+ts+'</div>';
 
   } else if(tipo==='musica'){
-    // Converter URL Spotify para embed
-    // Converter URL Spotify para embed
-    var sp=p.conteudo.split('?')[0]; // remover query params originais
-    if(sp.indexOf('spotify.com')>-1){
-      // Garantir formato embed
+    var sp=p.conteudo.split('?')[0];
+    // Remover segmentos de locale: /intl-pt/, /intl-en/, etc.
+    sp=sp.replace(/\/intl-[a-z]{2,5}\//g,'/');
+    // Converter para embed
+    if(sp.indexOf('/embed/')===-1){
       sp=sp.replace('https://open.spotify.com/','https://open.spotify.com/embed/');
-      // Evitar duplo /embed/embed/
-      sp=sp.replace(/\/embed\/embed\//,'/embed/');
     }
+    // Evitar duplo embed
+    sp=sp.replace(/\/embed\/embed\//g,'/embed/');
     sp+='?utm_source=generator&theme=0';
     body='<div style="position:relative">'
       +'<iframe class="mural-spotify" src="'+sp+'" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>'
