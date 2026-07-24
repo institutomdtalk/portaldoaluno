@@ -900,7 +900,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   transition:width .3s ease,opacity .3s;
   overflow:hidden;z-index:300;
 }
-.side-nav.collapsed{width:56px;border-right:1px solid rgba(196,164,90,.08);}
+.side-nav.collapsed{width:56px;border-right:1px solid rgba(196,164,90,.08);overflow:visible;}
 .side-nav-inner{width:220px;display:flex;flex-direction:column;height:100%;overflow:hidden;}
 .side-logo{padding:28px 22px 18px;}
 .side-logo img{width:72px;opacity:1;display:block;filter:brightness(1.1);}
@@ -2137,7 +2137,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 /* ─────────────────────────────────────────────────────────────── */
 
 /* ── SIDEBAR MINI (só ícones) ──────────────────────────────── */
-.side-nav.collapsed .side-nav-inner{width:56px;overflow:visible;flex-shrink:0}
+.side-nav.collapsed .side-nav-inner{width:56px;overflow:visible;flex-shrink:0;position:relative}
 .side-nav.collapsed .side-logo{padding:20px 0;display:flex;align-items:center;justify-content:center}
 .side-nav.collapsed .side-logo img,.side-nav.collapsed .side-logo-img{width:32px!important;height:32px!important;object-fit:contain}
 .side-nav.collapsed .side-logo-text,
