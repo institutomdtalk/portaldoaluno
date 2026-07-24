@@ -896,7 +896,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   display:flex;flex-direction:column;
   position:sticky;top:0;height:100vh;align-self:flex-start;
   transition:width .3s ease,opacity .3s;
-  overflow:hidden;z-index:300;
+  overflow:hidden;z-index:10000;
 }
 .side-nav.collapsed{width:0;border-right:none;opacity:0;}
 .side-nav-inner{width:220px;display:flex;flex-direction:column;height:100%;overflow:hidden;}
@@ -1893,7 +1893,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   .mentora-pin-cancel-btn:hover{color:var(--navy)}
   
 
-.hero-slide{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;transform:translateY(110%);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;pointer-events:none;background:var(--navy-deep,#050D1A)}
+.hero-slide{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;transform:translateY(110%);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;pointer-events:none;background:var(--navy-deep,#050D1A)}
 .hero-slide.open{transform:translateY(0);opacity:1;pointer-events:all}
 .hero-slide.img-bg{background-size:cover;background-position:center}
 .hero-slide.img-bg::before{content:"";position:absolute;inset:0;background:rgba(5,13,26,.65);z-index:0}
@@ -2133,11 +2133,6 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 
 #app-main-col:has(#heroSlide.open) #main-dashboard,
 #app-main-col:has(#heroSlide.open) #page-dashboard{ display:none !important; }
-
-/* Full-screen overlay para cobrir área abaixo do header quando slide está aberto */
-#slideOverlay{position:fixed;inset:0;background:#0B1D3A;z-index:29;display:none;pointer-events:none}
-#slideOverlay.visible{display:block}
-.hero-slide.open ~ #slideOverlay{display:block}
 </style>
 </head>
 <body>
@@ -2309,8 +2304,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
       </div>
     </div>
     <div class="header-gold-line"></div>
-    <div class="hero-slide" id="heroSlide"><button class="hero-slide-close" onclick="closeHeroSlide()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="hero-slide-body" id="heroSlideBody"></div>
-<div id="slideOverlay"></div></div>
+    <div class="hero-slide" id="heroSlide"><button class="hero-slide-close" onclick="closeHeroSlide()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><div class="hero-slide-body" id="heroSlideBody"></div></div>
   </header>
 
 
@@ -8305,7 +8299,6 @@ function _restoreDash(){
   }
 }
 function _slideOpen(s,b,bg){
-  var ov=document.getElementById("slideOverlay");if(ov)ov.classList.add("visible");
   if(_closeTimer){clearTimeout(_closeTimer);_closeTimer=null;}
   _restoreDash();
   b.innerHTML=""; b.style.cssText="";
@@ -9158,7 +9151,6 @@ function openHome(){
   s.classList.add("open"); b.scrollTop=0;
 }
 function closeHeroSlide(){
-  var ov=document.getElementById("slideOverlay");if(ov)ov.classList.remove("visible");
   if(typeof _closeTimer!=="undefined"&&_closeTimer) clearTimeout(_closeTimer);
   _restoreDash();
   var dash=document.getElementById("main-dashboard");
