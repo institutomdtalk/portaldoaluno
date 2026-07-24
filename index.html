@@ -896,7 +896,7 @@ body{font-family:var(--sans);background:var(--off-white);color:var(--text-body);
   display:flex;flex-direction:column;
   position:sticky;top:0;height:100vh;align-self:flex-start;
   transition:width .3s ease,opacity .3s;
-  overflow:hidden;z-index:10000;
+  overflow:hidden;z-index:300;
 }
 .side-nav.collapsed{width:0;border-right:none;opacity:0;}
 .side-nav-inner{width:220px;display:flex;flex-direction:column;height:100%;overflow:hidden;}
@@ -1893,7 +1893,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
   .mentora-pin-cancel-btn:hover{color:var(--navy)}
   
 
-.hero-slide{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;transform:translateY(110%);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;pointer-events:none;background:var(--navy-deep,#050D1A)}
+.hero-slide{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;transform:translateY(110%);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;pointer-events:none;background:var(--navy-deep,#050D1A)}
 .hero-slide.open{transform:translateY(0);opacity:1;pointer-events:all}
 .hero-slide.img-bg{background-size:cover;background-position:center}
 .hero-slide.img-bg::before{content:"";position:absolute;inset:0;background:rgba(5,13,26,.65);z-index:0}
