@@ -2137,7 +2137,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 /* ─────────────────────────────────────────────────────────────── */
 
 /* ── SIDEBAR MINI (só ícones) ──────────────────────────────── */
-.side-nav.collapsed .side-nav-inner{width:56px;overflow:visible;flex-shrink:0;position:relative}
+.side-nav.collapsed .side-nav-inner{width:56px;overflow:visible!important;flex-shrink:0;position:relative}
 .side-nav.collapsed .side-logo{padding:20px 0;display:flex;align-items:center;justify-content:center}
 .side-nav.collapsed .side-logo img,.side-nav.collapsed .side-logo-img{width:32px!important;height:32px!important;object-fit:contain}
 .side-nav.collapsed .side-logo-text,
@@ -2172,6 +2172,8 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 /* Submenu no mini — não mostrar */
 .side-nav.collapsed .side-sub{display:none!important}
 .side-nav.collapsed .side-footer{padding:8px 0}
+.side-nav.collapsed .side-menu{overflow:visible!important}
+.side-nav.collapsed .side-footer{overflow:visible!important}
 /* ─────────────────────────────────────────────────────────── */
 </style>
 </head>
@@ -8042,6 +8044,33 @@ function muralDeletar(id){
   );
 }
 // ────────────────────────────────────────────────────────────────────
+// Tooltip do sidebar mini
+(function(){
+  var tip = document.getElementById('sideTooltip');
+  if(!tip) return;
+  document.addEventListener('mouseover', function(e){
+    var nav = document.getElementById('sideNav');
+    if(!nav || !nav.classList.contains('collapsed')) return;
+    var item = e.target.closest('.side-item');
+    if(!item) { tip.style.display='none'; return; }
+    var label = item.getAttribute('data-label');
+    if(!label) { tip.style.display='none'; return; }
+    var rect = item.getBoundingClientRect();
+    tip.textContent = label;
+    tip.style.display = 'block';
+    tip.style.top = (rect.top + rect.height/2 - 14) + 'px';
+    tip.style.left = (rect.right + 10) + 'px';
+    tip.style.opacity = '1';
+  });
+  document.addEventListener('mouseout', function(e){
+    var item = e.target.closest && e.target.closest('.side-item');
+    if(item && !item.contains(e.relatedTarget)){
+      tip.style.opacity='0';
+      setTimeout(function(){ tip.style.display='none'; }, 150);
+    }
+  });
+})();
+
 </script>
 <!-- MODALS -->
 
@@ -9064,5 +9093,7 @@ function qzRetry() {
 </script>
 
 </body>
+
+<div id="sideTooltip" style="position:fixed;z-index:9999;background:#0B1D3A;color:rgba(255,255,255,.9);font-family:Raleway,sans-serif;font-size:11px;font-weight:600;letter-spacing:.04em;padding:5px 12px;border-radius:8px;border:1px solid rgba(196,164,90,.25);pointer-events:none;opacity:0;transition:opacity .15s;white-space:nowrap;display:none"></div>
 </body>
 </html>
