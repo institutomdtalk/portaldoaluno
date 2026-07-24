@@ -2013,21 +2013,23 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 /* Modal de publicação */
 .mural-modal-overlay{position:fixed;inset:0;z-index:400;background:rgba(5,13,26,.7);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center}
 .mural-modal-overlay.open{display:flex}
-.mural-modal{background:#0d1f3c;border:1px solid rgba(196,164,90,.25);border-radius:24px;padding:28px;width:90%;max-width:480px;box-shadow:0 24px 80px rgba(0,0,0,.5)}
+.mural-modal{background:#fff;border-radius:24px;padding:28px;width:90%;max-width:500px;box-shadow:0 24px 80px rgba(0,0,0,.35);max-height:90vh;overflow-y:auto}
 .mural-modal h3{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:300;color:#fff;margin:0 0 20px}
 .mural-modal h3 em{font-style:italic;color:#C4A45A}
 .mural-field-label{font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(196,164,90,.7);margin-bottom:7px;display:block}
-.mural-select{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:10px 14px;font-family:Raleway,sans-serif;font-size:13px;color:#fff;outline:none;margin-bottom:14px;cursor:pointer}
-.mural-select option{background:#0d1f3c;color:#fff}
-.mural-input{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:10px 14px;font-family:Raleway,sans-serif;font-size:13px;color:#fff;outline:none;box-sizing:border-box;transition:border-color .2s}
-.mural-input:focus{border-color:rgba(196,164,90,.5)}
-.mural-input::placeholder{color:rgba(255,255,255,.25)}
-.mural-ta{min-height:90px;resize:none;margin-bottom:14px}
+.mural-tipo-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;border:1px solid rgba(11,29,58,.1);border-radius:14px;background:#f8f8f8;cursor:pointer;font-family:Raleway,sans-serif;font-size:10px;font-weight:600;letter-spacing:.06em;color:rgba(11,29,58,.5);transition:all .2s}
+.mural-tipo-btn:hover{background:#f0ede8;border-color:rgba(196,164,90,.4);color:#0B1D3A}
+.mural-tipo-btn.active{background:rgba(196,164,90,.12);border-color:rgba(196,164,90,.5);color:#0B1D3A}
+.mural-tipo-btn.active svg{stroke:#C4A45A}
+.mural-input{width:100%;background:#f8f8f8;border:1px solid rgba(11,29,58,.1);border-radius:12px;padding:10px 14px;font-family:Raleway,sans-serif;font-size:13px;color:#0B1D3A;outline:none;box-sizing:border-box;transition:border-color .2s}
+.mural-input:focus{border-color:rgba(196,164,90,.5);background:#fff}
+.mural-input::placeholder{color:rgba(11,29,58,.3)}
+.mural-ta{min-height:90px;resize:none}
 .mural-senha-row{display:flex;align-items:center;gap:10px;margin:14px 0}
 .mural-modal-footer{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;border-top:1px solid rgba(255,255,255,.08);padding-top:16px}
-.mural-cancel-btn{background:none;border:none;font-family:Raleway,sans-serif;font-size:12px;color:rgba(255,255,255,.35);cursor:pointer}
-.mural-publish-btn{background:rgba(196,164,90,.2);color:#C4A45A;border:1px solid rgba(196,164,90,.4);border-radius:16px;padding:9px 22px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s}
-.mural-publish-btn:hover{background:rgba(196,164,90,.35)}
+.mural-cancel-btn{background:none;border:none;font-family:Raleway,sans-serif;font-size:12px;color:rgba(11,29,58,.35);cursor:pointer}
+.mural-publish-btn{background:#0B1D3A;color:#C4A45A;border:1px solid #0B1D3A;border-radius:16px;padding:10px 24px;font-family:Raleway,sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.mural-publish-btn:hover{background:#163158}
 .mural-publish-btn:disabled{opacity:.35;cursor:not-allowed}
 .mural-loading{text-align:center;padding:48px;font-family:Raleway,sans-serif;font-size:12px;color:rgba(255,255,255,.3)}
 /* ─────────────────────────────────────────────────────────────── */
@@ -7837,25 +7839,33 @@ function muralAbrirModal(){
   document.getElementById('muralSenha').value='';
   document.getElementById('muralConteudo').value='';
   document.getElementById('muralDescricao').value='';
+  window._muralTipoActual='aviso';
+  document.querySelectorAll('.mural-tipo-btn').forEach(function(b){b.classList.remove('active');});
+  var first=document.querySelector('.mural-tipo-btn');if(first)first.classList.add('active');
   muralTipoChange();
 }
 function muralFecharModal(){
   document.getElementById('muralModalOverlay').classList.remove('open');
 }
 
-function muralTipoChange(){
-  var tipo=document.getElementById('muralTipo').value;
-  var labels={aviso:'Texto / Aviso',link:'URL do link',video:'URL do YouTube',musica:'URL do Spotify',imagem:'URL da imagem'};
-  var placeholders={aviso:'Escreva o aviso ou mensagem...',link:'https://...',video:'https://youtube.com/watch?v=...',musica:'https://open.spotify.com/track/...',imagem:'https://...'};
-  document.getElementById('muralConteudoLabel').textContent=labels[tipo]||'Conteúdo';
-  document.getElementById('muralConteudo').placeholder=placeholders[tipo]||'';
-  document.getElementById('muralConteudo').className='mural-input'+(tipo==='aviso'?' mural-ta':'');
-  if(tipo==='aviso') document.getElementById('muralConteudo').setAttribute('rows','4');
-  document.getElementById('muralTextoExtra').style.display=(tipo==='aviso'?'none':'block');
+function muralSelectTipo(tipo, btn){
+  document.querySelectorAll(".mural-tipo-btn").forEach(function(b){b.classList.remove("active");});
+  if(btn) btn.classList.add("active");
+  document.getElementById("muralTipo") && (document.getElementById("muralTipo").value=tipo);
+  var labels={aviso:"Texto / Aviso",link:"URL do link",video:"URL do YouTube",musica:"URL do Spotify",imagem:"URL da imagem"};
+  var placeholders={aviso:"Escreva o aviso ou mensagem...",link:"https://...",video:"https://youtube.com/watch?v=...",musica:"https://open.spotify.com/track/...",imagem:"https://..."};
+  var label=document.getElementById("muralConteudoLabel");
+  var ta=document.getElementById("muralConteudo");
+  var extra=document.getElementById("muralTextoExtra");
+  if(label) label.textContent=labels[tipo]||"Conteúdo";
+  if(ta){ ta.placeholder=placeholders[tipo]||""; ta.className="mural-input"+(tipo==="aviso"?" mural-ta":""); }
+  if(extra) extra.style.display=(tipo==="aviso"?"none":"block");
+  window._muralTipoActual=tipo;
 }
+function muralTipoChange(){ muralSelectTipo(window._muralTipoActual||"aviso", document.querySelector(".mural-tipo-btn.active")); }
 
 function muralPublicar(){
-  var tipo=document.getElementById('muralTipo').value;
+  var tipo=window._muralTipoActual||'aviso';
   var conteudo=document.getElementById('muralConteudo').value.trim();
   var descricao=document.getElementById('muralDescricao').value.trim();
   var senha=document.getElementById('muralSenha').value;
@@ -8918,21 +8928,71 @@ function qzRetry() {
 <!-- Mural MD Talk: modal de publicação -->
 <div class="mural-modal-overlay" id="muralModalOverlay" onclick="if(event.target===this)muralFecharModal()">
   <div class="mural-modal">
-    <h3>Nova publicação <em>Mural</em></h3>
-    <label class="mural-field-label">Tipo de conteúdo</label>
-    <select class="mural-select" id="muralTipo" onchange="muralTipoChange()">
-      <option value="aviso">📢 Aviso / Texto</option>
-      <option value="link">🔗 Link</option>
-      <option value="video">▶️ Vídeo YouTube</option>
-      <option value="musica">🎵 Música Spotify</option>
-      <option value="imagem">🖼️ Imagem (URL)</option>
-    </select>
-    <label class="mural-field-label" id="muralConteudoLabel">Texto / Aviso</label>
-    <textarea class="mural-input mural-ta" id="muralConteudo" placeholder="Escreva o aviso ou mensagem..."></textarea>
-    <div id="muralTextoExtra" style="display:none">
-      <label class="mural-field-label">Descrição (opcional)</label>
-      <input class="mural-input" id="muralDescricao" placeholder="Descrição ou legenda..." style="margin-bottom:14px">
+
+    <!-- Header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+      <div>
+        <p style="font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#C4A45A;margin:0 0 4px">Instituto MD Talk</p>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;color:#0B1D3A;margin:0">Nova publicação</h3>
+      </div>
+      <button onclick="muralFecharModal()" style="width:36px;height:36px;border-radius:50%;background:#f4f4f4;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(11,29,58,.4);font-size:14px;transition:background .2s" onmouseover="this.style.background='#eaeaea'" onmouseout="this.style.background='#f4f4f4'">&#x2715;</button>
     </div>
+
+    <!-- Tipo de conteúdo -->
+    <p style="font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(11,29,58,.4);margin:0 0 10px">Tipo de conteúdo</p>
+    <div id="muralTipoGrid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:22px">
+
+      <button class="mural-tipo-btn active" data-tipo="aviso" onclick="muralSelectTipo('aviso',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span>Aviso</span>
+      </button>
+
+      <button class="mural-tipo-btn" data-tipo="link" onclick="muralSelectTipo('link',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+        <span>Link</span>
+      </button>
+
+      <button class="mural-tipo-btn" data-tipo="video" onclick="muralSelectTipo('video',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        <span>Vídeo</span>
+      </button>
+
+      <button class="mural-tipo-btn" data-tipo="musica" onclick="muralSelectTipo('musica',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        <span>Música</span>
+      </button>
+
+      <button class="mural-tipo-btn" data-tipo="imagem" onclick="muralSelectTipo('imagem',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Imagem</span>
+      </button>
+
+    </div>
+
+    <!-- Campo principal -->
+    <p style="font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(11,29,58,.4);margin:0 0 8px" id="muralConteudoLabel">Texto / Aviso</p>
+    <textarea class="mural-input mural-ta" id="muralConteudo" placeholder="Escreva o aviso ou mensagem..." style="margin-bottom:14px"></textarea>
+
+    <!-- Descrição (para tipos não-texto) -->
+    <div id="muralTextoExtra" style="display:none">
+      <p style="font-family:Raleway,sans-serif;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(11,29,58,.4);margin:0 0 8px">Descrição <span style="font-weight:400;text-transform:none;letter-spacing:0">(opcional)</span></p>
+      <input class="mural-input" id="muralDescricao" placeholder="Legenda ou descrição..." style="margin-bottom:14px">
+    </div>
+
+    <!-- Senha -->
+    <div style="display:flex;align-items:center;gap:12px;padding:14px;background:#f8f6f2;border-radius:12px;margin-bottom:4px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="rgba(11,29,58,.35)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      <input class="mural-input" id="muralSenha" type="password" placeholder="Senha de publicação" style="border:none;background:transparent;padding:0;flex:1;margin:0;font-size:13px" onkeydown="if(event.key==='Enter')muralPublicar()">
+    </div>
+
+    <!-- Footer -->
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid rgba(11,29,58,.07)">
+      <button class="mural-cancel-btn" onclick="muralFecharModal()">Cancelar</button>
+      <button class="mural-publish-btn" id="muralPublishBtn" onclick="muralPublicar()">Publicar no Mural</button>
+    </div>
+
+  </div>
+</div>
     <div class="mural-senha-row">
       <label class="mural-field-label" style="margin:0;white-space:nowrap">Senha</label>
       <input class="mural-input" id="muralSenha" type="password" placeholder="••••" style="max-width:120px;margin:0">
