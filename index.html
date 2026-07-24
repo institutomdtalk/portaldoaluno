@@ -8031,13 +8031,19 @@ function openMural(){
   var s=document.getElementById("heroSlide"),b=document.getElementById("heroSlideBody");
   var p=document.getElementById("panel-mural");
   if(!s||!b||!p) return;
-  // Usar _slideOpen para limpar correctamente (esconde dashboard, limpa body)
-  _slideOpen(s,b,null);
-  // Aplicar fundo navy
-  s.style.background="linear-gradient(135deg,#050D1A 0%,#0B1D3A 60%,#0d2444 100%)";
-  s.classList.add("mural-mode");
+
+  // 1) Aplicar fundo navy IMEDIATAMENTE — antes de qualquer outra operação
+  s.className="hero-slide mural-mode open";
+  s.style.cssText="background:linear-gradient(135deg,#050D1A 0%,#0B1D3A 60%,#0d2444 100%)";
+
+  // 2) Esconder dashboard sincronamente
+  var dash=document.getElementById("main-dashboard");
+  if(dash) dash.style.setProperty("display","none","important");
+  var page=document.getElementById("page-dashboard");
+  if(page) page.style.display="none";
+
+  // 3) Injectar geo + conteúdo
   b.style.cssText="padding:0;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;width:100%;position:relative";
-  // Elementos geométricos animados
   var geoHTML='<div class="mural-geo mural-geo-ring1"></div>'
     +'<div class="mural-geo mural-geo-ring2"></div>'
     +'<div class="mural-geo mural-geo-ring3"></div>'
@@ -8047,12 +8053,14 @@ function openMural(){
     +'<div class="mural-geo mural-geo-dot2"></div>'
     +'<div class="mural-geo mural-geo-dot3"></div>'
     +'<div class="mural-geo mural-geo-cross"></div>';
-  // Conteúdo do painel
   b.innerHTML=geoHTML+'<div style="position:relative;z-index:1">'+p.innerHTML+"</div>";
-  // Sidebar active
+
+  // 4) Sidebar active
   document.querySelectorAll(".side-item").forEach(function(el){el.classList.remove("active");});
   var si=document.getElementById("si-mural");if(si)si.classList.add("active");
-  s.classList.add("open");b.scrollTop=0;
+  b.scrollTop=0;
+
+  // 5) Carregar posts
   setTimeout(muralLoad,80);
   setTimeout(muralMarcarVisto,1500);
 }
