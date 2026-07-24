@@ -2002,7 +2002,7 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 /* Vídeo embed */
 .mural-embed{width:100%;aspect-ratio:16/9;border:none;display:block}
 /* Música Spotify */
-.mural-spotify{width:100%;border-radius:0;border:none;height:80px;display:block}
+.mural-spotify{width:100%;border-radius:0;border:none;height:152px;display:block}
 /* Link card */
 .mural-link{display:flex;align-items:center;gap:12px;padding:14px 16px;text-decoration:none}
 .mural-link-icon{width:38px;height:38px;border-radius:10px;background:rgba(196,164,90,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -7816,10 +7816,14 @@ function muralBuildCard(p){
 
   } else if(tipo==='musica'){
     // Converter URL Spotify para embed
-    var sp=p.conteudo.replace('open.spotify.com/','open.spotify.com/embed/').replace('/track/','/track/').replace('https://open.spotify.com/embed/embed/','https://open.spotify.com/embed/');
-    if(p.conteudo.indexOf('spotify.com')>-1 && p.conteudo.indexOf('/embed/')===-1){
-      sp=p.conteudo.replace('open.spotify.com/','open.spotify.com/embed/');
+    // Converter para embed Spotify
+    var sp=p.conteudo;
+    if(sp.indexOf('spotify.com')>-1&&sp.indexOf('/embed/')===-1){
+      sp=sp.replace('open.spotify.com/','open.spotify.com/embed/');
     }
+    // Adicionar parâmetros de tema
+    if(sp.indexOf('?')===-1) sp+='?utm_source=generator&theme=0';
+    else if(sp.indexOf('theme=')===-1) sp+='&theme=0';
     body='<iframe class="mural-spotify" src="'+sp+'" allowtransparency="true" allow="encrypted-media"></iframe>'
       +'<div class="mural-card-body">'+(p.descricao?'<div class="mural-card-text" style="margin-bottom:8px">'+p.descricao+'</div>':'')+ts+'</div>';
 
