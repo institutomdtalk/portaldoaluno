@@ -1837,6 +1837,9 @@ details[open] .perfil-chevron{transform:rotate(180deg)}
 @keyframes pp-pulse{0%{transform:scale(1);opacity:0.6}70%{transform:scale(1.5);opacity:0}100%{transform:scale(1.5);opacity:0}}
 .tut-overlay{position:fixed;inset:0;background:rgba(5,13,26,0.75);z-index:99990;display:none;pointer-events:auto}
 .tut-overlay.active{display:block}
+
+.tut-close{position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:50%;background:rgba(11,29,58,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:rgba(11,29,58,.45);transition:all .2s;z-index:2}
+.tut-close:hover{background:rgba(11,29,58,.12);color:#0B1D3A}
 .tut-box{position:fixed;z-index:99991;background:#fff;border-radius:18px;padding:36px;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.3),0 0 0 1px rgba(196,164,90,0.15);transition:left 0.35s cubic-bezier(0.22,1,0.36,1),top 0.35s cubic-bezier(0.22,1,0.36,1);overflow:hidden;pointer-events:auto}
 .tut-box::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(196,164,90,0.08) 0%,transparent 70%);pointer-events:none;border-radius:16px}
 .tut-step{font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
@@ -4232,6 +4235,7 @@ function _renderTutStep() {
   var isFirst = _tutStep === 0;
 
   box.innerHTML =
+    '<button class="tut-close" data-action="close" title="Fechar tutorial (Esc)">&#x2715;</button>' +
     '<div class="tut-step">Passo ' + (_tutStep+1) + ' de ' + _tutSteps.length + '</div>' +
     '<div class="tut-title">' + step.title + '</div>' +
     '<div class="tut-body">' + step.body + '</div>' +
@@ -9271,6 +9275,11 @@ function qzRetry() {
   _qz.qs=[]; _qz.cur=0; _qz.score=0; _qz.selection=undefined; _qz.answered=false;
   qzShow('qz-setup');
 }
+
+// ESC fecha o tutorial
+document.addEventListener("keydown", function(e){
+  if(e.key === "Escape") { var o=document.getElementById("tut-overlay"); if(o&&o.classList.contains("active")) fecharTutorial(); }
+});
 
 </script>
 
