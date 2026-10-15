@@ -1,0 +1,21 @@
+INSTITUTO THAIANA FARIA — PUSH V126 CORRIGIDO
+
+BASE DO PORTAL:
+v123_followup_mais_respiro
+
+VALIDADO NESTE INDEX.HTML:
+- Follow-Up unificado
+- Abas: Follow-Up / Material / Arquivados
+- padrão DD-MM-AAAA no nome dos arquivos
+- liberação real às 07:00 (Brasília)
+- badge verde "Disponível hoje"
+- capas futuras em cinza
+- respiro maior entre liberação e Visualizar / Arquivar
+- OneSignal App ID: ec04dad0-9b78-46e0-a3ed-63fe58199d8e
+
+SUBA ESTES 5 ARQUIVOS JUNTOS NA RAIZ DO GITHUB PAGES:
+- index.html
+- OneSignalSDKWorker.js
+- manifest.webmanifest
+- icon-192.png
+- icon-512.png

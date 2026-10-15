@@ -1,32 +1,21 @@
 {
-  "id": "/portaldoaluno/",
-  "name": "MD Talk | Portal do Aluno",
-  "short_name": "MD Talk",
-  "description": "Portal do Aluno MD Talk: acesso às aulas, calendário, materiais e progresso de estudos.",
-  "lang": "pt-BR",
+  "name": "Instituto Thaiana Faria",
+  "short_name": "Thaiana Faria",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#071729",
-  "theme_color": "#071729",
+  "background_color": "#f8f8f5",
+  "theme_color": "#17384d",
   "icons": [
     {
-      "src": "./icons/icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     },
     {
-      "src": "./icons/icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "type": "image/png"
     }
   ]
 }
