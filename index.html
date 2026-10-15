@@ -304,7 +304,7 @@ if(rememberedLogin && rememberedStudent){
   async function clearOldOneSignalWorkers(){
     if(!('serviceWorker' in navigator))return;
     const regs=await navigator.serviceWorker.getRegistrations();
-    const marker=location.origin+basePath()+'onesignal/';
+    const marker=location.origin+basePath();
     for(const reg of regs){
       if(String(reg.scope||'').startsWith(marker)){
         try{await reg.unregister()}catch(e){}
@@ -313,7 +313,7 @@ if(rememberedLogin && rememberedStudent){
   }
 
   async function verifyWorker(){
-    const url=location.origin+basePath()+'onesignal/OneSignalSDKWorker.js';
+    const url=location.origin+basePath()+'OneSignalSDKWorker.js';
     let res;
     try{
       res=await fetch(url,{cache:'no-store'});
@@ -322,12 +322,12 @@ if(rememberedLogin && rememberedStudent){
     }
 
     if(!res.ok){
-      throw new Error('OneSignalSDKWorker.js retornou HTTP '+res.status+'. Verifique a pasta /onesignal no GitHub.');
+      throw new Error('OneSignalSDKWorker.js retornou HTTP '+res.status+'. Verifique se OneSignalSDKWorker.js está na raiz do GitHub.');
     }
 
     const body=(await res.text()).trim();
     if(!body || /^<!doctype html/i.test(body) || /^<html/i.test(body)){
-      throw new Error('O endereço do OneSignalSDKWorker.js está retornando HTML em vez de JavaScript.');
+      throw new Error('O endereço do O OneSignalSDKWorker.js da raiz está retornando HTML em vez de JavaScript.');
     }
 
     if(!body.includes('OneSignalSDK.sw.js')){
@@ -400,8 +400,8 @@ if(rememberedLogin && rememberedStudent){
 
             await OneSignal.init({
               appId:APP_ID,
-              serviceWorkerPath:bp+'onesignal/OneSignalSDKWorker.js',
-              serviceWorkerParam:{scope:bp+'onesignal/'},
+              serviceWorkerPath:bp+'OneSignalSDKWorker.js',
+              serviceWorkerParam:{scope:bp},
               notifyButton:{enable:false}
             });
 
