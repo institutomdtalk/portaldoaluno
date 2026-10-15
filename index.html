@@ -263,8 +263,8 @@ if(rememberedLogin && rememberedStudent){
           const bp=basePath();
           await OneSignal.init({
             appId:MD_ONESIGNAL_APP_ID,
-            serviceWorkerPath:bp+'OneSignalSDKWorker.js',
-            serviceWorkerParam:{scope:bp},
+            serviceWorkerPath:bp+'onesignal/OneSignalSDKWorker.js',
+            serviceWorkerParam:{scope:bp+'onesignal/'},
             notifyButton:{enable:false}
           });
           OS=OneSignal;
