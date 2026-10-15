@@ -116,8 +116,6 @@ html,body,.stage{
   }
 }
 </style>
-
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 </head>
 <body>
 <div class="stage">
@@ -200,8 +198,12 @@ window.addEventListener('message',e=>{
     const login=String(msg.login||'').trim();
     if(!login) return;
     setLoginStorage(login,Boolean(msg.remember),msg.aluno||{},msg.avisos||[]);
-    window.mdPushIdentify?.(login);
     openPortal();
+
+    // Só reconecta em segundo plano se ESTE aparelho já tiver push ativado.
+    if(localStorage.getItem('md_push_enabled')==='1'){
+      setTimeout(()=>window.mdPushIdentify?.(login),3500);
+    }
   }
   if(msg.type==='mdtalk:portal:logout'){
     backToLogin();
@@ -226,89 +228,182 @@ if(rememberedLogin && rememberedStudent){
 }
 </script>
 
-<script id="md-onesignal-bridge-v128">
+<script id="md-onesignal-bridge-v129">
 (function(){
   const MD_ONESIGNAL_APP_ID='ec04dad0-9b78-46e0-a3ed-63fe58199d8e';
+  const MD_ONESIGNAL_SDK='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';
+
   let OS=null;
+  let sdkPromise=null;
   let initPromise=null;
   let lastInitError='';
 
   function configured(){ return Boolean(MD_ONESIGNAL_APP_ID); }
+
   function basePath(){
     const p=location.pathname||'/';
     return p.endsWith('/')?p:p.replace(/[^/]*$/,'');
   }
-  function isIOS(){ return /iPhone|iPad|iPod/i.test(navigator.userAgent||''); }
-  function isStandalone(){
-    return window.matchMedia?.('(display-mode: standalone)').matches || window.navigator.standalone===true;
+
+  function isIOS(){
+    return /iPhone|iPad|iPod/i.test(navigator.userAgent||'');
   }
+
+  function isStandalone(){
+    return window.matchMedia?.('(display-mode: standalone)').matches ||
+           window.navigator.standalone===true;
+  }
+
   function nativeBrowserSupport(){
-    if(isIOS()&&!isStandalone())return true; // mostramos instrução de instalação
+    if(isIOS()&&!isStandalone())return true;
     return Boolean(
       window.isSecureContext &&
       'serviceWorker' in navigator &&
       typeof Notification!=='undefined' &&
-      ('PushManager' in window || (OS?.Notifications?.isPushSupported?.()===true))
+      'PushManager' in window
     );
   }
+
   function state(){
     const needsHomeScreen=configured() && isIOS() && !isStandalone();
     let sdkSupported=false;
     try{ sdkSupported=Boolean(OS?.Notifications?.isPushSupported?.()); }catch(e){}
+
+    const optedIn=Boolean(OS?.User?.PushSubscription?.optedIn);
+    if(optedIn){
+      try{localStorage.setItem('md_push_enabled','1')}catch(e){}
+    }
+
     return {
       configured:configured(),
       sdkReady:Boolean(OS),
       initError:lastInitError,
-      supported:needsHomeScreen ? true : (Boolean(OS)?sdkSupported:nativeBrowserSupport()),
+      supported:needsHomeScreen ? true : (OS ? sdkSupported : nativeBrowserSupport()),
       needsHomeScreen,
-      permission:OS?.Notifications?.permissionNative || (typeof Notification!=='undefined'?Notification.permission:'default'),
-      optedIn:Boolean(OS?.User?.PushSubscription?.optedIn)
+      permission:OS?.Notifications?.permissionNative ||
+        (typeof Notification!=='undefined'?Notification.permission:'default'),
+      optedIn
     };
   }
+
   function sendState(){
-    try{ portalFrame?.contentWindow?.postMessage({type:'mdtalk:push:status',state:state()},'*') }catch(e){}
+    try{
+      portalFrame?.contentWindow?.postMessage(
+        {type:'mdtalk:push:status',state:state()},
+        '*'
+      );
+    }catch(e){}
+  }
+
+  function loadSdk(){
+    if(OS)return Promise.resolve();
+    if(sdkPromise)return sdkPromise;
+
+    sdkPromise=new Promise((resolve,reject)=>{
+      window.OneSignalDeferred=window.OneSignalDeferred||[];
+
+      const existing=document.querySelector('script[data-md-onesignal-sdk="1"]');
+      if(existing){
+        resolve();
+        return;
+      }
+
+      const script=document.createElement('script');
+      script.src=MD_ONESIGNAL_SDK;
+      script.async=true;
+      script.dataset.mdOnesignalSdk='1';
+
+      let settled=false;
+      const finish=(fn,value)=>{
+        if(settled)return;
+        settled=true;
+        clearTimeout(timer);
+        fn(value);
+      };
+
+      script.onload=()=>finish(resolve);
+      script.onerror=()=>finish(reject,new Error('Não foi possível carregar o OneSignal.'));
+
+      const timer=setTimeout(()=>{
+        try{script.remove()}catch(e){}
+        finish(reject,new Error('Tempo excedido ao carregar o OneSignal.'));
+      },6000);
+
+      document.head.appendChild(script);
+    }).catch(err=>{
+      sdkPromise=null;
+      throw err;
+    });
+
+    return sdkPromise;
   }
 
   async function ensureInit(force=false){
-    if(force){ initPromise=null; OS=null; lastInitError=''; }
+    if(OS&&!force)return OS;
+    if(force){
+      initPromise=null;
+      lastInitError='';
+    }
     if(initPromise)return initPromise;
+
     lastInitError='';
 
-    initPromise=new Promise((resolve,reject)=>{
-      window.OneSignalDeferred=window.OneSignalDeferred||[];
-      window.OneSignalDeferred.push(async function(OneSignal){
-        try{
-          const bp=basePath();
-          await OneSignal.init({
-            appId:MD_ONESIGNAL_APP_ID,
-            serviceWorkerPath:bp+'onesignal/OneSignalSDKWorker.js',
-            serviceWorkerParam:{scope:bp+'onesignal/'},
-            notifyButton:{enable:false}
-          });
-          OS=OneSignal;
-          lastInitError='';
-          try{
-            OS.User.PushSubscription.addEventListener('change',sendState);
-            OS.Notifications.addEventListener('permissionChange',sendState);
-          }catch(e){}
-          resolve(OneSignal);
-          sendState();
-        }catch(err){
-          lastInitError=String(err?.message||err||'Falha ao iniciar notificações');
-          console.warn('OneSignal init failed',err);
-          reject(err);
-          sendState();
-        }
-      });
+    initPromise=(async()=>{
+      try{
+        window.OneSignalDeferred=window.OneSignalDeferred||[];
 
-      // Se o SDK não chamar a fila (bloqueio/extensão/rede), não ficar eternamente "sem suporte".
-      setTimeout(()=>{
-        if(!OS && !lastInitError){
-          lastInitError='Tempo excedido ao carregar o OneSignal';
-          sendState();
-        }
-      },7000);
-    });
+        const ready=new Promise((resolve,reject)=>{
+          let done=false;
+          const timer=setTimeout(()=>{
+            if(done)return;
+            done=true;
+            reject(new Error('Tempo excedido ao iniciar notificações.'));
+          },7000);
+
+          window.OneSignalDeferred.push(async function(OneSignal){
+            if(done)return;
+            try{
+              const bp=basePath();
+
+              await OneSignal.init({
+                appId:MD_ONESIGNAL_APP_ID,
+                serviceWorkerPath:bp+'onesignal/OneSignalSDKWorker.js',
+                serviceWorkerParam:{scope:bp+'onesignal/'},
+                notifyButton:{enable:false}
+              });
+
+              OS=OneSignal;
+
+              try{
+                OS.User.PushSubscription.addEventListener('change',sendState);
+                OS.Notifications.addEventListener('permissionChange',sendState);
+              }catch(e){}
+
+              done=true;
+              clearTimeout(timer);
+              resolve(OneSignal);
+            }catch(err){
+              done=true;
+              clearTimeout(timer);
+              reject(err);
+            }
+          });
+        });
+
+        await loadSdk();
+        const oneSignal=await ready;
+        lastInitError='';
+        sendState();
+        return oneSignal;
+      }catch(err){
+        lastInitError=String(err?.message||err||'Falha ao iniciar notificações');
+        console.warn('OneSignal init failed',err);
+        initPromise=null;
+        sendState();
+        throw err;
+      }
+    })();
+
     return initPromise;
   }
 
@@ -323,14 +418,30 @@ if(rememberedLogin && rememberedStudent){
 
   async function subscribe(){
     try{
-      if(isIOS()&&!isStandalone()){sendState();return}
+      if(isIOS()&&!isStandalone()){
+        sendState();
+        return;
+      }
+
       const oneSignal=await ensureInit();
       if(!oneSignal)return;
-      const login=(sessionStorage.getItem('md_login')||localStorage.getItem('md_login')||'').trim();
+
+      const login=(
+        sessionStorage.getItem('md_login') ||
+        localStorage.getItem('md_login') ||
+        ''
+      ).trim();
+
       if(login)await oneSignal.login(login);
+
       if(oneSignal.Notifications.isPushSupported()){
         await oneSignal.Notifications.requestPermission();
       }
+
+      if(oneSignal.User?.PushSubscription?.optedIn){
+        try{localStorage.setItem('md_push_enabled','1')}catch(e){}
+      }
+
       sendState();
     }catch(e){
       lastInitError=String(e?.message||e||'Falha ao ativar notificações');
@@ -340,27 +451,30 @@ if(rememberedLogin && rememberedStudent){
 
   window.addEventListener('message',function(e){
     const msg=e.data||{};
+
     if(msg.type==='mdtalk:push:status:request'){
-      sendState(); // mostra imediatamente instrução de iOS ou estado básico
-      if(!isIOS()||isStandalone())ensureInit().then(sendState).catch(sendState);
+      // Mostra a interface imediatamente, sem segurar o carregamento do portal.
+      sendState();
+
+      // iPhone/iPad fora do modo instalado não precisa carregar SDK ainda.
+      if(!isIOS()||isStandalone()){
+        ensureInit().then(sendState).catch(sendState);
+      }
     }
+
     if(msg.type==='mdtalk:push:subscribe')subscribe();
     if(msg.type==='mdtalk:push:retry')ensureInit(true).then(sendState).catch(sendState);
   });
 
-  window.addEventListener('load',function(){
-    sendState();
-    if(!isIOS()||isStandalone()){
-      ensureInit().then(()=>{
-        const login=(sessionStorage.getItem('md_login')||localStorage.getItem('md_login')||'').trim();
-        if(login)identify(login);
-      }).catch(()=>{});
-    }
-  });
+  // Nenhum SDK é carregado durante o load inicial.
+  window.addEventListener('load',sendState);
 
   window.mdPushIdentify=identify;
+
   window.mdPushLogout=async function(){
-    try{ const oneSignal=await ensureInit(); if(oneSignal)await oneSignal.logout(); }catch(e){}
+    // Não baixar o SDK só para fazer logout.
+    if(!OS)return;
+    try{await OS.logout()}catch(e){}
   };
 })();
 </script>
